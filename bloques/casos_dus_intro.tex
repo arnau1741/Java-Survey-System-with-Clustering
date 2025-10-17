@@ -1,0 +1,111 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\section{Descripció general del sistema}
+
+El sistema proposat és una aplicació per a la creació, gestió i anàlisi d’enquestes en línia. 
+L’objectiu és facilitar tant la recollida de dades com l’estudi de patrons o perfils de comportament 
+a partir de les respostes obtingudes.  
+El sistema permetrà que diferents tipus d’usuaris —amb nivells d’accés diferenciats— 
+interactuïn amb la plataforma segons el seu rol.
+
+\subsection{Funcionalitats principals}
+
+\begin{enumerate}
+    \item \textbf{Gestió d’usuaris i autenticació:}  
+    El sistema mantindrà perfils amb nom d’usuari i contrasenya per als usuaris registrats.  
+    També serà possible respondre enquestes sense estar registrat, 
+    tot i que les funcionalitats disponibles seran més limitades.
+
+    \item \textbf{Creació i gestió d’enquestes:}  
+    Els usuaris registrats podran crear noves enquestes.  
+    Cada creador serà automàticament l’administrador d’aquesta enquesta, 
+    amb permisos per modificar-ne les preguntes, eliminar resultats o tancar-la.  
+    Les preguntes poden ser de diferents tipus:
+    \begin{itemize}
+        \item Respostes numèriques.
+        \item Text lliure.
+        \item Opcions múltiples (una o diverses respostes possibles).
+    \end{itemize}
+
+    \item \textbf{Resposta d’enquestes:}  
+    Tant els usuaris registrats com els no registrats podran respondre enquestes disponibles.  
+    Les respostes s’emmagatzemaran per al seu posterior anàlisi.
+
+    \item \textbf{Recomanació d’enquestes:}  
+    Els usuaris registrats rebran recomanacions personalitzades d’enquestes 
+    segons els seus interessos, les seves respostes anteriors o el seu historial d’activitat.
+
+    \item \textbf{Gestió col·laborativa i rols múltiples:}  
+    El sistema permetrà que diversos usuaris col·laborin en la gestió d’una mateixa enquesta, 
+    actuant com a coadministradors o encuestadors assignats.
+
+    \item \textbf{Importació i exportació de dades:}  
+    Els administradors i moderadors podran exportar o importar preguntes i respostes 
+    en formats estàndard (\texttt{.csv}, \texttt{.json}, etc.) per facilitar l’anàlisi o còpia de seguretat.
+
+    \item \textbf{Anàlisi de resultats i agrupament:}  
+    Els usuaris amb accés als resultats podran aplicar diferents algoritmes de \textit{clustering} 
+    per agrupar els participants segons la similitud de les seves respostes.  
+    Això permetrà identificar patrons i perfils de comportament.
+
+    \item \textbf{Anàlisi estadístic bàsic:}  
+    El sistema oferirà eines d’anàlisi estadística com:
+    \begin{itemize}
+        \item càlcul de mitjana, mediana i percentils,
+        \item representacions gràfiques (histogrames, diagrames de barres, etc.),
+        \item distribucions de respostes per pregunta o per grup.
+    \end{itemize}
+
+    \item \textbf{Visualització d’activitat:}  
+    Es podrà consultar quins usuaris o grups han respost més enquestes 
+    o han estat més actius dins la plataforma.
+
+    \item \textbf{Control de visibilitat i moderació:}  
+    Els administradors podran decidir si els resultats d’una enquesta són públics o privats.  
+    Els moderadors vetllaran pel compliment de les normes de la plataforma, 
+    podran eliminar continguts inapropiats i gestionar possibles conflictes.
+\end{enumerate}
+
+
+\subsection{Perfils d’usuari}
+
+El sistema distingeix quatre tipus principals d’usuaris, cadascun amb rols i permisos específics:
+
+\begin{itemize}
+    \item \textbf{Enquestat:}  
+    És l’usuari que respon les enquestes.  
+    Pot ser:
+    \begin{itemize}
+        \item \textit{No registrat:} pot respondre únicament enquestes públiques, sense necessitat de crear un compte.
+        \item \textit{Registrat:} pot respondre enquestes i, a més, crear-ne de noves.  
+        Quan crea una enquesta, passa automàticament a ser-ne l’administrador.
+    \end{itemize}
+
+    \item \textbf{Administrador:}  
+    És un usuari registrat que gestiona una o més enquestes pròpies o compartides.  
+    Pot:
+    \begin{itemize}
+        \item crear, modificar o eliminar les seves enquestes,
+        \item gestionar les preguntes i respostes associades,
+        \item eliminar resultats si ho considera necessari,
+        \item decidir si els resultats de l’enquesta són públics o privats,
+        \item afegir altres usuaris com a coadministradors o enquestadors.
+    \end{itemize}
+
+    \item \textbf{Enquestador:}  
+    És un usuari que s’encarrega de distribuir o administrar enquestes a altres participants.  
+    Pot recollir respostes en nom d’altres persones (per exemple, en entrevistes presencials) 
+    i ajudar en la gestió logística de les enquestes assignades pels administradors.
+
+    \item \textbf{Moderador:}  
+    Té privilegis globals sobre la plataforma.  
+    La seva funció principal és vetllar pel correcte funcionament del sistema i pel compliment de les normes.  
+    Pot revisar, suspendre o eliminar enquestes i continguts inapropiats, 
+    així com gestionar usuaris o resoldre conflictes dins la plataforma.
+\end{itemize}
+
+
+
+\end{document}

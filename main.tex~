@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{subfiles}
+
+
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  left=3cm,
+  right=2.5cm,
+  top=2.5cm,
+  bottom=3cm
+}
+\setlength{\parindent}{0pt}
+
+
+\title{prop}
+\author{nombres}
+\date{October 2025}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+\section{Introduction}
+
+
+%\subfile{bloques/introduccion.tex}
+
+\newpage
+\subfile{bloques/casos_dus_intro}
+\subfile{bloques/casos_dus_descripcio_final}
+
+
+%% patron para bajar la complejidad
+%% baja cohesion y?
+%% 
+\end{document}

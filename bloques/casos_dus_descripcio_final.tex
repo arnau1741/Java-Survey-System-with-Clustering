@@ -1,0 +1,371 @@
+\newcommand{\usecase}[6]{
+\subsection*{#1}
+\textbf{Actors principals:} #2\\
+\textbf{Objectiu:} #3\\
+\textbf{Precondicions:} #4\\
+\textbf{Descripció:} #5\\
+\textbf{Postcondicions:} #6
+}
+
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+
+\section{Casos d’ús dels enquestats}
+A continuació es descriuen els principals casos d’ús associats als usuaris enquestats, 
+tant registrats com no registrats.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Cas d’ús 1: Respondre una enquesta}
+
+\textbf{Actors principals:} Enquestat (registrat o no registrat)
+
+\textbf{Objectiu:} Permetre a l’usuari respondre una enquesta disponible a la plataforma.
+
+\textbf{Precondicions:}  
+L’enquesta ha d’estar activa.
+%%L’enquesta ha d’estar activa i accessible (pública o compartida amb l’usuari).
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’usuari accedeix a la pàgina de l’enquesta.
+    \item Llegeix les preguntes i introdueix les seves respostes.
+    \item Confirma i envia les respostes.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+Les respostes queden emmagatzemades al sistema i associades a l’enquesta.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item Error de validació de dades (respostes no desades).
+    \item L’enquesta ja està tancada o no és accessible.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Cas d’ús 2: Registrar-se al sistema}
+
+\textbf{Actors principals:} Enquestat (no registrat)
+
+\textbf{Objectiu:} Permetre a un usuari no registrat crear un compte per accedir a funcionalitats addicionals (crear enquestes, rebre recomanacions, etc.).
+
+\textbf{Precondicions:}  
+L’usuari no ha de tenir un compte actiu al sistema.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’usuari accedeix a la secció de registre.
+    \item Introdueix les seves dades (nom d’usuari, contrasenya, correu electrònic...).
+    \item El sistema valida la informació i crea el compte.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+El compte queda registrat i l’usuari pot iniciar sessió al sistema.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item El nom d’usuari ja està en ús.
+    \item Error en la validació o manca d’algun camp obligatori.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Cas d’ús 3: Consultar resultats públics}
+
+\textbf{Actors principals:} Enquestat (registrat o no registrat)
+
+\textbf{Objectiu:} Permetre a l’usuari visualitzar els resultats de les enquestes marcades com a públiques.
+
+\textbf{Precondicions:}  
+L’enquesta ha de tenir els resultats configurats com a públics per part de l’administrador.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’usuari accedeix a la secció de resultats públics.
+    \item Selecciona una enquesta.
+    \item El sistema mostra un resum estadístic de les respostes.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+L’usuari visualitza les dades agregades de l’enquesta seleccionada.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item No hi ha resultats disponibles o l’enquesta no és pública.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Cas d’ús 4: Rebre recomanacions d’enquestes}
+
+\textbf{Actors principals:} Enquestat registrat
+
+\textbf{Objectiu:} Permetre al sistema suggerir enquestes a l’usuari segons els seus interessos o respostes prèvies.
+
+\textbf{Precondicions:}  
+L’usuari ha d’estar registrat i haver respost almenys una enquesta anteriorment.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’usuari inicia sessió i accedeix al seu panell personal.
+    \item El sistema analitza el seu historial de respostes.
+    \item Es mostren recomanacions d’enquestes rellevants per l'usuari.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+L’usuari pot seleccionar una de les enquestes recomanades i respondre-la.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item L’usuari no té activitat prèvia suficient per generar recomanacions.
+\end{itemize}
+
+
+
+
+
+\section{Casos d’ús dels administradors d’enquestes}
+
+A continuació es descriuen els principals casos d’ús associats als administradors d’enquestes,
+és a dir, usuaris registrats que han creat una o més enquestes i poden gestionar-ne el contingut i els resultats.
+
+
+\subsection*{Cas d’ús 5: Crear una enquesta}
+
+\textbf{Actors principals:} Administrador (usuari registrat)
+
+\textbf{Objectiu:} Permetre a l’usuari crear una nova enquesta a la plataforma.
+
+\textbf{Precondicions:}  
+L’usuari ha d’estar autenticat al sistema.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’usuari accedeix a la secció de creació d’enquestes.
+    \item Introdueix la informació bàsica (títol, descripció, visibilitat, etc.).
+    \item Afegeix preguntes i possibles respostes.
+    \item Desa i publica l’enquesta.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+L’enquesta queda registrada al sistema i disponible segons la seva configuració (pública o privada).
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item Falten camps obligatoris (títol, preguntes...).
+\end{itemize}
+
+\subsection*{Cas d’ús 6: Editar una enquesta}
+
+\textbf{Actors principals:} Administrador (propietari de l’enquesta)
+
+\textbf{Objectiu:} Permetre modificar el contingut o la configuració d’una enquesta existent.
+
+\textbf{Precondicions:}  
+L’enquesta ha de pertànyer a l’usuari i no pot estar tancada (si s’han rebut respostes, algunes modificacions poden estar restringides).
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’usuari accedeix a la seva llista d’enquestes.
+    \item Selecciona una enquesta per editar.
+    \item Modifica preguntes, opcions o configuracions generals.
+    \item Desa els canvis.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+L’enquesta queda actualitzada segons les modificacions fetes.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item L’enquesta no existeix o no pertany a l’usuari.
+    \item No es poden modificar preguntes després de rebre respostes.
+\end{itemize}
+
+\subsection*{Cas d’ús 7: Eliminar una enquesta}
+
+\textbf{Actors principals:} Administrador (propietari de l’enquesta)
+
+\textbf{Objectiu:} Permetre a l’usuari eliminar una enquesta pròpia i totes les seves respostes associades.
+
+\textbf{Precondicions:}  
+L’enquesta ha de pertànyer a l’usuari.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’usuari accedeix a la seva llista d’enquestes.
+    \item Selecciona l’enquesta que vol eliminar.
+    \item Confirma la seva eliminació.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+L’enquesta i les seves respostes s’eliminen del sistema.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item L’enquesta no existeix o no pertany a l’usuari.
+\end{itemize}
+
+
+\subsection*{Cas d’ús 8: Consultar resultats de les seves enquestes}
+
+\textbf{Actors principals:} Administrador (propietari de l’enquesta)
+
+\textbf{Objectiu:} Permetre a l’usuari visualitzar els resultats i estadístiques de les seves enquestes.
+
+\textbf{Precondicions:}  
+L’enquesta ha de tenir respostes registrades.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’usuari accedeix a la seva enquesta.
+    \item El sistema mostra un resum estadístic de les respostes rebudes.
+    \item L’usuari pot exportar o filtrar els resultats.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+L’usuari visualitza o descarrega els resultats de la seva enquesta.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item L’enquesta encara no té respostes.
+    \item Error en la generació de les estadístiques.
+\end{itemize}
+
+\subsection*{Cas d’ús 9: Gestionar la visibilitat de l’enquesta}
+
+\textbf{Actors principals:} Administrador (propietari de l’enquesta)
+
+\textbf{Objectiu:} Permetre a l’usuari configurar si la seva enquesta és pública, privada o restringida a certs usuaris o enquestadors.
+
+\textbf{Precondicions:}  
+L’usuari ha de ser el propietari de l’enquesta.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’usuari accedeix a la configuració de l’enquesta.
+    \item Selecciona el nivell de visibilitat desitjat.
+    \item Desa la configuració.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+La visibilitat de l’enquesta queda actualitzada segons la nova configuració.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item L’enquesta no és editable (per exemple, està sota revisió o moderació).
+\end{itemize}
+
+\section{Casos d’ús dels enquestadors}
+
+Els enquestadors són usuaris designats per un o més administradors per ajudar en la difusió i recollida de respostes d’enquestes.
+Poden administrar enquestes a altres persones presencialment, però no poden modificar el contingut de les preguntes.
+
+\subsection*{Cas d’ús 10: Afegir respostes a una enquesta assignada}
+
+\textbf{Actors principals:} Enquestador
+
+\textbf{Objectiu:} Permetre a l’enquestador recollir respostes d’una enquesta en nom d’altres participants.
+
+\textbf{Precondicions:}  
+L’enquestador ha de tenir assignada l’enquesta per un administrador.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item L’enquestador accedeix a la llista d’enquestes assignades.
+    \item Selecciona l’enquesta que vol administrar.
+    \item Introdueix respostes en nom dels participants o comparteix l’enllaç per a respondre.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+Les respostes queden registrades correctament al sistema, associades a l’enquestador o al participant corresponent.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item L’enquesta no està disponible o ha estat tancada per l’administrador.
+\end{itemize}
+
+\section{Casos d’ús dels moderadors}
+
+Els moderadors tenen permisos globals dins del sistema.
+S’encarreguen de vetllar pel compliment de les normes, revisar el contingut de les enquestes i gestionar usuaris quan sigui necessari.
+
+\subsection*{Cas d’ús 11: Revisar una enquesta}
+
+\textbf{Actors principals:} Moderador
+
+\textbf{Objectiu:} Permetre al moderador revisar una enquesta creada per un administrador per assegurar que compleix les polítiques del sistema.
+
+\textbf{Precondicions:}  
+L’enquesta ha d'estar marcada com a denunciada.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item El moderador accedeix a la llista d’enquestes denunciades.
+    \item Consulta el contingut i revisa les preguntes.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+L’estat de l’enquesta s’actualitza (denuncia aprovada o rebutjada).
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item Error en l’accés a la informació de l’enquesta.
+\end{itemize}
+\textbf{Relacions:}  
+Aquest cas d'ús pot derivar en el \textit{Cas d'ús 13: Eliminar una enquesta} si el moderador detecta contingut inadequat.
+
+
+\subsection*{Cas d’ús 12: Suspendre o eliminar una enquesta}
+
+\textbf{Actors principals:} Moderador
+
+\textbf{Objectiu:} Permetre al moderador eliminar una enquesta que incompleixi les normes de la plataforma.
+
+\textbf{Precondicions:}  
+El moderador ha d’haver revisat l’enquesta o tenir una denúncia activa sobre ella.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item El moderador selecciona l’enquesta en qüestió.
+    \item Elimina definitivament l’enquesta.
+    \item Confirma l’acció.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+L’enquesta deixa d’estar disponible.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item L’enquesta ja ha estat eliminada o bloquejada per un altre moderador.
+\end{itemize}
+
+\subsection*{Cas d’ús 13: Gestionar usuaris}
+
+\textbf{Actors principals:} Moderador
+
+\textbf{Objectiu:} Permetre al moderador gestionar el comportament dels usuaris dins la plataforma.
+
+\textbf{Precondicions:}  
+L’usuari a gestionar ha d’estar registrat al sistema.
+
+\textbf{Descripció:}
+\begin{enumerate}
+    \item El moderador accedeix al panell d’usuaris.
+    \item Consulta el perfil o historial d’un usuari.
+    \item Pot bloquejar l'usuari seleccionat.
+\end{enumerate}
+
+\textbf{Postcondicions:}  
+Les mesures aplicades afecten l’estat de l’usuari.
+
+\textbf{Excepcions:}
+\begin{itemize}
+    \item Error en l’accés al perfil d’usuari.
+\end{itemize}
+
+
+
+
+\end{document}

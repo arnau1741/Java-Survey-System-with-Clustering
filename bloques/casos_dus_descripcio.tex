@@ -1,0 +1,145 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\section{Casos d'ús}
+\textbf{Nom:} Crear perfil\\
+\textbf{Actor:} Usuari\\
+\textbf{Comportament:}
+\begin{enumerate}
+    \item L’usuari informa del nom de l’usuari per poder respondre
+    \item L’usuari pot decidir en respondre amb un email (registrat) o anònimament
+    \item El sistema comprova les dades introduïdes i registra un nou perfil
+\end{enumerate}
+\textbf{Errors possibles i solucions}
+\begin{itemize}
+    \item Si ja existeix el perfil amb el nom d’usuari el sistema informarà l’error i li recomanarà un nou nom d’usuari bàsic
+    \item En cas que l’email ja existeixi el sistema informarà de l’error i no podrà registrar-se amb el perfil, en cas que sigui anònim activarà l’apartat 1a)
+\end{itemize}
+
+\vspace{0.5 cm}
+
+\textbf{Nom:} Respondre Enquesta\\
+\textbf{Actor:} Usuari\\
+\textbf{Comportament:}
+\begin{enumerate}
+    \item L’usuari respondrà la pregunta de l’enquesta depenent del tipus de resposta
+    \item El sistema validarà la resposta i passarà a la següent pregunta
+\end{enumerate}
+\textbf{Errors possibles i solucions}
+\begin{itemize}
+    \item Tot i que és possible deixar valors nuls, si ingressa algun caràcter especial el sistema informarà de l’error
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{0.5 cm}
+
+\textbf{Nom:} Consultar perfil
+\textbf{Actor:} Usuari
+\textbf{Comportament:}
+\begin{enumerate}
+    \item L’usuari demana al sistema informació del perfil com usuari o email en cas que sigui un usuari registrat
+\end{enumerate}
+\textbf{Errors possibles i solucions}
+\begin{itemize}
+    \item En cas que l’usuari anònim demani informació de l’email, el sistema informarà de l’error
+\end{itemize}
+
+\vspace{0.5 cm}
+
+\textbf{Nom:} Exportar enquesta
+\textbf{Actor:} Usuari
+\textbf{Comportament:}
+\begin{enumerate}
+    \item L’usuari demana al sistema l’exportació de l’enquesta en el format demanat (pdf o txt)
+    \item El sistema generarà un document i l’enviarà a la ruta que estableixi l’usuari
+\end{enumerate}
+\textbf{Errors possibles i solucions}
+\begin{itemize}
+    \item L’usuari pot incloure una ruta que no existeixi i el sistema informarà de l’error.
+    \item En cas que l’usuari no indiqui la ruta el sistema el guardarà per defecte a Baixades
+\end{itemize}
+
+\vspace{0.5 cm}
+
+\textbf{Nom:} Crear enquesta
+\textbf{Actor:} Usuari
+\textbf{Comportament:}
+\begin{enumerate}
+    \item L’usuari crearà una enquesta amb un seguit de preguntes que el mateix definirà
+    \item L’usuari podrà definir el tipus de pregunta i el format de les seves respostes
+    \item El sistema generarà l’enquesta amb les preguntes definides i les guardarà automàticament
+\end{enumerate}
+\textbf{Errors possibles i solucions}
+\begin{itemize}
+    \item Si l’usuari tracta de finalitzar l’enquesta sense establir les preguntes que ha definit el sistema informarà de l’error
+    \itemSi l’usuari tracta d’utilitzar caràcters especials en les preguntes el sistema informarà de l’error però li permetrà continuar
+    \item Si l’usuari tanca l’enquesta sense finalitzar les preguntes s’activa la 1a)
+\end{itemize}
+
+\vspace{0.5 cm}
+
+\textbf{Nom:} Modificar enquesta
+\textbf{Actor:} Usuari
+\textbf{Comportament:}
+\begin{enumerate}
+    \item L’usuari pot modificar la pregunta de les seves enquestes i en cas que siguin diferents es permetrà el canvi d’alguns tipus de resposta
+\end{enumerate}
+\textbf{Errors possibles i solucions}
+\begin{itemize}
+    \item Si l’usuari tracta de modificar el número de preguntes el sistema informarà de l’error i l'informarà sobre la possibilitat de fer una nova enquesta
+\end{itemize}
+
+\vspace{0.5 cm}
+
+\textbf{Nom:} Carregar enquesta
+\textbf{Actor:} Usuari
+\textbf{Comportament:}
+\begin{enumerate}
+    \item L’usuari podrà carregar alguna enquesta que hagi fet o fins i tot alguna incompleta per terminar-la de fer
+\end{enumerate}
+\textbf{Errors possibles i solucions}
+no hay??
+
+\vspace{0.5 cm}
+
+\textbf{Nom:} Guardar enquesta
+\textbf{Actor:} Usuari
+\textbf{Comportament:}
+\begin{enumerate}
+    \item L’usuari li demanarà el sistema que la guardi perquè sigui contestada per altres
+    \item L’usuari podrà guardar-la en qualsevol moment inclòs si està incomplet
+\end{enumerate}
+\textbf{Errors possibles i solucions}
+\begin{itemize}
+    \item En cas que l’usuari tanqui l’enquesta o hi hagi alguna fallada el sistema la guardarà automàticament
+\end{itemize}
+
+\vspace{0.5 cm}
+
+\textbf{Nom:} Sortir
+\textbf{Actor:} Usuari
+\textbf{Comportament:}
+\begin{enumerate}
+    \item L’usuari podrà sortir de l’enquesta en qualsevol moment
+\end{enumerate}
+\textbf{Errors possibles i solucions}
+\begin{itemize}
+    \item En cas que l’usuari està responent o creant alguna enquesta el sistema el guardara automàticament
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
