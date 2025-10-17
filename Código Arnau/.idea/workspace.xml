@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4cb3ce3a-98b1-48a9-86b0-916e1b090193" name="Changes" comment=".gitignore added">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/subgrup-prop21.5.iml" beforeDir="false" afterPath="$PROJECT_DIR$/subgrup-prop21.5.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.aux" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos tex, pdf etc/main.aux" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.fdb_latexmk" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos tex, pdf etc/main.fdb_latexmk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.fls" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos tex, pdf etc/main.fls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.log" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos tex, pdf etc/main.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos tex, pdf etc/main.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos tex, pdf etc/main.synctex.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos tex, pdf etc/main.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.toc" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos tex, pdf etc/main.toc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +74,12 @@
       <recent name="$PROJECT_DIR$/Codi Clases Usuari, GestorUsuaris, Subclases Usuari" />
       <recent name="$PROJECT_DIR$/Codi Clases Usuari, GestorUsuaris, Subclases Usuari/src" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Código Arnau" />
+      <recent name="$PROJECT_DIR$/Código Arnau/Codi Clases Usuari, GestorUsuaris, Subclases Usuari" />
+      <recent name="$PROJECT_DIR$/Código Arnau/Codi Clases Usuari, GestorUsuaris, Subclases Usuari/src" />
+      <recent name="$PROJECT_DIR$/Archivos tex, pdf etc" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
@@ -98,7 +110,7 @@
       <option name="presentableId" value="Default" />
       <updated>1760739981723</updated>
       <workItem from="1760739982926" duration="965000" />
-      <workItem from="1760740962100" duration="1156000" />
+      <workItem from="1760740962100" duration="1472000" />
     </task>
     <task id="LOCAL-00001" summary="hola">
       <option name="closed" value="true" />
