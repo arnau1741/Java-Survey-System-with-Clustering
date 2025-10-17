@@ -22,7 +22,7 @@ public class GestorUsuaris {
                     "ID: " + u.getId()
                             + ", Usuari: " + u.getUsuari()
                             + ", Email: " + u.getEmail()
-                            + ", Especialitat: " + ((u instanceof PerfilEnquestat) ? ((PerfilEnquestat) u).getEspecialitat() : "N/A")
+                            + ", Especialitat: " + (u.getEspecialitat())
             );
         }
     }
