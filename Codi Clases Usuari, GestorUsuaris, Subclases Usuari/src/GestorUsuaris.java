@@ -10,6 +10,11 @@ public class GestorUsuaris {
         usuaris = new ArrayList<>();
     }
 
+    //esto es una prueba de mieirda
+
+
+
+
     // Method to add a user
     public void afegirUsuari(Usuari usuari) {
         this.usuaris.add(usuari);
