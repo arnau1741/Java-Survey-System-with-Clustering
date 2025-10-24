@@ -13,7 +13,6 @@ public class Enquesta {
 
     private List<Pregunta> preguntes;
 
-    // posem les dates com atributs, creem una classe Data i es relaciona?
     // private LocalDateTime dataCreacio;
     // private LocalDateTime dataFinalitzacio;
 
@@ -34,30 +33,4 @@ public class Enquesta {
     public Usuari getCreador() { return creador;}
     // public LocalDateTime getDataCreacio() { return dataCreacio; }
     // public LocalDateTime getDataFinalitzacio() { return dataFinalitzacio; }
-
-    public void afegirPregunta(Pregunta p) {
-        p.setID(seguentPreguntaID++);
-        preguntes.add(p);
-    }
-
-    public void eliminarPregunta(int preguntaID) {
-        if (preguntaID >= 0 && preguntaID < preguntes.size()) {
-            preguntes.removeIf(p -> p.getID() == preguntaID);
-        }
-    }
-
-    public void modificarPregunta(Integer preguntaID, Pregunta novaPregunta) {
-        for (int i = 0; i < preguntes.size(); i++) {
-            Pregunta p = preguntes.get(i);
-            if (p.getID() == preguntaID) {
-                novaPregunta.setID(preguntaID);
-                preguntes.set(i, novaPregunta);
-                break;
-            }
-        }
-    }
-
-    public List<Pregunta> getPreguntes() {
-        return Collections.unmodifiableList(preguntes);
-    }
 }
