@@ -6,20 +6,22 @@ public class Pregunta {
 
     public enum Tipus { NUMERICA, LLIURE, UNICA, MULTIPLE, ORDENADA }
 
-    private String id;
+    private Integer id;
     private String text;
     private Tipus tipus;
 
     //Format P1 Pregunta_qualsevol? -- Defineix tipus de resposta
-    public Pregunta(String id, String text, Tipus tipus) {
+    public Pregunta(Integer id, String text, Tipus tipus) {
         this.id = id;
         this.text = text;
         this.tipus = tipus;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
+
+    public void setId(Integer newId) { id = newId; }
 
     public String getText() {
         return text;
@@ -32,10 +34,10 @@ public class Pregunta {
     @Override
     public String toString() {
         return "Pregunta{" +
-                "id='" + id + '\'' +
-                ", text='" + text + '\'' +
-                ", tipus=" + tipus +
-                '}';
+            "id='" + id + '\'' +
+            ", text='" + text + '\'' +
+            ", tipus=" + tipus +
+            '}';
     }
 
     // getters y toString()
