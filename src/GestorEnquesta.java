@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class GestorEnquesta {
+    // gestiona totes les enquestes creades
     private List<Enquesta> enquestes;
 
     public GestorEnquesta() {
@@ -10,10 +11,22 @@ public class GestorEnquesta {
     }
 
     public void afegirEnquesta(Enquesta enquesta) {
-        enquestes.add(enquesta);
+        if (getEnquestaPerID(enquesta.getId()) != null) {
+            System.out.println("Ja existeix una enquesta amb aquest ID: " + enquesta.getId());
+        }
+        else enquestes.add(enquesta);
     }
 
-    // public List<Enquesta> getEnquestes() { return enquestes;} fem això també?
+    public Enquesta getEnquestaPerID(int id) {
+        for (Enquesta e : enquestes) {
+            if (e.getId().equals(id)) return e;
+        }
+        return null;
+    }
+
+    public void eliminarEnquesta(int id) {
+        enquestes.removeIf(e -> e.getId().equals(id));
+    }
 
     public void afegirPregunta(Enquesta e, Pregunta p) {
         e.afegirPregunta(p);
@@ -29,6 +42,22 @@ public class GestorEnquesta {
 
     public List<Pregunta> getPreguntes(Enquesta e) {
         return e.getPreguntes();
+    }
+
+    public void afegirParticipant(Enquesta e, Usuari u) {
+        e.afegirParticipant(u);
+    }
+
+    public void afegirResposta(Enquesta e, Usuari u, Pregunta p, Resposta r) {
+        e.afegirResposta(u, p, r);
+    }
+
+    public void getResposta(Enquesta e, Usuari u, Pregunta p) {
+        e.getResposta(u, p);
+    }
+
+    public void llistarParticipants(Enquesta e) {
+        e.getParticipants();
     }
 
     public void llistarEnquestes() {
