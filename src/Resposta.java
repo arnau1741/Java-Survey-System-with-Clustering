@@ -4,15 +4,15 @@
 //resposta i es guarda en els diferents tipus de classe Resposta
 public abstract class Resposta {
     //Atributs de la classe Resposta
-    private String idPregunta;  //Per fer el id sera RA, RB, RC... amb un numero
+    private Integer idPregunta;  //Per fer el id sera RA, RB, RC... amb un numero
     private boolean contestat;  //Sera true si la resposta està contestada
 
-    public Resposta(String idPregunta) {
+    public Resposta(Integer idPregunta) {
         this.idPregunta = idPregunta;
         this.contestat = false;
     }
 
-    public String getIdPregunta() {
+    public Integer getIdPregunta() {
         return idPregunta;
     }
 

@@ -3,7 +3,7 @@ import java.util.List;
 public class RespostaOrdenada extends Resposta {
     private List<String> ordre;
 
-    public RespostaOrdenada(String idPregunta, List<String> ordre) {
+    public RespostaOrdenada(Integer idPregunta, List<String> ordre) {
         super(idPregunta);
         this.ordre = ordre;
     }
