@@ -14,7 +14,8 @@ public class GestorEnquesta {
         if (getEnquestaPerID(enquesta.getId()) != null) {
             System.out.println("Ja existeix una enquesta amb aquest ID: " + enquesta.getId());
         }
-        else enquestes.add(enquesta);
+        else enquestes.add(enquesta);;
+        //añadiria el añadir ya participante, respuestas, etc.
     }
 
     public Enquesta getEnquestaPerID(int id) {
@@ -24,41 +25,7 @@ public class GestorEnquesta {
         return null;
     }
 
-    public void eliminarEnquesta(int id) {
-        enquestes.removeIf(e -> e.getId().equals(id));
-    }
 
-    public void afegirPregunta(Enquesta e, Pregunta p) {
-        e.afegirPregunta(p);
-    }
-
-    public void eliminarPregunta(Enquesta e, int preguntaID) {
-        e.eliminarPregunta(preguntaID);
-    }
-
-    public void modificarPregunta(Enquesta e, Integer preguntaID, Pregunta novaPregunta) {
-        e.modificarPregunta(preguntaID, novaPregunta);
-    }
-
-    public List<Pregunta> getPreguntes(Enquesta e) {
-        return e.getPreguntes();
-    }
-
-    public void afegirParticipant(Enquesta e, Usuari u) {
-        e.afegirParticipant(u);
-    }
-
-    public void afegirResposta(Enquesta e, Usuari u, Pregunta p, Resposta r) {
-        e.afegirResposta(u, p, r);
-    }
-
-    public void getResposta(Enquesta e, Usuari u, Pregunta p) {
-        e.getResposta(u, p);
-    }
-
-    public void llistarParticipants(Enquesta e) {
-        e.getParticipants();
-    }
 
     public void llistarEnquestes() {
         for (Enquesta enq : enquestes) {

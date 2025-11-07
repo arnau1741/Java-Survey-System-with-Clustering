@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
 
+//patron estado para cambiar entre roles
+
 public abstract class Usuari {
     private int id;
     private String usuari;
@@ -22,8 +24,34 @@ public abstract class Usuari {
         this.blocked = false;
     }
 
+    //respondre enquesta (preguntar gestorencuestas)
+    public void respondreEnquesta() {
+        //mostrar preguntas
 
-    //Responder enquesta
+
+        //respondre preguntes
+    }
+
+    //crear una enquesta (administrador) (no para primera entrega)
+    public void crearEnquesta() {
+
+    }
+
+    //editar una enquesta (administrador) (no para primera entrega)
+
+    //eliminar una enquesta (administrador) (no para primera entrega)
+
+    //Gestionar viabilitat de la enquesta (administrador)
+
+    //Afegir respostes a una enquesta assignada (Enquestador)
+
+    //Revisar una enquesta (moderador)
+
+    //Bloquejar una enquesta (moderador)
+
+    //Gestionar usuaris (moderador)
+
+
 
     //Get functions
     public int getId() { return id; }

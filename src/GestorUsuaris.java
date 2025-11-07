@@ -19,7 +19,6 @@ public class GestorUsuaris {
     public void consultarPerfil(int id) {
         for (Usuari u : usuaris) {
             if (u.getId() == id) {
-                //escriure info del usuari
                 System.out.println(
                         "ID: " + u.getId()
                                 + ", Usuari: " + u.getUsuari()
