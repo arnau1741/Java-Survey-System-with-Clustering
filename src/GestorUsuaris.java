@@ -40,4 +40,13 @@ public class GestorUsuaris {
             );
         }
     }
+
+    public Usuari seleccionarUsuari(int idUsuari) {
+        for (Usuari u : usuaris) {
+            if (u.getId() == idUsuari) {
+                return u;
+            }
+        }
+        return null;
+    }
 }

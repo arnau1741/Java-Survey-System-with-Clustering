@@ -18,24 +18,6 @@ public class GestorEnquesta {
         //añadiria el añadir ya participante, respuestas, etc.
     }
 
-    public void respondreEnquesta(int idEnquesta, Usuari usuari) {
-        Enquesta enq = getEnquestaPerID(idEnquesta);
-
-        boolean participa = enq.participa(usuari);
-
-        if(!participa){
-            //crear nueva fila en la matriz que devolverá la fila x
-            int x = 0;
-            //añadir usuario a la lista de participantes en la posicion x
-            enq.afegirParticipant(usuari, x);
-        }
-
-        enq.mostrarPreguntes();
-
-        //lógica para añadir respuestas del usuario a la encuesta
-
-    }
-
     public Enquesta getEnquestaPerID(int id) {
         for (Enquesta e : enquestes) {
             if (e.getId().equals(id)) return e;

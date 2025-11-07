@@ -12,7 +12,7 @@ public class Enquesta {
 
     private Integer seguentPreguntaID = 0;
 
-    private List<List<Pregunta>> respostes; // Matriu de respostes per a cada pregunta
+    public List<List<Pregunta>> respostes; // Matriu de respostes per a cada pregunta
 
     //Par usuari <> Fila Matriu que li correspon
     public List<Pair<Usuari, Integer>> participants;
@@ -35,9 +35,8 @@ public class Enquesta {
 
     public boolean participa(Usuari usuari) {
         for(int i = 0; i < participants.size(); i++){
-            if(participants.get(i).getFirst().getId().equals(usuari.getId())){
+            if(participants.get(i).getFirst().getId() == usuari.getId()){
                 return true;
-                break;
             }
         }
         return false;
@@ -52,6 +51,11 @@ public class Enquesta {
 
     public void afegirParticipant(Usuari usuari, Integer filaMatriu){
         participants.add(new Pair<>(usuari, filaMatriu));
+    }
+
+    public int afegirFilaRespostes() {
+        respostes.add(new ArrayList<>());
+        return respostes.size() - 1;
     }
 
     // Getters
@@ -73,7 +77,11 @@ public class Enquesta {
         return Collections.unmodifiableList(participants);
     }
 
-    public Pregunta[] getPreguntes() {
-        return respostes.getFirst().toArray(new Pregunta[0]);
+    public Pregunta[] getPreguntes(int x) {
+        return respostes.get(x).toArray(new Pregunta[0]);
+    }
+
+    public void setPreguntaResposta(int x, int i, Pregunta pregunta) {
+        respostes.get(x).set(i, pregunta);
     }
 }

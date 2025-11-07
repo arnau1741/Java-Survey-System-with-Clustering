@@ -27,11 +27,6 @@ public abstract class Usuari {
         this.blocked = false;
     }
 
-    //respondre enquesta
-    public void respondreEnquesta(GestorEnquesta ge) {
-        ge.afegirEnquesta(idEnquesta, this);
-    }
-
     //crear una enquesta (administrador) (no para primera entrega)
     public void crearEnquesta() {
 
