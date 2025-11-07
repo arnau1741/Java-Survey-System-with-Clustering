@@ -14,8 +14,8 @@ public class Enquesta {
 
     private List<List<Pregunta>> respostes; // Matriu de respostes per a cada pregunta
 
-    //si i = 0 de respostes es del usuari id = 130, j = 0 participants = 130
-    private List<Usuari> participants;
+    //Par usuari <> Fila Matriu que li correspon
+    public List<Pair<Usuari, Integer>> participants;
 
     // posem les dates com atributs, creem una classe Data i es relaciona?
     // private LocalDateTime dataCreacio;
@@ -33,6 +33,27 @@ public class Enquesta {
         // this.dataCreacio = LocalDateTime.now();
     }
 
+    public boolean participa(Usuari usuari) {
+        for(int i = 0; i < participants.size(); i++){
+            if(participants.get(i).getFirst().getId().equals(usuari.getId())){
+                return true;
+                break;
+            }
+        }
+        return false;
+    }
+
+    public void mostrarPreguntes(){
+        //metode per mostrar les preguntes de l'enquesta
+        for(int j = 0; j < respostes.getFirst().size(); j++){
+            System.out.println("Pregunta " + respostes.getFirst().get(j).getText());
+        }
+    }
+
+    public void afegirParticipant(Usuari usuari, Integer filaMatriu){
+        participants.add(new Pair<>(usuari, filaMatriu));
+    }
+
     // Getters
     public Integer getId() { return id;}
     public String getTitol() { return titol;}
@@ -48,8 +69,11 @@ public class Enquesta {
     // public LocalDateTime getDataCreacio() { return dataCreacio; }
     // public LocalDateTime getDataFinalitzacio() { return dataFinalitzacio; }
 
-
-    public List<Usuari> getParticipants() {
+    public List<Pair<Usuari, Integer>> getParticipants() {
         return Collections.unmodifiableList(participants);
+    }
+
+    public Pregunta[] getPreguntes() {
+        return respostes.getFirst().toArray(new Pregunta[0]);
     }
 }

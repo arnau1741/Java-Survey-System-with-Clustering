@@ -8,10 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Enquesta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enquesta.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GestorEnquesta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GestorEnquesta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GestorUsuaris.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GestorUsuaris.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PerfilEnquestador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilEnquestador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PerfilEnquestat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilEnquestat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pregunta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pregunta.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Usuari.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Usuari.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +111,7 @@
       <updated>1760744597737</updated>
       <workItem from="1760744598791" duration="434000" />
       <workItem from="1760745039821" duration="445000" />
-      <workItem from="1762529063646" duration="4981000" />
+      <workItem from="1762529063646" duration="9800000" />
     </task>
     <servers />
   </component>

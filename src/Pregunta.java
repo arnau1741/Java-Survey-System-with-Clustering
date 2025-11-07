@@ -8,7 +8,7 @@ public class Pregunta {
     private Integer id;
     private String text;
     private Tipus tipus;
-    //Falta hacer esto
+
     private Resposta resposta;
 
     //Format Pregunta_qualsevol? -- Defineix tipus de resposta
