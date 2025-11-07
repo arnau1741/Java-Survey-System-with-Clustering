@@ -10,19 +10,34 @@ public class GestorUsuaris {
         usuaris = new ArrayList<>();
     }
 
-    // Method to add a user
-    public void afegirUsuari(Usuari usuari) {
+    // Metode per a crear un perfil
+    public void crearPerfil(Usuari usuari) {
         this.usuaris.add(usuari);
     }
 
-    // Method to list all users
+    //Metode per a consultar la informacio del perfil
+    public void consultarPerfil(int id) {
+        for (Usuari u : usuaris) {
+            if (u.getId() == id) {
+                //escriure info del usuari
+                System.out.println(
+                        "ID: " + u.getId()
+                                + ", Usuari: " + u.getUsuari()
+                                + ", Email: " + u.getEmail()
+                                + ", Especialitat: " + (u.getRol())
+                );
+            }
+        }
+    }
+
+    // Metode per a llistar tots els usuaris
     public void llistarUsuaris() {
         for (Usuari u : usuaris) {
             System.out.println(
                     "ID: " + u.getId()
                             + ", Usuari: " + u.getUsuari()
                             + ", Email: " + u.getEmail()
-                            + ", Especialitat: " + (u.getEspecialitat())
+                            + ", Especialitat: " + (u.getRol())
             );
         }
     }
