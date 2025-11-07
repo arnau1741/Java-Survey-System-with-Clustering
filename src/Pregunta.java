@@ -9,14 +9,14 @@ public class Pregunta {
     private String text;
     private Tipus tipus;
     //Falta hacer esto
-    private Resposta respuesta;
+    private Resposta resposta;
 
     //Format Pregunta_qualsevol? -- Defineix tipus de resposta
     public Pregunta(Integer id, String text, Tipus tipus) {
         this.id = id;
         this.text = text;
         this.tipus = tipus;
-        respuesta = null;
+        resposta = null;
     }
 
     public Integer getId() {
@@ -28,7 +28,7 @@ public class Pregunta {
     }
 
     public void setResposta(Resposta res) {
-        this.respuesta = res;
+        this.resposta = res;
     }
 
     public String getText() {
