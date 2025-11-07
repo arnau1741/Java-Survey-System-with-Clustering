@@ -1,18 +1,29 @@
+import java.util.List;
+import java.util.ArrayList;
+
 public abstract class Usuari {
     private int id;
     private String usuari;
-    private String email;
     private String rol;
     private boolean registrat;
 
+    private String email;
+    private boolean blocked;
+
     // Constructor
-    public Usuari(int id, String usuari, String email) {
+    public Usuari(int id, String usuari, boolean registrat, String rol) {
         this.id = id;
         this.usuari = usuari;
-        this.email = email;
-        this.rol = rol;
         this.registrat = registrat;
+        this.rol = rol;
+
+        //Si registrat, trucar a funcio per a demanar email
+        this.email = registrat ? email : null;
+        this.blocked = false;
     }
+
+
+    //Responder enquesta
 
     //Get functions
     public int getId() { return id; }
