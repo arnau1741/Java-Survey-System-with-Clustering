@@ -2,7 +2,7 @@
 public class RespostaNumerica extends Resposta {
     private Double valor;
 
-    public RespostaNumerica(Integer idPregunta, Double valor) {
+    public RespostaNumerica(Pregunta idPregunta, Double valor) {
         super(idPregunta);
         this.valor = valor;
         setContestat(valor != null);

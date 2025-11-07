@@ -2,7 +2,7 @@
 public class RespostaLliure extends Resposta{
     private String text;
 
-    public RespostaLliure(Integer idPregunta, String text) {
+    public RespostaLliure(Pregunta idPregunta, String text) {
         super(idPregunta);
         this.text = text;
         setContestat(text != null && !text.isBlank());

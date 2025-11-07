@@ -6,7 +6,7 @@ public class RespostaMultiple extends Resposta{
     private final List<Pair<String, Boolean>> opcions;
     private int seleccio = 0;
 
-    public RespostaMultiple(Integer idPregunta, List<String> totesOpcions) {
+    public RespostaMultiple(Pregunta idPregunta, List<String> totesOpcions) {
         super(idPregunta);
         this.opcions = new ArrayList<>();
         for (String palabra : totesOpcions)

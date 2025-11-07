@@ -6,14 +6,15 @@ public abstract class Resposta {
     //Atributs de la classe Resposta
     private Integer idPregunta;  //Per fer el id sera RA, RB, RC... amb un numero
     private boolean contestat;  //Sera true si la resposta està contestada
+    private Pregunta preguntaAss;
 
-    public Resposta(Integer idPregunta) {
-        this.idPregunta = idPregunta;
+    public Resposta(Pregunta preguntaAss) {
+        this.preguntaAss = preguntaAss;
         this.contestat = false;
     }
 
-    public Integer getIdPregunta() {
-        return idPregunta;
+    public Pregunta getPregunta() {
+        return preguntaAss;
     }
 
     public boolean EsContestat() {
