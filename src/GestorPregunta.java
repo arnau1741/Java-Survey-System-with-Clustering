@@ -1,7 +1,3 @@
-package prop.enquesta.resposta;
-
-import prop.enquesta.excepcions.RespostaInvalida;
-import prop.enquesta.utils.Validacio;
 import java.util.*;
 
 public class GestorPregunta {
