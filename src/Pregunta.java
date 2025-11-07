@@ -8,7 +8,7 @@ public class Pregunta {
     private Integer id;
     private String text;
     private Tipus tipus;
-
+    //Falta hacer esto
     private Resposta resposta;
 
     //Format Pregunta_qualsevol? -- Defineix tipus de resposta
@@ -27,6 +27,14 @@ public class Pregunta {
         id = newId;
     }
 
+    public Pregunta getPregunta() {
+        return this;
+    }
+
+    public Resposta getResposta() {
+        return resposta;
+    }
+
     public void setResposta(Resposta res) {
         this.resposta = res;
     }
@@ -41,10 +49,9 @@ public class Pregunta {
 
     @Override
     public String toString() {
-        return "Pregunta{" +
-                "id='" + id + '\'' +
-                ", text='" + text + '\'' +
-                ", tipus=" + tipus +
-                '}';
+        String respostaText = (resposta != null)
+                ? resposta.getValorString()
+                : "No contestada";
+        return "P" + id + '\'' + text + '\'' + respostaText;
     }
 }
