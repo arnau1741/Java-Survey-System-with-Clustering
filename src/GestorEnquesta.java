@@ -24,6 +24,15 @@ public class GestorEnquesta {
         }
         return null;
     }
+    ///Exportar enquesta?
+    /// importar enquesta?
+    /// Crear enquesta?
+    /// Modificar enquesta?
+    /// Guardar enquesta?
+    /// Administrar enquestes?
+    ///
+    /// Importar respostaes???
+    /// Gestionar respostes???
 
     public void llistarEnquestes() {
         for (Enquesta enq : enquestes) {
