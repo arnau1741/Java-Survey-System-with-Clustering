@@ -19,12 +19,15 @@ public class Pregunta {
         resposta = null;
     }
 
-    public Integer getId() {
-        return id;
+    //Si eliminem el gestor llavors aqui assignem la resposta
+    public void assignarResposta(Resposta resposta) {
+        this.resposta = resposta;
     }
 
-    public void setId(Integer newId) {
-        id = newId;
+
+    // getters
+    public Integer getId() {
+        return id;
     }
 
     public Pregunta getPregunta() {
@@ -35,16 +38,27 @@ public class Pregunta {
         return resposta;
     }
 
-    public void setResposta(Resposta res) {
-        this.resposta = res;
-    }
-
     public String getText() {
         return text;
     }
 
+
     public Tipus getTipus() {
         return tipus;
+    }
+
+    // setters
+
+    public void setId(Integer newId) {
+        id = newId;
+    }
+
+    public void setResposta(Resposta res) {
+        this.resposta = res;
+    }
+
+    public void  setText(String newText) {
+        text = newText;
     }
 
     @Override
