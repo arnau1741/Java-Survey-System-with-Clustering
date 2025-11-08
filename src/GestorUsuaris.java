@@ -49,4 +49,27 @@ public class GestorUsuaris {
         }
         return null;
     }
+
+    //Falta cas d'us gestionar visivilitat
+    /*
+    public void gestionarVisibilitat(int idUsuari, boolean visibilitat) {
+        for (Usuari u : usuaris) {
+            if (u.getId() == idUsuari) {
+                u.setVisibilitat(visibilitat);
+                System.out.println("La visibilitat de l'usuari " + u.getUsuari() + " s'ha actualitzat a: " + visibilitat);
+                return;
+            }
+        }
+        System.out.println("Usuari amb ID " + idUsuari + " no trobat.");
+    }
+    */
+
+    //Falta la opcio de sortir del sistema
+    /*
+    public int sortir() {
+    //S'ha de veure com farem el main o el driver del menu per tal de sortir del sistema
+        int numeroOpcio = -1;
+        return numeroOpcio;
+    }
+     */
 }

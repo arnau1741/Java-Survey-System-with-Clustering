@@ -24,8 +24,8 @@ public class GestorPregunta {
     public void modificarPregunta(Integer id, String nouText, Pregunta.Tipus nouTipus) {
         for (Pregunta p : preguntes) {
             if (p.getId().equals(id)) {
-                p.setResposta(null); // reset respuesta al cambiar el tipo
                 p = new Pregunta(id, nouText, nouTipus);
+                p.setResposta(null); // reset respuesta al cambiar el tipo
                 return;
             }
         }
