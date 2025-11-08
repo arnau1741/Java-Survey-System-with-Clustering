@@ -55,8 +55,8 @@ public class CtrlDomini {
         //Muestra las preguntas en orden para ser respondidas por el usuario
         enq.mostrarPreguntes();
 
-        //asignar la respuesta a la matriz de respuestas de la encuesta
-        //vector que se recibe de la capa de presentacion con las respuestas
+        //assignar fila de respostes a la matriu amb index x de l'usuari
+        //vector con las respuestas del usuario
         List<Pregunta> preguntes;
         enq.afegirPreguntesJaRespostes(x, preguntes);
     }
@@ -70,7 +70,7 @@ public class CtrlDomini {
 
         GestorEnquesta ges = getCtrlEnquesta();
         //creamos la enquesta
-        //introducimos los datos en la capa de prentacion (id, titol, descripcio, creador)
+        //introducimos los datos en la capa de presentacion (id, titol, descripcio, creador)
         int id = ges.returnSize();
         String titol = "me la pela";
         String descripcio = "una enquesta que me la pela";
