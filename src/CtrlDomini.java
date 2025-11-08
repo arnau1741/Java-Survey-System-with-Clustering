@@ -138,5 +138,13 @@ public class CtrlDomini {
             enq.setPreguntaResposta(x, i, pre);
         }
     }
+    /*
+    public void consultarEstadistiques(int idEnquesta) {
+        GestorEnquesta ge = getCtrlEnquesta();
+        Enquesta enq = ge.getEnquestaPerID(idEnquesta);
+        enq.mostrarEstadistiques();
+    }
+    */
+
 }
 
