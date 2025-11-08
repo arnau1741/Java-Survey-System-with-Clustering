@@ -4,7 +4,6 @@
 //resposta i es guarda en els diferents tipus de classe Resposta
 public abstract class Resposta {
     //Atributs de la classe Resposta
-    private Integer idPregunta;  //Per fer el id sera RA, RB, RC... amb un numero
     private boolean contestat;  //Sera true si la resposta està contestada
     private Pregunta preguntaAss;
 

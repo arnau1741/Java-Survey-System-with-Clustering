@@ -10,7 +10,6 @@ public abstract class Usuari {
     private int id;
     private String usuari;
     private String rol;
-    private boolean registrat;
 
     private String email;
     private boolean blocked;
@@ -19,7 +18,6 @@ public abstract class Usuari {
     public Usuari(int id, String usuari, boolean registrat, String rol) {
         this.id = id;
         this.usuari = usuari;
-        this.registrat = registrat;
         this.rol = rol;
 
         //Si registrat, trucar a funcio per a demanar email

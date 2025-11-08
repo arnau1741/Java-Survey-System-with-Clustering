@@ -3,96 +3,97 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/*
+ * Classe Enquesta
+ * Es una Lista de preguntes i una Matriu de respostes 
+ * Las respuestas de los usuarios no registrados es -1 y 
+ * las filas que usa en la matriz de respuestas
+ * se guardan en una lista aparte (noRegistratAnswers)
+ * Las filas de usuarios registrados se guardan en un mapa
+ * userToAnswerId
+ */
+
+
+
 public class Enquesta {
     // Representa una enquesta concreta: id, titol, descripcio, creador, preguntes, respostes, participants
     private Integer id;
     private String titol;
     private String descripcio;
-    private Usuari creador;
+    private Integer idCreador;
 
-    private Integer seguentPreguntaID = 0;
 
-    public List<List<Pregunta>> respostes; // Matriu de respostes per a cada pregunta
+    public List<List<Resposta>> respostes; // Matriu de respostes per a cada pregunta
     public List<Pregunta> preguntes;
 
     //Par usuari <> Fila Matriu que li correspon
-    public List<Pair<Usuari, Integer>> participants;
+    private Map<Integer, Integer> userToAnswerId; // Map d'usuari a fila de respostes
+
+    private List<Integer> noRegistratAnswers; // Llista de files de respostes per usuaris no registrats
 
     // posem les dates com atributs, creem una classe Data i es relaciona?
     // private LocalDateTime dataCreacio;
     // private LocalDateTime dataFinalitzacio;
 
     // Constructora
-    public Enquesta(Integer id, String titol, String descripcio, Usuari creador) {
+    public Enquesta(Integer id, String titol, String descripcio, Integer idCreador) {
         this.id = id;
         this.titol = titol;
         this.descripcio = descripcio;
-        this.creador = creador;
+        this.idCreador = idCreador;
 
         this.respostes = new ArrayList<>();
-        this.participants = new ArrayList<>();
+        this.userToAnswerId = new HashMap<>();
+        this.noRegistratAnswers = new ArrayList<>();
         // this.dataCreacio = LocalDateTime.now();
     }
 
-    public boolean participa(Usuari usuari) {
-        for(int i = 0; i < participants.size(); i++){
-            if(participants.get(i).getFirst().getId() == usuari.getId()){
+    public boolean participa(int id) {
+        if (id < 0) throw new IllegalArgumentException("L'id de l'usuari no pot ser negatiu.");
+
+        for (Integer userId : userToAnswerId.keySet()) {
+            if (userId.equals(id)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void mostrarPreguntes(){
-        //metode per mostrar les preguntes de l'enquesta
-        for(int j = 0; j < respostes.getFirst().size(); j++){
-            System.out.println("Pregunta " + respostes.getFirst().get(j).getText());
-        }
+
+
+    public List<Pregunta> getPreguntes(){
+        return Collections.unmodifiableList(preguntes);
     }
 
-    public void afegirParticipant(Usuari usuari, Integer filaMatriu){
-        participants.add(new Pair<>(usuari, filaMatriu));
-    }
-
-    public void afegirFilaRespostesBuit() {
-        respostes.add(new ArrayList<>());
-    }
-
-    public int afegirFilaRespostesAmbPreguntesNoRespostes(){
-        respostes.add(preguntes);
-        return respostes.size() - 1;
-    }
-
-    public void afegirPreguntesJaRespostes(int x, List<Pregunta> preguntes){
-        respostes.set(x, preguntes);
+    public void setResposta(int idUsuari, List<Resposta> respostesUsuari){
+        Integer filaMatriu = userToAnswerId.size();
+        respostes.add(respostesUsuari);
+        if (idUsuari >= 0) userToAnswerId.put(idUsuari, filaMatriu);
+        else if (idUsuari == -1) noRegistratAnswers.add(filaMatriu);
+        else throw new IllegalArgumentException("L'id de l'usuari no pot ser menor que -1.");
     }
 
     // Getters
     public Integer getId() { return id;}
     public String getTitol() { return titol;}
     public String getDescripcio() { return descripcio;}
-    public Usuari getCreador() { return creador;}
-    public List<Pregunta> getPreguntes() { return preguntes;}
+    public Integer getCreador() { return idCreador;}
 
     // Setters
     public void setTitol(String titol) { this.titol = titol; }
     public void setDescripcio(String descripcio) { this.descripcio = descripcio; }
-    public void setCreador(Usuari creador) { this.creador = creador; }
+    public void setCreador(Integer idCreador) { this.idCreador = idCreador; }
     public void setId(int id) { this.id = id; }
     public void setPreguntes(List<Pregunta> preguntes) { this.preguntes = preguntes; }
 
     // public LocalDateTime getDataCreacio() { return dataCreacio; }
     // public LocalDateTime getDataFinalitzacio() { return dataFinalitzacio; }
 
-    public List<Pair<Usuari, Integer>> getParticipants() {
-        return Collections.unmodifiableList(participants);
+    public List<Integer> getParticipants() {
+        return new ArrayList<>(userToAnswerId.keySet());
     }
 
-    public Pregunta[] getPreguntes(int x) {
-        return respostes.get(x).toArray(new Pregunta[0]);
-    }
-
-    public void setPreguntaResposta(int x, int i, Pregunta pregunta) {
-        respostes.get(x).set(i, pregunta);
-    }
 }
