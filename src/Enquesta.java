@@ -49,6 +49,7 @@ public class Enquesta {
         this.userToAnswerId = new HashMap<>();
         this.noRegistratAnswers = new ArrayList<>();
         // this.dataCreacio = LocalDateTime.now();
+        //this.visible = false;
     }
 
     public boolean participa(int id) {
@@ -95,5 +96,7 @@ public class Enquesta {
     public List<Integer> getParticipants() {
         return new ArrayList<>(userToAnswerId.keySet());
     }
+
+
 
 }

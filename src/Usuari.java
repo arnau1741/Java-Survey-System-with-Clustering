@@ -1,12 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 //patron estado para cambiar entre roles
 
 public abstract class Usuari {
-    private static final Scanner scanner = new Scanner(System.in);
-
     private int id;
     private String usuari;
     private String rol;
@@ -25,10 +22,7 @@ public abstract class Usuari {
         this.blocked = false;
     }
 
-    //crear una enquesta (administrador) (no para primera entrega)
-    public void crearEnquesta() {
-
-    }
+ 
 
     //editar una enquesta (administrador) (no para primera entrega)
 
@@ -51,14 +45,12 @@ public abstract class Usuari {
     public String getUsuari() { return usuari; }
     public String getEmail() { return email; }
     public String getRol() { return rol; }
-    public boolean isRegistrat() { return registrat; }
     public boolean isBlocked() { return blocked; }
 
     public void setId(int id) { this.id = id; }
     public void setUsuari(String usuari) { this.usuari = usuari; }
     public void setEmail(String email) { this.email = email; }
-    public void setRol(String especialitat) { this.rol = rol; }
-    public void setRegistrat(boolean registrat) { this.registrat = registrat; }
+    public void setRol(String rol) { this.rol = rol; }
     public void setBlocked(boolean blocked) { this.blocked = blocked; }
 }
 

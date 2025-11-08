@@ -99,7 +99,7 @@ public class GestorEnquesta {
                     "Enquesta ID: " + enq.getId() +
                     ", Títol: " + enq.getTitol() +
                     ", Descripció: " + enq.getDescripcio() +
-                    ", Creador: " + enq.getCreador().getUsuari()
+                    ", Creador: " + enq.getCreador()
             );
         }
     }
