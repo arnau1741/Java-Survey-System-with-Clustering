@@ -48,96 +48,17 @@ public class CtrlDomini {
         int x = -1;
         if(!participa){
             //crear nueva fila en la matriz que devolverá la fila x
-            x = enq.afegirFilaRespostes();
+            x = enq.afegirFilaRespostesAmbPreguntesNoRespostes();
             //añadir usuario a la lista de participantes en la posicion x
             enq.afegirParticipant(u, x);
         }
         //Muestra las preguntas en orden para ser respondidas por el usuario
         enq.mostrarPreguntes();
 
-        //lógica para añadir respuestas del usuario a la encuesta
-        Pregunta[] preguntes = enq.getPreguntes(x);
-        Scanner sc = new Scanner(System.in);
-        for(int i = 0; i < preguntes.length; i++){
-            Pregunta pre = preguntes[i];
-            System.out.println("\nPregunta " + (i + 1) + ": " + pre.getText());
-            //usuario da la respuesta
-            Resposta res = null;
-            try {
-                switch (pre.getTipus()) {
-                    case NUMERICA -> {
-                        System.out.print("Introdueix un número (0-10): ");
-                        double v = Double.parseDouble(sc.nextLine().trim());
-                        RespostaNumerica rn = new RespostaNumerica(pre, v);
-                        res = rn;
-                    }
-                    case LLIURE -> {
-                        System.out.print("Resposta lliure: ");
-                        String text = sc.nextLine();
-                        RespostaLliure rl = new RespostaLliure(pre, text);
-                        res = rl;
-                    }
-                    case UNICA -> {
-                        System.out.print("Introdueix opcions separades per comes (si n’hi ha): ");
-                        String entrada = sc.nextLine();
-                        List<String> opcions = Arrays.stream(entrada.split(","))
-                                .map(String::trim)
-                                .filter(s -> !s.isEmpty())
-                                .toList();
-
-                        System.out.println("Opcions disponibles: " + opcions);
-                        System.out.print("Selecciona una: ");
-                        String opcio = sc.nextLine().trim();
-
-                        RespostaUnica ru = new RespostaUnica(pre, opcions);
-                        ru.seleccionar(opcio);
-                        res = ru;
-                    }
-                    case MULTIPLE -> {
-                        System.out.print("Introdueix opcions separades per comes (si n’hi ha): ");
-                        String entrada = sc.nextLine();
-                        List<String> opcions = Arrays.stream(entrada.split(","))
-                                .map(String::trim)
-                                .filter(s -> !s.isEmpty())
-                                .toList();
-
-                        System.out.println("Selecciona diverses opcions (separades per comes): ");
-                        String respostaUsuari = sc.nextLine();
-                        List<String> seleccionades = Arrays.stream(respostaUsuari.split(","))
-                                .map(String::trim)
-                                .filter(s -> !s.isEmpty())
-                                .toList();
-
-                        RespostaMultiple rm = new RespostaMultiple(pre, opcions);
-                        for (String s : seleccionades) rm.seleccionar(s);
-                        res = rm;
-                    }
-                    case ORDENADA -> {
-                        System.out.print("Introdueix opcions separades per comes: ");
-                        String entrada = sc.nextLine();
-                        List<String> opcions = Arrays.stream(entrada.split(","))
-                                .map(String::trim)
-                                .filter(s -> !s.isEmpty())
-                                .toList();
-
-                        System.out.print("Introdueix l’ordre separat per comes: ");
-                        String ordre = sc.nextLine();
-                        List<String> ordreLlista = Arrays.stream(ordre.split(","))
-                                .map(String::trim)
-                                .filter(s -> !s.isEmpty())
-                                .toList();
-
-                        RespostaOrdenada ro = new RespostaOrdenada(pre, ordreLlista);
-                        res = ro;
-                    }
-                }
-                pre.setResposta(res);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            //asignar la respuesta a la matriz de respuestas de la encuesta
-            enq.setPreguntaResposta(x, i, pre);
-        }
+        //asignar la respuesta a la matriz de respuestas de la encuesta
+        //vector que se recibe de la capa de presentacion con las respuestas
+        List<Pregunta> preguntes;
+        enq.afegirPreguntesJaRespostes(x, preguntes);
     }
 
     //Caso de uso 2 - Crear enquesta
@@ -160,10 +81,12 @@ public class CtrlDomini {
         enq.participants.addFirst(new Pair<>(u, 0)); //afegim el creador com a participant per defecte
 
         //crear la fila de preguntas con respuestas respuestas
-        enq.afegirFilaRespostes();
+        enq.afegirFilaRespostesBuit();
 
         //añadir preguntas a la encuesta
         for(Pregunta p: pregunta) enq.respostes.get(id).add(p);
+
+        enq.preguntes = enq.respostes.get(id);
     }
 
 

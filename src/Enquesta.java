@@ -13,6 +13,7 @@ public class Enquesta {
     private Integer seguentPreguntaID = 0;
 
     public List<List<Pregunta>> respostes; // Matriu de respostes per a cada pregunta
+    public List<Pregunta> preguntes;
 
     //Par usuari <> Fila Matriu que li correspon
     public List<Pair<Usuari, Integer>> participants;
@@ -53,9 +54,17 @@ public class Enquesta {
         participants.add(new Pair<>(usuari, filaMatriu));
     }
 
-    public int afegirFilaRespostes() {
+    public void afegirFilaRespostesBuit() {
         respostes.add(new ArrayList<>());
+    }
+
+    public int afegirFilaRespostesAmbPreguntesNoRespostes(){
+        respostes.add(preguntes);
         return respostes.size() - 1;
+    }
+
+    public void afegirPreguntesJaRespostes(int x, List<Pregunta> preguntes){
+        respostes.set(x, preguntes);
     }
 
     // Getters
@@ -63,12 +72,14 @@ public class Enquesta {
     public String getTitol() { return titol;}
     public String getDescripcio() { return descripcio;}
     public Usuari getCreador() { return creador;}
+    public List<Pregunta> getPreguntes() { return preguntes;}
 
     // Setters
     public void setTitol(String titol) { this.titol = titol; }
     public void setDescripcio(String descripcio) { this.descripcio = descripcio; }
     public void setCreador(Usuari creador) { this.creador = creador; }
     public void setId(int id) { this.id = id; }
+    public void setPreguntes(List<Pregunta> preguntes) { this.preguntes = preguntes; }
 
     // public LocalDateTime getDataCreacio() { return dataCreacio; }
     // public LocalDateTime getDataFinalitzacio() { return dataFinalitzacio; }
