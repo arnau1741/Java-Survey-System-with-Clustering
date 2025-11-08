@@ -141,11 +141,10 @@ public class CtrlDomini {
     }
 
     //Caso de uso 2 - Crear enquesta
-    public void crearEnquesta(){
+    public void crearEnquesta(int idUsuari, List<Pregunta> pregunta) {
         //seleccionamos el usuario creador
         GestorUsuaris gu = getCtrlUsuari();
         gu.llistarUsuaris();
-        int idUsuari = 0;
         Usuari u = gu.seleccionarUsuari(idUsuari);
 
         GestorEnquesta ges = getCtrlEnquesta();
@@ -156,17 +155,15 @@ public class CtrlDomini {
         String descripcio = "una enquesta que me la pela";
         Enquesta enq = new Enquesta(id, titol, descripcio, u);
         ges.afegirEnquesta(enq);
+
+        //enq.afegirParticipant(u, enq.afegirFilaRespostes());
         enq.participants.addFirst(new Pair<>(u, 0)); //afegim el creador com a participant per defecte
 
         //crear la fila de preguntas con respuestas respuestas
         enq.afegirFilaRespostes();
-        List<Pregunta> preguntes = new ArrayList<>();
 
         //añadir preguntas a la encuesta
-        Pregunta nova = new Pregunta(id, text, tipus);
-        preguntes.add(nova);
-
-        enq.respostes.getFirst().add(nova);
+        for(Pregunta p: pregunta) enq.respostes.get(id).add(p);
     }
 
 
