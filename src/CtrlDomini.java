@@ -46,9 +46,9 @@ public class CtrlDomini {
 
 
     //Caso de uso 2 - Crear enquesta
-    public void crearEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> pregunta) { //Final
+    public void crearEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> preguntes) { //Final
         int id = gestorEnquesta.returnSize();
-        Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador);
+        Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntes);
         this.gestorEnquesta.afegirEnquesta(novaEnquesta);
     }
 

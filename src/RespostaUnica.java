@@ -6,7 +6,7 @@ public class RespostaUnica extends Resposta {
     private String seleccionada;
 
     public RespostaUnica(Pregunta idPregunta, List<String> opcions) {
-        super(idPregunta);
+        super();
         this.opcions = opcions;
         this.seleccionada = null;
     }

@@ -5,16 +5,11 @@
 public abstract class Resposta {
     //Atributs de la classe Resposta
     private boolean contestat;  //Sera true si la resposta està contestada
-    private Pregunta preguntaAss;
 
-    public Resposta(Pregunta preguntaAss) {
-        this.preguntaAss = preguntaAss;
+    public Resposta() {
         this.contestat = false;
     }
 
-    public Pregunta getPregunta() {
-        return preguntaAss;
-    }
 
     public boolean EsContestat() {
         return contestat;

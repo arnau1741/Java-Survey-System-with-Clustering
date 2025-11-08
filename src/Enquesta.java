@@ -39,12 +39,13 @@ public class Enquesta {
     // private LocalDateTime dataFinalitzacio;
 
     // Constructora
-    public Enquesta(Integer id, String titol, String descripcio, Integer idCreador) {
+    public Enquesta(Integer id, String titol, String descripcio, Integer idCreador, List<Pregunta> preguntes) {
         this.id = id;
         this.titol = titol;
         this.descripcio = descripcio;
         this.idCreador = idCreador;
 
+        this.preguntes = preguntes;
         this.respostes = new ArrayList<>();
         this.userToAnswerId = new HashMap<>();
         this.noRegistratAnswers = new ArrayList<>();
