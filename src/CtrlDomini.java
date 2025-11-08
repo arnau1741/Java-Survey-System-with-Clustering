@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -138,6 +139,37 @@ public class CtrlDomini {
             enq.setPreguntaResposta(x, i, pre);
         }
     }
+
+    //Caso de uso 2 - Crear enquesta
+    public void crearEnquesta(){
+        //seleccionamos el usuario creador
+        GestorUsuaris gu = getCtrlUsuari();
+        gu.llistarUsuaris();
+        int idUsuari = 0;
+        Usuari u = gu.seleccionarUsuari(idUsuari);
+
+        GestorEnquesta ges = getCtrlEnquesta();
+        //creamos la enquesta
+        //introducimos los datos en la capa de prentacion (id, titol, descripcio, creador)
+        int id = ges.returnSize();
+        String titol = "me la pela";
+        String descripcio = "una enquesta que me la pela";
+        Enquesta enq = new Enquesta(id, titol, descripcio, u);
+        ges.afegirEnquesta(enq);
+        enq.participants.addFirst(new Pair<>(u, 0)); //afegim el creador com a participant per defecte
+
+        //crear la fila de preguntas con respuestas respuestas
+        enq.afegirFilaRespostes();
+        List<Pregunta> preguntes = new ArrayList<>();
+
+        //añadir preguntas a la encuesta
+        Pregunta nova = new Pregunta(id, text, tipus);
+        preguntes.add(nova);
+
+        enq.respostes.getFirst().add(nova);
+    }
+
+
     /*
     public void consultarEstadistiques(int idEnquesta) {
         GestorEnquesta ge = getCtrlEnquesta();

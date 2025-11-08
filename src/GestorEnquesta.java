@@ -25,6 +25,10 @@ public class GestorEnquesta {
         }
         return null;
     }
+
+    public int returnSize(){
+        return enquestes.size();
+    }
     /// S'HA DE PENSAR EN AQUESTES DUES SI ES NECESARI QUE EL FEM
     /// Exportar enquesta?
     /// importar enquesta?
@@ -34,7 +38,7 @@ public class GestorEnquesta {
     /// Guardar enquesta? -----
     /// Administrar enquestes? Es un conjunt per tant es tot el que fa el gestor
     ///
-    /// Importar respostaes???
+    /// Importar respostes???
     /// Gestionar respostes???
     ///
     /*

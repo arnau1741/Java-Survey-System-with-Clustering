@@ -50,7 +50,7 @@ public class GestorUsuaris {
         return null;
     }
 
-    //Falta cas d'us gestionar visivilitat
+    //Falta cas d'us gestionar visibilitat (comprobar que sigui l'administrador)
     /*
     public void gestionarVisibilitat(int idUsuari, boolean visibilitat) {
         for (Usuari u : usuaris) {
