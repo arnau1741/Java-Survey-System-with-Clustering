@@ -1,7 +1,28 @@
+import java.util.List;
+
 public class PerfilEnquestador extends Usuari
 {
+    private List<Enquesta> enquestesAssignades;
     // Constructor
-    public PerfilEnquestador(int id, String usuari, String rol, boolean registrat) {
-        super(id, usuari, rol, registrat);
+    public PerfilEnquestador(int idUsuari, String nomUsuari, String contrasenya, String email)  {
+        super(idUsuari, nomUsuari,contrasenya, email);
+        enquestesAssignades = new java.util.ArrayList<>();
+    }
+
+    public boolean enquestaAssignada(int idEnquesta) {
+        for (Enquesta e : enquestesAssignades) {
+            if (e.getId() == idEnquesta) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void afegirEnquestaAssignada(Enquesta enquesta) {
+        enquestesAssignades.add(enquesta);
+    }
+
+    public List<Enquesta> getEnquestesAssignades() {
+        return enquestesAssignades;
     }
 }

@@ -1,25 +1,25 @@
-import java.util.List;
-
 public class RespostaOrdenada extends Resposta {
-    private List<String> ordre;
+    private Integer numOpcions;
+    private Integer resposta;
 
-    public RespostaOrdenada(List<String> ordre) {
+    public RespostaOrdenada(int numOpcions) {
         super();
-        this.ordre = ordre;
+        this.numOpcions = numOpcions;
     }
 
-    public List<String> getOrdre() {
-        return ordre;
+    public int setResposta(Integer resposta) {
+        if (resposta < 0 || resposta >= numOpcions) {
+            return 0; // Opció invàlida
+        }
+        this.resposta = resposta;
+        setContestat(true);
+        return 1;
     }
 
-    public void setOrdre(List<String> ordre) {
-        this.ordre = ordre;
-        setContestat(ordre != null && !ordre.isEmpty());
-    }
+
 
     @Override
     public String getValorString() {
-        if (ordre == null || ordre.isEmpty()) return "No contestada";
-        else return String.join(" > ", ordre); // Example format: "Option1 > Option2 > Option3"
+        return Integer.toString(resposta);
     }
 }

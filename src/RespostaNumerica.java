@@ -14,6 +14,7 @@ public class RespostaNumerica extends Resposta {
 
     public void setValor(Double valor) {
         this.valor = valor;
+        setContestat(valor != null);
     }
 
     //Falta revisar el valor

@@ -53,6 +53,62 @@ public class Enquesta {
         //this.visible = false;
     }
 
+
+    private List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
+        List<Resposta> respostesObj = new ArrayList<>();
+        for (String r : respostesStr) {
+            int index = respostesStr.indexOf(r);
+            int tipusPregunta = preguntes.get(index).getTipus();
+            if (tipusPregunta == 0) {// NUMERICA
+                try {
+                    RespostaNumerica respostaNumerica = new RespostaNumerica(Double.parseDouble(r));
+                    respostesObj.add(respostaNumerica);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Resposta numèrica invàlida: " + r);
+                }
+            } else if (tipusPregunta == 1) { // LLIURE
+                RespostaLliure respostaLliure = new RespostaLliure(r);
+                respostesObj.add(respostaLliure);
+            } else if (tipusPregunta == 2) { // UNICA
+                
+                int numOpcions = preguntes.get(index).getNumOpcions();
+                RespostaUnica respostaUnica = new RespostaUnica(numOpcions);
+                respostaUnica.setResposta(Integer.parseInt(r));
+                respostesObj.add(respostaUnica);
+            } else if (tipusPregunta == 3) {// MULTIPLE
+                int numOpcions = preguntes.get(index).getNumOpcions();
+                RespostaMultiple respostaMultiple = new RespostaMultiple(numOpcions);
+                // Convertir String a
+                List<Integer> seleccionades = new ArrayList<>();
+                String[] parts = r.split(","); // Suponemos que las opciones están separadas por comas
+                for (String part : parts) {
+                    seleccionades.add(Integer.parseInt(part.trim()));
+                }
+                respostaMultiple.selecciona(seleccionades);
+            } else if (tipusPregunta == 4) { // ORDENADA
+                int numOpcions = preguntes.get(index).getNumOpcions();
+                RespostaOrdenada respostaOrdenada = new RespostaOrdenada(numOpcions);
+                respostaOrdenada.setResposta(Integer.parseInt(r));
+                respostesObj.add(respostaOrdenada);
+            } else {
+                throw new IllegalArgumentException("Tipus de pregunta desconegut: " + tipusPregunta);
+            }
+        }
+        return respostesObj;
+    }
+
+    public Integer afegeixResposta(int idUsuari, List<String> respostes){
+        List<Resposta> respostesObj = stringARespostes(respostes);
+        Integer filaMatriu = userToAnswerId.size() + noRegistratAnswers.size();
+        this.respostes.add(respostesObj);
+        if (idUsuari >= 0) userToAnswerId.put(idUsuari, filaMatriu);
+        else if (idUsuari == -1) noRegistratAnswers.add(filaMatriu);
+        else throw new IllegalArgumentException("L'id de l'usuari no pot ser menor que -1.");
+        return filaMatriu;
+
+
+    }
+
     public boolean participa(int id) {
         if (id < 0) throw new IllegalArgumentException("L'id de l'usuari no pot ser negatiu.");
 
@@ -70,8 +126,35 @@ public class Enquesta {
 
 
 
-    public List<Pregunta> getPreguntes(){
-        return Collections.unmodifiableList(preguntes);
+    public List<String> getPreguntes(){
+        List<String> textsPreguntes = new ArrayList<>();
+        for (Pregunta p : preguntes) {
+            textsPreguntes.add(p.getText());
+            int tipus = p.getTipus(); //NUMERICA, LLIURE, UNICA, MULTIPLE, ORDENADA
+            if (tipus == 2) { //UNICA
+                // Afegir les opcions de la pregunta UNICA
+                // Suposant que la classe Pregunta té un mètode getOpcions()
+                List<String> opcions = p.getOpcions();
+                String opcionsStr = String.join(", ", opcions);
+                textsPreguntes.add("-" + opcionsStr);
+            }
+            else if (tipus == 3) { //MULTIPLE
+                // Afegir les opcions de la pregunta MULTIPLE
+                // Suposant que la classe Pregunta té un mètode getOpcions()
+                List<String> opcions = p.getOpcions();
+                String opcionsStr = String.join(", ", opcions);
+                textsPreguntes.add("-" + opcionsStr);
+            }
+            else if(tipus == 4){ //ORDENADA
+                // Afegir les opcions de la pregunta ORDENADA
+                // Suposant que la classe Pregunta té un mètode getOpcions()
+                List<String> opcions = p.getOpcions();
+                String opcionsStr = String.join(", ", opcions);
+                textsPreguntes.add("-" + opcionsStr);
+            }
+        }
+        return textsPreguntes;
+
     }
 
     public List<Resposta> getRespostesUsuari(Integer filaMatriu) {
@@ -107,5 +190,13 @@ public class Enquesta {
     }
 
 
-
+    public static Integer esNatural(String r) {
+        try {
+            Integer res = Integer.parseInt(r);  // Intenta convertir el String a un entero
+            if (res >= 0) return res;  // Si no lanza una excepción, es un entero válido
+            else return -1;
+        } catch (NumberFormatException e) {
+            return -1;  // Si lanza una excepción, no es un número entero válido
+        }
+    }
 }
