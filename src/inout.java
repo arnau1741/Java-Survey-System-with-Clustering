@@ -4,7 +4,7 @@
    Hansen (s'inclou el copyright de la versio original)
 */
 
-/*                 THE JAVA TEXT PROGRAM    
+/*                 THE JAVA TEXT PROGRAM
                        28 April 1999
             Copyright (c) 1999 Per Brinch Hansen
 
@@ -15,29 +15,27 @@ keyboard and disk files. The present version runs on
 Macintosh, Unix, and Windows 95 systems.
 */
 
-package DriverTBC;
-
 import java.io.*;
 
 public class inout
 { private final char cr = '\r',  eof = '\uFFFF',
     nl = '\n', sp = ' ';
   private final String EOF = "eof";
-  
+
 
   public inout() { }
 
   /* instruccions d'escriptura */
 
   public void write(boolean value) throws Exception
-  { write(value, 1); } 
+  { write(value, 1); }
 
-  public void write(boolean value, int width) 
+  public void write(boolean value, int width)
     throws Exception
   { String word = (String)(value?"true":"false");
     writespace(width - word.length());
     write(word);
-  } 
+  }
 
   public void write(char value) throws Exception
   { System.out.print(value); }
@@ -61,13 +59,13 @@ public class inout
   public void write(int value, int width) throws Exception
   { String numeral = String.valueOf((int)value);
     writespace(width - numeral.length());
-    write(numeral); 
+    write(numeral);
   }
 
   public void write(String value) throws Exception
   { write(value, 1); }
 
-  public void write(String value, int width) 
+  public void write(String value, int width)
     throws Exception
   { int length = value.length();
     for (int i = 0; i < length; i++)
@@ -81,14 +79,14 @@ public class inout
   public void writeln(boolean value) throws Exception
   { writeln(value, 1); }
 
-  public void writeln(boolean value, int width) 
+  public void writeln(boolean value, int width)
     throws Exception
   { write(value, width); writeln(); }
 
   public void writeln(char value) throws Exception
   { writeln(value, 1); }
 
-  public void writeln(char value, int width) 
+  public void writeln(char value, int width)
     throws Exception
   { write(value, width); writeln(); }
 
@@ -128,16 +126,16 @@ public class inout
   private int typed= 0, used= 0;
 
   private char readkey() throws Exception
-  { if (used == typed) 
+  { if (used == typed)
       { String line = readkeyline();
         if (line.equals(EOF))
           { typed = 0; buffer[typed] = eof; }
         else
           { typed = line.length();
-            for (int i = 0; i < typed; i++) 
+            for (int i = 0; i < typed; i++)
               buffer[i] = line.charAt(i);
             buffer[typed] = nl;
-          }   
+          }
         typed = typed + 1; used = 0;
       }
     char ch = buffer[used];
@@ -201,7 +199,7 @@ public class inout
     //----------MODIFICACIO------------
     readblanks();
     if (ch == '+') readnext();
-    else if (ch == '-') 
+    else if (ch == '-')
       symbol.append(read());
     while (digit()) symbol.append(read());
     //---------------------------------
@@ -223,7 +221,7 @@ public class inout
   { StringBuffer symbol = new StringBuffer();
     readblanks();
     if (ch == '+') readnext();
-    else if (ch == '-') 
+    else if (ch == '-')
       symbol.append(read());
     while (digit()) symbol.append(read());
     Integer numeral =
@@ -249,7 +247,7 @@ public class inout
     while (letter() | digit() | (ch == '_'))
       { letters.append(ch); readnext(); }
     return letters.toString();
-  }   
+  }
 
   public void readnext() throws Exception
   { ch = (char)readkey(); ahead = true; }
