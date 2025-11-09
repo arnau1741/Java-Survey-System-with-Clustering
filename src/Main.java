@@ -1,6 +1,10 @@
 // Main.java
 import java.io.IOException;
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -19,42 +23,16 @@ public class Main {
 
             try {
                 switch (opcio) {
-                    //Importar enquesta
-                    case 1 -> {
-                        io.writeln("Introdueix el path de l’enquesta a importar: ");
-                        String path = io.readword();
-                        String resultat = ctrl.importarEnquesta(path);
-                        //Escriure si el ficher es correcta
-                        io.writeln(resultat);
-                    }
-                    //Exportar enquesta
-                    case 2 -> {
-                        io.writeln("Introdueix l’ID de l’enquesta a exportar: ");
-                        int id = io.readint();
-                        //Aquesta part es posible que no el necesitem si definim el path directament
-                        io.writeln("Introduex la ruta on guardar l’enquesta: ");
-                        String path = io.readword();
-                        //S'haura de veure que exportem exactamen(Lista)
-                        String resultat = ctrl.exportarEnquesta(path, id);
-                        io.writeln(resultat);
-                    }
-                    //Importar respostes
-                    case 3 -> {
-                        io.writeln("Introdueix el path del fitxer de respostes a importar: ");
-                        String path = io.readword();
-                        String resultat = ctrl.importarRespostes(path);
-                        io.writeln(resultat);
-                    }
-                    // Exportar respostes
-                    case 4 -> {
-                        io.writeln("Introdueix l'id de l'enquesta per exportar respostes: ");
-                        int id = io.readint();
-                        String path = io.readword();
-                        String resultat = ctrl.exportarRespostes(path, id);
-                        io.writeln(resultat);
-                    }
-                    //Sortir
-                    case 0 -> io.writeln("Sortint...");
+                    case -1 -> io.writeln("Surt");
+
+                    case 1 -> importarEnquesta(io, ctrl);
+
+                    case 2 -> exportarEnquesta(io, ctrl);
+
+                    case 3 -> importarRespostes(io, ctrl);
+
+                    case 4 -> exportarRespostes(io, ctrl);
+
                     default -> io.writeln("Opció no vàlida.");
                 }
             } catch (IOException e) {
@@ -76,8 +54,120 @@ public class Main {
         //Abrir pipe y guardar datos en fichero
         //Guardarlo en la ruta establecida
 
-
     }
 
+    // === IMPORTAR ENQUESTA ===
+    private static void importarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.write("Introdueix el path del fitxer .txt d'enquesta: ");
+        String path = io.readword();
 
+        List<String> linies = readAllLines(path);
+        if (linies.isEmpty()) {
+            io.writeln(" Fitxer buit o inexistent.");
+            return;
+        }
+
+        // Primer línia: titol;descripcio;numPreguntes
+        String[] meta = linies.get(0).split(";");
+        String titol = meta[0].trim();
+        String descripcio = meta[1].trim();
+        int numPreg = Integer.parseInt(meta[2].trim());
+
+        List<Pregunta> preguntes = new ArrayList<>();
+        int nextId = 0;
+
+        // Línies següents: textPregunta;tipus
+        for (int i = 1; i <= numPreg; i++) {
+            String[] parts = linies.get(i).split(";");
+            String text = parts[0].trim();
+            Pregunta.Tipus tipus = Pregunta.Tipus.valueOf(parts[1].trim().toUpperCase());
+            Pregunta p = new Pregunta(nextId++, text, tipus);
+            preguntes.add(p);
+        }
+
+        // Creador fictici (ID=0 per simplificar)
+        ctrl.importarEnquesta(titol, descripcio, 0, preguntes);
+        io.writeln("Enquesta importada correctament!");
+    }
+
+    // === EXPORTAR ENQUESTA ===
+    private static void exportarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.write("Introdueix l'ID de l'enquesta a exportar: ");
+        int id = io.readint();
+        io.write("Introdueix el path on guardar (ex: sortida.txt): ");
+        String path = io.readword();
+
+        List<String> export = ctrl.exportarEnquesta(id);
+        if (export == null) {
+            io.writeln("Enquesta no trobada.");
+            return;
+        }
+
+        writeAllLines(path, export);
+        io.writeln("Enquesta exportada correctament a: " + path);
+    }
+
+    // === IMPORTAR RESPOSTES ===
+    private static void importarRespostes(inout io, CtrlDomini ctrl) throws Exception {
+        io.write("Introdueix l'id de l'usuari que importa les respostes: ");
+        int idUsuari = io.readint();
+        io.writeln("Introdueix el id de l'enquesta a la que corresponen les respostes: ");
+        int idEnquesta = io.readint();
+        io.write("Introdueix el path del fitxer de respostes: ");
+        String path = io.readword();
+        
+        List<String> linies = readAllLines(path);
+
+        int numPreg = Integer.parseInt(linies.get(0).trim());
+        List<String> preguntes = new ArrayList<>();
+        List<String> respostes = new ArrayList<>();
+
+        // Primer la secció de preguntes
+        for (int i = 1; i <= numPreg; i++) {
+            preguntes.add(linies.get(i).trim());
+        }
+
+        // Ara les respostes
+        for (int i = numPreg + 1; i < linies.size(); i++) {
+            respostes.add(linies.get(i).trim());
+        }
+
+        ctrl.importarRespostes(idEnquesta, idUsuari, preguntes, respostes);
+        io.writeln("Respostes importades correctament!");
+    }
+
+    // === EXPORTAR RESPOSTES ===
+    private static void exportarRespostes(inout io, CtrlDomini ctrl) throws Exception {
+        io.write("Introdueix l'ID de l'enquesta: ");
+        int id = io.readint();
+        io.write("Path on guardar (ex: respostes.txt): ");
+        String path = io.readword();
+
+        List<String> export = ctrl.exportarRespostes(id);
+        if (export == null) {
+            io.writeln("No hi ha respostes per aquesta enquesta.");
+            return;
+        }
+
+        writeAllLines(path, export);
+        io.writeln("Respostes exportades correctament a: " + path);
+    }
+
+    // Helpers de lectura/escriptura
+    private static List<String> readAllLines(String path) throws IOException {
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) lines.add(line);
+        }
+        return lines;
+    }
+
+    private static void writeAllLines(String path, List<String> lines) throws IOException {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(path))) {
+            for (String l : lines) pw.println(l);
+        }
+    }
 }
+
+

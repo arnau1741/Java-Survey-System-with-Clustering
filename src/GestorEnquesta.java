@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.SplittableRandom;
+import java.util.*;
 
 public class GestorEnquesta {
     // gestiona totes les enquestes creades
@@ -28,6 +30,104 @@ public class GestorEnquesta {
 
     public int returnSize(){
         return enquestes.size();
+    }
+    //Caso de uso importar enquesta
+    public void importarEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> preguntes) {
+        int id = returnSize();
+        Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntes);
+        afegirEnquesta(novaEnquesta);
+    }
+
+
+    //Caso de uso exportar enquesta
+    public List<String> exportarEnquesta(int id) {
+        Enquesta e = getEnquestaPerID(id);
+        if (e == null) {
+            System.out.println("No s'ha trobat cap enquesta amb ID " + id + ".");
+            return null;
+        }
+        List<String> out = new ArrayList<>();
+        List<Pregunta> pre = e.getPreguntes();
+
+        out.add(e.getTitol() + ";" + e.getDescripcio() + ";" + pre.size());
+        for (Pregunta p : pre) {
+            out.add(p.getText() + ";" + p.getTipus());
+        }
+        return out;
+    }
+
+    public void importarRespostas(int idEnquesta, int idUsuari, List<String> preguntesTxt, List<String> respostesTxt) {
+        Enquesta enq = getEnquestaPerID(idEnquesta);
+        if (enq == null) {
+            System.out.println("No s'ha trobat cap enquesta amb ID " + idEnquesta + ".");
+            return;
+        }
+
+        List<Resposta> respostesUsuari = new ArrayList<>();
+        for (int i = 0; i < preguntesTxt.size(); i++) {
+            String tipus = preguntesTxt.get(i).split(";")[1];
+            String valor = respostesTxt.get(i);
+
+            Resposta resposta;
+            switch (tipus) {
+                case "LLIURE":
+                    resposta = new RespostaLliure(valor);
+                    break;
+                case "ORDENADA":
+                    List<String> opcions = List.of(valor.split(","));
+                    resposta = new RespostaOrdenada(opcions);
+                    break;
+                case "MULTIPLE":
+                    List<String> opcionsMultiple = List.of(valor.split(","));
+                    resposta = new RespostaMultiple(opcionsMultiple);
+                    break;
+                case "NUMERICA":
+                    resposta = new RespostaNumerica(Double.parseDouble(valor));
+                    break;
+                case "UNICA":
+                    List<String> unica = List.of(valor.split(","));
+                    resposta = new RespostaUnica(unica);
+                    break;
+                default:
+                    System.out.println("Tipus de pregunta desconegut: " + tipus);
+                    return;
+            }
+            respostesUsuari.add(resposta);
+        }
+        enq.setResposta(idUsuari, respostesUsuari);
+    }
+
+    public List<String> exportarRespostes(int idEnquesta, int idUsuari) {
+        Enquesta e = getEnquestaPerID(idEnquesta);
+        if (e == null) {
+            System.out.println("No s'ha trobat cap enquesta amb ID " + idEnquesta + ".");
+            return null;
+        }
+
+        List<String> out = new ArrayList<>();
+        out.add("Nombre de preguntes: " + e.getPreguntes().size());
+        Integer filaUsuari = e.obtenFilaIdUsuari(idUsuari);
+        if (filaUsuari == null) {
+            out.add("L'usuari amb ID " + idUsuari + " no ha respost aquesta enquesta.");
+            return out;
+        }
+
+        List<Resposta> filaRespostes = e.respostes.get(filaUsuari);
+        List<Pregunta> preguntes = e.getPreguntes();
+
+        out.add("Respostes de l'usuari " + idUsuari + ":");
+        out.add("------------------------------------");
+
+        // Combinar pregunta i resposta
+        for (int i = 0; i < preguntes.size(); i++) {
+            Pregunta p = preguntes.get(i);
+            Resposta r = filaRespostes.get(i);
+            String valor = (r == null) ? "No contestada" : r.getValorString();
+            out.add("P" + p.getId() + ": " + p.getText() + " → " + valor);
+        }
+
+        out.add("------------------------------------");
+        return out;
     }
     /// S'HA DE PENSAR EN AQUESTES DUES SI ES NECESARI QUE EL FEM
     /// Exportar enquesta?

@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 
 
 public class CtrlDomini {
@@ -42,9 +42,6 @@ public class CtrlDomini {
         enq.setResposta(idUsuari, respostesUsuari);
     }
 
-
-
-
     //Caso de uso 2 - Crear enquesta
     public void crearEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> preguntes) { //Final
         int id = gestorEnquesta.returnSize();
@@ -52,7 +49,25 @@ public class CtrlDomini {
         this.gestorEnquesta.afegirEnquesta(novaEnquesta);
     }
 
+    //Caso de uso 3: importar enquesta
+    public void importarEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> preguntes) {
+        gestorEnquesta.importarEnquesta(titol, descripcio, idCreador, preguntes);
+    }
 
+    // Caso de uso 4: exportar enquesta
+    public List<String> exportarEnquesta(int id) {
+        return gestorEnquesta.exportarEnquesta(id);
+    }
+
+    // Caso de uso 5: importar respostes
+    public void importarRespostes(int idEnquesta, int idUsuari, List<String> preguntesTxt, List<String> respostesTxt) {
+        gestorEnquesta.importarRespostas(idEnquesta, idUsuari, preguntesTxt, respostesTxt);
+    }
+
+    //Caso de uso 6: exportar respostes
+    public List<String> exportarRespostes(int id) {
+        return gestorEnquesta.exportarEnquesta(id);
+    }
 
     /*
     public void consultarEstadistiques(int idEnquesta) {

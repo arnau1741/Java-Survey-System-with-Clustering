@@ -19,7 +19,7 @@ public class GestorPregunta {
     public void eliminarPregunta(Integer id) {
         preguntes.removeIf(p -> p.getId().equals(id));
     }
-
+/*
     // Modificar pregunta
     public void modificarPregunta(Integer id, String nouText, Pregunta.Tipus nouTipus) {
         for (Pregunta p : preguntes) {
@@ -51,6 +51,7 @@ public class GestorPregunta {
         }
         return null;
     }
+    */
 
     //Mostrar totes les preguntes
     public void mostrarPreguntes() {

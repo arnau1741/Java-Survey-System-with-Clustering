@@ -64,6 +64,10 @@ public class Enquesta {
         return false;
     }
 
+    public Integer obtenFilaIdUsuari(int idUsuari) {
+        return userToAnswerId.get(idUsuari);
+    }
+
 
 
     public List<Pregunta> getPreguntes(){

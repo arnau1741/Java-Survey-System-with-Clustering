@@ -2,8 +2,8 @@
 public class RespostaNumerica extends Resposta {
     private Double valor;
 
-    public RespostaNumerica(Pregunta idPregunta, Double valor) {
-        super(idPregunta);
+    public RespostaNumerica(Double valor) {
+        super();
         this.valor = valor;
         setContestat(valor != null);
     }
