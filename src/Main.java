@@ -33,6 +33,10 @@ public class Main {
 
                     case 4 -> exportarRespostes(io, ctrl);
 
+                    case 5 -> crearUsuari(io, ctrl);
+
+                    case 6 -> consultarUsuari(io, ctrl);
+
                     default -> io.writeln("Opció no vàlida.");
                 }
             } catch (IOException e) {
@@ -115,7 +119,7 @@ public class Main {
         int idEnquesta = io.readint();
         io.write("Introdueix el path del fitxer de respostes: ");
         String path = io.readword();
-        
+
         List<String> linies = readAllLines(path);
 
         int numPreg = Integer.parseInt(linies.get(0).trim());
@@ -167,6 +171,40 @@ public class Main {
         try (PrintWriter pw = new PrintWriter(new FileWriter(path))) {
             for (String l : lines) pw.println(l);
         }
+    }
+
+    private static void crearUsuari(inout io, CtrlDomini ctrl) throws Exception {
+
+        io.write("Introdueix l'ID de l'usuari: ");
+        int id = io.readint();
+        io.write("Introdueix el nom: ");
+        String nom = io.readword();
+        io.write("Introdueix l'email: ");
+        String email = io.readword();
+        io.write("Introdueix el rol de l'usuari (ADMINISTRADOR, MODERADOR, ENQUESTADOR, ENQUESTAT): ");
+        String rolStr = io.readword().toUpperCase();
+        io.write("Es registrat? (true/false): ");
+        boolean registrat = io.readboolean();
+        Usuari usuari;
+        switch (rolStr) {
+            //case "ADMINISTRADOR" -> usuari = new Administrador(id, nom, true);
+            //case "MODERADOR" -> usuari = new Moderador(id, nom, true);
+            case "ENQUESTADOR" -> usuari = new PerfilEnquestador(id, nom, rolStr, registrat);
+            case "ENQUESTAT" -> usuari = new PerfilEnquestat(id, nom, rolStr, registrat);
+            default -> {
+                io.writeln("Rol no vàlid.");
+                return;
+            }
+        }
+        usuari.setEmail(email);
+        ctrl.getCtrlUsuari().crearPerfil(usuari);
+        io.writeln("Usuari creat correctament!");
+    }
+
+    private static void consultarUsuari(inout io, CtrlDomini ctrl) throws Exception {
+        io.write("Introdueix l'ID de l'usuari a consultar: ");
+        int id = io.readint();
+        ctrl.getCtrlUsuari().consultarPerfil(id);
     }
 }
 

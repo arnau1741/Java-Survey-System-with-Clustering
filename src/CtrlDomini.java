@@ -69,6 +69,16 @@ public class CtrlDomini {
         return gestorEnquesta.exportarEnquesta(id);
     }
 
+    //Caso de uso 8: crear perfil usuari
+    public void crearPerfil(Usuari usuari) {
+        gestorUsuaris.crearPerfil(usuari);
+    }
+
+    //Caso de uso 9: consultar perfil usuari
+    public void consultarPerfil(int id) {
+        gestorUsuaris.consultarPerfil(id);
+    }
+
     /*
     public void consultarEstadistiques(int idEnquesta) {
         GestorEnquesta ge = getCtrlEnquesta();
