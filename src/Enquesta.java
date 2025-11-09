@@ -74,6 +74,10 @@ public class Enquesta {
         return Collections.unmodifiableList(preguntes);
     }
 
+    public List<Resposta> getRespostesUsuari(Integer filaMatriu) {
+        return Collections.unmodifiableList(respostes.get(filaMatriu));
+    }
+
     public void setResposta(int idUsuari, List<Resposta> respostesUsuari){
         Integer filaMatriu = userToAnswerId.size();
         respostes.add(respostesUsuari);

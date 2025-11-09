@@ -79,6 +79,21 @@ public class CtrlDomini {
         gestorUsuaris.consultarPerfil(id);
     }
 
+    //Caso de uso 10: consultarEnquesta
+    public void consultarEnquesta() {
+        gestorEnquesta.llistarEnquestes();
+    }
+
+    //Caso de uso 11: consultarRespostes
+    public List<Resposta> consultarRespostes(int idEnquesta, int idUsuari) {
+        return gestorEnquesta.consultarRespostes(idEnquesta, idUsuari);
+    }
+
+    //Caso de uso 12: esborrar enquesta
+    public void esborrarEnquesta(int idEnquesta) {
+        gestorEnquesta.esborrarEnquesta(idEnquesta);
+    }
+
     /*
     public void consultarEstadistiques(int idEnquesta) {
         GestorEnquesta ge = getCtrlEnquesta();

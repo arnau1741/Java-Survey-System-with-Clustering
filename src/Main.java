@@ -37,27 +37,24 @@ public class Main {
 
                     case 6 -> consultarUsuari(io, ctrl);
 
+                    case 7 -> consultarEnquesta(io, ctrl);
+
+                    case 8 -> consultarRespostas(io, ctrl);
+
+                    case 9 -> crearEnquesta(io, ctrl);
+
+                    case 10 -> modificarEnquesta(io, ctrl);
+
+                    case 11 -> esborrarEnquesta(io, ctrl);
+
+                    case 12 -> respondreEnquesta(io, ctrl);
+
                     default -> io.writeln("Opció no vàlida.");
                 }
             } catch (IOException e) {
                 //io.writeln("Error d’E/S: " + e.getMessage());
             }
         } while(opcio != -1);
-
-        //Import
-        //Recibir un fichero (Path) -> Abrimos fichero
-        //sc = new Scanner(System.in);
-        //System.out.print("Introdueix la ruta del fitxer d'importació: ");
-        //String rutaImport = sc.nextLine();
-
-        //Llamar a funcion para tratar
-        //Obtener datos y llamar a controlador de dominio
-
-        //Export
-        //Llamo al controlador de dominio para obtener datos
-        //Abrir pipe y guardar datos en fichero
-        //Guardarlo en la ruta establecida
-
     }
 
     // === IMPORTAR ENQUESTA ===
@@ -205,6 +202,103 @@ public class Main {
         io.write("Introdueix l'ID de l'usuari a consultar: ");
         int id = io.readint();
         ctrl.getCtrlUsuari().consultarPerfil(id);
+    }
+
+    private static void consultarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.write("Es consulta la enquesta existent");
+        ctrl.consultarEnquesta();
+    }
+
+    //Falta revisar esto
+    private static void consultarRespostas(inout io, CtrlDomini ctrl) throws Exception {
+        io.write("Introdueix l'ID de l'enquesta: ");
+        int idEnquesta = io.readint();
+        io.write("Introdueix l'ID de l'usuari: ");
+        int idUsuari = io.readint();
+        List<Resposta> respostes = ctrl.consultarRespostes(idEnquesta, idUsuari);
+        if (respostes.isEmpty()) {
+            io.writeln("No s'han trobat respostes per aquesta enquesta i usuari.");
+            return;
+        }
+        int num = 0;
+        for (Resposta r : respostes) {
+            io.writeln("Pregunta ID: " + num + ", Resposta: " + r.getValorString());
+            num++;
+        }
+    }
+
+    private static void crearEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+
+        io.writeln("Escriu un titol per l'enquesta");
+        String titol = io.readword();
+        io.writeln("Escriu una descripcio per l'enquesta");
+        String descripcio = io.readword();
+        io.writeln("Introdueix l'ID del creador de l'enquesta");
+        int idCreador = io.readint();
+        io.writeln("Introdueix el nombre de preguntes que tindra l'enquesta");
+        int numPreguntes = io.readint();
+        List<Pregunta> preguntes = new ArrayList<>();
+
+        for (int i = 0; i < numPreguntes; i++) {
+            io.writeln("Escriu el text de la pregunta " + (i + 1));
+            String textPregunta = io.readword();
+            io.writeln("Escriu el tipus de la pregunta (OBERTA, TANCADA, NUMERICA, UNICA)");
+            String tipusStr = io.readword().toUpperCase();
+            Pregunta.Tipus tipus = null;
+            try {
+                tipus = Pregunta.Tipus.valueOf(tipusStr);
+            } catch (IllegalArgumentException e) {
+                io.writeln("Tipus de pregunta no vàlid.");
+            }
+            Pregunta pregunta = new Pregunta(i + 1, textPregunta, tipus);
+            preguntes.add(pregunta);
+        }
+        ctrl.crearEnquesta(titol, descripcio, idCreador, preguntes);
+        io.writeln("Enquesta creada correctament!");
+    }
+
+    private static void modificarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Funcionalitat de modificar enquesta no implementada encara.");
+    }
+
+    private static void esborrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.write("Introdueix l'id de l'enquesta");
+        int idEnquesta = io.readint();
+        ctrl.esborrarEnquesta(idEnquesta);
+        io.writeln("Enquesta esborrada correctament.");
+    }
+
+    //Falta implementar esto
+    private static void respondreEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'id de l'enquesta a respondre: ");
+        int idEnquesta = io.readint();
+        io.write("Introdueix l'id de l'usuari que respon l'enquesta: ");
+        int idUsuari = io.readint();
+        io.write("Introdueix les respostes de l'usuari a l'enquesta");
+        List<Resposta> respostesUsuari = new ArrayList<>();
+        List<Pregunta> preguntes = ctrl.getPreguntes(idEnquesta);
+        List<Resposta> respostesExistents = ctrl.consultarRespostes(idEnquesta, idUsuari);
+
+        for (Pregunta p : preguntes) {
+            io.writeln("Pregunta: " + p.getText() + " (Tipus: " + p.getTipus() + ")");
+            io.write("Resposta: ");
+            String respostaStr = io.readword();
+            Resposta resposta;
+            switch (p.getTipus()) {
+                case LLIURE -> resposta = new RespostaLliure(respostaStr);
+                case NUMERICA -> resposta = new RespostaNumerica(Double.parseDouble(respostaStr));
+                case UNICA -> resposta = new RespostaUnica(List.of(respostaStr.split(",")));
+                case MULTIPLE -> resposta = new RespostaMultiple(List.of(respostaStr.split(",")));
+                case ORDENADA -> resposta = new RespostaOrdenada(List.of(respostaStr.split(",")));
+                default -> {
+                    io.writeln("Tipus de pregunta desconegut.");
+                    return;
+                }
+            }
+            respostesUsuari.add(resposta);
+        }
+        ctrl.respondreEnquesta(idEnquesta, idUsuari, respostesUsuari);
+        io.writeln("Enquesta respondida correctament!");
     }
 }
 

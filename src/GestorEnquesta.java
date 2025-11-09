@@ -20,7 +20,7 @@ public class GestorEnquesta {
         else enquestes.add(enquesta);;
         //añadiria el añadir ya participante, respuestas, etc.
     }
-
+    //Consultar enquesta per ID
     public Enquesta getEnquestaPerID(int id) {
         for (Enquesta e : enquestes) {
             if (e.getId().equals(id)) return e;
@@ -129,6 +129,17 @@ public class GestorEnquesta {
         out.add("------------------------------------");
         return out;
     }
+
+    //Cas d'us consultar respostes (necesari) en cas que necessitem l'estadistica sera un altre cas
+    public List<Resposta> consultarRespostes(int idEnquesta, int idUsuari) {
+        Enquesta enq = getEnquestaPerID(idEnquesta);
+        if (enq == null) {
+            System.out.println("No s'ha trobat cap enquesta amb ID " + idEnquesta + ".");
+            return Collections.emptyList();
+        }
+        Integer filamatriu = enq.obtenFilaIdUsuari(idUsuari);
+        return enq.getRespostesUsuari(filamatriu);
+    }
     /// S'HA DE PENSAR EN AQUESTES DUES SI ES NECESARI QUE EL FEM
     /// Exportar enquesta?
     /// importar enquesta?
@@ -172,9 +183,7 @@ public class GestorEnquesta {
     public void respondreResposta() {
     }
 
-    //Cas d'us consultar respostes (necesari) en cas que necessitem l'estadistica sera un altre cas
-    public void consultarRespostes() {
-    }
+
      */
 
 
