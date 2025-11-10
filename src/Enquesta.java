@@ -138,6 +138,22 @@ public class Enquesta {
     public String getDescripcio() { return descripcio;}
     public Integer getCreador() { return idCreador;}
     public List<Pregunta> getPreguntesObj() { return Collections.unmodifiableList(preguntes); }
+    public int getNumPreguntes() { return preguntes.size(); }
+    public int getNumRespostes() {
+        if (preguntes.isEmpty()) return 0;
+        Pregunta primeraPregunta = preguntes.get(0);
+        return primeraPregunta.getNumRespostes();
+    }
+
+    public List<Resposta> getRespostesUsuari(int idUsuari) {
+        List<Resposta> respostesUsuari = new ArrayList<>();
+        for (Pregunta p : preguntes) {
+            Map<Integer, Resposta> respostesMap = p.getRespostes();
+            Resposta r = respostesMap.get(idUsuari);
+            respostesUsuari.add(r);
+        }
+        return respostesUsuari;
+    }
 
     /*
     public boolean participa(int id) {

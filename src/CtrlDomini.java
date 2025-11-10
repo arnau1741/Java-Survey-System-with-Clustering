@@ -35,6 +35,21 @@ public class CtrlDomini {
         this.ctrlDominiMantEnquesta.addEnquesta(novaEnquesta);
     }
 
+    ////////////////////// Caso de uso  clustering //////////////////////
+    public Map<Integer, Integer> clustering(int idEnquesta, int k, int maxIterations) {
+        Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        KMeans kmeans = new KMeans(k, maxIterations);
+        kmeans.fit(enq);
+        int[] labels = kmeans.getLabels();
+        Map<Integer, Integer> resultat = new HashMap<>();
+        int n = enq.getNumRespostes();
+        for (int i = 0; i < n; i++) {
+            resultat.put(i, labels[i]);
+        }
+        return resultat;
+    }
+
+
     //////////////////// Funciones para debug ///////////////////////////////
     //mostrar enquestes per debug
     public void mostrarEnquestes() {
