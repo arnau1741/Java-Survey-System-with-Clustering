@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 
 public class Main {
+    private static final String Base_path = "pruebas";
     public static void main(String[] args) throws Exception {
         CtrlDomini ctrl = new CtrlDomini();
         inout io = new inout();
@@ -17,7 +18,15 @@ public class Main {
             io.writeln("2. Exportar enquestes");
             io.writeln("3. Importar usuaris");
             io.writeln("4. Exportar usuaris");
-            io.writeln("5. Sortir");
+            io.writeln("5. Crear usuari");
+            io.writeln("6. Consultar usuari");
+            io.writeln("7. Consultar enquesta");
+            io.writeln("8. Consultar respostes");
+            io.writeln("9. Crear enquesta");
+            io.writeln("10. Modificar enquesta");
+            io.writeln("11. Esborrar enquesta");
+            io.writeln("12. Respondre enquesta");
+            io.writeln("-1. Sortir");
             io.write("Selecciona una opcio: ");
             opcio = io.readint();
 
@@ -59,8 +68,9 @@ public class Main {
 
     // === IMPORTAR ENQUESTA ===
     private static void importarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
-        io.write("Introdueix el path del fitxer .txt d'enquesta: ");
-        String path = io.readword();
+        io.write("Introdueix el nombre de ficher d'enquesta (sense extensio): ");
+        String fitxer = io.readword();
+        String path = Base_path + "/" + fitxer + ".txt";
 
         List<String> linies = readAllLines(path);
         if (linies.isEmpty()) {
@@ -95,9 +105,10 @@ public class Main {
     private static void exportarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.write("Introdueix l'ID de l'enquesta a exportar: ");
         int id = io.readint();
-        io.write("Introdueix el path on guardar (ex: sortida.txt): ");
-        String path = io.readword();
 
+        //io.write("Introdueix el path on guardar (ex: sortida.txt): ");
+        //String path = io.readword();
+        String path = Base_path + "/sortida" + id + ".txt";
         List<String> export = ctrl.exportarEnquesta(id);
         if (export == null) {
             io.writeln("Enquesta no trobada.");
@@ -114,8 +125,10 @@ public class Main {
         int idUsuari = io.readint();
         io.writeln("Introdueix el id de l'enquesta a la que corresponen les respostes: ");
         int idEnquesta = io.readint();
-        io.write("Introdueix el path del fitxer de respostes: ");
-        String path = io.readword();
+
+        io.write("Introdueix el fitxer sense extensio: ");
+        String fitxer = io.readword();
+        String path = Base_path + "/" + fitxer + ".txt";
 
         List<String> linies = readAllLines(path);
 
@@ -141,8 +154,9 @@ public class Main {
     private static void exportarRespostes(inout io, CtrlDomini ctrl) throws Exception {
         io.write("Introdueix l'ID de l'enquesta: ");
         int id = io.readint();
-        io.write("Path on guardar (ex: respostes.txt): ");
-        String path = io.readword();
+        //io.write("Path on guardar (ex: respostes.txt): ");
+        //String path = io.readword();
+        String path = Base_path + "/respostes" + id + ".txt";
 
         List<String> export = ctrl.exportarRespostes(id);
         if (export == null) {
