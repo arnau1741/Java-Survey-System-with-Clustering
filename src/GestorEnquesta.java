@@ -21,6 +21,7 @@ public class GestorEnquesta {
         else enquestes.add(enquesta);;
         //añadiria el añadir ya participante, respuestas, etc.
     }
+
     //Consultar enquesta per ID
     public Enquesta getEnquestaPerID(int id) {
         for (Enquesta e : enquestes) {
@@ -29,6 +30,7 @@ public class GestorEnquesta {
         return null;
     }
 
+    //Devolver el siguiente ID disponible para una nueva enquesta y actualizar el contador
     public int returnIdEnquesta(){
         int tmp = ultimIdEnquesta;
         ultimIdEnquesta++;
