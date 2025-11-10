@@ -1,8 +1,8 @@
 public class PerfilEnquestat extends Usuari
 {
     // Constructor
-    public PerfilEnquestat(int id, String usuari, String rol, boolean registrat) {
-        super(id, usuari, rol, registrat);
+    public PerfilEnquestat(int id, String usuari, boolean registrat, String rol) {
+        super(id, usuari, registrat, rol);
     }
 
 }

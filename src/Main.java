@@ -5,13 +5,19 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.io.File;
 
 public class Main {
-    private static final String Base_path = "pruebas";
+    //private static final String Base_path = "/Pruebas";
+    private static String Base_path;
+
+
+
     public static void main(String[] args) throws Exception {
         CtrlDomini ctrl = new CtrlDomini();
         inout io = new inout();
         int opcio = 0;
+        Base_path =  inicialitzarRutaBase();
         do {
             io.writeln("======Enquesta======");
             io.writeln("1. Importar enquestes");
@@ -58,6 +64,8 @@ public class Main {
 
                     case 12 -> respondreEnquesta(io, ctrl);
 
+                    //case 13 ->aplicar clustering;
+
                     default -> io.writeln("Opció no vàlida.");
                 }
             } catch (IOException e) {
@@ -66,11 +74,37 @@ public class Main {
         } while(opcio != -1);
     }
 
+    private static String inicialitzarRutaBase() {
+        String dir = System.getProperty("user.dir");
+
+        // Para IntelliJ: si estamos ejecutando desde out/production, ajustar la ruta
+        if (dir.contains("out") && dir.contains("production")) {
+            dir = new File(dir).getParentFile().getParentFile().getAbsolutePath();
+        }
+
+        File pruebasDir = new File(dir, "Pruebas");
+
+        // Si no existe, crear la carpeta
+        if (!pruebasDir.exists()) {
+            pruebasDir.mkdirs();
+        }
+
+        return pruebasDir.getAbsolutePath();
+    }
+
     // === IMPORTAR ENQUESTA ===
     private static void importarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.write("Introdueix el nombre de ficher d'enquesta (sense extensio): ");
-        String fitxer = io.readword();
-        String path = Base_path + "/" + fitxer + ".txt";
+        String fitxer = io.readword().trim();
+        String path = Base_path + File.separator + fitxer + ".txt";
+
+        io.writeln("Llegint fitxer: " + path);
+
+        File f = new File(path);
+        if (!f.exists()) {
+            io.writeln("No s'ha trobat el fitxer!");
+            return;
+        }
 
         List<String> linies = readAllLines(path);
         if (linies.isEmpty()) {
@@ -108,7 +142,7 @@ public class Main {
 
         //io.write("Introdueix el path on guardar (ex: sortida.txt): ");
         //String path = io.readword();
-        String path = Base_path + "/sortida" + id + ".txt";
+        String path = Base_path + File.separator + "sortida" + id + ".txt";
         List<String> export = ctrl.exportarEnquesta(id);
         if (export == null) {
             io.writeln("Enquesta no trobada.");
@@ -128,7 +162,15 @@ public class Main {
 
         io.write("Introdueix el fitxer sense extensio: ");
         String fitxer = io.readword();
-        String path = Base_path + "/" + fitxer + ".txt";
+        String path = Base_path + File.separator + fitxer + ".txt";
+
+        io.writeln("Llegint fitxer: " + path);
+
+        File f = new File(path);
+        if (!f.exists()) {
+            io.writeln("No s'ha trobat el fitxer!");
+            return;
+        }
 
         List<String> linies = readAllLines(path);
 
@@ -156,7 +198,7 @@ public class Main {
         int id = io.readint();
         //io.write("Path on guardar (ex: respostes.txt): ");
         //String path = io.readword();
-        String path = Base_path + "/respostes" + id + ".txt";
+        String path = Base_path + File.separator + "respostes" + id + ".txt";
 
         List<String> export = ctrl.exportarRespostes(id);
         if (export == null) {
@@ -200,8 +242,8 @@ public class Main {
         switch (rolStr) {
             //case "ADMINISTRADOR" -> usuari = new Administrador(id, nom, true);
             //case "MODERADOR" -> usuari = new Moderador(id, nom, true);
-            case "ENQUESTADOR" -> usuari = new PerfilEnquestador(id, nom, rolStr, registrat);
-            case "ENQUESTAT" -> usuari = new PerfilEnquestat(id, nom, rolStr, registrat);
+            case "ENQUESTADOR" -> usuari = new PerfilEnquestador(id, nom, registrat, rolStr);
+            case "ENQUESTAT" -> usuari = new PerfilEnquestat(id, nom, registrat, rolStr);
             default -> {
                 io.writeln("Rol no vàlid.");
                 return;
