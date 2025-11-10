@@ -6,21 +6,27 @@ public class Pregunta {
 
     //public enum Tipus {NUMERICA, LLIURE, UNICA, MULTIPLE, ORDENADA}
 
-    private final List<String> opcions = Arrays.asList("NUMERICA", "LLIURE", "UNICA", "MULTIPLE", "ORDENADA");
     private String text;
     private Integer tipus;
     private Map<Integer, Resposta> respostes; 
-    private Integer numOpcions; // Nombre d'opcions per a preguntes UNICA, MULTIPLE, ORDENADA
+    private final Integer numOpcions; // Nombre d'opcions per a preguntes UNICA, MULTIPLE, ORDENADA
+    private final List<String> opcions;
 
     //Format Pregunta_qualsevol? -- Defineix tipus de resposta
-    public Pregunta(String text, int tipus) {
+    public Pregunta(String text, int tipus, List<String> opcions) {
         this.text = text;
         this.tipus = tipus;
-        if (tipus < 0 || tipus >= opcions.size()) {
-            throw new IllegalArgumentException("Tipus de pregunta invàlid: " + tipus);
-        }
         this.respostes = new java.util.HashMap<>();
-        if (tipus == 0 || tipus == 1) this.numOpcions = 0; // No s'aplica per a NUMERICA i LLIURE
+        if (tipus == 0 || tipus == 4) {
+            this.numOpcions = 0; // No s'aplica per a NUMERICA i LLIURE
+            this.opcions = null;
+        } else if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, MULTIPLE, ORDENADA
+            this.numOpcions = opcions.size();
+            this.opcions = new ArrayList<>(opcions);
+        } else {
+            throw new IllegalArgumentException("Tipus de pregunta desconegut: " + tipus); 
+        }
+
     }
 
     // getters
@@ -41,8 +47,12 @@ public class Pregunta {
         return opcions;
     }
 
+    public Map<Integer, Resposta> getRespostes() {
+        return Collections.unmodifiableMap(respostes);
+    }
+
     public int getNumOpcions() {
-        if (tipus == 2 || tipus == 3 || tipus == 4) {
+        if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, MULTIPLE, ORDENADA
             return numOpcions;
         } else {
             throw new UnsupportedOperationException("No es pot obtenir el nombre d'opcions per a aquest tipus de pregunta.");
@@ -55,13 +65,7 @@ public class Pregunta {
         text = newText;
     }
 
-    public void setNumOpcions(int numOpcions) {
-        if (tipus == 2 || tipus == 3 || tipus == 4) {
-            this.numOpcions = numOpcions;
-        } else {
-            throw new UnsupportedOperationException("No es pot establir el nombre d'opcions per a aquest tipus de pregunta.");
-        }
-    }
+
 
     public Integer addResposta(Resposta resposta, int idUsuari) {
         if (respostes.containsKey(idUsuari)) {
@@ -70,6 +74,7 @@ public class Pregunta {
         respostes.put(idUsuari, resposta);
         return 1;
     }
+
 
     @Override
     public String toString() {

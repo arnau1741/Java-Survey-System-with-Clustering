@@ -30,17 +30,14 @@ public class RespostaMultiple extends Resposta{
 
     // Retorna només les opcions seleccionades com a String
     @Override
-    public String getValorString() {
-        if (respostes == null || respostes.isEmpty()) return "No contestada";
-        else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < respostes.size(); i++) {
-                sb.append(respostes.get(i));
-                if (i < respostes.size() - 1) {
-                    sb.append(", ");
-                }
+    public String getText(List<String> opcions) {
+        StringBuilder sb = new StringBuilder();
+        for (Integer opcio : respostes) {
+            if (sb.length() > 0) {
+                sb.append(", ");
             }
-            return sb.toString();
+            sb.append(opcions.get(opcio));
         }
+        return sb.toString();
     }
 }

@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class RespostaNumerica extends Resposta {
     private Double valor;
@@ -17,10 +18,12 @@ public class RespostaNumerica extends Resposta {
         setContestat(valor != null);
     }
 
-    //Falta revisar el valor
     @Override
-    public String getValorString() {
-        if(valor == null) return "No contestada";
-        else return String.valueOf(valor);
+    public String getText(List<String> opcions) {
+        if (valor == null) {
+            return "No contestat";
+        }
+        return valor.toString();
     }
+
 }

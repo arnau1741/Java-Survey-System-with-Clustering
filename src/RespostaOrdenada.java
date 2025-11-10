@@ -1,3 +1,4 @@
+import java.util.List;
 public class RespostaOrdenada extends Resposta {
     private Integer numOpcions;
     private Integer resposta;
@@ -16,10 +17,11 @@ public class RespostaOrdenada extends Resposta {
         return 1;
     }
 
-
-
     @Override
-    public String getValorString() {
-        return Integer.toString(resposta);
-    }
+    public String getText(List<String> opcions) {
+        if (resposta == null) {
+            return "No contestat";
+        }
+        return opcions.get(resposta);
+    } 
 }

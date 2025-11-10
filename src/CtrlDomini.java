@@ -12,23 +12,114 @@ public class CtrlDomini {
         ctrlDominiMantUsuari = new CtrlDominiMantUsuari();
     }
 
-    /*
-    //Getters
-    public CtrlDominiMantEnquesta getCtrlEnquesta() {
-        return ctrlDominiMantEnquesta;
-    }
-    public CtrlDominiMantUsuari getCtrlUsuari() {
-        return ctrlDominiMantUsuari;
+    ////////////////// Caso de uso 1 - Respondre enquesta //////////////////////
+    public List<String> getPreguntes(int idEnquesta){ //Final
+        System.out.println("entra a getPreguntes de CtrlDomini");
+        return this.ctrlDominiMantEnquesta.getPreguntesEnquesta(idEnquesta);
     }
 
-    //Setters
-    public void setCtrlEnquesta(GestorEnquesta gestorEnquesta) {
-        this.gestorEnquesta = gestorEnquesta;
+    public void respondreEnquesta(int idEnquesta, int idUsuari, List<String> respostesUsuari) { //Final
+        Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        System.out.println("entra a respondreEnquesta de CtrlDomini");
+        List<Resposta> respostesObj = enq.stringARespostes(respostesUsuari);
+        enq.afegeixResposta(idUsuari, respostesObj);
+        System.out.println("salta de respondreEnquesta de CtrlDomini");
     }
-    public void setCtrlUsuari(GestorUsuaris gestorUsuaris) {
-        this.gestorUsuaris = gestorUsuaris;
+
+
+    /////////////////////// Caso de uso 2 - Crear enquesta //////////////////////
+    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) { //Final
+        List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntes);
+        int id = ctrlDominiMantEnquesta.getNumEnquestes();
+        Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntesObj);
+        this.ctrlDominiMantEnquesta.addEnquesta(novaEnquesta);
     }
-    */
+
+    //////////////////// Funciones para debug ///////////////////////////////
+    //mostrar enquestes per debug
+    public void mostrarEnquestes() {
+        int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
+        System.out.println("Número d'enquestes: " + numEnquestes);
+        for (int i = 0; i < numEnquestes; i++) {
+            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(i);
+            System.out.println("ID enquesta: " + enq.getId() + ", Títol: " + enq.getTitol() + ", Descripció: " + enq.getDescripcio());
+        }
+    }
+
+    //mostrar enquestes amb preguntes per debug
+    public void mostrarEnquestesAmbPreguntes() {
+        int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
+        System.out.println("Número d'enquestes: " + numEnquestes);
+        for (int i = 0; i < numEnquestes; i++) {
+            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(i);
+            System.out.println("ID enquesta: " + enq.getId() + ", Títol: " + enq.getTitol() + ", Descripció: " + enq.getDescripcio());
+            List<String> preguntes = enq.getPreguntes();
+            System.out.println("Preguntes:");
+            for (String p : preguntes) {
+                System.out.println("- " + p);
+            }
+        }
+    }
+
+    //mostrar enquestes amb preguntes i respostes per debug
+    public void mostrarEnquestesAmbPreguntesIRespostes() {
+        int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
+        System.out.println("Número d'enquestes: " + numEnquestes);
+        for (int i = 0; i < numEnquestes; i++) {
+            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(i);
+            System.out.println("ID creador: " + enq.getId() + ", Títol: " + enq.getTitol() + ", Descripció: " + enq.getDescripcio());
+            List<Pregunta> preguntes = enq.getPreguntesObj();
+            System.out.println("Preguntes i respostes:");
+            for (Pregunta p : preguntes) {
+                System.out.println("- Pregunta: " + p.getText());
+                Map<Integer, Resposta> respostes = p.getRespostes();
+                List<String> opcions = p.getOpcions();
+                if (opcions != null){
+                    for (String opcio : opcions) {
+                    System.out.println("  * Opció: " + opcio);
+                    }
+                }
+                for (Map.Entry<Integer, Resposta> entry : respostes.entrySet()) {
+                    System.out.println("  - Usuari ID: " + entry.getKey() + ", Resposta: " + entry.getValue().getText(opcions));
+                }
+            }
+        }
+    }
+
+
+    //////////////////////// Funcions auxiliars ///////////////////////////////
+    //Transforma les preguntes en format text a objectes Pregunta
+    private List<Pregunta> transformaPreguntesAObj (List<String> preguntes) throws IllegalArgumentException {
+        List <Pregunta> preguntesObj = new ArrayList<>();
+        int size = preguntes.size();
+        int idx = 0;
+        while (idx < size) {
+            String enunciat = preguntes.get(idx);
+            int tipus = Integer.parseInt(enunciat);
+            idx++;
+            enunciat = preguntes.get(idx);
+            idx++;
+            if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, MULTIPLE, ORDENADA
+                int numOpcions = Integer.parseInt(preguntes.get(idx));
+                idx++;
+                List<String> opcions = new ArrayList<>();
+                for (int i = 0; i < numOpcions; i++) {
+                    String opcio = preguntes.get(idx);
+                    opcions.add(opcio);
+                    idx++;
+                }
+                Pregunta p = new Pregunta(enunciat, tipus, opcions);
+                preguntesObj.add(p);
+            }
+            else if (tipus == 0 || tipus == 4) { //NUMERICA, LLIURE
+                Pregunta p = new Pregunta(enunciat, tipus, null);
+                preguntesObj.add(p);
+            }
+        }
+        return preguntesObj;
+    }
+
+    /*
 
     //Cas d'us crear usuari
     public int crearEnquestador(String nomUsuari, String contrasenya, String email) {
@@ -40,36 +131,6 @@ public class CtrlDomini {
         ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
         return id;
     }
-
-
-    //Caso de uso 2 - Crear enquesta
-    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes, List<String>tipus) { //Final
-        List<Pregunta> preguntesObj = new ArrayList<>();
-        for (String p : preguntes) {
-            int index = preguntes.indexOf(p);
-            Pregunta.Tipus t = Pregunta.Tipus.valueOf(tipus.get(index));
-            Pregunta novaPregunta = new Pregunta(p, t);
-            preguntesObj.add(novaPregunta);
-        }
-        int id = ctrlDominiMantEnquesta.getNumEnquestes();
-        Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntesObj);
-        this.ctrlDominiMantEnquesta.afegirEnquesta(novaEnquesta);
-    }
-
-    //Caso de uso 1 - Respondre enquesta
-    public List<Pregunta> getPreguntes(int idEnquesta){ //Final
-        return this.ctrlDominiMantEnquesta.getPreguntesEnquesta(idEnquesta);
-    }
-
-    public void respondreEnquesta(int idEnquesta, int idUsuari, List<Resposta> respostesUsuari) { //Final
-        GestorEnquesta ge = getCtrlEnquesta();
-        Enquesta enq = ge.getEnquestaPerID(idEnquesta);
-        if (enq == null) {
-            throw new IllegalArgumentException("L'enquesta amb ID " + idEnquesta + " no existeix.");
-        }
-        enq.setResposta(idUsuari, respostesUsuari);
-    }
-
 
     //Caso de uso 3: importar enquesta
     public void importarEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> preguntes) {
@@ -115,6 +176,7 @@ public class CtrlDomini {
     public void esborrarEnquesta(int idEnquesta) {
         gestorEnquesta.esborrarEnquesta(idEnquesta);
     }
+    */
 
     /*
     public void consultarEstadistiques(int idEnquesta) {

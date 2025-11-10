@@ -1,6 +1,3 @@
-import java.util.List;
-import java.util.ArrayList;
-
 //patron estado para cambiar entre roles
 
 public abstract class Usuari {
@@ -45,8 +42,5 @@ public abstract class Usuari {
     //Bloquejar una enquesta (moderador)
 
     //Gestionar usuaris (moderador)
-
-
-
 }
 
