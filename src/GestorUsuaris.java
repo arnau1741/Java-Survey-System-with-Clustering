@@ -25,6 +25,8 @@ public class GestorUsuaris {
                                 + ", Email: " + u.getEmail()
                                 + ", Especialitat: " + (u.getRol())
                 );
+                //parar busqueda
+                break;
             }
         }
     }
