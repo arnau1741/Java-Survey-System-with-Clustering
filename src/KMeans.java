@@ -3,6 +3,7 @@ import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Collections;
 
 public class KMeans{
 
@@ -114,6 +115,10 @@ public class KMeans{
     private void updateCentroids(Enquesta data, int dim) {
         // inicia centroides vacíos
         List<List<Resposta>> newCentroids = new ArrayList<>();
+        for (int c = 0; c < k; c++) {
+            List<Resposta> row = new ArrayList<>(Collections.nCopies(dim, null));
+            newCentroids.add(row);
+        }
         int[] counts = new int[k];
         int numRespostes = data.getNumRespostes();
 
@@ -171,6 +176,7 @@ public class KMeans{
             for (int d = 0; d < dim; d++) {
                 if (data.getPreguntesObj().get(d).getTipus() == 0){
                     //numerica
+
                     RespostaNumerica rCentroid = (RespostaNumerica) newCentroids.get(c).get(d);
                     if (rCentroid != null) {
                         rCentroid.setValor(rCentroid.getValor() / counts[c]);
