@@ -7,6 +7,7 @@ import java.util.*;
 public class GestorEnquesta {
     // gestiona totes les enquestes creades
     private List<Enquesta> enquestes;
+    private int ultimIdEnquesta = 0;
 
     //Cas d'us crear enquesta
     public GestorEnquesta() {
@@ -28,12 +29,15 @@ public class GestorEnquesta {
         return null;
     }
 
-    public int returnSize(){
-        return enquestes.size();
+    public int returnIdEnquesta(){
+        int tmp = ultimIdEnquesta;
+        ultimIdEnquesta++;
+        return tmp;
     }
+
     //Caso de uso importar enquesta
     public void importarEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> preguntes) {
-        int id = returnSize();
+        int id = returnIdEnquesta();
         Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntes);
         afegirEnquesta(novaEnquesta);
     }
