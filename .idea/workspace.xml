@@ -5,16 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/hamcrest-core-1.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/junit-4.12.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TestUnitariEnquestador.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CtrlDomini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CtrlDomini.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GestorAlgoritme.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GestorEnquesta.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GestorPregunta.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GestorUsuaris.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/KMeans.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PerfilAdministrador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilAdministrador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PerfilEnquestador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilEnquestador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PerfilEnquestat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilEnquestat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Usuari.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Usuari.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/subgrup-prop21.5.iml" beforeDir="false" afterPath="$PROJECT_DIR$/subgrup-prop21.5.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,23 +59,28 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindow.GitHub Copilot Chat.ShowToolbar": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "ctrlDomini",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/subgrup-prop21.5.iml",
+    "last_opened_file_path": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/lib/junit-4.12.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
@@ -89,6 +90,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>

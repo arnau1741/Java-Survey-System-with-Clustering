@@ -27,20 +27,5 @@ public abstract class Usuari {
     public void setUsuari(String usuari) { this.nomUsuari = usuari; }
     public void setEmail(String email) { this.email = email; }
     public void setBlocked(boolean blocked) { this.blocked = blocked; }
- 
-
-    //editar una enquesta (administrador) (no para primera entrega)
-
-    //eliminar una enquesta (administrador) (no para primera entrega)
-
-    //Gestionar viabilitat de la enquesta (administrador)
-
-    //Afegir respostes a una enquesta assignada (Enquestador)
-
-    //Revisar una enquesta (moderador)
-
-    //Bloquejar una enquesta (moderador)
-
-    //Gestionar usuaris (moderador)
 }
 
