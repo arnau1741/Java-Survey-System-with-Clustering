@@ -7,8 +7,14 @@
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CtrlDomini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CtrlDomini.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CtrlDominiMantEnquesta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CtrlDominiMantEnquesta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GestorEnquesta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GestorEnquesta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GestorAlgoritme.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GestorEnquesta.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GestorPregunta.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GestorUsuaris.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KMeans.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PerfilAdministrador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilAdministrador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PerfilEnquestador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilEnquestador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PerfilEnquestat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilEnquestat.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +82,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
     "to.speed.mode.migration.done": "true",
     "two.files.diff.last.used.folder": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/Archivos tex, pdf etc",
     "vue.rearranger.settings.migration": "true"
@@ -122,5 +128,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

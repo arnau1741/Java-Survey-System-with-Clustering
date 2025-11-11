@@ -22,6 +22,10 @@ public class PerfilEnquestador extends Usuari
         enquestesAssignades.add(enquesta);
     }
 
+    public void eliminarEnquestaAssignada(int idEnquesta) {
+        enquestesAssignades.removeIf(e -> e.getId() == idEnquesta);
+    }
+
     public List<Enquesta> getEnquestesAssignades() {
         return enquestesAssignades;
     }

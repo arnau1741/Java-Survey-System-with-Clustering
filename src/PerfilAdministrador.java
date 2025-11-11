@@ -22,8 +22,13 @@ public class PerfilAdministrador extends Usuari
         enquestesAdministrades.add(enquesta);
     }
 
+    public void eliminarEnquestaAdministrada(int idEnquesta) {
+        enquestesAdministrades.removeIf(e -> e.getId() == idEnquesta);
+    }
+
     public List<Enquesta> getEnquestesAdministrades() {
         return enquestesAdministrades;
     }
-    
+
+
 }
