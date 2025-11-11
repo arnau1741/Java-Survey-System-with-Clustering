@@ -1,0 +1,13 @@
+Enquesta sobre el consum de cafè
+Petita enquesta sobre hàbits de consum de cafè.
+101
+2
+0
+Quants cafès prens al dia?
+1
+Prefereixes el cafè amb llet o sense?
+2
+Amb llet
+Sense llet
+Altres
+

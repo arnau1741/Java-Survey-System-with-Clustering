@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class RespostaLliure extends Resposta{
     private String text;
@@ -14,7 +15,7 @@ public class RespostaLliure extends Resposta{
     }
 
     @Override
-    public String getValorString() {
+    public String getText(List<String> opcions) {
         if(text == null || text.isBlank()) return "No contestada";
         else return text;
     }

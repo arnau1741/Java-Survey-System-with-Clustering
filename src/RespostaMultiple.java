@@ -3,51 +3,41 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class RespostaMultiple extends Resposta{
-    private final List<Pair<String, Boolean>> opcions;
-    private int seleccio = 0;
+    private Integer numOpcions;
+    private List<Integer> respostes; //valors entre 0 i numOpcions -1
 
-    public RespostaMultiple(List<String> totesOpcions) {
+    public RespostaMultiple(Integer numOpcions) {
         super();
-        this.opcions = new ArrayList<>();
-        for (String palabra : totesOpcions)
-            opcions.add(new Pair<>(palabra, false));
+        this.numOpcions = numOpcions;
     }
 
     //Marca una opció com a seleccionada
-    public void seleccionar(String opcio) {
-        for (Pair<String, Boolean> pair : opcions) {
-            if (pair.getFirst().equalsIgnoreCase(opcio)) {
-                pair.setSecond(true);
-                if (seleccio == 0) setContestat(true);
-                ++seleccio;
+    public int selecciona (List<Integer> seleccionat) {
+        this.respostes = new ArrayList<>();
+        for (Integer opcio : seleccionat) {
+            if (opcio < 0 || opcio >= numOpcions) {
+                return 0; // Opció invàlida
             }
+            this.respostes.add(opcio);
         }
+        if(!this.respostes.isEmpty()) setContestat(true);
+        return 1;
     }
 
-    //Desmarca una opció
-    public void desseleccionar(String opcio) {
-        for (Pair<String, Boolean> pair : opcions) {
-            if (pair.getFirst().equalsIgnoreCase(opcio)) {
-                pair.setSecond(false);
-                --seleccio;
-                if(seleccio == 0) setContestat(false);
-            }
-        }
-    }
-
-    // Retorna la llista de totes les opcions amb el seu estat
-    public List<Pair<String, Boolean>> getOpcions() {
-        return opcions;
+    public int getNumOpcions() {
+        return numOpcions;
     }
 
     // Retorna només les opcions seleccionades com a String
     @Override
-    public String getValorString() {
-        List<String> seleccionades = new ArrayList<>();
-        for (Pair<String, Boolean> pair : opcions) {
-            if (pair.getSecond()) seleccionades.add(pair.getFirst());
+    public String getText(List<String> opcions) {
+        StringBuilder sb = new StringBuilder();
+        for (Integer opcio : respostes) {
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
+            sb.append(opcions.get(opcio));
         }
-        if(seleccionades.isEmpty()) return "No contestada";
-        else return String.join(", ", seleccionades);
+        return sb.toString();
     }
 }

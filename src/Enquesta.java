@@ -24,15 +24,8 @@ public class Enquesta {
     private String titol;
     private String descripcio;
     private Integer idCreador;
+    private List<Pregunta> preguntes;
 
-
-    public List<List<Resposta>> respostes; // Matriu de respostes per a cada pregunta
-    public List<Pregunta> preguntes;
-
-    //Par usuari <> Fila Matriu que li correspon
-    private Map<Integer, Integer> userToAnswerId; // Map d'usuari a fila de respostes
-
-    private List<Integer> noRegistratAnswers; // Llista de files de respostes per usuaris no registrats
 
     // posem les dates com atributs, creem una classe Data i es relaciona?
     // private LocalDateTime dataCreacio;
@@ -44,15 +37,125 @@ public class Enquesta {
         this.titol = titol;
         this.descripcio = descripcio;
         this.idCreador = idCreador;
-
         this.preguntes = preguntes;
-        this.respostes = new ArrayList<>();
-        this.userToAnswerId = new HashMap<>();
-        this.noRegistratAnswers = new ArrayList<>();
-        // this.dataCreacio = LocalDateTime.now();
-        //this.visible = false;
     }
 
+
+    public List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
+        List<Resposta> respostesObj = new ArrayList<>();
+        for (String r : respostesStr) {
+            int index = respostesStr.indexOf(r);
+            int tipusPregunta = preguntes.get(index).getTipus();
+            if (tipusPregunta == 0) {// NUMERICA
+                try {
+                    RespostaNumerica respostaNumerica = new RespostaNumerica(Double.parseDouble(r));
+                    respostesObj.add(respostaNumerica);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Resposta numèrica invàlida: " + r);
+                }
+            }else if (tipusPregunta == 1) { // UNICA
+                int numOpcions = preguntes.get(index).getNumOpcions();
+                RespostaUnica respostaUnica = new RespostaUnica(numOpcions);
+                respostaUnica.setResposta(Integer.parseInt(r));
+                respostesObj.add(respostaUnica);
+            } else if (tipusPregunta == 2) { // ORDENADA
+                int numOpcions = preguntes.get(index).getNumOpcions();
+                RespostaOrdenada respostaOrdenada = new RespostaOrdenada(numOpcions);
+                respostaOrdenada.setResposta(Integer.parseInt(r));
+                respostesObj.add(respostaOrdenada);
+            } else if (tipusPregunta == 3) {// MULTIPLE
+                int numOpcions = preguntes.get(index).getNumOpcions();
+                RespostaMultiple respostaMultiple = new RespostaMultiple(numOpcions);
+                // Convertir String a
+                List<Integer> seleccionades = new ArrayList<>();
+                String[] parts = r.split(","); // Suponemos que las opciones están separadas por comas
+                for (String part : parts) {
+                    seleccionades.add(Integer.parseInt(part.trim()));
+                }
+                respostaMultiple.selecciona(seleccionades);
+            } else if (tipusPregunta == 4) { // LLIURE
+                RespostaLliure respostaLliure = new RespostaLliure(r);
+                respostesObj.add(respostaLliure);
+            } else {
+                throw new IllegalArgumentException("Tipus de pregunta desconegut: " + tipusPregunta);
+            }
+        }
+        return respostesObj;
+    }
+
+
+    public List<String> getPreguntes(){
+        List<String> textsPreguntes = new ArrayList<>();
+        for (Pregunta p : preguntes) {
+            int tipus = p.getTipus(); //NUMERICA, UNICA, MULTIPLE, ORDENADA, LLIURE
+            textsPreguntes.add(Integer.toString(tipus));
+            textsPreguntes.add(p.getText());
+            if (tipus == 1) { //UNICA
+                // Afegir les opcions de la pregunta UNICA
+                // Suposant que la classe Pregunta té un mètode getOpcions()
+                List<String> opcions = p.getOpcions();
+                int nombreOpcions = opcions.size();
+                textsPreguntes.add(Integer.toString(nombreOpcions));
+                for(String opcio : opcions){
+                    textsPreguntes.add(opcio);
+                }
+            }
+            else if (tipus == 2) { //MULTIPLE
+                // Afegir les opcions de la pregunta MULTIPLE
+                // Suposant que la classe Pregunta té un mètode getOpcions()
+                List<String> opcions = p.getOpcions();
+                int nombreOpcions = opcions.size();
+                textsPreguntes.add(Integer.toString(nombreOpcions));
+                for(String opcio : opcions){
+                    textsPreguntes.add(opcio);
+                }
+            }
+            else if(tipus == 3){ //ORDENADA
+                // Afegir les opcions de la pregunta ORDENADA
+                // Suposant que la classe Pregunta té un mètode getOpcions()
+                List<String> opcions = p.getOpcions();
+                int nombreOpcions = opcions.size();
+                textsPreguntes.add(Integer.toString(nombreOpcions));
+                for(String opcio : opcions){
+                    textsPreguntes.add(opcio);
+                }
+            }
+        }
+        return textsPreguntes;
+    }
+    public void afegeixResposta(int idUsuari, List<Resposta> respostes){
+        int size = preguntes.size();
+        for (int i = 0; i < size; i++) {
+            Pregunta p = preguntes.get(i);
+            Resposta r = respostes.get(i);
+            p.addResposta(r, idUsuari);
+        }
+    }
+
+    // Getters
+    public Integer getId() { return id;}
+    public String getTitol() { return titol;}
+    public String getDescripcio() { return descripcio;}
+    public Integer getCreador() { return idCreador;}
+    public List<Pregunta> getPreguntesObj() { return Collections.unmodifiableList(preguntes); }
+    public int getNumPreguntes() { return preguntes.size(); }
+    public int getNumRespostes() {
+        if (preguntes.isEmpty()) return 0;
+        Pregunta primeraPregunta = preguntes.get(0);
+        return primeraPregunta.getNumRespostes();
+    }
+
+    public List<Resposta> getRespostesUsuari(int idUsuari) {
+        List<Resposta> respostesUsuari = new ArrayList<>();
+        for (Pregunta p : preguntes) {
+            Map<Integer, Resposta> respostesMap = p.getRespostes();
+            Resposta r = respostesMap.get(idUsuari);
+            respostesUsuari.add(r);
+        }
+        return respostesUsuari;
+    }
+
+    /*
     public boolean participa(int id) {
         if (id < 0) throw new IllegalArgumentException("L'id de l'usuari no pot ser negatiu.");
 
@@ -70,9 +173,7 @@ public class Enquesta {
 
 
 
-    public List<Pregunta> getPreguntes(){
-        return Collections.unmodifiableList(preguntes);
-    }
+
 
     public List<Resposta> getRespostesUsuari(Integer filaMatriu) {
         return Collections.unmodifiableList(respostes.get(filaMatriu));
@@ -86,11 +187,6 @@ public class Enquesta {
         else throw new IllegalArgumentException("L'id de l'usuari no pot ser menor que -1.");
     }
 
-    // Getters
-    public Integer getId() { return id;}
-    public String getTitol() { return titol;}
-    public String getDescripcio() { return descripcio;}
-    public Integer getCreador() { return idCreador;}
 
     // Setters
     public void setTitol(String titol) { this.titol = titol; }
@@ -107,5 +203,29 @@ public class Enquesta {
     }
 
 
+    public static Integer esNatural(String r) {
+        try {
+            Integer res = Integer.parseInt(r);  // Intenta convertir el String a un entero
+            if (res >= 0) return res;  // Si no lanza una excepción, es un entero válido
+            else return -1;
+        } catch (NumberFormatException e) {
+            return -1;  // Si lanza una excepción, no es un número entero válido
+        }
+    }*/
 
+    void mostrarEnquesta1() {
+        System.out.println("Enquesta ID: " + id);
+        System.out.println("Títol: " + titol);
+        System.out.println("Descripció: " + descripcio);
+        System.out.println("Creador ID: " + idCreador);
+    }
+
+    void mostrarEnquesta2(){
+        int numPreguntes = preguntes.size();
+        System.out.println("Número de preguntes: " + numPreguntes);
+        for (int i = 0; i < numPreguntes; i++) {
+            Pregunta p = preguntes.get(i);
+            System.out.println("Pregunta " + (i+1) + ": " + p.getText() + " (Tipus: " + p.getTipus() + ")");
+        }
+    }
 }
