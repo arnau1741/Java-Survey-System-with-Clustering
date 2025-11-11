@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/TestUnitariAdministrador.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TestUnitariEnquestat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/KMeans.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/KMeansAdaptation.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestUnitariEnquestador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestUnitariEnquestador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestUnitariAdministrador.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariAdministrador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestUnitariEnquestador.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TestUnitariEnquestat.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestat.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +57,11 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.TestUnitariAdministrador.executor": "Run",
+    "JUnit.TestUnitariAdministrador.testAfegirEnquestaAdministrada.executor": "Run",
+    "JUnit.TestUnitariAdministrador.testConstructor.executor": "Run",
+    "JUnit.TestUnitariAdministrador.testEliminarEnquestaAdministrada.executor": "Run",
+    "JUnit.TestUnitariAdministrador.testGetEnquestesAdministrades.executor": "Run",
     "JUnit.TestUnitariEnquestador.constructorInicialitzaCorrectament.executor": "Run",
     "JUnit.TestUnitariEnquestador.executor": "Run",
     "JUnit.TestUnitariEnquestat.executor": "Run",
@@ -98,6 +100,7 @@
       <recent name="$PROJECT_DIR$/lib" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/TestUnitarios" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
