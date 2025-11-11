@@ -1,7 +1,4 @@
-package prop.enquesta.test;
 
-import prop.enquesta.resposta.Pregunta;
-import prop.enquesta.resposta.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.*;
