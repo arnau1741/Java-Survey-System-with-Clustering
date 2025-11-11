@@ -63,10 +63,13 @@ public class TestUnitariEnquestat {
     }
 
     @Test
-    public void haRealitzatEnquestaFuncionaCorrectament() {
-        Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
-        assertThat(enquestat.haRealitzatEnquesta(1), equalTo(false));
-        enquestat.afegirEnquestaRealitzada(enquesta);
-        assertThat(enquestat.haRealitzatEnquesta(1), equalTo(true));
+    public void getEnquestesRealitzadesFuncionaCorrectament() {
+        Enquesta enquesta1 = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
+        Enquesta enquesta2 = new Enquesta(2, "Titol2", "Desc2", 3, new java.util.ArrayList<>());
+        enquestat.afegirEnquestaRealitzada(enquesta1);
+        enquestat.afegirEnquestaRealitzada(enquesta2);
+        assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(2));
+        assertThat(enquestat.getEnquestesRealitzades().get(0), equalTo(enquesta1));
+        assertThat(enquestat.getEnquestesRealitzades().get(1), equalTo(enquesta2));
     }
 }
