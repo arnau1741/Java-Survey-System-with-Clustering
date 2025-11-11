@@ -23,6 +23,7 @@ public class TestUnitariEnquestador {
         assertThat(enquestador.getId(), equalTo(0));
         assertThat(enquestador.getContrasenya(), equalTo("1234"));
         assertThat(enquestador.getEmail(), equalTo("anna@gmail.com"));
+        assertThat(enquestador.isBlocked(), equalTo(false));
     }
 
     @Test
@@ -31,7 +32,9 @@ public class TestUnitariEnquestador {
         Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
         Enquesta enquesta2 = new Enquesta(2, "Titol2", "Desc2", 3, new java.util.ArrayList<>());
         enquestador.afegirEnquestaAssignada(enquesta);
+        enquestador.afegirEnquestaAssignada(enquesta2);
         assertThat(enquestador.enquestaAssignada(1), equalTo(true));
+        assertThat(enquestador.enquestaAssignada(2), equalTo(true));
     }
 
     @Test
