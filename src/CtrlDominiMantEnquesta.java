@@ -2,6 +2,7 @@ import java.util.*;
 
 public class CtrlDominiMantEnquesta {
     private Map<Integer, Enquesta> enquestes;
+    private int ultimIdEnquesta = 0;
 
     // Constructor que inicializa la colección de encuestas
     public CtrlDominiMantEnquesta() {
@@ -20,6 +21,13 @@ public class CtrlDominiMantEnquesta {
     // Método para obtener el número total de encuestas
     public int getNumEnquestes() {
         return enquestes.size();
+    }
+
+    //Método para obtener un nuevo ID de encuesta
+    public int getIdEnquestaNova() {
+        int tmp = ultimIdEnquesta;
+        ultimIdEnquesta++;
+        return tmp;
     }
 
     // Método para obtener una encuesta por su ID

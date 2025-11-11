@@ -33,7 +33,7 @@ public class GestorEnquesta {
     }
     //Caso de uso importar enquesta
     public void importarEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> preguntes) {
-        int id = returnSize();
+        int id = "si se utiliza el gestor y el dominimantenquesta, hacer esto de alguna manera";
         Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntes);
         afegirEnquesta(novaEnquesta);
     }
