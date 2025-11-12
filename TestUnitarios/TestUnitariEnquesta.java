@@ -51,7 +51,11 @@ public class TestUnitariEnquesta {
     public void testAfegeixResposta() {
         List<Resposta> respostes = new ArrayList<>();
         respostes.add(new RespostaNumerica(25.5));
-        respostes.add(new RespostaUnica(1));
+        // UNICA
+        RespostaUnica rUnica = new RespostaUnica(e.getPreguntesObj().get(1).getNumOpcions());
+        rUnica.setResposta(1);
+        respostes.add(rUnica);
+        // respostes.add(new RespostaUnica(1));
         // MULTIPLE
         RespostaMultiple rMultiple = new RespostaMultiple(e.getPreguntesObj().get(2).getNumOpcions());
         rMultiple.selecciona(Arrays.asList(0, 2)); // selecciona opcions 0 i 2
@@ -67,7 +71,11 @@ public class TestUnitariEnquesta {
     public void testGetRespostesUsuari() {
         List<Resposta> respostes = new ArrayList<>();
         respostes.add(new RespostaNumerica(25.5));
-        respostes.add(new RespostaUnica(1));
+        // UNICA
+        RespostaUnica rUnica = new RespostaUnica(e.getPreguntesObj().get(1).getNumOpcions());
+        rUnica.setResposta(1);
+        respostes.add(rUnica);
+        // respostes.add(new RespostaUnica(1));
         // MULTIPLE
         RespostaMultiple rMultiple = new RespostaMultiple(e.getPreguntesObj().get(2).getNumOpcions());
         rMultiple.selecciona(Arrays.asList(0, 2)); // selecciona opcions 0 i 2
