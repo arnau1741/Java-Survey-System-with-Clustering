@@ -37,6 +37,7 @@ public class Enquesta {
         this.preguntes = preguntes;
     }
 
+    // converteix les respostes de String a objectes Resposta
     public List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
         List<Resposta> respostesObj = new ArrayList<>();
         // for (String r : respostesStr) {
@@ -83,6 +84,7 @@ public class Enquesta {
         return respostesObj;
     }
 
+    // retorna els textos de les preguntes
     public List<String> getPreguntes(){
         List<String> textsPreguntes = new ArrayList<>();
         for (Pregunta p : preguntes) {
@@ -132,7 +134,7 @@ public class Enquesta {
     public int getNumPreguntes() { return preguntes.size(); }
     public int getNumRespostes() {
         if (preguntes.isEmpty()) return 0;
-        Pregunta primeraPregunta = preguntes.get(0);
+        Pregunta primeraPregunta = preguntes.getFirst();
         return primeraPregunta.getNumRespostes();
     }
 
