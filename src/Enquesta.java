@@ -148,6 +148,29 @@ public class Enquesta {
         return respostesUsuari;
     }
 
+
+    public List<Resposta> getRespostesUsuariMatriu(int filaMatriu) {
+        List<Resposta> respostesUsuari = new ArrayList<>();
+        Integer idUsuari = null;
+        for (Pregunta p : preguntes) {
+            Map<Integer, Resposta> respostesMap = p.getRespostes();
+            if (idUsuari == null) {
+                // Obtenir l'ID de l'usuari corresponent a la fila de la matriu si no ha estat obtingut encara
+                int count = 0;
+                for (Integer key : respostesMap.keySet()) {
+                    if (count == filaMatriu) {
+                        idUsuari = key;
+                        break;
+                    }
+                    count++;
+                }
+            }
+            Resposta r = respostesMap.get(idUsuari);
+            respostesUsuari.add(r);
+        }
+        return respostesUsuari;
+    }
+
     /*
     public boolean participa(int id) {
         if (id < 0) throw new IllegalArgumentException("L'id de l'usuari no pot ser negatiu.");

@@ -17,6 +17,14 @@ public class RespostaOrdenada extends Resposta {
         return 1;
     }
 
+    public Integer getResposta() {
+        return resposta;
+    }
+
+    public Integer getOrdre() {
+        return resposta;
+    }
+
     @Override
     public String getText(List<String> opcions) {
         if (resposta == null) {

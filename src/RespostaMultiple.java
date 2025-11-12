@@ -28,6 +28,10 @@ public class RespostaMultiple extends Resposta{
         return numOpcions;
     }
 
+    public List<Integer> getRespostes() {
+        return respostes;
+    }
+
     // Retorna només les opcions seleccionades com a String
     @Override
     public String getText(List<String> opcions) {

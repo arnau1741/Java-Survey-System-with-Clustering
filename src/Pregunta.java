@@ -11,6 +11,8 @@ public class Pregunta {
     private Map<Integer, Resposta> respostes; 
     private final Integer numOpcions; // Nombre d'opcions per a preguntes UNICA, MULTIPLE, ORDENADA
     private final List<String> opcions;
+    private double minValue; // Per a preguntes NUMERICA
+    private double maxValue; // Per a preguntes NUMERICA
 
     //Format Pregunta_qualsevol? -- Defineix tipus de resposta
     public Pregunta(String text, int tipus, List<String> opcions) {
@@ -48,6 +50,20 @@ public class Pregunta {
 
     public Map<Integer, Resposta> getRespostes() {
         return Collections.unmodifiableMap(respostes);
+    }
+    public double getMinValue() {
+        if (tipus == 0) { // NUMERICA
+            return minValue;
+        } else {
+            throw new UnsupportedOperationException("No es pot obtenir el valor mínim per a aquest tipus de pregunta.");
+        }
+    }
+    public double getMaxValue() {
+        if (tipus == 0) { // NUMERICA
+            return maxValue;
+        } else {
+            throw new UnsupportedOperationException("No es pot obtenir el valor màxim per a aquest tipus de pregunta.");
+        }
     }
 
     public int getNumOpcions() {

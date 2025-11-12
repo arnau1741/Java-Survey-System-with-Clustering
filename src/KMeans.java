@@ -37,7 +37,7 @@ public class KMeans{
 
         for (int iter = 0; iter < maxIterations; iter++) {
             boolean changed = assignClusters(data);
-             updateCentroids(data, dim);
+            updateCentroids(data, dim);
 
             if (!changed) {
                 break;
@@ -58,13 +58,14 @@ public class KMeans{
         }
         return centroids;
     }
-
+    /*
     public int predict(List<Resposta> point) {
         if (centroids == null) {
             throw new IllegalStateException("Primero llama a fit().");
         }
+
         return closestCentroid(point, centroids);
-    }
+    }*/
 
 
     private  List<List<Resposta>> initCentroidsRandom(Enquesta data, int k) {
@@ -89,7 +90,8 @@ public class KMeans{
         int numRespostes = data.getNumRespostes();
         for (int i = 0; i < numRespostes; i++) {
             List<Resposta> point = data.getRespostesUsuariMatriu(i);
-            int newLabel = closestCentroid(point, centroids);
+            List<Pregunta> preguntes = data.getPreguntesObj();
+            int newLabel = closestCentroid(point, centroids, preguntes);
             if (newLabel != labels[i]) {
                 labels[i] = newLabel;
                 changed = true;
@@ -98,12 +100,12 @@ public class KMeans{
         return changed;
     }
 
-    private int closestCentroid(List<Resposta> point, List<List<Resposta>> centroids) {
+    private int closestCentroid(List<Resposta> point, List<List<Resposta>> centroids, List<Pregunta> preguntes) {
         int bestIndex = 0;
-        double bestDist = distance(point, centroids.get(0));
+        double bestDist = distance(point, centroids.get(0), preguntes);
 
         for (int c = 1; c < centroids.size(); c++) {
-            double dist = distance(point, centroids.get(c));
+            double dist = distance(point, centroids.get(c), preguntes);
             if (dist < bestDist) {
                 bestDist = dist;
                 bestIndex = c;
@@ -188,8 +190,106 @@ public class KMeans{
         centroids = newCentroids;
     }
 
-    private double distance(List<Resposta> a, List<Resposta> b) {
+//////////////////////// Funcions distancia locals ///////////////////////////////
+
+    private double distanciaNumerica(RespostaNumerica a, RespostaNumerica b, double min, double max) {
+        if (a == null && b == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        if (a == null || b == null) {
+            return max - min; // Distancia máxima si alguna respuesta es nula
+        }
+        return Math.abs(a.getValor() - b.getValor()) / (max - min);
+    }
+
+    private double distanciaOrdenada (RespostaOrdenada a, RespostaOrdenada b, int numOpcions) {
+        if (a == null && b == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        if (a == null || b == null) {
+            return 1.0; // Distancia máxima si alguna respuesta es nula
+        }
+        Integer ordenA = a.getOrdre();
+        Integer ordenB = b.getOrdre();
+        return Math.abs(ordenA - ordenB)/(numOpcions - 1);
+    }
+
+    private double distanciaNoOrdenadaUnica(Resposta a, Resposta b) {
+        if (a == null && b == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        if (a == null || b == null) {
+            return 1.0; // Distancia máxima si alguna respuesta es nula
+        }
+        return a.equals(b) ? 0.0 : 1.0;
+    }
+
+    private double distanciaNoOrdenadaMultiple(RespostaMultiple a, RespostaMultiple b) {
+        if (a == null && b == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        if (a == null || b == null) {
+            return 1.0; // Distancia máxima si alguna respuesta es nula
+        }
+
+        // Calcular coeficient de Jaccard
+        List<Integer> resA = a.getRespostes();
+        List<Integer> resB = b.getRespostes();
+        List<Integer> union = new ArrayList<>(resA);
+        for (Integer r : resB) {
+            if (!union.contains(r)) {
+                union.add(r);
+            }
+        }
+        int interseccioCount = 0;
+        for (Integer r : resA) {
+            if (resB.contains(r)) {
+                interseccioCount++;
+            }
+        }
+        return 1.0 - ((double) interseccioCount / union.size());
+    }
+    /*
+    private double distanciaLliure(Resposta a, Resposta b) {
+        return 0.0; // Ignorar preguntes de tipus LLIURE en el càlcul de la distància
+    }
+    */
+        
+
+
+    private double distance(List<Resposta> a, List<Resposta> b, List<Pregunta> preguntes) {
         double sum = 0.0;
+        int numPreguntes = preguntes.size();
+        for (int i = 0; i < numPreguntes; i++) {
+            Pregunta p = preguntes.get(i);
+            int tipus = p.getTipus();
+            Resposta ra = a.get(i);
+            Resposta rb = b.get(i);
+            switch (tipus) {
+                case 0: // NUMERICA
+                    // Calcular min i max per a la pregunta usant pregunta p.getMinValue() i p.getMaxValue()
+                    double min = p.getMinValue();
+                    double max = p.getMaxValue();
+                    sum += distanciaNumerica((RespostaNumerica) ra, (RespostaNumerica) rb, min, max);
+                    break;
+                case 1: // UNICA
+                    sum += distanciaNoOrdenadaUnica(ra, rb);
+                    break;
+                case 2: // MULTIPLE
+                    sum += distanciaNoOrdenadaMultiple((RespostaMultiple) ra, (RespostaMultiple) rb);
+                    break;
+                case 3: // ORDENADA
+                    int numOpcions = p.getNumOpcions();
+                    sum += distanciaOrdenada((RespostaOrdenada) ra, (RespostaOrdenada) rb, numOpcions);
+                    break;
+                case 4: // LLIURE
+                    // Ignorar preguntes de tipus LLIURE en el càlcul de la distancia
+                    break;
+                default:
+                    throw new IllegalArgumentException("Tipus de pregunta desconegut: " + tipus);
+            }
+        }
+                    
         return sum;
     }
 }
