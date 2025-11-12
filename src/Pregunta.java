@@ -38,7 +38,6 @@ public class Pregunta {
         return text;
     }
 
-
     public int getTipus() {
         return tipus;
     }
@@ -64,12 +63,9 @@ public class Pregunta {
     }
 
     // setters
-
     public void setText(String newText) {
         text = newText;
     }
-
-
 
     public Integer addResposta(Resposta resposta, int idUsuari) {
         if (respostes.containsKey(idUsuari)) {
@@ -98,7 +94,6 @@ public class Pregunta {
             throw new UnsupportedOperationException("No es pot calcular la moda per a aquest tipus de pregunta.");
         }
     }
-
 
     @Override
     public String toString() {

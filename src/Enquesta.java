@@ -16,8 +16,6 @@ import java.util.Map;
  * userToAnswerId
  */
 
-
-
 public class Enquesta {
     // Representa una enquesta concreta: id, titol, descripcio, creador, preguntes, respostes, participants
     private Integer id;
@@ -25,7 +23,6 @@ public class Enquesta {
     private String descripcio;
     private Integer idCreador;
     private List<Pregunta> preguntes;
-
 
     // posem les dates com atributs, creem una classe Data i es relaciona?
     // private LocalDateTime dataCreacio;
@@ -40,12 +37,14 @@ public class Enquesta {
         this.preguntes = preguntes;
     }
 
-
     public List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
         List<Resposta> respostesObj = new ArrayList<>();
-        for (String r : respostesStr) {
-            int index = respostesStr.indexOf(r);
+        // for (String r : respostesStr) {
+        for (int index = 0; index < respostesStr.size(); index++) {
+            String r = respostesStr.get(index);
+            // int index = respostesStr.indexOf(r);
             int tipusPregunta = preguntes.get(index).getTipus();
+
             if (tipusPregunta == 0) {// NUMERICA
                 try {
                     RespostaNumerica respostaNumerica = new RespostaNumerica(Double.parseDouble(r));
@@ -53,7 +52,7 @@ public class Enquesta {
                 } catch (NumberFormatException e) {
                     throw new IllegalArgumentException("Resposta numèrica invàlida: " + r);
                 }
-            }else if (tipusPregunta == 1) { // UNICA
+            } else if (tipusPregunta == 1) { // UNICA
                 int numOpcions = preguntes.get(index).getNumOpcions();
                 RespostaUnica respostaUnica = new RespostaUnica(numOpcions);
                 respostaUnica.setResposta(Integer.parseInt(r));
@@ -73,6 +72,7 @@ public class Enquesta {
                     seleccionades.add(Integer.parseInt(part.trim()));
                 }
                 respostaMultiple.selecciona(seleccionades);
+                respostesObj.add(respostaMultiple);
             } else if (tipusPregunta == 4) { // LLIURE
                 RespostaLliure respostaLliure = new RespostaLliure(r);
                 respostesObj.add(respostaLliure);
@@ -83,46 +83,37 @@ public class Enquesta {
         return respostesObj;
     }
 
-
     public List<String> getPreguntes(){
         List<String> textsPreguntes = new ArrayList<>();
         for (Pregunta p : preguntes) {
-            int tipus = p.getTipus(); //NUMERICA, UNICA, MULTIPLE, ORDENADA, LLIURE
+            int tipus = p.getTipus(); // NUMERICA, UNICA, MULTIPLE, ORDENADA, LLIURE
             textsPreguntes.add(Integer.toString(tipus));
             textsPreguntes.add(p.getText());
-            if (tipus == 1) { //UNICA
+            if (tipus == 1) { // UNICA
                 // Afegir les opcions de la pregunta UNICA
-                // Suposant que la classe Pregunta té un mètode getOpcions()
                 List<String> opcions = p.getOpcions();
                 int nombreOpcions = opcions.size();
                 textsPreguntes.add(Integer.toString(nombreOpcions));
-                for(String opcio : opcions){
-                    textsPreguntes.add(opcio);
-                }
+                textsPreguntes.addAll(opcions);
             }
-            else if (tipus == 2) { //MULTIPLE
+            else if (tipus == 2) { // MULTIPLE
                 // Afegir les opcions de la pregunta MULTIPLE
-                // Suposant que la classe Pregunta té un mètode getOpcions()
                 List<String> opcions = p.getOpcions();
                 int nombreOpcions = opcions.size();
                 textsPreguntes.add(Integer.toString(nombreOpcions));
-                for(String opcio : opcions){
-                    textsPreguntes.add(opcio);
-                }
+                textsPreguntes.addAll(opcions);
             }
-            else if(tipus == 3){ //ORDENADA
+            else if(tipus == 3){ // ORDENADA
                 // Afegir les opcions de la pregunta ORDENADA
-                // Suposant que la classe Pregunta té un mètode getOpcions()
                 List<String> opcions = p.getOpcions();
                 int nombreOpcions = opcions.size();
                 textsPreguntes.add(Integer.toString(nombreOpcions));
-                for(String opcio : opcions){
-                    textsPreguntes.add(opcio);
-                }
+                textsPreguntes.addAll(opcions);
             }
         }
         return textsPreguntes;
     }
+
     public void afegeixResposta(int idUsuari, List<Resposta> respostes){
         int size = preguntes.size();
         for (int i = 0; i < size; i++) {
@@ -171,10 +162,6 @@ public class Enquesta {
         return userToAnswerId.get(idUsuari);
     }
 
-
-
-
-
     public List<Resposta> getRespostesUsuari(Integer filaMatriu) {
         return Collections.unmodifiableList(respostes.get(filaMatriu));
     }
@@ -186,7 +173,6 @@ public class Enquesta {
         else if (idUsuari == -1) noRegistratAnswers.add(filaMatriu);
         else throw new IllegalArgumentException("L'id de l'usuari no pot ser menor que -1.");
     }
-
 
     // Setters
     public void setTitol(String titol) { this.titol = titol; }
@@ -201,7 +187,6 @@ public class Enquesta {
     public List<Integer> getParticipants() {
         return new ArrayList<>(userToAnswerId.keySet());
     }
-
 
     public static Integer esNatural(String r) {
         try {
