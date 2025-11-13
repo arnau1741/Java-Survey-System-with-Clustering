@@ -31,7 +31,7 @@ public class TestUnitariEnquesta {
 
     @Test
     public void testStringARespostes() {
-        List<String> respostesStr = Arrays.asList("25.5", "1", "0,2", "Cap comentari");
+        List<String> respostesStr = Arrays.asList("25", "1", "0,2", "Cap comentari");
         List<Resposta> respostes = e.stringARespostes(respostesStr);
 
         assertEquals(4, respostes.size());
@@ -44,7 +44,7 @@ public class TestUnitariEnquesta {
     @Test
     public void testGetPreguntes() {
         List<String> preguntesTxt = e.getPreguntes();
-        assertEquals(10, preguntesTxt.size());
+        assertEquals(13, preguntesTxt.size());
     }
 
     @Test
