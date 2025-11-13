@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class Main {
 
@@ -30,6 +32,7 @@ public class Main {
                     case 4 -> ctrl.mostrarEnquestesAmbPreguntes();
                     case 5 -> respondreEnquesta(io, ctrl);
                     case 6 -> ctrl.mostrarEnquestesAmbPreguntesIRespostes();
+                    case 7 -> exportarEnquesta(io, ctrl);
 
                     default -> io.writeln("\n[ERROR] Opció no vàlida. Torna-ho a intentar.\n");
                 }
@@ -76,8 +79,8 @@ public class Main {
         io.writeln(" 4) Mostrar enquestes amb preguntes");
         io.writeln(" 5) Respon enquesta");
         io.writeln(" 6) Mostrar enquestes amb preguntes i respostes");
-        /*
         io.writeln(" 7) Exportar enquesta");
+        /*
         io.writeln(" 8) Importar respostes");
         io.writeln(" 9) Exportar respostes");
         io.writeln(" 10) Crear usuari");
@@ -224,9 +227,15 @@ public class Main {
         io.writeln("       línia: nombre d'opcions");
         io.writeln("       següents línies: cada opció\n");
 
-        io.write("Introdueix el nom o ruta del fitxer: ");
-        //Se cambia el path
-        String path = io.readline();
+        io.writeln("Introdueix el nombre de ficher d'enquesta (sense extensio): ");
+        String fitxer = io.readword().trim();
+        String path = Base_path + File.separator + fitxer + ".txt";
+        io.writeln("Llegint fitxer: " + path);
+        File f = new File(path);
+        if (!f.exists()) {
+            io.writeln("No s'ha trobat el fitxer!");
+            return;
+        }
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String titol = llegirObligatori(br, "Falta títol");
@@ -276,7 +285,7 @@ public class Main {
             io.writeln("\n[ERROR FORMAT FITXER] " + e.getMessage() + "\n");
         }
     }
-    /*
+
     // === EXPORTAR ENQUESTA ===
     private static void exportarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix l'ID de l'enquesta a exportar: ");
@@ -300,6 +309,7 @@ public class Main {
             for (String l : lines) pw.println(l);
         }
     }
+        /*
 
     private static void crearUsuari(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix l'ID de l'usuari: ");
@@ -370,10 +380,15 @@ public class Main {
     }
 
     private static void esborrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'id de l'usuari: ");
+        int idUsuari = io.readint();
+
         io.writeln("Introdueix l'id de l'enquesta");
         int idEnquesta = io.readint();
-        ctrl.esborrarEnquesta(idEnquesta);
+
+        ctrl.eliminarEnquesta(int idUsuari, int idEnquesta);
         io.writeln("Enquesta esborrada correctament.");
+
     }
      */
 

@@ -43,6 +43,50 @@ public class CtrlDomini {
     public int importarEnquesta(int idUsuari, String path){
         return 0;
     }
+
+    // Caso de uso 4: exportar enquesta
+    public List<String> exportarEnquesta(int id) {
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(id);
+        if (enq == null) {
+            return null;
+        }
+        List <String> exportat = new ArrayList<>();
+        exportat.add("==== Informacio enquesta ====");
+        exportat.add("ID: " + enq.getId());
+        exportat.add("Titol: " + enq.getTitol());
+        exportat.add("Descripcio: " + enq.getDescripcio());
+        exportat.add("Creador ID: " + enq.getCreador());
+        exportat.add("Numero de preguntes: " + enq.getNumPreguntes());
+        exportat.add("");
+
+        List<Pregunta> preguntes = enq.getPreguntesObj();
+        exportat.add("==== Preguntes i respostes ====");
+        for (int i = 0; i < preguntes.size(); i++) {
+            Pregunta p = preguntes.get(i);
+            exportat.add("Pregunta: " + (i+1) + ": " + p.getText());
+
+            List<String> opcions = p.getOpcions();
+            if (opcions != null && !opcions.isEmpty()){
+                exportat.add("Opcions:");
+                for (int j = 0; j < opcions.size(); j++) {
+                    String opcio = opcions.get(j);
+                    exportat.add("  * Opció " + (j+1) + ": " + opcio);
+                }
+            }
+            Map<Integer, Resposta> respostes = p.getRespostes();
+            if(!respostes.isEmpty()) {
+                exportat.add("Respostes:");
+                for (Map.Entry<Integer, Resposta> entry : respostes.entrySet()) {
+                    exportat.add("  - Usuari ID: " + entry.getKey() + ", Resposta: " + entry.getValue().getText(opcions));
+                }
+            }
+            else {
+                exportat.add("No hi ha respostes.");
+            }
+            exportat.add("");
+        }
+        return exportat;
+    }
     /// 
     public int importarRespostes(int idUsuari, String path, int idEnquesta){
         return 0;
@@ -52,6 +96,8 @@ public class CtrlDomini {
         //borrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
         //borrar de usuarios //si queremos hacer esto, implementar la logica en crear
+        Usuari us = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        //us.eliminarEnquestaCreada(idEnquesta);
     }
 
     //deberiamos hacer mas versiones en un futuro.
@@ -282,10 +328,7 @@ public class CtrlDomini {
         gestorEnquesta.importarEnquesta(titol, descripcio, idCreador, preguntes);
     }
 
-    // Caso de uso 4: exportar enquesta
-    public List<String> exportarEnquesta(int id) {
-        return gestorEnquesta.exportarEnquesta(id);
-    }
+
 
     // Caso de uso 5: importar respostes
     public void importarRespostes(int idEnquesta, int idUsuari, List<String> preguntesTxt, List<String> respostesTxt) {
