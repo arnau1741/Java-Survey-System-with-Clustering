@@ -380,10 +380,15 @@ public class Main {
     }
 
     private static void esborrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'id de l'usuari: ");
+        int idUsuari = io.readint();
+
         io.writeln("Introdueix l'id de l'enquesta");
         int idEnquesta = io.readint();
-        ctrl.esborrarEnquesta(idEnquesta);
+
+        ctrl.eliminarEnquesta(int idUsuari, int idEnquesta);
         io.writeln("Enquesta esborrada correctament.");
+
     }
      */
 
