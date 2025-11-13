@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class Main {
 
@@ -282,7 +284,7 @@ public class Main {
             io.writeln("\n[ERROR FORMAT FITXER] " + e.getMessage() + "\n");
         }
     }
-    /*
+
     // === EXPORTAR ENQUESTA ===
     private static void exportarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix l'ID de l'enquesta a exportar: ");
@@ -306,6 +308,7 @@ public class Main {
             for (String l : lines) pw.println(l);
         }
     }
+        /*
 
     private static void crearUsuari(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix l'ID de l'usuari: ");
