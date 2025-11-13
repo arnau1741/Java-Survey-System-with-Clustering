@@ -39,12 +39,12 @@ public class CtrlDomini {
     }
 
     /////////////////////// Caso de uso - Importar enquesta //////////////////
-    public int importarEnquesta(int idUsuari, string path){
+    public int importarEnquesta(int idUsuari, String path){
         return 0;
     }
     /// 
     /// 
-    public int importarRespostes(int idUsuari, string path, int idEnquesta){
+    public int importarRespostes(int idUsuari, String path, int idEnquesta){
         return 0;
     }
 
