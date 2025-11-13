@@ -76,6 +76,16 @@ public class Main {
         io.writeln(" 4) Mostrar enquestes amb preguntes");
         io.writeln(" 5) Respon enquesta");
         io.writeln(" 6) Mostrar enquestes amb preguntes i respostes");
+        /*
+        io.writeln(" 7) Exportar enquesta");
+        io.writeln(" 8) Importar respostes");
+        io.writeln(" 9) Exportar respostes");
+        io.writeln(" 10) Crear usuari");
+        io.writeln(" 11) Consultar usuari");
+        io.writeln(" 12) Consultar respostes"); ????
+        io.writeln(" 13) Modificar enquesta");
+        io.writeln(" 14) Esborrar enquesta");
+         */
         io.writeln(" 0) Sortir");
         io.writeln("======================================");
         io.write("Selecciona una opció: ");
@@ -266,6 +276,106 @@ public class Main {
             io.writeln("\n[ERROR FORMAT FITXER] " + e.getMessage() + "\n");
         }
     }
+    /*
+    // === EXPORTAR ENQUESTA ===
+    private static void exportarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'ID de l'enquesta a exportar: ");
+        int id = io.readint();
+
+        //io.write("Introdueix el path on guardar (ex: sortida.txt): ");
+        //String path = io.readword();
+        String path = Base_path + File.separator + "sortida" + id + ".txt";
+        List<String> export = ctrl.exportarEnquesta(id);
+        if (export == null) {
+            io.writeln("Enquesta no trobada.");
+            return;
+        }
+
+        writeAllLines(path, export);
+        io.writeln("Enquesta exportada correctament a: " + path);
+    }
+
+    private static void writeAllLines(String path, List<String> lines) throws IOException {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(path))) {
+            for (String l : lines) pw.println(l);
+        }
+    }
+
+    private static void crearUsuari(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'ID de l'usuari: ");
+        int id = io.readint();
+        io.writeln("Introdueix el nom: ");
+        String nom = io.readword();
+        io.writeln("Introdueix el contrasenya: ");
+        String contrasenya = io.readword();
+        io.writeln("Introdueix l'email: ");
+        String email = io.readword();
+
+
+        io.writeln("Introdueix el rol de l'usuari (ADMINISTRADOR, MODERADOR, ENQUESTADOR, ENQUESTAT): ");
+        String rolStr = io.readword().toUpperCase();
+        io.writeln("Es registrat? (true/false): ");
+
+        boolean registrat = io.readboolean();
+        Usuari usuari;
+        switch (rolStr) {
+            //case "ADMINISTRADOR" -> usuari = new Administrador(id, nom, true);
+            //case "MODERADOR" -> usuari = new Moderador(id, nom, true);
+            case "ENQUESTADOR" -> usuari = new PerfilEnquestador(id, nom, contrasenya, email);
+            case "ENQUESTAT" -> usuari = new PerfilEnquestat(id, nom, contrasenya, email);
+            default -> {
+                io.writeln("Rol no vàlid.");
+                return;
+            }
+        }
+        usuari.setEmail(email);
+        ctrl.getCtrlUsuari().afegirUsuari(usuari);
+        io.writeln("Usuari creat correctament!");
+    }
+
+    private static void consultarUsuari(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'ID de l'usuari a consultar: ");
+        int id = io.readint();
+        ctrl.getCtrlUsuari().consultarPerfil(id);
+    }
+
+    private static void consultarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Es consulta la enquesta existent");
+        ctrl.consultarEnquesta();
+    }
+
+    //Falta revisar esto
+    private static void consultarRespostas(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'ID de l'enquesta: ");
+        int idEnquesta = io.readint();
+        io.writeln("Introdueix l'ID de l'usuari: ");
+        int idUsuari = io.readint();
+
+        List<Resposta> respostes = ctrl.consultarRespostes(idEnquesta, idUsuari);
+        if (respostes.isEmpty()) {
+            io.writeln("No s'han trobat respostes per aquesta enquesta i usuari.");
+            return;
+        }
+        int num = 0;
+        for (Resposta r : respostes) {
+            io.writeln("Pregunta ID: " + num + ", Resposta: " + r.getText());
+            num++;
+        }
+
+
+    }
+
+     private static void modificarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Funcionalitat de modificar enquesta no implementada encara.");
+    }
+
+    private static void esborrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'id de l'enquesta");
+        int idEnquesta = io.readint();
+        ctrl.esborrarEnquesta(idEnquesta);
+        io.writeln("Enquesta esborrada correctament.");
+    }
+     */
 
     // ===================== HELPERS FITXER =====================
 
