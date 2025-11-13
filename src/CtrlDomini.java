@@ -44,7 +44,6 @@ public class CtrlDomini {
         return 0;
     }
     /// 
-    /// 
     public int importarRespostes(int idUsuari, String path, int idEnquesta){
         return 0;
     }
@@ -201,10 +200,8 @@ public class CtrlDomini {
         return preguntesObj;
     }
 
-    /*
-
     //Cas d'us crear usuari
-    public int crearEnquestador(String nomUsuari, String contrasenya, String email) {
+    public int crearUsuariEnquestat(String nomUsuari, String contrasenya, String email) {
         if (ctrlDominiMantUsuari.existeixUsuari(nomUsuari)) {
             return 0;
         }
@@ -213,6 +210,72 @@ public class CtrlDomini {
         ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
         return id;
     }
+
+    public int afegirEnquestador(int idUsuariAdmin, int idEnquesta,String nomUsuariEnquestador){
+        if (!ctrlDominiMantUsuari.existeixUsuari(nomUsuariEnquestador)) {
+            return -1; // Codi error: Usuari no existeix
+        }
+        Usuari usuari = ctrlDominiMantUsuari.getUsuariPerNom(nomUsuariEnquestador);
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (usuari instanceof PerfilEnquestat){
+            PerfilEnquestador nouEnquestador = new PerfilEnquestador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
+            nouEnquestador.afegirEnquestaAssignada(enq);
+            ctrlDominiMantUsuari.reemplacarUsuari(usuari, nouEnquestador);
+            return 1; // Èxit 
+        } else if(usuari instanceof PerfilEnquestador){
+            PerfilEnquestador enquestador = (PerfilEnquestador) usuari;
+            if (enquestador.enquestaAssignada(idEnquesta)) {
+                return -2; // Codi error: Enquesta ja assignada
+            }
+            enquestador.afegirEnquestaAssignada(enq);
+            return 1; // Èxit
+        } else if (usuari instanceof PerfilAdministrador){
+            // mirem si la administra a enquestesdministrades
+            PerfilAdministrador admin = (PerfilAdministrador) usuari;
+            if (admin.enquestaAdministrada(idEnquesta)) {
+                return -3; // Codi error: Usuari ja administra aquesta enquesta
+            }
+            // mirem si la te a enquestesassignades
+            if (admin.enquestaAssignada(idEnquesta)) {
+                return -2; // Codi error: Enquesta ja assignada
+            }
+            admin.afegirEnquestaAssignada(enq);
+            return 1; // Èxit
+        }
+        return -4; // Codi error: Tipus d'usuari desconegut
+    }
+
+    public int afegirAdministrador(int idUsuariAdmin, int idEnquesta,String nomUsuariAdministrador){
+        if (!ctrlDominiMantUsuari.existeixUsuari(nomUsuariAdministrador)) {
+            return -1; // Codi error: Usuari no existeix
+        }
+        Usuari usuari = ctrlDominiMantUsuari.getUsuariPerNom(nomUsuariAdministrador);
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (usuari instanceof PerfilEnquestat){
+            PerfilAdministrador nouAdministrador = new PerfilAdministrador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
+            nouAdministrador.afegirEnquestaAdministrada(enq);
+            ctrlDominiMantUsuari.reemplacarUsuari(usuari, nouAdministrador);
+            return 1; // Èxit 
+        } else if(usuari instanceof PerfilEnquestador){
+            PerfilAdministrador nouAdministrador = new PerfilAdministrador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
+            nouAdministrador.afegirEnquestaAdministrada(enq);
+            ctrlDominiMantUsuari.reemplacarUsuari(usuari, nouAdministrador);
+            return 1; // Èxit 
+        } else if (usuari instanceof PerfilAdministrador){
+            PerfilAdministrador admin = (PerfilAdministrador) usuari;
+            if (admin.enquestaAdministrada(idEnquesta)) {
+                return -2; // Codi error: Enquesta ja administrada
+            }
+            admin.afegirEnquestaAdministrada(enq);
+            return 1; // Èxit
+        }
+        return -3; // Codi error: Tipus d'usuari desconegut
+    }
+
+
+
+    /*
+
 
     //Caso de uso 3: importar enquesta
     public void importarEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> preguntes) {

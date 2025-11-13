@@ -3,6 +3,7 @@ import java.util.List;
 public class PerfilEnquestador extends Usuari
 {
     private List<Enquesta> enquestesAssignades;
+    private List<Enquesta> enquestesRealitzada;
     // Constructor
     public PerfilEnquestador(int idUsuari, String nomUsuari, String contrasenya, String email)  {
         super(idUsuari, nomUsuari,contrasenya, email);

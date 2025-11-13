@@ -27,5 +27,22 @@ public class CtrlDominiMantUsuari {
         }
         return false;
     }
+
+    public boolean existeixUsuariId(int IdUsuari){
+        return usuaris.containsKey(IdUsuari);
+    }
+
+    public Usuari getUsuariPerNom(String nomUsuari) {
+        for (Usuari u : usuaris.values()) {
+            if (u.getUsuari().equals(nomUsuari)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void reemplacarUsuari(Usuari usuariAntic, Usuari usuariNou) {
+        usuaris.put(usuariAntic.getId(), usuariNou);
+    }
     
 }
