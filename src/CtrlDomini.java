@@ -66,8 +66,37 @@ public class CtrlDomini {
 
     public void esborrarRespostaEnquesta(int idUsuari, int idEnquesta, int idEnquestat){
         //pensar en como trabajar con idEnquestat.
+            /*
 
+            if (!ctrlDominiMantEnquesta.existeixEnquesta(idEnquesta)) {
+                System.out.println("Error: Enquesta no existeix");
+                return -1; // Codi error: Enquesta no existeix
+            }
 
+            boolean esCreador = ctrlDominiMantEnquesta.esCreadorEnquesta(idEnquesta, idUsuari);
+            boolean esElMateixUsuari = (idUsuari == idEnquestat);
+
+            if (!esCreador && !esElMateixUsuari) {
+                System.out.println("Error: Sense permisos per esborrar resposta");
+                return -2; // Codi error: Sense permisos
+            }
+            */
+
+            // 3. Obtenir l'enquesta i eliminar la resposta
+            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+            int respostesEliminades = 0;
+            for (Pregunta pregunta : enq.getPreguntesObj()) {
+                Map<Integer, Resposta> respostes = pregunta.getRespostes();
+                if (respostes.containsKey(idEnquestat)) {
+                    respostes.remove(idEnquestat);
+                    respostesEliminades++;
+                }
+            }
+            if (respostesEliminades > 0) {
+                System.out.println("Eliminades " + respostesEliminades + " respostes");
+            } else {
+                System.out.println("Error: No s'han trobat respostes per eliminar");
+            }
     }
 
 
