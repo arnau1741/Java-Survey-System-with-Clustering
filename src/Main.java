@@ -253,7 +253,7 @@ public class Main {
         io.writeln("       línia: nombre d'opcions");
         io.writeln("       següents línies: cada opció\n");
 
-        io.writeln("Introdueix el nombre de ficher d'enquesta (sense extensio): ");
+        io.writeln("Introdueix el nombre de fitxer d'enquesta (sense extensió): ");
         String fitxer = io.readword().trim();
         String path = Base_path + File.separator + fitxer + ".txt";
         io.writeln("Llegint fitxer: " + path);
