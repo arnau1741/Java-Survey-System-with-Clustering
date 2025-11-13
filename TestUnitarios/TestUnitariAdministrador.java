@@ -8,16 +8,13 @@ import static org.hamcrest.Matcher.*;
 
 public class TestUnitariAdministrador {
 
-    private PerfilAdministrador admin, admin2;
+    private PerfilAdministrador admin;
 
     @Before
     public void setUp() {
         admin = new PerfilAdministrador(
                 0,"Anna", "1234",
                 "anna@gmail.com");
-        admin2 = new PerfilAdministrador(
-                1,"Joan", "5678",
-                "joan@gmail.com");
     }
 
     @Test
