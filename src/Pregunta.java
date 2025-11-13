@@ -118,6 +118,11 @@ public class Pregunta {
         }
     }
 
+    public void eliminarTotesRespostes() {
+        respostes.clear();
+        minKeyRespostes = -1;
+    }
+
     @Override
     public String toString() {
         return "Pregunta Text: " + text + ", Tipus: " + opcions.get(tipus);

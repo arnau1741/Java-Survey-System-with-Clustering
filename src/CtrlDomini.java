@@ -144,10 +144,18 @@ public class CtrlDomini {
     //deberiamos hacer mas versiones en un futuro.
     public int modificarPreguntaEnquesta(int idUsuari, int idxPregunta, List<String> novaPregunta){
         //borrar todas las respuestas
-        //get enquesta
-        //crear nueva pregunta
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idxPregunta);
+        List<Pregunta> preguntes = enq.getPreguntesObj();
+        for (Pregunta p : preguntes) {
+            p.eliminarTotesRespostes();
+        }
+        //crear la nueva pregunta
+        List<Pregunta> preguntesObj = transformaPreguntesAObj(novaPregunta);
+        //assignar la nueva pregunta a la enquesta
+        enq.canviarPregunta(idxPregunta, preguntesObj.get(0));
         //setearla como nueva pregunta
-        return 0;
+
+        return 1; // Èxit
     }
 
     public void esborrarRespostaEnquesta(int idUsuari, int idEnquesta, int idEnquestat){

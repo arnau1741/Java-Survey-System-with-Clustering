@@ -171,6 +171,13 @@ public class Enquesta {
         return respostesUsuari;
     }
 
+    public void canviarPregunta(int idxPregunta, Pregunta novaPregunta) {
+        if (idxPregunta < 0 || idxPregunta >= preguntes.size()) {
+            throw new IndexOutOfBoundsException("Índex de pregunta fora de rang: " + idxPregunta);
+        }
+        preguntes.set(idxPregunta, novaPregunta);
+    }
+
     /*
     public boolean participa(int id) {
         if (id < 0) throw new IllegalArgumentException("L'id de l'usuari no pot ser negatiu.");

@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariAdministrador.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariAdministrador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pruebas/importarRespostesCafe.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Pruebas/importarRespostesCafe.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CtrlDomini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CtrlDomini.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Enquesta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enquesta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pregunta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pregunta.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +87,16 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true" show_console_on_std_out="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="subgrup-prop21.5" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestPregunta" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
@@ -103,19 +115,16 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.TestPregunta" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.TestPregunta" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
