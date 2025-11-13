@@ -38,6 +38,39 @@ public class CtrlDomini {
         this.ctrlDominiMantEnquesta.addEnquesta(novaEnquesta);
     }
 
+    /////////////////////// Caso de uso - Importar enquesta //////////////////
+    public int importarEnquesta(int idUsuari, string path){
+        return 0;
+    }
+    /// 
+    /// 
+    public int importarRespostes(int idUsuari, string path, int idEnquesta){
+        return 0;
+    }
+
+    public int eliminarEnquesta(int idUsuari, int idEnquesta){
+        //borrar de ctrlDominiMantEnquesta
+        //borrar de usuarios
+        return 0;
+    }
+
+    //deberiamos hacer mas versiones en un futuro.
+    public int modificarPreguntaEnquesta(int idUsuari, int idxPregunta, List<String> novaPregunta){
+        //borrar todas las respuestas
+        //get enquesta
+        //crear nueva pregunta
+        //setearla como nueva pregunta
+        return 0;
+    }
+
+    public int esborrarRespostaEnquesta(int idUsuari, int idEnquesta, int idEnquestat){
+        //pensar en como trabajar con idEnquestat.
+        return 0;
+    }
+
+
+
+
     ////////////////////// Caso de uso  clustering //////////////////////
     public Map<Integer, Integer> clustering(int idEnquesta, int k, int maxIterations) {
         Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
