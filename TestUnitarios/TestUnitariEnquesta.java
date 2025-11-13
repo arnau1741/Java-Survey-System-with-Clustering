@@ -12,7 +12,7 @@ public class TestUnitariEnquesta {
         List<Pregunta> preguntes = new ArrayList<>();
 
        preguntes.add(new Pregunta("Edat?", 0, new ArrayList<>()));
-       preguntes.add(new Pregunta("Color preferit?", 1, new ArrayList<>()));
+       preguntes.add(new Pregunta("Color preferit?", 1, Arrays.asList("Groc", "Blau", "Vermell", "Verd")));
        preguntes.add(new Pregunta("Aficions?", 3, Arrays.asList("Cinema", "Esport", "Lectura")));
        preguntes.add(new  Pregunta("Comentaris?", 4, new ArrayList<>()));
 
@@ -31,7 +31,7 @@ public class TestUnitariEnquesta {
 
     @Test
     public void testStringARespostes() {
-        List<String> respostesStr = Arrays.asList("25", "1", "0,2", "Cap comentari");
+        List<String> respostesStr = Arrays.asList("25.5", "1", "0,2", "Cap comentari");
         List<Resposta> respostes = e.stringARespostes(respostesStr);
 
         assertEquals(4, respostes.size());
@@ -44,7 +44,7 @@ public class TestUnitariEnquesta {
     @Test
     public void testGetPreguntes() {
         List<String> preguntesTxt = e.getPreguntes();
-        assertEquals(13, preguntesTxt.size());
+        assertEquals(17, preguntesTxt.size());
     }
 
     @Test
