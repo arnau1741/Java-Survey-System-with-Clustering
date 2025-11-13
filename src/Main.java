@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,10 +7,14 @@ import java.util.List;
 
 public class Main {
 
+    //Variable per defecte per als fitxers
+    private static String Base_path;
+
     public static void main(String[] args) {
         CtrlDomini ctrl = new CtrlDomini();
         inout io = new inout();
         int opcio = -1;
+        Base_path = inicialitzarRutaBase();
 
         try {
             do {
@@ -39,6 +44,24 @@ public class Main {
                 // Si ni tan sols podem escriure l'error, no fem res més
             }
         }
+    }
+
+    private static String inicialitzarRutaBase() {
+        String dir = System.getProperty("user.dir");
+
+        // Para IntelliJ: si estamos ejecutando desde out/production, ajustar la ruta
+        if (dir.contains("out") && dir.contains("production")) {
+            dir = new File(dir).getParentFile().getParentFile().getAbsolutePath();
+        }
+
+        File pruebasDir = new File(dir, "Pruebas");
+
+        // Si no existe, crear la carpeta
+        if (!pruebasDir.exists()) {
+            pruebasDir.mkdirs();
+        }
+
+        return pruebasDir.getAbsolutePath();
     }
 
     // ========================= MENÚ =========================
