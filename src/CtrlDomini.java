@@ -53,7 +53,6 @@ public class CtrlDomini {
         //borrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
         //borrar de usuarios //si queremos hacer esto, implementar la logica en crear
-
     }
 
     //deberiamos hacer mas versiones en un futuro.

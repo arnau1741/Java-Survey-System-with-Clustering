@@ -18,6 +18,12 @@ public class CtrlDominiMantEnquesta {
         }
     }
 
+    public void eliminarEnquesta(int idEnquesta) {
+        if (enquestes.containsKey(idEnquesta)) {
+            enquestes.remove(idEnquesta);
+        }
+    }
+
     // Método para obtener el número total de encuestas
     public int getNumEnquestes() {
         return enquestes.size();
