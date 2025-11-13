@@ -2,7 +2,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class CtrlDomini {
     //Tiene que estar todos los gestores creados
@@ -87,17 +89,56 @@ public class CtrlDomini {
         }
         return exportat;
     }
-    /// 
+    /// importarRespostes funcio que llegeix les respostes d'un fitxer 
+    /// leer: (numPreguntas, PREGUNTA1, PREGUNTA2, ...PREGUNTAn, RESPUESTA1, RESPUESTA2, ... RESPUESTAm) 
+    ///RESPUESTAj = (resp1, resp2,... respn)
     public int importarRespostes(int idUsuari, String path, int idEnquesta){
-        return 0;
+        //llegir fitxer
+        List<String> respostesTxt = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                respostesTxt.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1; // Error al leer el archivo
+        }
+        //afegir respostes a l'enquesta
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (enq == null) {
+            return -2; // Enquesta no existeix
+        }
+        //llegim el nombre de respostes (primer linia)
+        int numRespostes = Integer.parseInt(respostesTxt.get(0));
+        int numPreguntes = enq.getNumPreguntes();
+        System.out.println("NumRespostes llegides: " + numRespostes);
+        System.out.println("NumPreguntes de l'enquesta: " + numPreguntes);
+
+        //llegim les respostes (a partir de la linia 1, una resposta per linia)
+        List<String> respostesUsuari = new ArrayList<>();
+        for (int i = 1; i <= numRespostes*numPreguntes; i++) {
+            respostesUsuari.add(respostesTxt.get(i));
+            if (i%numPreguntes == 0) {
+                //afegim la resposta a l'enquesta
+                List<Resposta> respostesObj = enq.stringARespostes(respostesUsuari);
+                enq.afegeixResposta(-1, respostesObj);
+                //netegem la llista de respostes per al seguent usuari
+                //mostra les respostes afegides
+                System.out.println("Respostes afegides per usuari " + (i/numPreguntes) + ": " + respostesUsuari);
+
+                respostesUsuari.clear();
+            }
+        }
+        return numRespostes; // Èxit
     }
 
     public void eliminarEnquesta(int idUsuari, int idEnquesta){
         //borrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
         //borrar de usuarios //si queremos hacer esto, implementar la logica en crear
-        Usuari us = ctrlDominiMantUsuari.getUsuari(idUsuari);
-        //us.eliminarEnquestaCreada(idEnquesta);
+        Usuari usuari = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        usuari.eliminarEnquesta(idEnquesta);
     }
 
     //deberiamos hacer mas versiones en un futuro.

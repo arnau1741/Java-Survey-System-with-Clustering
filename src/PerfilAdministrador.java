@@ -68,4 +68,10 @@ public class PerfilAdministrador extends Usuari
         enquestesAdministrades.removeIf(e -> e.getId() == idEnquesta);
     }
 
+    public void eliminarEnquesta(int idEnquesta) {
+        eliminarEnquestaAdministrada(idEnquesta);
+        eliminarEnquestaAssignada(idEnquesta);
+        eliminarEnquestaRealitzada(idEnquesta);
+    }
+
 }

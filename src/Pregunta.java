@@ -9,6 +9,7 @@ public class Pregunta {
     private String text;
     private Integer tipus;
     private Map<Integer, Resposta> respostes; 
+    private int minKeyRespostes; // Per a respostes d'usuaris no registrats
     private final Integer numOpcions; // Nombre d'opcions per a preguntes UNICA, MULTIPLE, ORDENADA
     private final List<String> opcions;
     private double minValue; // Per a preguntes NUMERICA
@@ -19,6 +20,7 @@ public class Pregunta {
         this.text = text;
         this.tipus = tipus;
         this.respostes = new java.util.HashMap<>();
+        this.minKeyRespostes = -1;
         if (tipus == 0 || tipus == 4) {
             this.numOpcions = 0; // No s'aplica per a NUMERICA i LLIURE
             this.opcions = null;
@@ -84,6 +86,11 @@ public class Pregunta {
     }
 
     public Integer addResposta(Resposta resposta, int idUsuari) {
+        if (idUsuari == -1) { // Usuari no registrat
+            respostes.put(minKeyRespostes, resposta);
+            minKeyRespostes--;
+            return 1;
+        }
         if (respostes.containsKey(idUsuari)) {
             return 0; // Ja existeix una resposta per aquest usuari
         }

@@ -6,7 +6,7 @@ Petita enquesta sobre hàbits de consum de cafè.
 Quants cafès prens al dia?
 1
 Prefereixes el cafè amb llet o sense?
-2
+3
 Amb llet
 Sense llet
 Altres

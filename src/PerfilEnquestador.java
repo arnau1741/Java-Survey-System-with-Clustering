@@ -23,11 +23,24 @@ public class PerfilEnquestador extends Usuari
         enquestesAssignades.add(enquesta);
     }
 
+    public void afegirEnquestaRealitzada(Enquesta enquesta) {
+        enquestesRealitzada.add(enquesta);
+    }
+
     public void eliminarEnquestaAssignada(int idEnquesta) {
         enquestesAssignades.removeIf(e -> e.getId() == idEnquesta);
     }
 
+    public void eliminarEnquestaRealitzada(int idEnquesta) {
+        enquestesRealitzada.removeIf(e -> e.getId() == idEnquesta);
+    }
+
     public List<Enquesta> getEnquestesAssignades() {
         return enquestesAssignades;
+    }
+
+    public void eliminarEnquesta(int idEnquesta) {
+        eliminarEnquestaAssignada(idEnquesta);
+        eliminarEnquestaRealitzada(idEnquesta);
     }
 }

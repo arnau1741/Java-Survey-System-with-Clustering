@@ -27,5 +27,6 @@ public abstract class Usuari {
     public void setUsuari(String usuari) { this.nomUsuari = usuari; }
     public void setEmail(String email) { this.email = email; }
     public void setBlocked(boolean blocked) { this.blocked = blocked; }
+    public abstract void eliminarEnquesta(int idEnquesta);
 }
 

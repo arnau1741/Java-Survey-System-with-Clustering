@@ -29,4 +29,8 @@ public class PerfilEnquestat extends Usuari
     public List<Enquesta> getEnquestesRealitzades() {
         return enquestesRealitzades;
     }
+
+    public void eliminarEnquesta(int idEnquesta) {
+        eliminarEnquestaRealitzada(idEnquesta);
+    }
 }
