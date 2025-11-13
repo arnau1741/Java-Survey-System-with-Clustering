@@ -155,7 +155,7 @@ public class Main {
             }
         }
         ctrl.respondreEnquesta(idEnquesta, idUsuari, respostesUsuari);
-        io.writeln("\n[OK] Enquesta respondida correctament!\n");
+        io.writeln("\n[OK] Enquesta resposta correctament!\n");
     }
 
 
