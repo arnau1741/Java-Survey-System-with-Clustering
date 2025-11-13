@@ -33,6 +33,17 @@ public class PerfilAdministrador extends Usuari
         return enquestesRealitzada;
     }
 
+    public boolean enquestaAssignada(int idEnquesta) {
+        for (Enquesta e : enquestesAssignades) {
+            if (e.getId() == idEnquesta) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
     public void afegirEnquestaAssignada(Enquesta enquesta) {
         enquestesAssignades.add(enquesta);
     }
