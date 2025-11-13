@@ -32,6 +32,7 @@ public class Main {
                     case 4 -> ctrl.mostrarEnquestesAmbPreguntes();
                     case 5 -> respondreEnquesta(io, ctrl);
                     case 6 -> ctrl.mostrarEnquestesAmbPreguntesIRespostes();
+                    case 7 -> exportarEnquesta(io, ctrl);
 
                     default -> io.writeln("\n[ERROR] Opció no vàlida. Torna-ho a intentar.\n");
                 }
@@ -78,8 +79,8 @@ public class Main {
         io.writeln(" 4) Mostrar enquestes amb preguntes");
         io.writeln(" 5) Respon enquesta");
         io.writeln(" 6) Mostrar enquestes amb preguntes i respostes");
-        /*
         io.writeln(" 7) Exportar enquesta");
+        /*
         io.writeln(" 8) Importar respostes");
         io.writeln(" 9) Exportar respostes");
         io.writeln(" 10) Crear usuari");
