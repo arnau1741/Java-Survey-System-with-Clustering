@@ -36,6 +36,7 @@ public class CtrlDomini {
         int id = ctrlDominiMantEnquesta.getIdEnquestaNova();
         Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntesObj);
         this.ctrlDominiMantEnquesta.addEnquesta(novaEnquesta);
+
     }
 
     /////////////////////// Caso de uso - Importar enquesta //////////////////
@@ -48,10 +49,11 @@ public class CtrlDomini {
         return 0;
     }
 
-    public int eliminarEnquesta(int idUsuari, int idEnquesta){
+    public void eliminarEnquesta(int idUsuari, int idEnquesta){
         //borrar de ctrlDominiMantEnquesta
-        //borrar de usuarios
-        return 0;
+        ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
+        //borrar de usuarios //si queremos hacer esto, implementar la logica en crear
+
     }
 
     //deberiamos hacer mas versiones en un futuro.
@@ -63,9 +65,10 @@ public class CtrlDomini {
         return 0;
     }
 
-    public int esborrarRespostaEnquesta(int idUsuari, int idEnquesta, int idEnquestat){
+    public void esborrarRespostaEnquesta(int idUsuari, int idEnquesta, int idEnquestat){
         //pensar en como trabajar con idEnquestat.
-        return 0;
+
+
     }
 
 
