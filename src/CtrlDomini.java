@@ -33,7 +33,7 @@ public class CtrlDomini {
     /////////////////////// Caso de uso 2 - Crear enquesta //////////////////////
     public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) { //Final
         List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntes);
-        int id = ctrlDominiMantEnquesta.getNumEnquestes();
+        int id = ctrlDominiMantEnquesta.getIdEnquestaNova();
         Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntesObj);
         this.ctrlDominiMantEnquesta.addEnquesta(novaEnquesta);
     }
