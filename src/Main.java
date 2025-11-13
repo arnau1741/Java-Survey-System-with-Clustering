@@ -224,9 +224,15 @@ public class Main {
         io.writeln("       línia: nombre d'opcions");
         io.writeln("       següents línies: cada opció\n");
 
-        io.write("Introdueix el nom o ruta del fitxer: ");
-        //Se cambia el path
-        String path = io.readline();
+        io.writeln("Introdueix el nombre de ficher d'enquesta (sense extensio): ");
+        String fitxer = io.readword().trim();
+        String path = Base_path + File.separator + fitxer + ".txt";
+        io.writeln("Llegint fitxer: " + path);
+        File f = new File(path);
+        if (!f.exists()) {
+            io.writeln("No s'ha trobat el fitxer!");
+            return;
+        }
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String titol = llegirObligatori(br, "Falta títol");
