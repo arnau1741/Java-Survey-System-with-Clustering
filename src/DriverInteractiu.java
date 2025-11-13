@@ -101,7 +101,7 @@ public class DriverInteractiu {
             Resposta resposta = obtenirRespostaUsuari(pregunta);
             if (resposta != null) {
                 try {
-                    resposta.validar();
+                    //resposta.validar();
                     int resultat = pregunta.addResposta(resposta, idUsuari);
                     if (resultat == 1) {
                         respostesUsuari.add(resposta);
@@ -109,8 +109,8 @@ public class DriverInteractiu {
                     } else {
                         System.out.println("Ja havies respost a aquesta pregunta");
                     }
-                } catch (RespostaInvalida e) {
-                    System.out.println("Resposta invàlida: " + e.getMessage());
+                } catch (Exception e) {
+                    //System.out.println("Resposta invàlida: " + e.getMessage());
                     i--;
                 }
             }
