@@ -1,14 +1,15 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
     public static String Base_path;
+
 
     /**
      * Mostra el menú principal
@@ -40,6 +41,25 @@ public class Utils {
         io.write("Selecciona una opció: ");
     }
 
+
+    /**
+     * Llegeix una opció de menú
+     * @param io objecte d'entrada/sortida
+     * @return l'opció llegida
+     * @throws Exception si hi ha un error d'entrada/sortida
+     */
+    public static int llegirOpcio(inout io) throws Exception {
+        int opcio;
+        try {
+            opcio = io.readint();
+        } catch (Exception e) {
+            opcio = -1; // si entra qualsevol cosa rara
+        }
+        io.readline(); // consumir fi de línia
+        return opcio;
+    }
+
+
     /**
      * Mostra una enquesta donat el seu Id
      * @param io objecte d'entrada/sortida
@@ -54,7 +74,12 @@ public class Utils {
     }
 
 
-    ////////////////////// Funcioanlitats ////////////////////////////////
+    // ==================== Funcionalitats ====================
+
+
+    //=================== RESPONDRE ENQUESTA ====================
+
+
     /**
      * Permet respondre una enquesta
      * @param io objecte d'entrada/sortida
@@ -112,37 +137,9 @@ public class Utils {
         io.writeln("\n[OK] Enquesta resposta correctament!\n");
     }
 
-    /**
-     * Importa respostes des d'un fitxer
-     * @param io objecte d'entrada/sortida
-     * @param ctrl controlador de domini
-     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
-     */
-    public static void importarRespostes(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("\n--- IMPORTAR RESPOSTES DES DE FITXER ---");
-        io.write("Introdueix l'ID de l'usuari que respon l'enquesta: ");
-        int idUsuari = io.readint();
-        io.readline();
 
-        io.write("Introdueix l'ID de l'enquesta: ");
-        int idEnquesta = io.readint();
-        io.readline();
+    // ==================== CREACIÓ MANUAL D'ENQUESTA ====================
 
-        io.write("Introdueix el nombre de fitxer de respostes (sense extensió): ");
-        String fitxer = io.readword().trim();
-        String path = Base_path + File.separator + fitxer + ".txt";
-        io.writeln("Llegint fitxer: " + path);
-        File f = new File(path);
-        if (!f.exists()) {
-            io.writeln("No s'ha trobat el fitxer!");
-            return;
-        }
-
-        int numRespostesImportades = ctrl.importarRespostes(idUsuari, path, idEnquesta);
-        io.writeln("\n[OK] Respostes importades correctament! Total respostes importades: " + numRespostesImportades + "\n");
-    }
-
-    // ==================== CREACIÓ MANUAL ====================
 
     /**
      * Crea una enquesta manualment
@@ -202,7 +199,9 @@ public class Utils {
         io.writeln("\n[OK] Enquesta creada correctament!\n");
     }
 
+
     // ==================== CREACIÓ DES DE FITXER ====================
+
 
     /**
      * Crea una enquesta des de fitxer
@@ -283,6 +282,44 @@ public class Utils {
         }
     }
 
+
+    // ==================== IMPORTAR RESPOSTES ====================
+
+
+    /**
+     * Importa respostes des d'un fitxer
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     */
+    public static void importarRespostes(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("\n--- IMPORTAR RESPOSTES DES DE FITXER ---");
+        io.write("Introdueix l'ID de l'usuari que respon l'enquesta: ");
+        int idUsuari = io.readint();
+        io.readline();
+
+        io.write("Introdueix l'ID de l'enquesta: ");
+        int idEnquesta = io.readint();
+        io.readline();
+
+        io.write("Introdueix el nombre de fitxer de respostes (sense extensió): ");
+        String fitxer = io.readword().trim();
+        String path = Base_path + File.separator + fitxer + ".txt";
+        io.writeln("Llegint fitxer: " + path);
+        File f = new File(path);
+        if (!f.exists()) {
+            io.writeln("No s'ha trobat el fitxer!");
+            return;
+        }
+
+        int numRespostesImportades = ctrl.importarRespostes(idUsuari, path, idEnquesta);
+        io.writeln("\n[OK] Respostes importades correctament! Total respostes importades: " + numRespostesImportades + "\n");
+    }
+
+
+    // ==================== CONSULTAR PERFIL USUARI ====================
+
+
     /**
      * Permet consultar el perfil d'un usuari
      * @param io objecte d'entrada/sortida
@@ -294,6 +331,10 @@ public class Utils {
         int idUsuari = io.readint();
         ctrl.consultarPerfil(idUsuari);
     }
+
+
+    // ==================== EXPORTAR ENQUESTA ====================
+
 
     /**
      * Exporta una enquesta a un fitxer
@@ -317,6 +358,9 @@ public class Utils {
         writeAllLines(path, export);
         io.writeln("Enquesta exportada correctament a: " + path);
     }
+
+
+
 
     /**
      * Escriu totes les línies a un fitxer
@@ -373,25 +417,4 @@ public class Utils {
             throw new IllegalArgumentException(errorMsg + " (valor llegit: '" + s + "')");
         }
     }
-
-    /**
-     * Llegeix una opció de menú
-     * @param io objecte d'entrada/sortida
-     * @return l'opció llegida
-     * @throws Exception si hi ha un error d'entrada/sortida
-     */
-    public static int llegirOpcio(inout io) throws Exception {
-        int opcio;
-        try {
-            opcio = io.readint();
-        } catch (Exception e) {
-            opcio = -1; // si entra qualsevol cosa rara
-        }
-        io.readline(); // consumir fi de línia
-        return opcio;
-    }
-
-
-
-
 }
