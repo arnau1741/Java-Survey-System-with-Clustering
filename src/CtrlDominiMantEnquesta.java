@@ -5,11 +5,20 @@ public class CtrlDominiMantEnquesta {
     private int ultimIdEnquesta = 0;
 
     // Constructor que inicializa la colección de encuestas
+
+    /**
+     * Constructor de la classe CtrlDominiMantEnquesta
+     */
     public CtrlDominiMantEnquesta() {
         enquestes = new HashMap<>();
     }
 
-    // Método para agregar una encuesta
+
+    /**
+     * Afegeix una enquesta a la col·lecció d'enquestes
+     * @param enquesta a afegir
+     * @throws IllegalArgumentException si l'enquesta és nul·la
+     */
     public void addEnquesta(Enquesta enquesta) {
         if (enquesta != null) {
             enquestes.put(enquesta.getId(), enquesta);
@@ -18,26 +27,40 @@ public class CtrlDominiMantEnquesta {
         }
     }
 
-    //Método para eliminar una encuesta por su ID
+    /**
+     * Elimina una enquesta de la col·lecció d'enquestes
+     * @param idEnquesta de l'enquesta a eliminar
+     */
     public void eliminarEnquesta(int idEnquesta) {
         if (enquestes.containsKey(idEnquesta)) {
             enquestes.remove(idEnquesta);
         }
     }
 
-    // Método para obtener el número total de encuestas
+    /**
+     * Obtén el número total de encuestas
+     * @return número d'enquestes
+     */
     public int getNumEnquestes() {
         return enquestes.size();
     }
 
-    //Método para obtener un nuevo ID de encuesta
+    /**
+     * Obtenir un id nou per a una enquesta
+     * @return id nou
+     */
     public int getIdEnquestaNova() {
         int tmp = ultimIdEnquesta;
         ultimIdEnquesta++;
         return tmp;
     }
 
-    // Método para obtener una encuesta por su ID
+    /**
+     * Obtenir una enquesta donat el seu id
+     * @param idEnquesta de l'enquesta a obtenir
+     * @return enquesta amb l'id donat
+     * @throws NoSuchElementException si no existeix l'enquesta amb l'id donat
+     */
     public Enquesta getEnquesta(int idEnquesta) {
         Enquesta enq = enquestes.get(idEnquesta);
         if (enq == null) {
@@ -46,7 +69,11 @@ public class CtrlDominiMantEnquesta {
         return enq;
     }
 
-    // Método para obtener las preguntas de una encuesta
+    /**
+     * Obtenir les preguntes d'una enquesta donat el seu id
+     * @param idEnquesta de l'enquesta
+     * @return llista de preguntes de l'enquesta, llista buida si no es troba l'enquesta
+     */
     public List<String> getPreguntesEnquesta(int idEnquesta) {
         Enquesta enq = enquestes.get(idEnquesta);
         if (enq != null) {
@@ -55,7 +82,9 @@ public class CtrlDominiMantEnquesta {
         return Collections.emptyList();  // Devuelve una lista vacía si no se encuentra la encuesta
     }
 
-    // Método para mostrar todas las encuestas
+    /**
+     * Funcio per mostrar totes les enquestes
+     */
     public void mostrarEnquestes() {
         if (enquestes.isEmpty()) {
             System.out.println("No hay encuestas disponibles.");
