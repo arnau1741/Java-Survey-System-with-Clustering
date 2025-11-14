@@ -72,4 +72,25 @@ public class TestUnitariEnquestat {
         assertThat(enquestat.getEnquestesRealitzades().get(0), equalTo(enquesta1));
         assertThat(enquestat.getEnquestesRealitzades().get(1), equalTo(enquesta2));
     }
+
+    //Casos extrems
+    @Test
+    public void testEliminarDeLlistaBuida() {
+        enquestat.eliminarEnquestaRealitzada(1);
+        assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(0));
+    }
+
+    @Test
+    public void testEliminarEnquestaInexistent() {
+        // Afegeix una enquesta
+        Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
+        enquestat.afegirEnquestaRealitzada(enquesta);
+
+        // Intenta eliminar una que no existeix
+        enquestat.eliminarEnquestaRealitzada(99);
+
+        // Comprova que la llista no ha canviat i l'enquesta original segueix allà
+        assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(1));
+        assertThat(enquestat.haRealitzatEnquesta(1), equalTo(true));
+    }
 }

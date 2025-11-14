@@ -61,4 +61,23 @@ public class TestUnitariAdministrador {
         assertThat(enquestes.get(0), equalTo(enquesta));
         assertThat(enquestes.get(1), equalTo(enquesta2));
     }
+
+    //Casos extrems
+    @Test
+    public void testEliminarDeLlistaBuida() {
+        admin.eliminarEnquestaAdministrada(1);
+        assertThat(admin.getEnquestesAdministrades().size(), equalTo(0));
+    }
+
+    @Test
+    public void testEliminarEnquestaInexistent() {
+        Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
+        admin.afegirEnquestaAdministrada(enquesta);
+
+        admin.eliminarEnquestaAdministrada(99);
+
+        // Comprova que la llista no ha canviat i l'enquesta original segueix allà
+        assertThat(admin.getEnquestesAdministrades().size(), equalTo(1));
+        assertThat(admin.enquestaAdministrada(1), equalTo(true));
+    }
 }
