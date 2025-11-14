@@ -16,6 +16,14 @@ public class Pregunta {
     private double maxValue; // Per a preguntes NUMERICA
 
     //Format Pregunta_qualsevol? -- Defineix tipus de resposta
+
+    /**
+     * Constructor de la classe Pregunta
+     * @param text de la pregunta
+     * @param tipus de la pregunta
+     * @param opcions per a preguntes UNICA, MULTIPLE, ORDENADA
+     * @throws IllegalArgumentException si el tipus de pregunta és desconegut
+     */
     public Pregunta(String text, int tipus, List<String> opcions) {
         this.text = text;
         this.tipus = tipus;
@@ -34,25 +42,52 @@ public class Pregunta {
     }
 
     // getters
+
+    /**
+     * Getter de la pregunta
+     * @return la pròpia pregunta
+     */
     public Pregunta getPregunta() {
         return this;
     }
 
+    /**
+     * Getter del text de la pregunta
+     * @return el text de la pregunta
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * Getter del tipus de la pregunta
+     * @return el tipus de la pregunta
+     */
     public int getTipus() {
         return tipus;
     }
 
+    /**
+     * Getter de les opcions de la pregunta
+     * @return les opcions de la pregunta
+     */
     public List<String> getOpcions() {
         return opcions;
     }
 
+    /**
+     * Getter del map de respostes de la pregunta
+     * @return el map de respostes de la pregunta
+     */
     public Map<Integer, Resposta> getRespostes() {
         return Collections.unmodifiableMap(respostes);
     }
+
+    /**
+     * Getter del valor mínim per a preguntes numèriques
+     * @return el valor mínim
+     * @throws UnsupportedOperationException si la pregunta no és numèrica
+     */
     public double getMinValue() {
         if (tipus == 0) { // NUMERICA
             return minValue;
@@ -60,6 +95,12 @@ public class Pregunta {
             throw new UnsupportedOperationException("No es pot obtenir el valor mínim per a aquest tipus de pregunta.");
         }
     }
+
+    /**
+     * Getter del valor màxim per a preguntes numèriques
+     * @return el valor màxim
+     * @throws UnsupportedOperationException si la pregunta no és numèrica
+     */
     public double getMaxValue() {
         if (tipus == 0) { // NUMERICA
             return maxValue;
@@ -68,6 +109,11 @@ public class Pregunta {
         }
     }
 
+    /**
+     * Getter del nombre d'opcions per a preguntes UNICA, MULTIPLE, ORDENADA
+     * @return el nombre d'opcions
+     * @throws UnsupportedOperationException si la pregunta no és d'aquests tipus
+     */
     public int getNumOpcions() {
         if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, MULTIPLE, ORDENADA
             return numOpcions;
@@ -76,15 +122,29 @@ public class Pregunta {
         }
     }
 
+    /**
+     * Getter del nombre de respostes a la pregunta
+     * @return el nombre de respostes
+     */
     public int getNumRespostes() {
         return respostes.size();
     }
 
     // setters
+    /**
+     * Setter del text de la pregunta
+     * @param newText nou text de la pregunta
+     */
     public void setText(String newText) {
         text = newText;
     }
 
+    /**
+     * Afegeix una resposta a la pregunta
+     * @param resposta a afegir
+     * @param idUsuari identificador de l'usuari que fa la resposta (-1 si no està registrat)
+     * @return 1 si s'ha afegit correctament, 0 si ja existeix una resposta per aquest usuari
+     */
     public Integer addResposta(Resposta resposta, int idUsuari) {
         if (idUsuari == -1) { // Usuari no registrat
             respostes.put(minKeyRespostes, resposta);
@@ -98,6 +158,11 @@ public class Pregunta {
         return 1;
     }
 
+    /**
+     * Calcula la moda de les respostes per a preguntes UNICA, MULTIPLE, ORDENADA
+     * @return la resposta moda
+     * @throws UnsupportedOperationException si la pregunta no és d'aquests tipus
+     */
     public Resposta getRespostaModa(){
         if (tipus == 1 ||tipus == 2 || tipus==3){
             Map<Resposta, Integer> freqMap = new HashMap<>();
@@ -118,6 +183,9 @@ public class Pregunta {
         }
     }
 
+    /**
+     * Elimina totes les respostes de la pregunta
+     */
     public void eliminarTotesRespostes() {
         respostes.clear();
         minKeyRespostes = -1;
