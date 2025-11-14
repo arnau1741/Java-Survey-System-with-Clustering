@@ -192,7 +192,7 @@ public class KMeans{
 
 //////////////////////// Funcions distancia locals ///////////////////////////////
 
-    private double distanciaNumerica(RespostaNumerica a, RespostaNumerica b, double min, double max) {
+    public double distanciaNumerica(RespostaNumerica a, RespostaNumerica b, double min, double max) {
         if (a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
         }
@@ -202,7 +202,7 @@ public class KMeans{
         return Math.abs(a.getValor() - b.getValor()) / (max - min);
     }
 
-    private double distanciaOrdenada (RespostaOrdenada a, RespostaOrdenada b, int numOpcions) {
+    public double distanciaOrdenada (RespostaOrdenada a, RespostaOrdenada b, int numOpcions) {
         if (a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
         }
@@ -214,7 +214,7 @@ public class KMeans{
         return Math.abs(ordenA - ordenB)/(numOpcions - 1);
     }
 
-    private double distanciaNoOrdenadaUnica(Resposta a, Resposta b) {
+    public double distanciaNoOrdenadaUnica(Resposta a, Resposta b) {
         if (a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
         }
@@ -224,7 +224,7 @@ public class KMeans{
         return a.equals(b) ? 0.0 : 1.0;
     }
 
-    private double distanciaNoOrdenadaMultiple(RespostaMultiple a, RespostaMultiple b) {
+    public double distanciaNoOrdenadaMultiple(RespostaMultiple a, RespostaMultiple b) {
         if (a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
         }
@@ -257,7 +257,7 @@ public class KMeans{
         
 
 
-    private double distance(List<Resposta> a, List<Resposta> b, List<Pregunta> preguntes) {
+    public double distance(List<Resposta> a, List<Resposta> b, List<Pregunta> preguntes) {
         double sum = 0.0;
         int numPreguntes = preguntes.size();
         for (int i = 0; i < numPreguntes; i++) {
