@@ -2,11 +2,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matcher.*;
 
-public class TestUnitariEnquestat {
+public class TestUnitariEnquestat_Stub {
 
     private PerfilEnquestat enquestat, enquestat2;
 
@@ -37,39 +35,63 @@ public class TestUnitariEnquestat {
 
     @Test
     public void afegirEnquestaRealitzadaFuncionaCorrectament() {
-        //id, titol, descripcio, idcreador, preguntes
-        Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
-        Enquesta enquesta2 = new Enquesta(2, "Titol2", "Desc2", 3, new java.util.ArrayList<>());
+        Enquesta enquesta = new EnquestaStub(1);
+        Enquesta enquesta2 = new EnquestaStub(2);
+
         enquestat.afegirEnquestaRealitzada(enquesta);
         assertThat(enquestat.haRealitzatEnquesta(1), equalTo(true));
         assertThat(enquestat.haRealitzatEnquesta(2), equalTo(false));
+
         enquestat.afegirEnquestaRealitzada(enquesta2);
         assertThat(enquestat.haRealitzatEnquesta(2), equalTo(true));
     }
 
     @Test
     public void eliminarEnquestaRealitzadaFuncionaCorrectament() {
-        Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
-        Enquesta enquesta2 = new Enquesta(2, "Titol2", "Desc2", 3, new java.util.ArrayList<>());
+        Enquesta enquesta = new EnquestaStub(1);
+        Enquesta enquesta2 = new EnquestaStub(2);
+
         enquestat.afegirEnquestaRealitzada(enquesta);
         enquestat.afegirEnquestaRealitzada(enquesta2);
+
         assertThat(enquestat.haRealitzatEnquesta(1), equalTo(true));
         assertThat(enquestat.haRealitzatEnquesta(2), equalTo(true));
+
         enquestat.eliminarEnquestaRealitzada(1);
         assertThat(enquestat.haRealitzatEnquesta(1), equalTo(false));
         assertThat(enquestat.haRealitzatEnquesta(2), equalTo(true));
+
         enquestat.eliminarEnquestaRealitzada(2);
         assertThat(enquestat.haRealitzatEnquesta(2), equalTo(false));
     }
 
     @Test
     public void getEnquestesRealitzadesFuncionaCorrectament() {
-        Enquesta enquesta1 = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
-        Enquesta enquesta2 = new Enquesta(2, "Titol2", "Desc2", 3, new java.util.ArrayList<>());
+        Enquesta enquesta1 = new EnquestaStub(1);
+        Enquesta enquesta2 = new EnquestaStub(2);
+
         enquestat.afegirEnquestaRealitzada(enquesta1);
         enquestat.afegirEnquestaRealitzada(enquesta2);
+
         assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(2));
-        assertThat(enquestat.getEnquestesRealitzades().get(0), equalTo(enquesta1));
-        assertThat(enquestat.getEnquestesRealitzades().get(1), equalTo(enquesta2));
+        assertThat(enquestat.getEnquestesRealitzades().get(0).getId(), equalTo(1));
+        assertThat(enquestat.getEnquestesRealitzades().get(1).getId(), equalTo(2));
+    }
+
+    @Test
+    public void testEliminarDeLlistaBuida() {
+        enquestat.eliminarEnquestaRealitzada(1);
+        assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(0));
+    }
+
+    @Test
+    public void testEliminarEnquestaInexistent() {
+        Enquesta enquesta = new EnquestaStub(1);
+        enquestat.afegirEnquestaRealitzada(enquesta);
+
+        enquestat.eliminarEnquestaRealitzada(99);
+
+        assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(1));
+        assertThat(enquestat.haRealitzatEnquesta(1), equalTo(true));
     }
 }
