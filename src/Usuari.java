@@ -8,6 +8,13 @@ public abstract class Usuari {
     private boolean blocked;
 
     // Constructor
+    /**
+     * Funcio constructora de la classe Usuari
+     * @param idUsuari de l'usuari
+     * @param nomUsuari de l'usuari
+     * @param contrasenya de l'usuari
+     * @param email de l'usuari
+     */
     public Usuari(int idUsuari, String nomUsuari, String contrasenya, String email) {
         this.idUsuari = idUsuari;
         this.nomUsuari = nomUsuari;
