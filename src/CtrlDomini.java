@@ -11,18 +11,33 @@ public class CtrlDomini {
     private CtrlDominiMantEnquesta ctrlDominiMantEnquesta;
     private CtrlDominiMantUsuari ctrlDominiMantUsuari;
 
+    /**
+     * Crea una nova instancia de CtrlDomini
+     *
+     */
     public CtrlDomini() {
         //Crear los controladores de dominio
         ctrlDominiMantEnquesta = new CtrlDominiMantEnquesta();
         ctrlDominiMantUsuari = new CtrlDominiMantUsuari();
     }
 
+    /**
+     * Retorna les preguntes de l'enquesta amb id donat
+     * @param idEnquesta Identificador de l'enquesta
+     * @return Llista de preguntes en format text
+     */
     ////////////////// Caso de uso 1 - Respondre enquesta //////////////////////
     public List<String> getPreguntes(int idEnquesta){ //Final
         System.out.println("entra a getPreguntes de CtrlDomini");
         return this.ctrlDominiMantEnquesta.getPreguntesEnquesta(idEnquesta);
     }
 
+    /**
+     *Funcio per a respondre una enquesta
+     * @param idEnquesta Identificador de l'enquesta a respondre
+     * @param idUsuari Identificador de l'usuari que respon l'enquesta
+     * @param respostesUsuari Llista de respostes
+     */
     public void respondreEnquesta(int idEnquesta, int idUsuari, List<String> respostesUsuari) { //Final
         Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         System.out.println("entra a respondreEnquesta de CtrlDomini");
@@ -31,7 +46,13 @@ public class CtrlDomini {
         System.out.println("salta de respondreEnquesta de CtrlDomini");
     }
 
-
+    /**
+     * Funcio per a crear una enquesta
+     * @param titol Titol de l'enquesta
+     * @param descripcio Descripcio de l'enquesta
+     * @param idCreador Identificador de l'usuari creador de l'enquesta
+     * @param preguntes Llista de preguntes
+     */
     /////////////////////// Caso de uso 2 - Crear enquesta //////////////////////
     public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) { //Final
         List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntes);
@@ -46,6 +67,11 @@ public class CtrlDomini {
         return 0;
     }
 
+    /**
+     * Funcio per a exportar una enquesta
+     * @param id de l'enquesta a exportar
+     * @return Llista de strings amb la informacio de l'enquesta
+     */
     // Caso de uso 4: exportar enquesta
     public List<String> exportarEnquesta(int id) {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(id);
@@ -92,6 +118,13 @@ public class CtrlDomini {
     /// importarRespostes funcio que llegeix les respostes d'un fitxer 
     /// leer: (numPreguntas, PREGUNTA1, PREGUNTA2, ...PREGUNTAn, RESPUESTA1, RESPUESTA2, ... RESPUESTAm) 
     ///RESPUESTAj = (resp1, resp2,... respn)
+    /**
+     * Funcio per a importar respostes d'un fitxer
+     * @param idUsuari identificador de l'usuari que importa les respostes
+     * @param path origen del fitxer
+     * @param idEnquesta identificador de l'enquesta
+     * @return nombre de respostes importades, -1 si hi ha un error llegint el fitxer, -2 si l'enquesta no existeix
+     */
     public int importarRespostes(int idUsuari, String path, int idEnquesta){
         //llegir fitxer
         List<String> respostesTxt = new ArrayList<>();
@@ -133,6 +166,11 @@ public class CtrlDomini {
         return numRespostes; // Èxit
     }
 
+    /**
+     * Funcio per a eliminar una enquesta
+     * @param idUsuari identificador de l'usuari que elimina l'enquesta
+     * @param idEnquesta identificador de l'enquesta a eliminar
+     */
     public void eliminarEnquesta(int idUsuari, int idEnquesta){
         //borrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
@@ -141,6 +179,13 @@ public class CtrlDomini {
         usuari.eliminarEnquesta(idEnquesta);
     }
 
+    /**
+     * Funcio per a modificar una pregunta d'una enquesta
+     * @param idUsuari identificador de l'usuari que modifica la pregunta
+     * @param idxPregunta index de la pregunta a modificar
+     * @param novaPregunta llista de strings amb la nova pregunta
+     * @return 1 si s'ha modificat correctament
+     */
     //deberiamos hacer mas versiones en un futuro.
     public int modificarPreguntaEnquesta(int idUsuari, int idxPregunta, List<String> novaPregunta){
         //borrar todas las respuestas
@@ -158,6 +203,12 @@ public class CtrlDomini {
         return 1; // Èxit
     }
 
+    /**
+     * Funcio per a esborrar les respostes d'una enquesta d'un enquestat
+     * @param idUsuari identificador de l'usuari que esborra la resposta
+     * @param idEnquesta identificador de l'enquesta
+     * @param idEnquestat identificador de l'usuari que ha respost l'enquesta
+     */
     public void esborrarRespostaEnquesta(int idUsuari, int idEnquesta, int idEnquestat){
         //pensar en como trabajar con idEnquestat.
             /*
@@ -195,7 +246,13 @@ public class CtrlDomini {
 
 
 
-
+    /**
+     * Funcio per a realitzar clustering K-means sobre les respostes d'una enquesta
+     * @param idEnquesta identificador de l'enquesta
+     * @param k nombre de clústers
+     * @param maxIterations nombre màxim d'iteracions
+     * @return Map amb l'identificador de la resposta i el clúster assignat
+     */
     ////////////////////// Caso de uso  clustering //////////////////////
     public Map<Integer, Integer> clustering(int idEnquesta, int k, int maxIterations) {
         Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
@@ -213,6 +270,9 @@ public class CtrlDomini {
 
     //////////////////// Funciones para debug ///////////////////////////////
     //mostrar enquestes per debug
+    /**
+     * Funcio per a mostrar les enquestes i les seves preguntes i respostes
+     */
     public void mostrarEnquesta(int idEnquesta) {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         System.out.println("Enquesta: " + idEnquesta);
@@ -223,6 +283,9 @@ public class CtrlDomini {
     }
 
     //mostrar enquestes amb preguntes per debug
+    /**
+     * Funcio per a mostrar les enquestes amb preguntes
+     */
     public void mostrarEnquestesAmbPreguntes() {
         int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
         System.out.println("Número d'enquestes: " + numEnquestes);
@@ -237,6 +300,9 @@ public class CtrlDomini {
         }
     }
 
+    /**
+     * Funcio per a mostrar les enquestes amb preguntes i respostes
+     */
     //mostrar enquestes amb preguntes i respostes per debug
     public void mostrarEnquestesAmbPreguntesIRespostes() {
         int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
@@ -262,7 +328,12 @@ public class CtrlDomini {
         }
     }
 
-
+    /**
+     * Funcio per a transformar les preguntes en format string a objectes Pregunta
+     * @param preguntes Llista de preguntes en format text
+     * @return Llista de preguntes en format objecte Pregunta
+     * @throws IllegalArgumentException
+     */
     //////////////////////// Funcions auxiliars ///////////////////////////////
     //Transforma les preguntes en format text a objectes Pregunta
     private List<Pregunta> transformaPreguntesAObj (List<String> preguntes) throws IllegalArgumentException {
@@ -295,6 +366,13 @@ public class CtrlDomini {
         return preguntesObj;
     }
 
+    /**
+     * Funcio per a crear un usuari enquestat
+     * @param nomUsuari Nom de l'usuari
+     * @param contrasenya Contrasenya de l'usuari
+     * @param email Email de l'usuari
+     * @return Identificador de l'usuari creat, 0 si l'usuari ja existeix
+     */
     //Cas d'us crear usuari
     public int crearUsuariEnquestat(String nomUsuari, String contrasenya, String email) {
         if (ctrlDominiMantUsuari.existeixUsuari(nomUsuari)) {
@@ -306,6 +384,14 @@ public class CtrlDomini {
         return id;
     }
 
+    /**
+     * Funcio per a afegir un enquestador
+     * Pendent a ser canviat segons el patro estat en entregues futures
+     * @param idUsuariAdmin identificador de l'usuari administrador que afegeix l'enquestador
+     * @param idEnquesta identificador de l'enquesta
+     * @param nomUsuariEnquestador nom de l'usuari enquestador
+     * @return 1 si s'ha afegit correctament, -1 si l'usuari no existeix, -2 si l'enquesta ja està assignada, -3 si l'usuari ja administra aquesta enquesta, -4 tipus d'usuari desconegut
+     */
     public int afegirEnquestador(int idUsuariAdmin, int idEnquesta,String nomUsuariEnquestador){
         if (!ctrlDominiMantUsuari.existeixUsuari(nomUsuariEnquestador)) {
             return -1; // Codi error: Usuari no existeix
@@ -340,6 +426,13 @@ public class CtrlDomini {
         return -4; // Codi error: Tipus d'usuari desconegut
     }
 
+    /**
+     * Funcio per a afegir un administrador
+     * @param idUsuariAdmin identificador de l'usuari administrador que afegeix l'administrador
+     * @param idEnquesta identificador de l'enquesta
+     * @param nomUsuariAdministrador nom de l'usuari administrador
+     * @return 1 si s'ha afegit correctament, -1 si l'usuari no existeix, -2 si l'enquesta ja és administrada, -3 tipus d'usuari desconegut
+     */
     public int afegirAdministrador(int idUsuariAdmin, int idEnquesta,String nomUsuariAdministrador){
         if (!ctrlDominiMantUsuari.existeixUsuari(nomUsuariAdministrador)) {
             return -1; // Codi error: Usuari no existeix
@@ -367,6 +460,10 @@ public class CtrlDomini {
         return -3; // Codi error: Tipus d'usuari desconegut
     }
 
+    /**
+     * Funcio per a consultar el perfil d'un usuari
+     * @param id identificador de l'usuari
+     */
     //Caso de uso 9: consultar perfil usuari
     public void consultarPerfil(int id) {
         Usuari us = ctrlDominiMantUsuari.getUsuari(id);
