@@ -18,6 +18,7 @@ public class CtrlDominiMantEnquesta {
         }
     }
 
+    //Método para eliminar una encuesta por su ID
     public void eliminarEnquesta(int idEnquesta) {
         if (enquestes.containsKey(idEnquesta)) {
             enquestes.remove(idEnquesta);

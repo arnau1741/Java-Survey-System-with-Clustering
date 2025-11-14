@@ -1,0 +1,51 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"6209c3cc-661a-4f3b-9337-c1580b742505\" name=\"Changes\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/PerfilEnquestador.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/PerfilEnquestador.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/PerfilEnquestat.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/PerfilEnquestat.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Usuari.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Usuari.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Class\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitLabMergeRequestFiltersHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPENED&quot;,\n    &quot;assignee&quot;: {\n      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,\n      &quot;username&quot;: &quot;arnau.hernandez.navarro&quot;,\n      &quot;fullname&quot;: &quot;arnau.hernandez.navarro&quot;\n    }\n  }\n}</component>\n  <component name=\"GitLabMergeRequestsSettings\">{\n  &quot;selectedUrlAndAccountId&quot;: {\n    &quot;first&quot;: &quot;https://repo.fib.upc.es/grau-prop/subgrup-prop21.5&quot;,\n    &quot;second&quot;: &quot;35dd451b-43ad-4e08-8e94-a61f3fb26a1a&quot;\n  }\n}</component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 6\n}</component>\n  <component name=\"ProjectId\" id=\"34DOIgzLfNOPgH9Li7g0JLlmFHZ\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"Application.Main.executor\": \"Run\",\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252\": \"true\",\n    \"RunOnceActivity.git.unshallow\": \"true\",\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\n    \"com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1\": \"true\",\n    \"git-widget-placeholder\": \"main\",\n    \"ignore.virus.scanning.warn.message\": \"true\",\n    \"junie.onboarding.icon.badge.shown\": \"true\",\n    \"kotlin-language-version-configured\": \"true\",\n    \"last_opened_file_path\": \"/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/subgrup-prop21.5.iml\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.detected.package.tslint\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\n    \"nodejs_package_manager_path\": \"npm\",\n    \"project.structure.last.edited\": \"Modules\",\n    \"project.structure.proportion\": \"0.15\",\n    \"project.structure.side.proportion\": \"0.2\",\n    \"to.speed.mode.migration.done\": \"true\",\n    \"two.files.diff.last.used.folder\": \"/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/Archivos tex, pdf etc\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  }\n}]]></component>\n  <component name=\"RecentsManager\">\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$\" />\n    </key>\n  </component>\n  <component name=\"RunManager\">\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\n      <option name=\"filePath\" />\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SharedIndexes\">\n    <attachedChunks>\n      <set>\n        <option value=\"bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84\" />\n      </set>\n    </attachedChunks>\n  </component>\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"6209c3cc-661a-4f3b-9337-c1580b742505\" name=\"Changes\" comment=\"\" />\n      <created>1760744597737</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1760744597737</updated>\n      <workItem from=\"1760744598791\" duration=\"434000\" />\n      <workItem from=\"1760745039821\" duration=\"445000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 3f80778242c04a2507a717e29808d07588cc1165)
++++ b/.idea/workspace.xml	(date 1763039872201)
+@@ -6,8 +6,6 @@
+   <component name="ChangeListManager">
+     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/PerfilEnquestador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilEnquestador.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/PerfilEnquestat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PerfilEnquestat.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/Usuari.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Usuari.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -71,6 +69,7 @@
+     "project.structure.last.edited": "Modules",
+     "project.structure.proportion": "0.15",
+     "project.structure.side.proportion": "0.2",
++    "settings.editor.selected.configurable": "preferences.lookFeel",
+     "to.speed.mode.migration.done": "true",
+     "two.files.diff.last.used.folder": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/Archivos tex, pdf etc",
+     "vue.rearranger.settings.migration": "true"
+Index: src/Usuari.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.List;\nimport java.util.ArrayList;\n\npublic abstract class Usuari {\n    private int id;\n    private String usuari;\n    private String rol;\n    private boolean registrat;\n\n    private String email;\n    private boolean blocked;\n\n    // Constructor\n    public Usuari(int id, String usuari, boolean registrat, String rol) {\n        this.id = id;\n        this.usuari = usuari;\n        this.registrat = registrat;\n        this.rol = rol;\n\n        //Si registrat, trucar a funcio per a demanar email\n        this.email = registrat ? email : null;\n        this.blocked = false;\n    }\n\n\n    //Responder enquesta\n\n    //Get functions\n    public int getId() { return id; }\n    public String getUsuari() { return usuari; }\n    public String getEmail() { return email; }\n    public String getRol() { return rol; }\n    public boolean isRegistrat() { return registrat; }\n\n    public void setId(int id) { this.id = id; }\n    public void setUsuari(String usuari) { this.usuari = usuari; }\n    public void setEmail(String email) { this.email = email; }\n    public void setRol(String especialitat) { this.rol = rol; }\n    public void setRegistrat(boolean registrat) { this.registrat = registrat; }\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Usuari.java b/src/Usuari.java
+--- a/src/Usuari.java	(revision 3f80778242c04a2507a717e29808d07588cc1165)
++++ b/src/Usuari.java	(date 1762513304757)
+@@ -31,11 +31,13 @@
+     public String getEmail() { return email; }
+     public String getRol() { return rol; }
+     public boolean isRegistrat() { return registrat; }
++    public boolean isBlocked() { return blocked; }
+ 
+     public void setId(int id) { this.id = id; }
+     public void setUsuari(String usuari) { this.usuari = usuari; }
+     public void setEmail(String email) { this.email = email; }
+     public void setRol(String especialitat) { this.rol = rol; }
+     public void setRegistrat(boolean registrat) { this.registrat = registrat; }
++    public void setBlocked(boolean blocked) { this.blocked = blocked; }
+ }
+ 

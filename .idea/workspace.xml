@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pruebas/importarRespostesCafe.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Pruebas/importarRespostesCafe.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CtrlDomini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CtrlDomini.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enquesta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enquesta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pregunta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pregunta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CtrlDominiMantEnquesta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CtrlDominiMantEnquesta.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitLabMergeRequestFiltersHistory">{
@@ -125,6 +127,13 @@
         <item itemvalue="JUnit.TestPregunta" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
