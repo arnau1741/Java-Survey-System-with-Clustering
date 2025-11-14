@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Utils {
     public static String Base_path;
@@ -29,6 +30,7 @@ public class Utils {
         io.writeln(" 7) Exportar enquesta");
         io.writeln(" 8) Importar respostes");
         io.writeln(" 9) Consultar usuari");
+        io.writeln(" 10) Clustering d'usuaris");
         /*
         io.writeln(" 9) Exportar respostes");
         io.writeln(" 10) Crear usuari");
@@ -360,7 +362,28 @@ public class Utils {
     }
 
 
+    // ===================== CLUSTERING =====================
 
+    public static void clustering(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("\n--- CLUSTERING D'USUARIS ---");
+        io.write("Introdueix l'ID de l'enquesta: ");
+        int idEnquesta = io.readint();
+        io.readline();
+
+        io.write("Introdueix el nombre de clusters (k): ");
+        int k = io.readint();
+        io.readline();
+
+        io.write("Introdueix nombre maxim d'iteracions: ");
+        int maxIter = io.readint();
+        io.readline();
+
+        Map<Integer, Integer> result = ctrl.clustering(idEnquesta, k, maxIter);
+        for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
+            io.writeln("Usuari ID: " + entry.getKey() + " -> Cluster: " + entry.getValue());
+        }
+        io.writeln("\n[OK] Clustering realitzat correctament!\n");
+    }
 
     /**
      * Escriu totes les línies a un fitxer

@@ -10,6 +10,7 @@ public class RespostaUnica extends Resposta {
      */
     public RespostaUnica(int numOpcions) {
         super();
+        this.resposta = -1; // Indica que no s'ha contestat encara
         this.numOpcions = numOpcions;
     }
 

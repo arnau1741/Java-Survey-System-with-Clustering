@@ -6,6 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pruebas/importarRespostesCafe.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Pruebas/importarRespostesCafe.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestKmeans.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestKmeans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CtrlDomini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CtrlDomini.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KMeans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/KMeans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pregunta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pregunta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RespostaLliure.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RespostaLliure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RespostaUnica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RespostaUnica.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,36 +60,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestKmeans.testDistanciaNumerica.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestPregunta.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ctrlDomini&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/Archivos tex, pdf etc&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;two.files.diff.last.used.folder&quot;: &quot;/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/Archivos tex, pdf etc&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.KMeansDistanceTest.distanciaNumerica_mismaRespuesta_daCero.executor": "Run",
+    "JUnit.TestKmeans.testDistanciaNoOrdenadaUnica.executor": "Run",
+    "JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaDif.executor": "Run",
+    "JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaEq.executor": "Run",
+    "JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNonNull.executor": "Run",
+    "JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNull.executor": "Run",
+    "JUnit.TestKmeans.testDistanciaNumerica.executor": "Run",
+    "JUnit.TestKmeans.testDistanciaNumericaNullNull.executor": "Run",
+    "JUnit.TestPregunta.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "ctrlDomini",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/Archivos tex, pdf etc",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "to.speed.mode.migration.done": "true",
+    "two.files.diff.last.used.folder": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/Archivos tex, pdf etc",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
     <layout>
       <window_info id="Bookmarks" side_tool="true" />
@@ -122,31 +141,53 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true" show_console_on_std_out="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="21" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="subgrup-prop21.5" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestKmeans.testDistanciaNumerica" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNull">
+    <configuration name="TestKmeans.testDistanciaNoOrdenadaUnica" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="TestKmeans" />
-      <option name="METHOD_NAME" value="testDistanciaNumerica" />
+      <option name="METHOD_NAME" value="testDistanciaNoOrdenadaUnica" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestPregunta" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestKmeans.testDistanciaNoOrdenadaUnicaDif" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestPregunta" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="TestKmeans" />
+      <option name="METHOD_NAME" value="testDistanciaNoOrdenadaUnicaDif" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestKmeans.testDistanciaNoOrdenadaUnicaEq" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="subgrup-prop21.5" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestKmeans" />
+      <option name="METHOD_NAME" value="testDistanciaNoOrdenadaUnicaEq" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestKmeans.testDistanciaNoOrdenadaUnicaNullNonNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="subgrup-prop21.5" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestKmeans" />
+      <option name="METHOD_NAME" value="testDistanciaNoOrdenadaUnicaNullNonNull" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestKmeans.testDistanciaNoOrdenadaUnicaNullNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="subgrup-prop21.5" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestKmeans" />
+      <option name="METHOD_NAME" value="testDistanciaNoOrdenadaUnicaNullNull" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -161,15 +202,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.TestKmeans.testDistanciaNumerica" />
-      <item itemvalue="JUnit.TestPregunta" />
+      <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnica" />
+      <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaDif" />
+      <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaEq" />
+      <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNonNull" />
+      <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNull" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.TestKmeans.testDistanciaNumerica" />
-        <item itemvalue="JUnit.TestPregunta" />
+        <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNull" />
+        <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNonNull" />
+        <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaDif" />
+        <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaEq" />
+        <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnica" />
       </list>
     </recent_temporary>
   </component>
@@ -177,6 +222,7 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
       </set>
     </attachedChunks>
   </component>
@@ -193,6 +239,7 @@
       <workItem from="1762622016159" duration="4402000" />
       <workItem from="1762787633013" duration="5341000" />
       <workItem from="1763064969200" duration="1475000" />
+      <workItem from="1763144963501" duration="4517000" />
     </task>
     <servers />
   </component>

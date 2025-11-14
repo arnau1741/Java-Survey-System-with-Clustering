@@ -149,12 +149,41 @@ public class Pregunta {
         if (idUsuari == -1) { // Usuari no registrat
             respostes.put(minKeyRespostes, resposta);
             minKeyRespostes--;
+
+            if (tipus == 0) { // NUMERICA
+                double valor = ((RespostaNumerica) resposta).getValor();
+                if (respostes.size() == 1) {
+                    minValue = valor;
+                    maxValue = valor;
+                } else {
+                    if (valor < minValue) {
+                        minValue = valor;
+                    }
+                    if (valor > maxValue) {
+                        maxValue = valor;
+                    }
+                }
+            }
             return 1;
         }
         if (respostes.containsKey(idUsuari)) {
             return 0; // Ja existeix una resposta per aquest usuari
         }
         respostes.put(idUsuari, resposta);
+        if (tipus == 0) { // NUMERICA
+            double valor = ((RespostaNumerica) resposta).getValor();
+            if (respostes.size() == 1) {
+                minValue = valor;
+                maxValue = valor;
+            } else {
+                if (valor < minValue) {
+                    minValue = valor;
+                }
+                if (valor > maxValue) {
+                    maxValue = valor;
+                }
+            }
+        }
         return 1;
     }
 

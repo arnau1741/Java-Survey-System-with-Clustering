@@ -13,6 +13,8 @@ public class KMeans{
 
     private List<List<Resposta>> centroids; 
     private int[] labels;
+    private boolean fet;
+    private double coeficientSilhouete;
 
     /**
      * Constructor per a KMeans
@@ -25,6 +27,7 @@ public class KMeans{
         this.k = k;
         this.maxIterations = maxIterations;
         this.random = new Random(seed);
+        this.fet = false;
     }
 
     /**
@@ -46,18 +49,50 @@ public class KMeans{
         int dim = data.getNumPreguntes();
 
         centroids = initCentroidsRandom(data, k);
+        System.out.println("Initial centroids:");
+        for (List<Resposta> centroid : centroids) {
+            for (Resposta r : centroid) {
+                if (r != null) {
+                    System.out.print(r.getText(data.getPreguntesObj().get(centroid.indexOf(r)).getOpcions()) + " | ");
+                } else {
+                    System.out.print("null | ");
+                }
+            }
+            System.out.println();
+        }
 
         labels = new int[n];
         Arrays.fill(labels, -1);
 
         for (int iter = 0; iter < maxIterations; iter++) {
             boolean changed = assignClusters(data);
+            System.out.println("Labels:");
+            for (int label : labels) {
+                System.out.print(label + " | ");
+            }
+            System.out.println();
             updateCentroids(data, dim);
+
+            System.out.println("Iteration " + (iter + 1) + " completed.");
+            System.out.println("Centroids:");
+            for (List<Resposta> centroid : centroids) {
+                for (Resposta r : centroid) {
+                    if (r != null) {
+                        System.out.print(r.getText(data.getPreguntesObj().get(centroid.indexOf(r)).getOpcions()) + " | ");
+                    } else {
+                        System.out.print("null | ");
+                    }
+                }
+                System.out.println();
+            }
 
             if (!changed) {
                 break;
             }
         }
+        fet = true;
+        coeficientSilhouete = coeficientSilhouete(data);
+        System.out.println("Coeficient de Silhouete: " + coeficientSilhouete);
     }
 
     /**
@@ -122,6 +157,8 @@ public class KMeans{
      * @return true si alguna etiqueta ha canviat, false en cas contrari
      */
     private boolean assignClusters(Enquesta data) {
+        System.out.println("Assigning clusters...");
+        System.out.println();
         boolean changed = false;
         int numRespostes = data.getNumRespostes();
         for (int i = 0; i < numRespostes; i++) {
@@ -132,6 +169,19 @@ public class KMeans{
                 labels[i] = newLabel;
                 changed = true;
             }
+
+            //mostrar les respostes i la seva assignacio a clúster
+            System.out.print("Punt " + i + ": ");
+            for (Resposta r : point) {
+                if (r != null) {
+                    System.out.print(r.getText(data.getPreguntesObj().get(point.indexOf(r)).getOpcions()) + " | ");
+                } else {
+                    System.out.print("null | ");
+                }
+            }
+            System.out.print("-> Cluster: " + newLabel);
+            System.out.println();
+
         }
         return changed;
     }
@@ -146,9 +196,12 @@ public class KMeans{
     private int closestCentroid(List<Resposta> point, List<List<Resposta>> centroids, List<Pregunta> preguntes) {
         int bestIndex = 0;
         double bestDist = distance(point, centroids.get(0), preguntes);
+        System.out.println("Distàncies al punt:");
+        System.out.println("Centroid 0: " + bestDist);
 
         for (int c = 1; c < centroids.size(); c++) {
             double dist = distance(point, centroids.get(c), preguntes);
+            System.out.println("Centroid " + c + ": " + dist);
             if (dist < bestDist) {
                 bestDist = dist;
                 bestIndex = c;
@@ -231,6 +284,12 @@ public class KMeans{
                     if (rCentroid != null) {
                         rCentroid.setValor(rCentroid.getValor() / counts[c]);
                     }
+                    else{
+                        //no hi ha respostes per aquest clúster
+                        int idx = random.nextInt(numRespostes);
+                        List<Resposta> randomPoint = data.getRespostesUsuariMatriu(idx);
+                        newCentroids.get(c).set(d, randomPoint.get(d));
+                    }
                 }
             }
         }
@@ -282,14 +341,16 @@ public class KMeans{
      * @param b resposta única b
      * @return distància entre a i b
      */
-    public double distanciaNoOrdenadaUnica(Resposta a, Resposta b) {
-        if (a == null && b == null) {
+    public double distanciaNoOrdenadaUnica(RespostaUnica a, RespostaUnica b) {
+        int resA = a.getResposta();
+        int resB = b.getResposta();
+        if (resA == -1 && resB == -1) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
         }
-        if (a == null || b == null) {
+        if (resA == -1 || resB == -1) {
             return 1.0; // Distancia máxima si alguna respuesta es nula
         }
-        return a.equals(b) ? 0.0 : 1.0;
+        return resA == resB ? 0.0 : 1.0;
     }
 
     /**
@@ -323,11 +384,41 @@ public class KMeans{
         }
         return 1.0 - ((double) interseccioCount / union.size());
     }
-    /*
-    private double distanciaLliure(Resposta a, Resposta b) {
-        return 0.0; // Ignorar preguntes de tipus LLIURE en el càlcul de la distància
+
+    private double levenshteinDistance(String a, String b) {
+        int[][] dp = new int[a.length() + 1][b.length() + 1];
+
+        for (int i = 0; i <= a.length(); i++) {
+            for (int j = 0; j <= b.length(); j++) {
+                if (i == 0) {
+                    dp[i][j] = j; // Deletion
+                } else if (j == 0) {
+                    dp[i][j] = i; // Insertion
+                } else if (a.charAt(i) == b.charAt(j)) {
+                    dp[i][j] = Math.min(dp[i - 1][j], // Deletion
+                                Math.min(dp[i][j - 1], // Insertion
+                                dp[i - 1][j - 1])); // Substitution
+                } else {
+                    dp[i][j] = 1 + Math.min(dp[i - 1][j], // Deletion
+                                    Math.min(dp[i][j - 1], // Insertion
+                                             dp[i - 1][j - 1])); // Substitution
+                }
+            }
+        }
+        return dp[a.length()][b.length()];
     }
-    */
+
+    private double distanciaLliure(RespostaLliure a, RespostaLliure b) {
+        int lenA = a.length();
+        int lenB = b.length();
+        if (lenA == 0 && lenB == 0) {
+            return 0.0; // Distancia zero si les dues respostes son buides
+        }
+        double maxLen = Math.max(lenA, lenB);
+        double absLenDif = Math.abs(lenA - lenB);
+
+        return (levenshteinDistance(a.getResposta(), b.getResposta()) - absLenDif) / (maxLen - absLenDif);
+    }
         
 
     /**
@@ -353,7 +444,7 @@ public class KMeans{
                     sum += distanciaNumerica((RespostaNumerica) ra, (RespostaNumerica) rb, min, max);
                     break;
                 case 1: // UNICA
-                    sum += distanciaNoOrdenadaUnica(ra, rb);
+                    sum += distanciaNoOrdenadaUnica((RespostaUnica) ra, (RespostaUnica) rb);
                     break;
                 case 2: // MULTIPLE
                     sum += distanciaNoOrdenadaMultiple((RespostaMultiple) ra, (RespostaMultiple) rb);
@@ -363,7 +454,7 @@ public class KMeans{
                     sum += distanciaOrdenada((RespostaOrdenada) ra, (RespostaOrdenada) rb, numOpcions);
                     break;
                 case 4: // LLIURE
-                    // Ignorar preguntes de tipus LLIURE en el càlcul de la distancia
+                    sum += distanciaLliure((RespostaLliure) ra, (RespostaLliure) rb);
                     break;
                 default:
                     throw new IllegalArgumentException("Tipus de pregunta desconegut: " + tipus);
@@ -371,5 +462,61 @@ public class KMeans{
         }
                     
         return sum;
+    }
+
+//////////////////////// Funcions distancia locals /////////////////////////////// 
+    private double coeficientSilhouete(Enquesta data){
+        if (!fet) {
+            throw new IllegalStateException("Call fit() first.");
+        }
+        int n = data.getNumRespostes();
+        double totalSilhouete = 0.0;
+        List<Pregunta> preguntes = data.getPreguntesObj();
+        for (int i = 0; i < n; i++) {
+            List<Resposta> point = data.getRespostesUsuariMatriu(i);
+            int cluster = labels[i];
+
+            // Calcular a(i)
+            double a = 0.0;
+            int sameClusterCount = 0;
+            for (int j = 0; j < n; j++) {
+                if (i != j && labels[j] == cluster) {
+                    List<Resposta> otherPoint = data.getRespostesUsuariMatriu(j);
+                    a += distance(point, otherPoint, preguntes);
+                    sameClusterCount++;
+                }
+            }
+            if (sameClusterCount > 0) {
+                a /= sameClusterCount;
+            }
+
+            // Calcular b(i)
+            double b = Double.MAX_VALUE;
+            for (int c = 0; c < k; c++) {
+                if (c != cluster) {
+                    double distSum = 0.0;
+                    int otherClusterCount = 0;
+                    for (int j = 0; j < n; j++) {
+                        if (labels[j] == c) {
+                            List<Resposta> otherPoint = data.getRespostesUsuariMatriu(j);
+                            distSum += distance(point, otherPoint, preguntes);
+                            otherClusterCount++;
+                        }
+                    }
+                    if (otherClusterCount > 0) {
+                        double avgDist = distSum / otherClusterCount;
+                        if (avgDist < b) {
+                            b = avgDist;
+                        }
+                    }
+                }
+            }
+
+            // Calcular s(i)
+            double s = (b -  a)/Math.max(a,b);
+        
+            totalSilhouete += s;
+        }
+        return totalSilhouete / n;
     }
 }

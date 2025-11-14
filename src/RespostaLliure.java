@@ -22,6 +22,15 @@ public class RespostaLliure extends Resposta{
         setContestat(text != null && !text.isBlank());
     }
 
+    public int length() {
+        if (text == null) return 0;
+        return text.length();
+    }
+
+    public String getResposta() {
+        return text;
+    }
+
     /**
      * Getter del text de la resposta lliure
      * @return text de la resposta lliure
