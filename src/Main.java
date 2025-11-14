@@ -27,12 +27,13 @@ public class Main {
 
                     case 1 -> Utils.crearEnquestaManual(io, ctrl);
                     case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl);
-                    case 3 -> ctrl.mostrarEnquestes();
+                    case 3 -> Utils.mostrarEnquesta(io, ctrl);
                     case 4 -> ctrl.mostrarEnquestesAmbPreguntes();
                     case 5 -> Utils.respondreEnquesta(io, ctrl);
                     case 6 -> ctrl.mostrarEnquestesAmbPreguntesIRespostes();
                     case 7 -> Utils.exportarEnquesta(io, ctrl);
                     case 8 -> Utils.importarRespostes(io, ctrl);
+                    case 9 -> Utils.consultarPerfil(io, ctrl);
 
                     default -> io.writeln("\n[ERROR] Opció no vàlida. Torna-ho a intentar.\n");
                 }

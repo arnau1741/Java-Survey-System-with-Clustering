@@ -15,17 +15,17 @@ public class Utils {
         io.writeln("======================================");
         io.writeln(" 1) Crear enquesta manualment");
         io.writeln(" 2) Crear enquesta des de fitxer");
-        io.writeln(" 3) Mostrar enquestes");
+        io.writeln(" 3) Mostrar enquesta");
         io.writeln(" 4) Mostrar enquestes amb preguntes");
         io.writeln(" 5) Respon enquesta");
         io.writeln(" 6) Mostrar enquestes amb preguntes i respostes");
         io.writeln(" 7) Exportar enquesta");
         io.writeln(" 8) Importar respostes");
+        io.writeln(" 9) Consultar usuari");
         /*
         io.writeln(" 9) Exportar respostes");
         io.writeln(" 10) Crear usuari");
-        io.writeln(" 11) Consultar usuari");
-        io.writeln(" 12) Consultar respostes"); ????
+        io.writeln(" 12) Consultar respostes");
         io.writeln(" 13) Modificar enquesta");
         io.writeln(" 14) Esborrar enquesta");
          */
@@ -33,7 +33,12 @@ public class Utils {
         io.writeln("======================================");
         io.write("Selecciona una opció: ");
     }
+    public static void mostrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix el Id de l'enquesta");
+        int idEnquesta = io.readint();
 
+        ctrl.mostrarEnquesta(idEnquesta);
+    }
 
 
     ////////////////////// Funcioanlitats ////////////////////////////////
@@ -240,6 +245,13 @@ public class Utils {
         } catch (IllegalArgumentException e) {
             io.writeln("\n[ERROR FORMAT FITXER] " + e.getMessage() + "\n");
         }
+    }
+
+    //Consultar perfil
+    public static void consultarPerfil(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introduiex l'Id del usuari");
+        int idUsuari = io.readint();
+        ctrl.consultarPerfil(idUsuari);
     }
 
     // === EXPORTAR ENQUESTA ===

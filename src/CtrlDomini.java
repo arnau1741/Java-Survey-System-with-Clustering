@@ -213,13 +213,13 @@ public class CtrlDomini {
 
     //////////////////// Funciones para debug ///////////////////////////////
     //mostrar enquestes per debug
-    public void mostrarEnquestes() {
-        int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
-        System.out.println("Número d'enquestes: " + numEnquestes);
-        for (int i = 0; i < numEnquestes; i++) {
-            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(i);
-            System.out.println("ID enquesta: " + enq.getId() + ", Títol: " + enq.getTitol() + ", Descripció: " + enq.getDescripcio());
-        }
+    public void mostrarEnquesta(int idEnquesta) {
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        System.out.println("Enquesta: " + idEnquesta);
+        System.out.println("Titol: " + enq.getTitol());
+        System.out.println("Descripció: " + enq.getDescripcio());
+        System.out.println("Nº de preguntes: " + enq.getNumPreguntes());
+
     }
 
     //mostrar enquestes amb preguntes per debug
@@ -365,6 +365,14 @@ public class CtrlDomini {
             return 1; // Èxit
         }
         return -3; // Codi error: Tipus d'usuari desconegut
+    }
+
+    //Caso de uso 9: consultar perfil usuari
+    public void consultarPerfil(int id) {
+        Usuari us = ctrlDominiMantUsuari.getUsuari(id);
+        System.out.println("Id de l'usuari: " + us.getId());
+        System.out.println("Nom de l'usuari: " + us.getUsuari());
+        System.out.println("Email: " + us.getEmail());
     }
 
 
