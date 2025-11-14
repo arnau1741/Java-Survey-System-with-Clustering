@@ -14,6 +14,12 @@ public class KMeans{
     private List<List<Resposta>> centroids; 
     private int[] labels;
 
+    /**
+     * Constructor per a KMeans
+     * @param k nombre de clústers
+     * @param maxIterations nombre màxim d'iteracions
+     * @param seed llavor per a la generació aleatòria
+     */
     public KMeans(int k, int maxIterations, long seed) {
         if (k <= 0) throw new IllegalArgumentException("k should be > 0");
         this.k = k;
@@ -21,10 +27,19 @@ public class KMeans{
         this.random = new Random(seed);
     }
 
+    /**
+     * Constructor per a KMeans sense llavor aleatòria basada en el temps actual
+     * @param k nombre de clústers
+     * @param maxIterations nombre màxim d'iteracions
+     */
     public KMeans(int k, int maxIterations) {
         this(k, maxIterations, System.currentTimeMillis());
     }
 
+    /**
+     * Ajusta el model KMeans a les dades proporcionades
+     * @param data les dades d'entrada (Enquesta)
+     */
     public void fit(Enquesta data) {
         int n = data.getNumRespostes();
         if (n == 0) throw new IllegalArgumentException("There is no data");
@@ -45,6 +60,11 @@ public class KMeans{
         }
     }
 
+    /**
+     * Obté les etiquetes assignades a cada punt després de l'ajust
+     * @return array d'etiquetes
+     * @throws IllegalStateException si fit() no s'ha cridat encara
+     */
     public int[] getLabels() {
         if (labels == null) {
             throw new IllegalStateException("Call fit() first.");
@@ -52,6 +72,11 @@ public class KMeans{
         return labels;
     }
 
+    /**
+     * Obté els centroides després de l'ajust
+     * @return llista de centroides
+     * @throws IllegalStateException si fit() no s'ha cridat encara
+     */
     public List<List<Resposta>> getCentroids() {
         if (centroids == null) {
             throw new IllegalStateException("Call fit() first.");
@@ -67,7 +92,13 @@ public class KMeans{
         return closestCentroid(point, centroids);
     }*/
 
-
+    /**
+     * Inicialitza els centroides seleccionant k punts aleatoris de les dades
+     * @param data les dades d'entrada (Enquesta)
+     * @param k nombre de clústers
+     * @return matriu de centroides
+     * @throws IllegalArgumentException si k és més gran que el nombre de punts
+     */
     private  List<List<Resposta>> initCentroidsRandom(Enquesta data, int k) {
         int n = data.getNumRespostes();
         if (k > n) {
@@ -85,6 +116,11 @@ public class KMeans{
         return centroids;
     }
 
+    /**
+     * Assigna cada punt al clúster més proper
+     * @param data les dades d'entrada (Enquesta)
+     * @return true si alguna etiqueta ha canviat, false en cas contrari
+     */
     private boolean assignClusters(Enquesta data) {
         boolean changed = false;
         int numRespostes = data.getNumRespostes();
@@ -100,6 +136,13 @@ public class KMeans{
         return changed;
     }
 
+    /**
+     * Troba l'índex del centroid més proper a un punt donat
+     * @param point punt de dades
+     * @param centroids matriu de centroides
+     * @param preguntes les preguntes de l'enquesta
+     * @return índex del centroid més proper
+     */
     private int closestCentroid(List<Resposta> point, List<List<Resposta>> centroids, List<Pregunta> preguntes) {
         int bestIndex = 0;
         double bestDist = distance(point, centroids.get(0), preguntes);
@@ -114,6 +157,11 @@ public class KMeans{
         return bestIndex;
     }
 
+    /**
+     * Actualitza els centroides basant-se en les assignacions actuals
+     * @param data les dades d'entrada (Enquesta)
+     * @param dim dimensionalitat de les dades
+     */
     private void updateCentroids(Enquesta data, int dim) {
         // inicia centroides vacíos
         List<List<Resposta>> newCentroids = new ArrayList<>();
@@ -191,7 +239,14 @@ public class KMeans{
     }
 
 //////////////////////// Funcions distancia locals ///////////////////////////////
-
+    /**
+     * Calcula la distància normalitzada entre dues respostes numèriques
+     * @param a resposta numèrica a
+     * @param b resposta numèrica b
+     * @param min valor mínim possible
+     * @param max valor màxim possible
+     * @return distància normalitzada entre a i b
+     */
     public double distanciaNumerica(RespostaNumerica a, RespostaNumerica b, double min, double max) {
         if (a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
@@ -202,6 +257,13 @@ public class KMeans{
         return Math.abs(a.getValor() - b.getValor()) / (max - min);
     }
 
+    /**
+     * Calcula la distància normalitzada entre dues respostes ordenades
+     * @param a resposta ordenada a
+     * @param b resposta ordenada b
+     * @param numOpcions nombre d'opcions possibles
+     * @return distància normalitzada entre a i b
+     */
     public double distanciaOrdenada (RespostaOrdenada a, RespostaOrdenada b, int numOpcions) {
         if (a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
@@ -214,6 +276,12 @@ public class KMeans{
         return Math.abs(ordenA - ordenB)/(numOpcions - 1);
     }
 
+    /**
+     * Calcula la distància entre dues respostes no ordenades úniques
+     * @param a resposta única a
+     * @param b resposta única b
+     * @return distància entre a i b
+     */
     public double distanciaNoOrdenadaUnica(Resposta a, Resposta b) {
         if (a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
@@ -224,6 +292,12 @@ public class KMeans{
         return a.equals(b) ? 0.0 : 1.0;
     }
 
+    /**
+     * Calcula la distància entre dues respostes no ordenades múltiples
+     * @param a resposta múltiple a
+     * @param b resposta múltiple b
+     * @return distància entre a i b
+     */
     public double distanciaNoOrdenadaMultiple(RespostaMultiple a, RespostaMultiple b) {
         if (a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
@@ -256,7 +330,13 @@ public class KMeans{
     */
         
 
-
+    /**
+     * Calcula la distància total entre dues llistes de respostes
+     * @param a llista de respostes a
+     * @param b llista de respostes b
+     * @param preguntes llista de preguntes corresponents
+     * @return distància total entre a i b
+     */
     public double distance(List<Resposta> a, List<Resposta> b, List<Pregunta> preguntes) {
         double sum = 0.0;
         int numPreguntes = preguntes.size();
