@@ -6,9 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariAdministrador.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariAdministrador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestador.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestat.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/TestUnitariEnquestat.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/TestUnitariEnquestat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-16.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-16.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-17.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-17.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/overview-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestat.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestat_Stub.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +74,7 @@
     "JUnit.TestUnitariAdministrador.testAfegirEnquestaNull.executor": "Run",
     "JUnit.TestUnitariAdministrador.testEliminarDeLlistaBuida.executor": "Run",
     "JUnit.TestUnitariAdministrador.testEliminarEnquestaInexistent.executor": "Run",
+    "JUnit.TestUnitariEnquestador.executor": "Run",
     "JUnit.TestUnitariEnquestat.executor": "Run",
     "JUnit.TestUnitariEnquestat.testEliminarDeLlistaBuida.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -133,7 +143,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestUnitariEnquestador">
+  <component name="RunManager" selected="JUnit.TestUnitariEnquestat_Stub">
     <configuration name="TestUnitariAdministrador" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
@@ -162,19 +172,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestUnitariEnquestat" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestUnitariEnquestat_Stub" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquestat" />
+      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquestat_Stub" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestUnitariEnquestat.testEliminarDeLlistaBuida" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestUnitariEnquestat_Stub.testEliminarDeLlistaBuida" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquestat" />
+      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquestat_Stub" />
       <option name="METHOD_NAME" value="testEliminarDeLlistaBuida" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -194,15 +204,15 @@
       <item itemvalue="JUnit.TestUnitariAdministrador" />
       <item itemvalue="JUnit.TestUnitariAdministrador.testAfegirEnquestaNull" />
       <item itemvalue="JUnit.TestUnitariEnquestador" />
-      <item itemvalue="JUnit.TestUnitariEnquestat" />
-      <item itemvalue="JUnit.TestUnitariEnquestat.testEliminarDeLlistaBuida" />
+      <item itemvalue="JUnit.TestUnitariEnquestat_Stub" />
+      <item itemvalue="JUnit.TestUnitariEnquestat_Stub.testEliminarDeLlistaBuida" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestUnitariEnquestat_Stub" />
         <item itemvalue="JUnit.TestUnitariEnquestador" />
         <item itemvalue="JUnit.TestUnitariAdministrador" />
-        <item itemvalue="JUnit.TestUnitariEnquestat" />
-        <item itemvalue="JUnit.TestUnitariEnquestat.testEliminarDeLlistaBuida" />
+        <item itemvalue="JUnit.TestUnitariEnquestat_Stub.testEliminarDeLlistaBuida" />
         <item itemvalue="JUnit.TestUnitariAdministrador.testAfegirEnquestaNull" />
       </list>
     </recent_temporary>
