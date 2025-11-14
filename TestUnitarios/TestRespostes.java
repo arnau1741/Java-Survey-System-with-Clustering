@@ -10,6 +10,8 @@ import java.util.*;
  */
 public class TestRespostes {
 
+
+    ///==============Casos basics===========
     @Test
     public void testRespostaNumerica() {
         RespostaNumerica rn = new RespostaNumerica(7.5);
@@ -18,14 +20,6 @@ public class TestRespostes {
         assertEquals("7.5", rn.getText(null));
         assertEquals(7.5, rn.getValor(), 0.001);
     }
-
-    /*
-    @Test(expected = RespostaInvalida.class)
-    public void testRespostaNumericaInvalida() throws RespostaInvalida {
-        RespostaNumerica rn = new RespostaNumerica(15.0); // Fora de rang 0-10
-        rn.validar();
-    }
-    */
 
     @Test
     public void testRespostaNumericaNoContestada() {
@@ -129,4 +123,125 @@ public class TestRespostes {
         assertFalse(ro.EsContestat());
         assertEquals("No contestat", ro.getText(Arrays.asList("A", "B", "C")));
     }
+
+    /// ===================Casos extrems==============
+    ///
+    ///
+    ///
+    @Test
+    public void testRespostaNumericaValorExtrem() {
+        // Valors numèrics extrems
+        RespostaNumerica rnMax = new RespostaNumerica(Double.MAX_VALUE);
+        assertTrue(rnMax.EsContestat());
+        assertEquals(String.valueOf(Double.MAX_VALUE), rnMax.getText(null));
+
+        RespostaNumerica rnMin = new RespostaNumerica(Double.MIN_VALUE);
+        assertTrue(rnMin.EsContestat());
+        assertEquals(String.valueOf(Double.MIN_VALUE), rnMin.getText(null));
+
+        RespostaNumerica rnNegatiu = new RespostaNumerica(-1000.0);
+        assertTrue(rnNegatiu.EsContestat());
+        assertEquals("-1000.0", rnNegatiu.getText(null));
+    }
+
+    @Test
+    public void testRespostaNumericaValorZero() {
+        // Valor zero
+        RespostaNumerica rnZero = new RespostaNumerica(0.0);
+        assertTrue(rnZero.EsContestat());
+        assertEquals("0.0", rnZero.getText(null));
+    }
+
+    @Test
+    public void testRespostaNumericaCanviValorExtrem() {
+        // Canvi de valor extrem
+        RespostaNumerica rn = new RespostaNumerica(5.0);
+        rn.setValor(Double.MAX_VALUE);
+        assertEquals(Double.MAX_VALUE, rn.getValor(), 0.001);
+        assertTrue(rn.EsContestat());
+    }
+
+    @Test
+    public void testRespostaLliureTextMassaLlarg() {
+        // Text molt llarg
+        String textMassaLlarg = "A".repeat(10000);
+        RespostaLliure rl = new RespostaLliure(textMassaLlarg);
+        assertTrue(rl.EsContestat());
+        assertEquals(textMassaLlarg, rl.getText(null));
+    }
+
+    @Test
+    public void testRespostaLliureTextNomésEspais() {
+        // Text només amb espais
+        RespostaLliure rl = new RespostaLliure("   ");
+        assertFalse(rl.EsContestat());
+        assertEquals("No contestada", rl.getText(null));
+    }
+
+    @Test
+    public void testRespostaLliureTextCaractersSpecials() {
+        // Text amb caràcters especials
+        // Es te pensat en fer una excepcio si facilita al Kmeans, si no, no es fa
+        String textEspecial = "Resposta amb ñ, ç, àèìòù i símbols: !@#$%^&*()";
+        RespostaLliure rl = new RespostaLliure(textEspecial);
+        assertTrue(rl.EsContestat());
+        assertEquals(textEspecial, rl.getText(null));
+    }
+
+    @Test
+    public void testRespostaUnicaPrimeraIOpcions() {
+        // Seleccionar primera i última opció
+        RespostaUnica ru = new RespostaUnica(5);
+
+        ru.setResposta(0); // Primera opció
+        assertTrue(ru.EsContestat());
+        assertEquals(0, ru.getResposta());
+
+        ru.setResposta(4); // Última opció
+        assertTrue(ru.EsContestat());
+        assertEquals(4, ru.getResposta());
+    }
+
+    @Test
+    public void testRespostaUnicaZeroOpcions() {
+        // Zero opcions (cas límit)
+        RespostaUnica ru = new RespostaUnica(0);
+        int resultat = ru.setResposta(0);
+        //Ha de fallar perque esta fora del limit
+        assertEquals(0, resultat);
+        assertFalse(ru.EsContestat());
+    }
+
+    @Test
+    public void testRespostaMultipleTotesOpcions() {
+        // Seleccionar totes les opcions
+        RespostaMultiple rm = new RespostaMultiple(5);
+        List<Integer> totes = Arrays.asList(0, 1, 2, 3, 4);
+        int resultat = rm.selecciona(totes);
+        assertEquals(1, resultat);
+        assertTrue(rm.EsContestat());
+    }
+
+    @Test
+    public void testRespostaMultipleLlistaBuida() {
+        // Llista buida de seleccions
+        RespostaMultiple rm = new RespostaMultiple(3);
+        List<Integer> buida = new ArrayList<>();
+        int resultat = rm.selecciona(buida);
+        //En ser buida no s'executa i per tant es cert i s'executa amb exit
+        assertEquals(1, resultat);
+        assertFalse(rm.EsContestat()); // No hi ha seleccions
+        assertTrue(rm.getRespostes().isEmpty());
+    }
+
+    @Test
+    public void testRespostaMultipleOpcionsDuplicades() {
+        // Opcions duplicades
+        RespostaMultiple rm = new RespostaMultiple(3);
+        List<Integer> duplicades = Arrays.asList(0, 0, 1, 1);
+        int resultat = rm.selecciona(duplicades);
+        assertEquals(1, resultat);
+        assertTrue(rm.EsContestat());
+    }
+
 }
