@@ -9,6 +9,12 @@ import java.util.List;
 
 public class Utils {
     public static String Base_path;
+
+    /**
+     * Mostra el menú principal
+     * @param io objecte d'entrada/sortida
+     * @throws Exception si hi ha un error d'entrada/sortida
+     */
     public static void mostrarMenu(inout io) throws Exception {
         io.writeln("======================================");
         io.writeln("              ENQUESTES");
@@ -33,6 +39,13 @@ public class Utils {
         io.writeln("======================================");
         io.write("Selecciona una opció: ");
     }
+
+    /**
+     * Mostra una enquesta donat el seu Id
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     */
     public static void mostrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix el Id de l'enquesta");
         int idEnquesta = io.readint();
@@ -42,6 +55,12 @@ public class Utils {
 
 
     ////////////////////// Funcioanlitats ////////////////////////////////
+    /**
+     * Permet respondre una enquesta
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     */
     public static void respondreEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("\n--- RESPONDRE ENQUESTA ---");
         io.write("Introdueix l'ID de l'enquesta: ");
@@ -93,7 +112,12 @@ public class Utils {
         io.writeln("\n[OK] Enquesta resposta correctament!\n");
     }
 
-
+    /**
+     * Importa respostes des d'un fitxer
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     */
     public static void importarRespostes(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("\n--- IMPORTAR RESPOSTES DES DE FITXER ---");
         io.write("Introdueix l'ID de l'usuari que respon l'enquesta: ");
@@ -120,6 +144,12 @@ public class Utils {
 
     // ==================== CREACIÓ MANUAL ====================
 
+    /**
+     * Crea una enquesta manualment
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no es pot crear
+     */
     public static void crearEnquestaManual(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("\n--- CREACIÓ D'ENQUESTA (MANUAL) ---");
 
@@ -174,6 +204,12 @@ public class Utils {
 
     // ==================== CREACIÓ DES DE FITXER ====================
 
+    /**
+     * Crea una enquesta des de fitxer
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no es pot crear
+     */
     public static void crearEnquestaDesDeFitxer(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("\n--- CREACIÓ D'ENQUESTA DES DE FITXER ---");
         io.writeln("Format esperat del fitxer:");
@@ -247,14 +283,24 @@ public class Utils {
         }
     }
 
-    //Consultar perfil
+    /**
+     * Permet consultar el perfil d'un usuari
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'usuari no existeix
+     */
     public static void consultarPerfil(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introduiex l'Id del usuari");
         int idUsuari = io.readint();
         ctrl.consultarPerfil(idUsuari);
     }
 
-    // === EXPORTAR ENQUESTA ===
+    /**
+     * Exporta una enquesta a un fitxer
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     */
     public static void exportarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix l'ID de l'enquesta a exportar: ");
         int id = io.readint();
@@ -271,13 +317,28 @@ public class Utils {
         writeAllLines(path, export);
         io.writeln("Enquesta exportada correctament a: " + path);
     }
+
+    /**
+     * Escriu totes les línies a un fitxer
+     * @param path del fitxer
+     * @param lines llistes de línies a escriure
+     * @throws IOException si hi ha un error d'entrada/sortida
+     */
     private static void writeAllLines(String path, List<String> lines) throws IOException {
         try (PrintWriter pw = new PrintWriter(new FileWriter(path))) {
             for (String l : lines) pw.println(l);
         }
     }
+
     // ===================== HELPERS FITXER =====================
 
+    /**
+     * Llegeix una línia obligatòria del BufferedReader
+     * @param br bufferedReader
+     * @param errorMsg errorMsg missatge d'error si no es pot llegir
+     * @return la línia llegida
+     * @throws IOException si hi ha un error d'entrada/sortida
+     */
     private static String llegirObligatori(BufferedReader br, String errorMsg) throws IOException {
         String line = br.readLine();
         if (line == null || line.trim().isEmpty()) {
@@ -286,11 +347,25 @@ public class Utils {
         return line.trim();
     }
 
+    /**
+     * Llegeix un enter obligatori del BufferedReader
+     * @param br bufferedReader
+     * @param errorMsg missatge d'error si no es pot llegir
+     * @return l'enter llegit
+     * @throws IOException si hi ha un error d'entrada/sortida
+     */
     private static int llegirIntObligatori(BufferedReader br, String errorMsg) throws IOException {
         String line = llegirObligatori(br, errorMsg);
         return parseOrThrow(line, errorMsg);
     }
 
+    /**
+     * Parsea un enter o llença una excepció amb missatge personalitzat
+     * @param s cadena a parsear
+     * @param errorMsg missatge d'error si no es pot parsear
+     * @return l'enter parseat
+     * @throws IllegalArgumentException si no es pot parsear
+     */
     private static int parseOrThrow(String s, String errorMsg) {
         try {
             return Integer.parseInt(s.trim());
@@ -299,7 +374,12 @@ public class Utils {
         }
     }
 
-
+    /**
+     * Llegeix una opció de menú
+     * @param io objecte d'entrada/sortida
+     * @return l'opció llegida
+     * @throws Exception si hi ha un error d'entrada/sortida
+     */
     public static int llegirOpcio(inout io) throws Exception {
         int opcio;
         try {
