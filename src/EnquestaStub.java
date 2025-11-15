@@ -1,18 +1,9 @@
 public class EnquestaStub extends Enquesta {
-    private final int id;
+    private final Integer id;
 
-    public EnquestaStub(int id) {
+    public EnquestaStub(Integer id) {
         super(id, "Stub", "Descripcio stub", 0, new java.util.ArrayList<>());
         this.id = id;
     }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public int getNumPreguntes() {
-        return 0;
-    }
 }
+
