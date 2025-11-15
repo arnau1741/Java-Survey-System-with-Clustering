@@ -1,0 +1,24 @@
+2
+enquesta_cafe
+2
+enquesta_satisfaccion
+8
+101
+0
+importarRespostesCafe
+8
+102
+1
+importarRespostesSatisfaccion
+6
+1
+103
+7
+16
+11
+0
+0
+Pregunta de prova
+0
+16
+0
