@@ -18,10 +18,10 @@ import java.util.Map;
 
 public class Enquesta {
     // Representa una enquesta concreta: id, titol, descripcio, creador, preguntes, respostes, participants
-    private Integer id;
+    private int id;
     private String titol;
     private String descripcio;
-    private Integer idCreador;
+    private int idCreador;
     private List<Pregunta> preguntes;
 
     // posem les dates com atributs, creem una classe Data i es relaciona?
@@ -38,7 +38,7 @@ public class Enquesta {
      * @param idCreador de l'usuari
      * @param preguntes de l'enquesta
      */
-    public Enquesta(Integer id, String titol, String descripcio, Integer idCreador, List<Pregunta> preguntes) {
+    public Enquesta(int id, String titol, String descripcio, int idCreador, List<Pregunta> preguntes) {
         this.id = id;
         this.titol = titol;
         this.descripcio = descripcio;
@@ -166,7 +166,7 @@ public class Enquesta {
      * Retorna l'id de l'enquesta
      * @return id de l'enquesta
      */
-    public Integer getId() { return id;}
+    public int getId() { return id;}
 
     /**
      * Retorna el títol de l'enquesta
@@ -184,7 +184,7 @@ public class Enquesta {
      * Retorna l'id del creador de l'enquesta
      * @return id del creador de l'enquesta
      */
-    public Integer getCreador() { return idCreador;}
+    public int getCreador() { return idCreador;}
 
     /**
      * Retorna la llista de preguntes de l'enquesta
