@@ -12,9 +12,9 @@ public class TestUnitariEnquesta_Stub {
 
     @Before
     public void setUp() {
-        enquesta1 = new Enquesta(0,"Enquesta de prova",
+        enquesta1 = new Enquesta(0, "Enquesta de prova",
                 "Descripcio de prova", 99, new ArrayList<>());
-        enquesta2 = new Enquesta(1,"Segona enquesta",
+        enquesta2 = new Enquesta(1, "Segona enquesta",
                 "Descripcio segona enquesta", 100, new ArrayList<>());
     }
 
@@ -32,8 +32,4 @@ public class TestUnitariEnquesta_Stub {
         assertThat(enquesta2.getCreador(), equalTo(100));
         assertThat(enquesta2.getPreguntes(), equalTo(new ArrayList<>()));
     }
-
-    @Test
-    public void () {
-
-    }
+}
