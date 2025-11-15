@@ -1,0 +1,288 @@
+Fusión de barómetros de enero a marzo de 2023 (Estudios CIS 3390, 3395 y 3398)
+Cuestionario ficticio
+1
+50
+1
+P.0 En primer lugar quisiera preguntarle si tiene Ud....
+3
+La nacionalidad española.
+La nacionalidad española y otra
+Otra nacionalidad
+2
+P.1 Pensando en todos los efectos de la pandemia del coronavirus, ¿diría Ud. que la crisis del coronavirus le preocupa mucho, bastante, poco o nada?
+7
+Mucho
+Bastante
+Regular
+Poco
+Nada
+N.S.
+N.C.
+2
+P.2 ¿Está Ud. muy preocupado/a, bastante, algo, poco o nada preocupado/a por la invasión de Rusia a Ucrania?
+9
+Muy preocupado/a
+Bastante preocupado/a
+Algo preocupado/a
+Poco preocupado/a
+Nada preocupado/a
+No tiene criterio
+Le es indiferente
+N.S.
+N.C.
+2
+P.3 Refiriéndonos a la situación social de España, ¿cómo la calificaría Ud.: muy buena, buena, mala o muy mala?
+7
+Muy buena
+Buena
+Regular
+Mala
+Muy mala
+N.S.
+N.C.
+2
+P.4 ¿Cómo calificaría Ud. su situación económica personal en la actualidad: muy buena, buena, mala o muy mala?
+7
+Muy buena
+Buena
+Regular
+Mala
+Muy mala
+N.S.
+N.C.
+2
+P.5 Refiriéndonos a la situación económica general de España actualmente, ¿cómo la calificaría Ud.: muy buena, buena, mala o muy mala?
+7
+Muy buena
+Buena
+Regular
+Mala
+Muy mala
+N.S.
+N.C.
+4
+P.6 ¿Cuál es, a su juicio, el principal problema que existe actualmente en España? (1er. Problema)
+4
+P.6 ¿Cuál es, a su juicio, el principal problema que existe actualmente en España? (2º Problema)
+4
+P.6 ¿Cuál es, a su juicio, el principal problema que existe actualmente en España? (3er. Problema)
+4
+P.7 ¿Y cuál es el problema que a Ud., personalmente, le afecta más? (1er Problema)
+4
+P.7 ¿Y cuál es el problema que a Ud., personalmente, le afecta más? (2º Problema)
+4
+P.7 ¿Y cuál es el problema que a Ud., personalmente, le afecta más? (3er Problema)
+2
+P.8 ¿Diría Ud. que en estos momentos el cambio climático le preocupa mucho, bastante, poco o nada?
+7
+Mucho
+Bastante
+Regular
+Poco
+Nada
+N.S.
+N.C.
+4
+P.9 Cambiando de tema, de los/as principales líderes políticos/as, ¿quién preferiría que fuese el/la presidente/a del Gobierno en estos momentos?
+0
+P.10 Me gustaría que me dijera cuál es la probabilidad de que Ud. fuera a votar suponiendo que mañana se celebrasen elecciones generales, al Parlamento español. Para contestar utilice una escala de 0 a 10...
+1
+P.11 ¿ Ud. es de las personas que votan siempre por el mismo partido, que por lo general suelen votar por el mismo partido o según lo que más le convenza en ese momento votan por un partido u otro o no votan?
+8
+Votan siempre por el mismo partido.
+Por lo general suele votar por el mismo partido.
+Según lo que más le convenza en ese momento votan por un partido u otro o no votan.
+Votan en blanco o nulo.
+No suelen votar.
+Es la primera vez que votan.
+N.S.
+N.C.
+2
+P.12 ¿Cuándo suele Ud. decidir por qué partido político o coalición va a votar?
+7
+Lo decide mucho antes del inicio de la campaña electoral
+Lo decide al comienzo de la campaña electoral
+Lo decide durante la última semana de la campaña electoral
+Lo decide durante la jornada de reflexión, la víspera de las elecciones
+Lo decide el mismo día de las elecciones
+Aún no ha votado en ningunas elecciones
+N.C.
+1
+P.13 Y a la hora de votar en unas elecciones, ¿a qué le da Ud. más importancia?
+6
+Al partido político
+Al/a la candidato/a
+Al programa
+A todo por igual
+N.S.
+N.C.
+4
+P.14 Suponiendo que mañana se celebrasen elecciones generales, es decir, al Parlamento español, ¿a qué partido votaría Ud.?
+4
+P.15 En el caso de que por cualquier razón finalmente no votase por el partido que me ha dicho, ¿a qué otro partido votaría Ud.?
+4
+P.16 Sin ningún compromiso por su parte, ¿me podría decir por qué partido siente Ud. más simpatía?
+0
+P.17 Cuando se habla de política se utilizan normally las expresiones izquierda y derecha. Situándonos en una escala que va del 1 al 10... ¿en qué casilla se colocaría Ud.?
+1
+P.18 ¿Conoce a Pedro Sánchez?
+3
+Conoce
+No conoce
+N.C.
+1
+P.18 ¿Conoce a Alberto Núñez Feijóo?
+3
+Conoce
+No conoce
+N.C.
+1
+P.18 ¿Conoce a Yolanda Diaz?
+3
+Conoce
+No conoce
+N.C.
+1
+P.18 ¿Conoce a Santiago Abascal?
+3
+Conoce
+No conoce
+N.C.
+1
+P.18 ¿Conoce a Inés Arrimadas?
+3
+Conoce
+No conoce
+N.C.
+1
+P.18 ¿Conoce a Iñigo Errejón?
+3
+Conoce
+No conoce
+N.C.
+0
+P.18a ¿Qué valoración le merece Pedro Sánchez? (1-10)
+0
+P.18a ¿Qué valoración le merece Alberto Núñez Feijóo? (1-10)
+0
+P.18a ¿Qué valoración le merece Yolanda Diaz? (1-10)
+0
+P.18a ¿Qué valoración le merece Santiago Abascal? (1-10)
+0
+P.18a ¿Qué valoración le merece Inés Arrimadas? (1-10)
+0
+P.18a ¿Qué valoración le merece Iñigo Errejón? (1-10)
+2
+P.19 El presidente del Gobierno, Pedro Sánchez, ¿le inspira a Ud. mucha confianza, bastante confianza, poca o ninguna confianza?
+6
+Mucha confianza
+Bastante confianza
+Poca confianza
+Ninguna confianza
+N.S.
+N.C.
+2
+P.20 ¿Y el líder del principal partido de la oposición, Alberto Núñez Feijóo, le inspira, personalmente, mucha confianza, bastante, poca o ninguna confianza?
+6
+Mucha confianza
+Bastante confianza
+Poca confianza
+Ninguna confianza
+N.S.
+N.C.
+1
+P.21 ¿Me podría decir si en las elecciones generales del 10 de noviembre de 2019...?
+6
+Votó
+No votó
+No tenía edad para votar
+No tenía derecho a voto
+No recuerda
+N.C.
+4
+P.21a ¿Y podría decirme a qué partido o coalición votó?
+4
+P.22 En todo caso, ¿qué partido considera más cercano a sus propias ideas?
+2
+P.23 ¿Ha ido Ud. a la escuela o cursado algún tipo de estudios?
+4
+No, es analfabeto/a
+No, pero sabe leer y escribir
+Sí, ha ido a la escuela
+N.C.
+4
+P.23a ¿Cuáles son los estudios de más alto nivel oficial que Ud. ha cursado (con independencia de que los haya terminado o no)?
+1
+P.24 ¿Cómo se define Ud. en materia religiosa: católico/a practicante, católico/a no practicante, creyente de otra religión, agnóstico/a, indiferente o no creyente, o ateo/a?
+7
+Católico/a practicante
+Católico/a no practicante
+Creyente de otra religión
+Agnóstico/a (no niegan la existencia de Dios pero tampoco la descartan)
+Indiferente, no creyente
+Ateo/a (niegan la existencia de Dios)
+N.C.
+2
+P.25 ¿Con qué frecuencia asiste Ud. a misa u otros oficios religiosos...?
+7
+Nunca
+Casi nunca
+Varias veces al año
+Dos o tres veces al mes
+Todos los domingos y festivos
+Varias veces a la semana
+N.C.
+1
+P.26 ¿Cuál es su estado civil?
+6
+Casado/a
+Soltero/a
+Viudo/a
+Separado/a
+Divorciado/a
+N.C.
+1
+P.27 ¿En qué situación laboral se encuentra Ud. actualmente?
+9
+Trabaja
+Jubilado/a o pensionista (anteriormente ha trabajado)
+Pensionista (anteriormente no ha trabajado)
+En paro y ha trabajado antes
+En paro y busca su primer empleo
+Estudiante
+Trabajo doméstico no remunerado
+Otra situación
+N.C.
+1
+P.27a ¿Trabaja como...?
+7
+Asalariado/a por cuenta ajena
+Empresario/a o profesional con asalariados/as
+Profesional o trabajador/a autónomo/a (sin asalariados/as)
+Ayuda familiar (sin remuneración reglamentada...)
+Miembro de una cooperativa
+Otra situación, ¿cuál?
+N.C.
+4
+P.27b ¿Me puede decir cuál es su ocupación actual?
+2
+En su opinión, la sinceridad de la persona entrevistada ha sido...
+5
+Mucha
+Bastante
+Poca
+Ninguna
+N.S.
+2
+P.28 Actualmente, entre todos/as los/as miembros del hogar... ¿de cuántos ingresos al mes disponen en su hogar...?
+8
+Más de 5000 €
+De 3.901 a 5000 €
+De 2.701 a 3.900 €
+De 1.801 a 2.700 €
+De 1.100 a 1.800€
+Menos de 1.100€
+N.S
+N.C.
+4
+P.29 ¿A qué clase social diría Ud. que pertenece?
