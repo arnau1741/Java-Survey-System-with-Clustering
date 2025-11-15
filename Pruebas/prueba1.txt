@@ -1,0 +1,12 @@
+2
+enquesta_cafe
+2
+enquesta_musica
+2
+enquesta_satisfaccion
+16
+13
+1
+101
+16
+0

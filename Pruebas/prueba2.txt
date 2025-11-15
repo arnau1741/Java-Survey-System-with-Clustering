@@ -1,0 +1,34 @@
+1
+Enquesta de prova sobre programacio
+Es valua el nivel de la prova realizada
+101
+3
+0
+Que nivel de el programa (0 - 100)?
+4
+Diu l'algoritme que has utilitzat?
+2
+Que programas has utilitzat?
+3
+java
+c++
+c
+6
+0
+102
+70
+bfs
+1,2
+6
+0
+103
+20
+bfs
+0
+1
+16
+14
+0
+102
+0
+
