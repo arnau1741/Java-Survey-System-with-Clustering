@@ -1,0 +1,11 @@
+2
+enquesta_cafe
+16
+8
+101
+0
+importarRespostesCafe
+16
+5
+0
+0
