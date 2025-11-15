@@ -6,20 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/TestUnitariAdministrador.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/TestUnitariAdministrador.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/TestUnitariEnquestador.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/TestUnitariEnquestador.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-16.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-16.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-17.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-17.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/overview-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariAdministrador.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariAdministrador_Stub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestador_Mock.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestador_Stub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestPregunta.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestPregunta.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +65,7 @@
     "JUnit.TestKmeans.testDistanciaNumerica.executor": "Run",
     "JUnit.TestKmeans.testDistanciaNumericaNullNull.executor": "Run",
     "JUnit.TestPregunta.executor": "Run",
+    "JUnit.TestPreguntaMockStub.executor": "Run",
     "JUnit.TestUnitariAdministrador_Stub.executor": "Run",
     "JUnit.TestUnitariEnquestador_Mock.afegirEnquestaAssignadaFuncionaCorrectament.executor": "Run",
     "JUnit.TestUnitariEnquestador_Mock.executor": "Run",
@@ -151,23 +139,21 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestUnitariAdministrador_Stub">
-    <configuration name="TestKmeans.testDistanciaNoOrdenadaUnicaNullNonNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TestPregunta">
+    <configuration name="TestPregunta" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestKmeans" />
-      <option name="METHOD_NAME" value="testDistanciaNoOrdenadaUnicaNullNonNull" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="TestPregunta" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestKmeans.testDistanciaNoOrdenadaUnicaNullNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestPreguntaMockStub" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestKmeans" />
-      <option name="METHOD_NAME" value="testDistanciaNoOrdenadaUnicaNullNull" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="TestPreguntaMockStub" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -210,19 +196,19 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="JUnit.TestPregunta" />
+      <item itemvalue="JUnit.TestPreguntaMockStub" />
       <item itemvalue="JUnit.TestUnitariAdministrador_Stub" />
       <item itemvalue="JUnit.TestUnitariEnquestador_Stub" />
       <item itemvalue="JUnit.TestUnitariEnquestador_Stub.afegirEnquestaAssignadaFuncionaCorrectament" />
-      <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNonNull" />
-      <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNull" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestPregunta" />
+        <item itemvalue="JUnit.TestPreguntaMockStub" />
         <item itemvalue="JUnit.TestUnitariAdministrador_Stub" />
         <item itemvalue="JUnit.TestUnitariEnquestador_Stub" />
         <item itemvalue="JUnit.TestUnitariEnquestador_Stub.afegirEnquestaAssignadaFuncionaCorrectament" />
-        <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNull" />
-        <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNonNull" />
       </list>
     </recent_temporary>
   </component>
@@ -250,7 +236,7 @@
       <workItem from="1763144963501" duration="4517000" />
       <workItem from="1763217695506" duration="80000" />
       <workItem from="1763214244952" duration="3330000" />
-      <workItem from="1763225711818" duration="4709000" />
+      <workItem from="1763225711818" duration="5340000" />
     </task>
     <servers />
   </component>
