@@ -18,7 +18,6 @@ public class Utils {
      * @throws Exception si hi ha un error d'entrada/sortida
      */
     public static void mostrarMenu(inout io) throws Exception {
-        /*
         io.writeln("======================================");
         io.writeln("              ENQUESTES");
         io.writeln("======================================");
@@ -37,7 +36,6 @@ public class Utils {
         io.writeln(" 13) Esborrar enquesta");
         io.writeln(" 14) Esborrar resposta");
         io.writeln(" 15) Clustering d'usuaris");
-        */
 
 
         /*

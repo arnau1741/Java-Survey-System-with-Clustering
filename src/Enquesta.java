@@ -55,6 +55,7 @@ public class Enquesta {
      * @throws IllegalArgumentException si alguna resposta no és vàlida segons el tipus de pregunta
      */
     public List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
+        System.out.println("Convirtiendo respuestas de String a objetos Resposta...");
         List<Resposta> respostesObj = new ArrayList<>();
         // for (String r : respostesStr) {
         for (int index = 0; index < respostesStr.size(); index++) {
@@ -112,8 +113,8 @@ public class Enquesta {
         List<String> tipusToString = new ArrayList<>();
         tipusToString.add("NUMERICA");
         tipusToString.add("UNICA");
-        tipusToString.add("MULTIPLE");
         tipusToString.add("ORDENADA");
+        tipusToString.add("MULTIPLE");
         tipusToString.add("LLIURE");
 
         List<String> textsPreguntes = new ArrayList<>();
@@ -129,15 +130,15 @@ public class Enquesta {
                 textsPreguntes.add(Integer.toString(nombreOpcions));
                 textsPreguntes.addAll(opcions);
             }
-            else if (tipus == 2) { // MULTIPLE
-                // Afegir les opcions de la pregunta MULTIPLE
+            else if (tipus == 2) { // ORDENADA
+                // Afegir les opcions de la pregunta ORDENADA
                 List<String> opcions = p.getOpcions();
                 int nombreOpcions = opcions.size();
                 textsPreguntes.add(Integer.toString(nombreOpcions));
                 textsPreguntes.addAll(opcions);
             }
-            else if(tipus == 3){ // ORDENADA
-                // Afegir les opcions de la pregunta ORDENADA
+            else if(tipus == 3){ // MULTIPLE
+                // Afegir les opcions de la pregunta MULTIPLE
                 List<String> opcions = p.getOpcions();
                 int nombreOpcions = opcions.size();
                 textsPreguntes.add(Integer.toString(nombreOpcions));

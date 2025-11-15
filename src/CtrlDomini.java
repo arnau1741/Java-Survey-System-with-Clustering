@@ -372,7 +372,7 @@ public class CtrlDomini {
             idx++;
             enunciat = preguntes.get(idx);
             idx++;
-            if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, MULTIPLE, ORDENADA
+            if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, ORDENADA, MULTIPLE
                 int numOpcions = Integer.parseInt(preguntes.get(idx));
                 idx++;
                 List<String> opcions = new ArrayList<>();
