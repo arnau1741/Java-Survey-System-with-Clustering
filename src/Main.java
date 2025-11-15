@@ -1,11 +1,5 @@
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+
 
 public class Main {
 
@@ -27,10 +21,10 @@ public class Main {
 
                     case 1 -> Utils.crearEnquestaManual(io, ctrl);
                     case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl);
-                    case 3 -> Utils.mostrarEnquesta(io, ctrl);
-                    case 4 -> ctrl.mostrarEnquestesAmbPreguntes();
-                    case 5 -> Utils.respondreEnquesta(io, ctrl);
-                    case 6 -> ctrl.mostrarEnquestesAmbPreguntesIRespostes();
+                    case 3 -> Utils.consultarEnquesta(io, ctrl);
+                    case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl);
+                    case 5 -> Utils.consultarRespostesEnquesta(io, ctrl);
+                    case 6 -> Utils.respondreEnquesta(io, ctrl);
                     case 7 -> Utils.exportarEnquesta(io, ctrl);
                     case 8 -> Utils.importarRespostes(io, ctrl);
                     case 9 -> Utils.consultarPerfil(io, ctrl);

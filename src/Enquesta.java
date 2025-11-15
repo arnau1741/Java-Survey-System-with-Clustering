@@ -107,10 +107,18 @@ public class Enquesta {
      * @return llista de textos de les preguntes
      */
     public List<String> getPreguntes(){
+        List<String> tipusToString = new ArrayList<>();
+        tipusToString.add("NUMÈRICA");
+        tipusToString.add("ÚNICA");
+        tipusToString.add("MÚLTIPLE");
+        tipusToString.add("ORDENADA");
+        tipusToString.add("LLIURE");
+
         List<String> textsPreguntes = new ArrayList<>();
         for (Pregunta p : preguntes) {
             int tipus = p.getTipus(); // NUMERICA, UNICA, MULTIPLE, ORDENADA, LLIURE
-            textsPreguntes.add(Integer.toString(tipus));
+            //textsPreguntes.add(Integer.toString(tipus));
+            textsPreguntes.add(tipusToString.get(tipus));
             textsPreguntes.add(p.getText());
             if (tipus == 1) { // UNICA
                 // Afegir les opcions de la pregunta UNICA
@@ -133,6 +141,7 @@ public class Enquesta {
                 textsPreguntes.add(Integer.toString(nombreOpcions));
                 textsPreguntes.addAll(opcions);
             }
+            textsPreguntes.add("- - -");
         }
         return textsPreguntes;
     }

@@ -24,9 +24,9 @@ public class Utils {
         io.writeln(" 1) Crear enquesta manualment");
         io.writeln(" 2) Crear enquesta des de fitxer");
         io.writeln(" 3) Mostrar enquesta");
-        io.writeln(" 4) Mostrar enquestes amb preguntes");
-        io.writeln(" 5) Respon enquesta");
-        io.writeln(" 6) Mostrar enquestes amb preguntes i respostes");
+        io.writeln(" 4) Mostrar enquesta amb preguntes");
+        io.writeln(" 5) Mostrar respostes d'una enquesta");
+        io.writeln(" 6) Respon enquesta");
         io.writeln(" 7) Exportar enquesta");
         io.writeln(" 8) Importar respostes");
         io.writeln(" 9) Consultar usuari");
@@ -68,11 +68,14 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
-    public static void mostrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+    public static void consultarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix el Id de l'enquesta");
         int idEnquesta = io.readint();
 
-        ctrl.mostrarEnquesta(idEnquesta);
+        List<String> result = ctrl.consultarEnquesta(idEnquesta);
+        for (String line : result) {
+            io.writeln(line);
+        }
     }
 
 
@@ -319,22 +322,6 @@ public class Utils {
     }
 
 
-    // ==================== CONSULTAR PERFIL USUARI ====================
-
-
-    /**
-     * Permet consultar el perfil d'un usuari
-     * @param io objecte d'entrada/sortida
-     * @param ctrl controlador de domini
-     * @throws Exception si hi ha un error d'entrada/sortida o l'usuari no existeix
-     */
-    public static void consultarPerfil(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introduiex l'Id del usuari");
-        int idUsuari = io.readint();
-        ctrl.consultarPerfil(idUsuari);
-    }
-
-
     // ==================== EXPORTAR ENQUESTA ====================
 
 
@@ -359,6 +346,57 @@ public class Utils {
 
         writeAllLines(path, export);
         io.writeln("Enquesta exportada correctament a: " + path);
+    }
+
+
+
+    // ==================== CONSULTAR PERFIL USUARI ====================
+
+
+    /**
+     * Permet consultar el perfil d'un usuari
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'usuari no existeix
+     */
+    public static void consultarPerfil(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introduiex l'Id del usuari");
+        int idUsuari = io.readint();
+        List<String> perfil = ctrl.consultarPerfil(idUsuari);
+        for (String line : perfil) {
+            io.writeln(line);
+        }
+    }
+
+
+    // ==================== CONSULTAR ENQUESTA ====================
+
+    /**
+     * Permet consultar una enquesta amb les seves preguntes
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     */
+    public static void consultarEnquestaAmbPreguntes(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'ID de l'enquesta a consultar: ");
+        int id = io.readint();
+        List<String> info = ctrl.consultarEnquestaAmbPreguntes(id);
+        for (String line : info) {
+            io.writeln(line);
+        }
+    }
+
+
+    // ==================== CONSULTAR RESULTATS ENQUESTA ====================
+
+
+    public static void consultarRespostesEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'ID de l'enquesta a consultar les respostes: ");
+        int id = io.readint();
+        List<String> respostes = ctrl.consultarRespostesEnquesta(id);
+        for (String line : respostes) {
+            io.writeln(line);
+        }
     }
 
 

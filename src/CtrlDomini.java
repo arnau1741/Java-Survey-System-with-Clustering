@@ -273,37 +273,61 @@ public class CtrlDomini {
     /**
      * Funcio per a mostrar les enquestes i les seves preguntes i respostes
      */
-    public void mostrarEnquesta(int idEnquesta) {
+    public List<String> consultarEnquesta(int idEnquesta) {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        System.out.println("Enquesta: " + idEnquesta);
-        System.out.println("Titol: " + enq.getTitol());
-        System.out.println("Descripció: " + enq.getDescripcio());
-        System.out.println("Nº de preguntes: " + enq.getNumPreguntes());
-
+        List<String> result = new ArrayList<>();
+        result.add("Enquesta: " + idEnquesta);
+        result.add("Titol: " + enq.getTitol());
+        result.add("Descripció: " + enq.getDescripcio());
+        result.add("Nº de preguntes: " + enq.getNumPreguntes());
+        return result;
     }
+
 
     //mostrar enquestes amb preguntes per debug
     /**
      * Funcio per a mostrar les enquestes amb preguntes
      */
-    public void mostrarEnquestesAmbPreguntes() {
-        int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
-        System.out.println("Número d'enquestes: " + numEnquestes);
-        for (int i = 0; i < numEnquestes; i++) {
-            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(i);
-            System.out.println("ID enquesta: " + enq.getId() + ", Títol: " + enq.getTitol() + ", Descripció: " + enq.getDescripcio());
-            List<String> preguntes = enq.getPreguntes();
-            System.out.println("Preguntes:");
-            for (String p : preguntes) {
-                System.out.println("- " + p);
-            }
+    public List<String> consultarEnquestaAmbPreguntes(int idEnquesta) {
+        List<String> result = new ArrayList<>();
+        result = consultarEnquesta(idEnquesta);
+
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        List<String> preguntes = enq.getPreguntes();
+        result.add("Preguntes:");
+        for (String p : preguntes) {
+            result.add("- " + p);
         }
+        return result;
     }
 
     /**
      * Funcio per a mostrar les enquestes amb preguntes i respostes
      */
     //mostrar enquestes amb preguntes i respostes per debug
+    public List<String> consultarRespostesEnquesta(int idEnquesta){
+        List<String> result = new ArrayList<>();
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        List<Pregunta> preguntes = enq.getPreguntesObj();
+        for (Pregunta p : preguntes) {   
+            result.add("Pregunta: " + p.getText());
+            List<String> opcions = p.getOpcions();
+            if (opcions != null){
+                result.add("Opcions:");
+                for (String opcio : opcions) {
+                    result.add("  * Opció: " + opcio);
+                }
+            }
+            Map<Integer, Resposta> respostes = p.getRespostes();
+            for (Map.Entry<Integer, Resposta> entry : respostes.entrySet()) {
+                result.add("  - Usuari ID: " + entry.getKey() + ", Resposta: " + entry.getValue().getText(opcions));
+            }
+        }
+        return result;
+    }
+
+
+
     public void mostrarEnquestesAmbPreguntesIRespostes() {
         int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
         System.out.println("Número d'enquestes: " + numEnquestes);
@@ -465,11 +489,13 @@ public class CtrlDomini {
      * @param id identificador de l'usuari
      */
     //Caso de uso 9: consultar perfil usuari
-    public void consultarPerfil(int id) {
+    public List<String> consultarPerfil(int id) {
         Usuari us = ctrlDominiMantUsuari.getUsuari(id);
-        System.out.println("Id de l'usuari: " + us.getId());
-        System.out.println("Nom de l'usuari: " + us.getUsuari());
-        System.out.println("Email: " + us.getEmail());
+        List<String> perfil = new ArrayList<>();
+        perfil.add("Id de l'usuari: " + us.getId());
+        perfil.add("Nom de l'usuari: " + us.getUsuari());
+        perfil.add("Email: " + us.getEmail());
+        return perfil;
     }
 
 
