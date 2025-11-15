@@ -19,7 +19,7 @@ public class Main {
                 switch (opcio) {
                     case 0 -> io.writeln("\nSortint...");
 
-                    case 1 -> Utils.crearEnquestaManual(io, ctrl);
+                    case 1 -> Utils.crearEnquestaManual(io, ctrl); //prueba hecha
                     case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl);
                     case 3 -> Utils.consultarEnquesta(io, ctrl);
                     case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl);
@@ -29,10 +29,10 @@ public class Main {
                     case 8 -> Utils.importarRespostes(io, ctrl);
                     case 9 -> io.writeln("--");//Utils.exportarResposta(io, ctrl);
                     case 10 -> Utils.consultarPerfil(io, ctrl);
-                    case 11 -> Utils.modificarEnquesta(io, ctrl);
+                    case 11 -> Utils.modificarEnquesta(io, ctrl); //prueba hecha
                     case 12 -> Utils.modificarResposta(io, ctrl);
-                    case 13 -> Utils.esborrarEnquesta(io,ctrl);
-                    case 14 -> Utils.esborrarResposta(io,ctrl);
+                    case 13 -> Utils.esborrarEnquesta(io,ctrl); //prueba hecha
+                    case 14 -> Utils.esborrarResposta(io,ctrl); //prueba hecha
                     case 15 -> Utils.clustering(io, ctrl);
                     case 16 -> ctrl.mostrarEnquestesAmbPreguntesIRespostes();
 
