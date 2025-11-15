@@ -21,7 +21,7 @@ public class Main {
                     case 1 -> Utils.crearEnquestaManual(io, ctrl); //prueba hecha
                     case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl);
                     case 3 -> Utils.consultarEnquesta(io, ctrl); //prueba hecha
-                    case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl);
+                    case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl); //prueba hecha
                     case 5 -> Utils.consultarRespostesEnquesta(io, ctrl);
                     case 6 -> Utils.respondreEnquesta(io, ctrl);
                     case 7 -> Utils.exportarEnquesta(io, ctrl);
