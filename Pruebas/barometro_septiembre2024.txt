@@ -1,0 +1,164 @@
+Barómetro de Septiembre 2024
+Estudio CIS 3474
+1
+32
+1
+P.0 En primer lugar quisiera preguntarle si tiene Ud....
+3
+La nacionalidad española.
+La nacionalidad española y otra
+Otra nacionalidad
+1
+P.1 ¿Cree Ud. que actualmente existen muchas desigualdades entre los países pobres y los países ricos?
+4
+Cree que existen muchas desigualdades
+No cree que existan muchas desigualdades
+N.S.
+N.C.
+2
+P.1a ¿Y cree Ud. que las desigualdades actuales entre los países pobres y los ricos, actualmente son mayores, menores o iguales que hace 30 o 35 años?
+5
+Son mayores
+Son menores
+Son iguales
+N.S.
+N.C.
+1
+P.2 ¿Cree Ud. que las desigualdades existentes entre los países pobres y los países ricos son una de las causas que explican el aumento de la población inmigrante en países como España?
+4
+Sí lo cree
+No lo cree
+N.S.
+N.C.
+1
+P.3 ¿Cree Ud. que España debería realizar un esfuerzo mayor, menor o igual que el que realiza actualmente para ayudar al desarrollo de los países más pobres?
+5
+Un esfuerzo mayor
+Un esfuerzo menor
+Un esfuerzo igual
+N.S.
+N.C.
+2
+P.4 ¿Está Ud. muy preocupado/a, bastante, algo, poco o nada preocupado/a por la invasión de Rusia a Ucrania?
+7
+Muy preocupado/a
+Bastante preocupado/a
+Algo preocupado/a
+Poco preocupado/a
+Nada preocupado/a
+N.S.
+N.C.
+2
+P.5 ¿Y por el conflicto en Oriente Próximo, entre israelíes y palestinos?
+7
+Muy preocupado/a
+Bastante preocupado/a
+Algo preocupado/a
+Poco preocupado/a
+Nada preocupado/a
+N.S.
+N.C.
+2
+P.6 ¿Diría Ud. que en estos momentos el cambio climático le preocupa mucho, bastante, poco o nada?
+7
+Mucho
+Bastante
+(NO LEER) Regular
+Poco
+Nada
+N.S.
+N.C.
+2
+P.7 Refiriéndonos a la situación económica general de España actualmente, ¿cómo la calificaría Ud.: muy buena, buena, regular, mala o muy mala?
+7
+Muy buena
+Buena
+Regular
+Mala
+Muy mala
+N.S.
+N.C.
+2
+P.8 ¿Y cómo calificaría Ud. su situación económica personal en la actualidad: muy buena, buena, regular, mala o muy mala?
+7
+Muy buena
+Buena
+Regular
+Mala
+Muy mala
+N.S.
+N.C.
+4
+P.9 ¿Cuál es, a su juicio, el principal problema que existe actualmente en España? (1er. Problema)
+4
+P.9 ¿Cuál es, a su juicio, el principal problema que existe actualmente en España? (2º Problema)
+4
+P.9 ¿Cuál es, a su juicio, el principal problema que existe actualmente en España? (3er. Problema)
+4
+P.10 ¿Y cuál es el problema que a Ud., personalmente, le afecta más? (1er Problema)
+4
+P.10 ¿Y cuál es el problema que a Ud., personalmente, le afecta más? (2º Problema)
+4
+P.10 ¿Y cuál es el problema que a Ud., personalmente, le afecta más? (3er Problema)
+4
+P.11 Cambiando de tema, de los/as principales líderes políticos/as, ¿quién preferiría que fuese el/la presidente/a del Gobierno en estos momentos?
+0
+P.12 Me gustaría que me dijera cuál es la probabilidad de que Ud. fuera a votar suponiendo que mañana se celebrasen elecciones generales... utilice una escala de 0 a 10...
+4
+P.13 Suponiendo que mañana se celebrasen elecciones generales, ¿a qué partido votaría Ud.?
+4
+P.14 En el caso de que por cualquier razón finalmente no votase por el partido que me ha dicho, ¿a qué otro partido votaría Ud.?
+4
+P.15 Sin ningún compromiso por su parte, ¿me podría decir por qué partido siente Ud. más simpatía?
+0
+P.16 Cuando se habla de política se utilizan normalmente las expresiones izquierda y derecha... en una escala que va del 1 al 10... ¿en qué casilla se colocaría Ud.?
+1
+P.17 ¿Conoce a Pedro Sánchez?
+3
+Conoce
+No conoce
+N.C.
+1
+P.17 ¿Conoce a Alberto Núñez Feijóo?
+3
+Conoce
+No conoce
+N.C.
+1
+P.17 ¿Conoce a Santiago Abascal?
+3
+Conoce
+No conoce
+N.C.
+1
+P.17 ¿Conoce a Yolanda Díaz?
+3
+Conoce
+No conoce
+N.C.
+0
+P.17a ¿Qué valoración le merece Pedro Sánchez? (1-10)
+0
+P.17a ¿Qué valoración le merece Alberto Núñez Feijóo? (1-10)
+0
+P.17a ¿Qué valoración le merece Santiago Abascal? (1-10)
+0
+P.17a ¿Qué valoración le merece Yolanda Díaz? (1-10)
+2
+P.18 El presidente del Gobierno, Pedro Sánchez, ¿le inspira a Ud. mucha confianza, bastante confianza, poca o ninguna confianza?
+6
+Mucha confianza
+Bastante confianza
+Poca confianza
+Ninguna confianza
+N.S.
+N.C.
+2
+P.19 ¿Y el líder del principal partido de la oposición, Alberto Núñez Feijóo, le inspira, personalmente, mucha confianza, bastante, poca o ninguna confianza?
+6
+Mucha confianza
+Bastante confianza
+Poca confianza
+Ninguna confianza
+N.S.
+N.C.
