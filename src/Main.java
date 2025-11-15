@@ -27,8 +27,13 @@ public class Main {
                     case 6 -> Utils.respondreEnquesta(io, ctrl);
                     case 7 -> Utils.exportarEnquesta(io, ctrl);
                     case 8 -> Utils.importarRespostes(io, ctrl);
-                    case 9 -> Utils.consultarPerfil(io, ctrl);
-                    case 10 -> Utils.clustering(io, ctrl);
+                    case 9 -> io.writeln("--");//Utils.exportarResposta(io, ctrl);
+                    case 10 -> Utils.consultarPerfil(io, ctrl);
+                    case 11 -> Utils.modificarEnquesta(io, ctrl);
+                    case 12 -> Utils.modificarResposta(io, ctrl);
+                    case 13 -> Utils.esborrarEnquesta(io,ctrl);
+                    case 14 -> Utils.esborrarResposta(io,ctrl);
+                    case 15 -> Utils.clustering(io, ctrl);
 
                     default -> io.writeln("\n[ERROR] Opció no vàlida. Torna-ho a intentar.\n");
                 }

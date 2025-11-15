@@ -29,10 +29,15 @@ public class Utils {
         io.writeln(" 6) Respon enquesta");
         io.writeln(" 7) Exportar enquesta");
         io.writeln(" 8) Importar respostes");
-        io.writeln(" 9) Consultar usuari");
-        io.writeln(" 10) Clustering d'usuaris");
-        /*
         io.writeln(" 9) Exportar respostes");
+        io.writeln(" 10) Consultar usuari");
+        io.writeln(" 11) Modificar enquesta");
+        io.writeln(" 12) Modificar resposta");
+        io.writeln(" 13) Esborrar enquesta");
+        io.writeln(" 14) Esborrar resposta");
+        io.writeln(" 15) Clustering d'usuaris");
+
+        /*
         io.writeln(" 10) Crear usuari");
         io.writeln(" 12) Consultar respostes");
         io.writeln(" 13) Modificar enquesta");
@@ -434,6 +439,101 @@ public class Utils {
             for (String l : lines) pw.println(l);
         }
     }
+
+    /**
+     * Esborra l'enquesta identificada per idEnquesta d'un usuari
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception
+     */
+    // ===================== Esborrar enquestes =====================
+    public static void esborrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introduiex l'index de l'enquesta a esborrar");
+        int idEnquesta = io.readint();
+        io.writeln("Introduiex l'Id de l'usuari");
+        int idUsuari =io.readint();
+        ctrl.eliminarEnquesta(idEnquesta, idUsuari);
+    }
+
+
+    // ===================== Esborrar Resposta =====================
+    public static void esborrarResposta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introduiex l'index de l'enquesta a esborrar");
+        int idEnquesta = io.readint();
+        io.writeln("Introduiex l'Id de l'enquestat");
+        int idEnquestat =io.readint();
+        //Suposem usuari 1 perque l'implementacio es fara mes endavant
+        int Usuari = 1;
+        ctrl.esborrarRespostaEnquesta(Usuari, idEnquesta, idEnquestat);
+    }
+
+    // ===================== Modificar enquesta =====================
+    public static void modificarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
+        consultarEnquestaAmbPreguntes(io, ctrl);
+        io.writeln("Introduiex l'index de l'enquesta a modificar");
+        int idEnquesta = io.readint();
+
+        io.writeln("Introduiex l'index de la pregunta");
+        int idxPregunta = io.readint();
+
+        List<String> novaPregunta = new ArrayList<>();
+
+        io.writeln("Introdueix pregunta");
+        String text = io.readword();
+
+        io.writeln("Introduiex tipus (nomes numero):");
+        io.writeln(" - 0:Numerica");
+        io.writeln(" - 1:Unica");
+        io.writeln(" - 2:Multiple");
+        io.writeln(" - 3:Ordenada");
+        io.writeln(" - 4:Lliure");
+        String tipus = io.readword();
+
+        novaPregunta.add(text);
+        novaPregunta.add(tipus);
+
+        if(!tipus.equals("0") || !tipus.equals("4")) {
+            io.writeln("Introdueix el numero d'opcions");
+            int numero = io.readint();
+            io.writeln("Indica les opcions");
+            for(int i = 0; i < numero; i++) {
+                novaPregunta.add(io.readword());
+            }
+        }
+
+        int resultat = ctrl.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
+        if (resultat == 1) {
+            io.writeln("S'ha esborrat correctament");
+        }
+        else {
+            io.writeln("Problema: l'enquesta no s'ha esborrat");
+        }
+
+    }
+
+    // ===================== Modificar resposta =====================
+    public static void modificarResposta(inout io, CtrlDomini ctrl) throws Exception {
+        io.writeln("Introdueix l'id de l'enquesta");
+        int idEnquesta = io.readint();
+
+        io.writeln("Introduexi l'id de l'usuari");
+        int idUsuari = io.readint();
+        List<String> info = ctrl.consultarEnquestaAmbPreguntes(idEnquesta);
+        for (String line : info) {
+            io.writeln(line);
+        }
+
+        List<String> respostes = ctrl.consultarRespostesEnquesta(idEnquesta);
+        for (String line : respostes) {
+            io.writeln(line);
+        }
+
+        io.writeln("Quina pregunta vols modificar? (introdueix el número de pregunta):");
+        int numPregunta = io.readint();
+
+    }
+
+
 
     // ===================== HELPERS FITXER =====================
 

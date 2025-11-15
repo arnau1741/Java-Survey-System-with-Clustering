@@ -116,7 +116,7 @@ public class CtrlDomini {
         return exportat;
     }
     /// importarRespostes funcio que llegeix les respostes d'un fitxer 
-    /// leer: (numPreguntas, PREGUNTA1, PREGUNTA2, ...PREGUNTAn, RESPUESTA1, RESPUESTA2, ... RESPUESTAm) 
+    /// leer: (numPreguntas, PREGUNTA1, PREGUNTA2, ...PREGUNTAn, RESPUESTA1, RESPUESTA2, ... RESPUESTAm)
     ///RESPUESTAj = (resp1, resp2,... respn)
     /**
      * Funcio per a importar respostes d'un fitxer
@@ -181,15 +181,15 @@ public class CtrlDomini {
 
     /**
      * Funcio per a modificar una pregunta d'una enquesta
-     * @param idUsuari identificador de l'usuari que modifica la pregunta
+     * @param idEnquesta identificador de l'enquesta per la pregunta que vol modificar
      * @param idxPregunta index de la pregunta a modificar
      * @param novaPregunta llista de strings amb la nova pregunta
      * @return 1 si s'ha modificat correctament
      */
     //deberiamos hacer mas versiones en un futuro.
-    public int modificarPreguntaEnquesta(int idUsuari, int idxPregunta, List<String> novaPregunta){
+    public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta){
         //borrar todas las respuestas
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idxPregunta);
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         List<Pregunta> preguntes = enq.getPreguntesObj();
         for (Pregunta p : preguntes) {
             p.eliminarTotesRespostes();
@@ -227,21 +227,21 @@ public class CtrlDomini {
             }
             */
 
-            // 3. Obtenir l'enquesta i eliminar la resposta
-            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-            int respostesEliminades = 0;
-            for (Pregunta pregunta : enq.getPreguntesObj()) {
-                Map<Integer, Resposta> respostes = pregunta.getRespostes();
-                if (respostes.containsKey(idEnquestat)) {
-                    respostes.remove(idEnquestat);
-                    respostesEliminades++;
-                }
+        // 3. Obtenir l'enquesta i eliminar la resposta
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        int respostesEliminades = 0;
+        for (Pregunta pregunta : enq.getPreguntesObj()) {
+            Map<Integer, Resposta> respostes = pregunta.getRespostes();
+            if (respostes.containsKey(idEnquestat)) {
+                respostes.remove(idEnquestat);
+                respostesEliminades++;
             }
-            if (respostesEliminades > 0) {
-                System.out.println("Eliminades " + respostesEliminades + " respostes");
-            } else {
-                System.out.println("Error: No s'han trobat respostes per eliminar");
-            }
+        }
+        if (respostesEliminades > 0) {
+            System.out.println("Eliminades " + respostesEliminades + " respostes");
+        } else {
+            System.out.println("Error: No s'han trobat respostes per eliminar");
+        }
     }
 
 
@@ -309,7 +309,7 @@ public class CtrlDomini {
         List<String> result = new ArrayList<>();
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         List<Pregunta> preguntes = enq.getPreguntesObj();
-        for (Pregunta p : preguntes) {   
+        for (Pregunta p : preguntes) {
             result.add("Pregunta: " + p.getText());
             List<String> opcions = p.getOpcions();
             if (opcions != null){
@@ -342,7 +342,7 @@ public class CtrlDomini {
                 List<String> opcions = p.getOpcions();
                 if (opcions != null){
                     for (String opcio : opcions) {
-                    System.out.println("  * Opció: " + opcio);
+                        System.out.println("  * Opció: " + opcio);
                     }
                 }
                 for (Map.Entry<Integer, Resposta> entry : respostes.entrySet()) {
@@ -426,7 +426,7 @@ public class CtrlDomini {
             PerfilEnquestador nouEnquestador = new PerfilEnquestador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
             nouEnquestador.afegirEnquestaAssignada(enq);
             ctrlDominiMantUsuari.reemplacarUsuari(usuari, nouEnquestador);
-            return 1; // Èxit 
+            return 1; // Èxit
         } else if(usuari instanceof PerfilEnquestador){
             PerfilEnquestador enquestador = (PerfilEnquestador) usuari;
             if (enquestador.enquestaAssignada(idEnquesta)) {
@@ -467,12 +467,12 @@ public class CtrlDomini {
             PerfilAdministrador nouAdministrador = new PerfilAdministrador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
             nouAdministrador.afegirEnquestaAdministrada(enq);
             ctrlDominiMantUsuari.reemplacarUsuari(usuari, nouAdministrador);
-            return 1; // Èxit 
+            return 1; // Èxit
         } else if(usuari instanceof PerfilEnquestador){
             PerfilAdministrador nouAdministrador = new PerfilAdministrador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
             nouAdministrador.afegirEnquestaAdministrada(enq);
             ctrlDominiMantUsuari.reemplacarUsuari(usuari, nouAdministrador);
-            return 1; // Èxit 
+            return 1; // Èxit
         } else if (usuari instanceof PerfilAdministrador){
             PerfilAdministrador admin = (PerfilAdministrador) usuari;
             if (admin.enquestaAdministrada(idEnquesta)) {
@@ -497,63 +497,5 @@ public class CtrlDomini {
         perfil.add("Email: " + us.getEmail());
         return perfil;
     }
-
-
-
-
-
-    /*
-
-
-    //Caso de uso 3: importar enquesta
-    public void importarEnquesta(String titol, String descripcio, int idCreador, List<Pregunta> preguntes) {
-        gestorEnquesta.importarEnquesta(titol, descripcio, idCreador, preguntes);
-    }
-
-
-
-    // Caso de uso 5: importar respostes
-    public void importarRespostes(int idEnquesta, int idUsuari, List<String> preguntesTxt, List<String> respostesTxt) {
-        gestorEnquesta.importarRespostas(idEnquesta, idUsuari, preguntesTxt, respostesTxt);
-    }
-
-    //Caso de uso 6: exportar respostes
-    public List<String> exportarRespostes(int id) {
-        return gestorEnquesta.exportarEnquesta(id);
-    }
-
-    //Caso de uso 8: crear perfil usuari
-    public void crearPerfil(Usuari usuari) {
-        gestorUsuaris.crearPerfil(usuari);
-    }
-
-    //Caso de uso 9: consultar perfil usuari
-    public void consultarPerfil(int id) {
-        gestorUsuaris.consultarPerfil(id);
-    }
-
-    //Caso de uso 10: consultarEnquesta
-    public void consultarEnquesta() {
-        gestorEnquesta.llistarEnquestes();
-    }
-
-    //Caso de uso 11: consultarRespostes
-    public List<Resposta> consultarRespostes(int idEnquesta, int idUsuari) {
-        return gestorEnquesta.consultarRespostes(idEnquesta, idUsuari);
-    }
-
-    //Caso de uso 12: esborrar enquesta
-    public void esborrarEnquesta(int idEnquesta) {
-        gestorEnquesta.esborrarEnquesta(idEnquesta);
-    }
-    */
-
-    /*
-    public void consultarEstadistiques(int idEnquesta) {
-        GestorEnquesta ge = getCtrlEnquesta();
-        Enquesta enq = ge.getEnquestaPerID(idEnquesta);
-        enq.mostrarEstadistiques();
-    }
-    */
 
 }
