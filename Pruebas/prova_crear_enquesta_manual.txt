@@ -1,0 +1,17 @@
+1
+Enquesta de Prova
+Comprovacio de les preguntes
+1
+3
+0
+Quina edat tens?
+4
+Que opines del servei?
+2
+Quines opcions prefereixes?
+3
+Opcio A
+Opcio B
+Opcio C
+16
+0
