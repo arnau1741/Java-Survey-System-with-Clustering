@@ -1,0 +1,461 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{algorithm2e}
+
+\title{L'algoritme \textit{k-means}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducció}
+
+L'algoritme \textit{k-means} és un dels mètodes de \emph{clustering}
+(no supervisat) més utilitzats.
+Donat un conjunt de dades, el seu objectiu és agrupar els punts en $k$
+grups o clústers de manera que els punts d'un mateix clúster siguin
+més semblants entre ells que als d'altres clústers.
+
+Intuïtivament, \textit{k-means} busca $k$ centres (anomenats \emph{centroides})
+de manera que cada punt de dades s’assigni al centre més proper,
+i a continuació actualitza aquests centres com la mitjana dels punts
+assignats. Aquest procés es repeteix iterativament fins que el sistema
+``s'estabilitza''.
+
+\section{Formulació matemàtica}
+
+Sigui un conjunt de dades
+\[
+  X = \{x_1, x_2, \dots, x_n\}, \quad x_i \in \mathbb{R}^d,
+\]
+i un nombre de clústers $k \in \mathbb{N}$ tal que $1 \leq k < n$.
+
+L'objectiu de \textit{k-means} és trobar:
+
+\begin{itemize}
+  \item Una partició de les dades en $k$ clústers $C_1, C_2, \dots, C_k$
+        tals que $C_j \subset \{1,\dots,n\}$, $C_j \neq \emptyset$,
+        $C_j \cap C_\ell = \emptyset$ si $j \neq \ell$, i 
+        $\bigcup_{j=1}^k C_j = \{1,\dots,n\}$. Informalment, $C_i$ es
+		un subconjunt no buit de $\{1,\dots,n\}$ on les dades
+		dels indexos pertanyents a $C_i$ son semblants.
+  \item Un conjunt de centroides
+        \[
+          \mu_1, \mu_2, \dots, \mu_k \in \mathbb{R}^d.
+        \]
+	Que representa el centre de cada cluster.
+\end{itemize}
+
+L'objectiu del problema es separar les dades en K clusters, de manera que
+una dada pertany a un cluster i que les dades dins de cada cluster siguin properes
+entre elles. El problema es planteja com la minimització de la suma d'errors
+quadràtics dins de cada clúster (funció objectiu de \textit{k-means}):
+
+\[
+  J(\mu_1,\dots,\mu_k, C_1,\dots,C_k)
+  = \sum_{j=1}^{k} \sum_{i \in C_j} \| x_i - \mu_j \|^2.
+\]
+
+La resolució d'aquest problema de minimització no és trivial. Kmeans és un
+algoritme iteratiu que intenta convergir al mínim. L'algoritme \textit{k-means} 
+clàssic (també conegut com a algoritme de Lloyd) alterna dos passos:
+
+\begin{enumerate}
+  \item \textbf{Pas d'assignació}.  
+  Donat un conjunt de centroides $\mu_1, \mu_2, \dots, \mu_k \in \mathbb{R}^d$, el conjunt de punts assignats al clúster $j$ és
+  \[
+    C_j = \left\{\, i \;\middle|\; 
+      \|x_i - \mu_j\|^2 \leq \|x_i - \mu_\ell\|^2 \;\; \forall \ell \in \{1,\dots,k\}
+    \right\}.
+  \]
+  És a dir, cada punt s’assigna al centre més proper.
+
+  \item \textbf{Pas d’actualització}.  
+  Un cop fetes les assignacions, cada centre s’actualitza com la mitjana dels punts del seu clúster:
+  \[
+    \mu_j = \frac{1}{|C_j|} \sum_{i \in C_j} x_i,
+    \qquad j = 1,\dots,k.
+  \]
+\end{enumerate}
+
+Aquests dos passos es repeteixen fins que l’assignació deixa de canviar
+o fins assolir un nombre màxim d'iteracions.
+
+\section{Descripció detallada de l'algoritme}
+
+\subsection{Inicialització}
+
+La primera decisió que s'ha de prendre és com escollir els centroides
+inicials $\mu_1^{(0)}, \dots, \mu_k^{(0)}$.
+
+Opcions típiques:
+\begin{itemize}
+  \item Escollir aleatòriament $k$ punts del conjunt de dades i usar-los
+        com a centroides inicials.
+  \item Utilitzar heurístiques com \textit{k-means++}, que escull
+        els centroides inicials amb una probabilitat proporcional
+        a la distància al centre més proper ja seleccionat.
+\end{itemize}
+
+La inicialització és important perquè \textit{k-means} pot convergir
+a mínims locals: diferents inicialitzacions poden donar lloc a solucions
+diferents.
+
+\subsection{Pas d’assignació (E-step)}
+
+Donat un conjunt de centroides fixos
+$\mu_1, \dots, \mu_k$, l’algoritme recorre cada punt $x_i$
+i calcula les seves distàncies a cada centre. S’assigna $x_i$ al clúster
+que tingui el centre més proper.
+
+Des del punt de vista de la funció objectiu $J$, aquest pas minimitza
+$J$ respecte a les variables d’assignació (els $C_j$) mantenint fixos
+els centres.
+
+\subsection{Pas d’actualització (M-step)}
+
+Un cop assignats els punts als clústers, l'algoritme recalcula
+els centroides com la mitjana dels punts assignats a cada clúster:
+
+\[
+  \mu_j = \frac{1}{|C_j|} \sum_{i \in C_j} x_i.
+\]
+
+Aquest pas minimitza la funció objectiu $J$ respecte als centroides,
+mantenint fixa la partició dels punts.
+
+\subsection{Criteris d’aturada}
+
+L'algoritme es repeteix fins que es compleix alguna condició:
+
+\begin{itemize}
+  \item Les assignacions dels punts a clústers deixen de canviar.
+  \item La variació dels centroides entre iteracions consecutives
+        és menor que un llindar
+        \[
+          \max_j \|\mu_j^{(t)} - \mu_j^{(t-1)}\| < \varepsilon.
+        \]
+  \item S'assoleix un nombre màxim d'iteracions $T_{\max}$.
+\end{itemize}
+
+\section{Pseudocodi de l'algoritme \textit{k-means}}
+
+A continuació presentem un pseudocodi estàndard per a l'algoritme
+\textit{k-means}. Assumim que la funció
+\texttt{distancia(x, y)} calcula la distància (per exemple, euclidiana)
+entre els vectors \texttt{x} i \texttt{y}.
+
+\section{Pseudocodi de l'algoritme \textit{k-means}}
+
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\caption{Algoritme \textit{k-means}}
+
+\KwIn{Conjunt de dades $X = \{x_1,\dots,x_n\}$, nombre de clústers $k$, llindar $\varepsilon$, iteracions màximes $T_{\max}$.}
+\KwOut{Clústers $C_1,\dots,C_k$ i centroides $\mu_1,\dots,\mu_k$.}
+
+\BlankLine
+\textbf{Inicialització:}\;
+Seleccionar aleatòriament $k$ punts de $X$ i definir-los com a centroides inicials $\mu_1,\dots,\mu_k$.\;
+$t \leftarrow 0$.\;
+
+\Repeat(\tcp*[f]{Criteri d'aturada}){ $\Delta < \varepsilon$ \textbf{o} $t \ge T_{\max}$ }{
+
+  \BlankLine
+  \tcp{Pas d'assignació}
+  \For{$i = 1$ \KwTo $n$}{
+    Assignar $x_i$ al clúster:
+    \[
+      j^\star = \arg\min_{1 \le j \le k} \|x_i - \mu_j\|^2
+    \]
+    \[
+      x_i \in C_{j^\star}
+    \]\;
+  }
+
+  \BlankLine
+  \tcp{Guardar antics centroides}
+  $\mu_j^{\text{antic}} \leftarrow \mu_j$ per a tot $j$.\;
+
+  \BlankLine
+  \tcp{Pas d'actualització}
+  \For{$j = 1$ \KwTo $k$}{
+    Recalcular el centroide:
+    \[
+      \mu_j \leftarrow \frac{1}{|C_j|} \sum_{i \in C_j} x_i
+    \]\;
+  }
+
+  \BlankLine
+  \tcp{Càlcul del desplaçament per al criteri de parada}
+  $\Delta \leftarrow \max_{1 \le j \le k} \|\mu_j - \mu_j^{\text{antic}}\|$\;
+
+  $t \leftarrow t + 1$\;
+
+}
+
+\Return{els clústers $C_1,\dots,C_k$ i centroides finals $\mu_1,\dots,\mu_k$}\;
+
+\end{algorithm}
+
+\section{Comentaris i consideracions addicionals}
+
+\subsection{Complexitat}
+
+A cada iteració, el pas d'assignació requereix calcular distàncies
+de cada punt a cada centroide, amb una complexitat
+$O(nkd)$ si la dimensió és $d$.
+El pas d’actualització també és $O(nd)$ (només cal recorrer un cop els punts
+per calcular les mitjanes). Per tant,
+si l’algoritme executa $T$ iteracions, la complexitat total és
+aproximadament
+\[
+  O(T \cdot n \cdot k \cdot d).
+\]
+
+\subsection{Sensibilitat a la inicialització}
+
+\textit{k-means} és sensible a com s’inicialitzen els centroides:
+diferents inicialitzacions poden donar solucions de qualitat diferent.
+Per això sovint s’executa diverses vegades amb diferents llavors
+i s’escull la solució amb menor valor de $J$.
+
+\subsection{Limitacions}
+
+Algunes limitacions clàssiques de \textit{k-means}:
+
+\begin{itemize}
+  \item Assumeix que els clústers són aproximadament esfèrics
+        (en l’espai de la mètrica utilitzada).
+  \item No gestiona bé clústers amb mides molt diferents
+        o densitats desiguals.
+  \item És sensible a la presència d’\emph{outliers}, ja que
+        utilitza la mitjana per calcular els centroides.
+  \item Requereix fixar $k$ prèviament; escollir el nombre adequat
+        de clústers no sempre és trivial.
+\end{itemize}
+
+\section{Adaptació de l'algoritme \textit{k-means} al cas de les enquestes}
+
+En el context del projecte, cada persona respon un conjunt de preguntes
+diferents, cadascuna de les quals pot ser de tipologia distinta.
+Per tal d’aplicar mètodes de \textit{clustering}, representarem cadascuna
+d’aquestes respostes com un vector en un espai multidimensional.
+Així doncs, cada individu queda representat per un vector
+\[
+  X_i = [X_{i1}, X_{i2}, \dots, X_{iN}],
+\]
+on $X_{ik}$ és la resposta de la persona $i$ a la pregunta $k$.
+
+El conjunt de totes les respostes de totes les persones forma una matriu
+\[
+  X =
+  \begin{bmatrix}
+    X_{11} & \cdots & X_{1N} \\
+    \vdots & \ddots & \vdots \\
+    X_{M1} & \cdots & X_{MN}
+  \end{bmatrix},
+\]
+on $M$ és el nombre de persones i $N$ el nombre total de preguntes.
+
+\subsection{Tipologies de variables}
+
+Cada component $X_{ik}$ del vector pot ser de tipologia diferent,
+fet que introdueix la necessitat d’una funció de distància heterogènia.
+Les tipologies considerades són:
+
+\begin{itemize}
+  \item \textbf{Variables quantitatives (numèriques):}
+        emmagatzemen un valor numèric real.
+  \item \textbf{Variables qualitatives ordenades:}
+        un sol valor pertanyent a un conjunt de modalitats ordenades
+        (p. ex.\ \textit{poc, normal, força, molt}).
+  \item \textbf{Variables qualitatives no ordenades:}
+        un únic valor d’un conjunt de modalitats sense ordre.
+  \item \textbf{Variables qualitatives no ordenades multivaluades:}
+        una resposta formada per un conjunt de $p$ modalitats
+        possibles d'entre un conjunt de $q$ opcions.
+  \item \textbf{Respostes de text lliure:}
+        un string arbitrari sense valors predefinits.
+\end{itemize}
+
+Aquestes diferències impedeixen usar directament distàncies clàssiques
+com la euclidiana sense una definició local de distància adaptada.
+
+\subsection{Distàncies locals i global}
+
+La distància entre dues persones $X_i$ i $X_j$ s’obté com la mitjana
+de les distàncies locals:
+\[
+  D(X_i , X_j) = \frac{1}{N}\sum_{k=1}^N D_\text{local}(X_{ik}, X_{jk}),
+\]
+on $D_\text{local}$ depèn de la tipologia de la variable:
+
+\begin{enumerate}
+  \item \textbf{Numèrica:}
+        \[
+          D_\text{local}(x,y)=\frac{|x-y|}{V_{\max}-V_{\min}}.
+        \]
+  \item \textbf{Qualitativa ordenada:}
+        \[
+          D_\text{local}(x,y)=\frac{|m(x)-m(y)|}{\#\text{mod}-1}.
+        \]
+  \item \textbf{Qualitativa no ordenada:}
+        \[
+          D_\text{local}(x,y)=
+          \begin{cases}
+            0 & x=y,\\
+            1 & x\neq y.
+          \end{cases}
+        \]
+  \item \textbf{Multivaluada (Jaccard):}
+        \[
+          D_\text{local}(A,B)=1-\frac{|A\cap B|}{|A\cup B|}.
+        \]
+  \item \textbf{Text lliure (Levenshtein):}
+	  \[
+		  D_\text{local}(s,t) = \frac{L_{s,t}(\text{len}(s), \text{len}(t)) - \left| \text{len}(s) - \text{len}(t) \right|}{\max(\text{len}(s), \text{len}(t)) - \left| \text{len}(s) - \text{len}(t) \right|}
+	\]
+        on $L(s,t)$ és la \textbf{distància de Levenshtein}.
+\end{enumerate}
+
+\subsubsection*{Definició de la distància de Levenshtein}
+
+Donats dos strings \( s \) i \( t \), la distància de Levenshtein \( L(s,t) \) és:
+
+\[
+L_{s,t}(i,j) =
+\begin{cases}
+\max(i,j), & \text{si } \min(i,j) = 0, \\[10pt]
+\min
+	\begin{cases}
+		L_{s,t}(i-1,j) + 1, \\
+		L_{s,t}(i,j-1) + 1, \\
+		L_{s,t}(i-1,j-1) + 
+	  \begin{cases}
+		  1 & \text{si } a_i \neq b_j, \\
+		  0 & \text{si } a_i = b_j, \\
+	  \end{cases} \\
+	\end{cases}
+& \text{altrament}.
+\end{cases}
+\]
+
+\subsection{Centroide d’un clúster}
+
+Donat un clúster
+\[
+  C_p = \{X_{1}^{(p)}, X_{2}^{(p)}, \dots, X_{N_p}^{(p)}\},
+\]
+definim el seu centroide com:
+\[
+  \text{centroide}(C_p)=
+  [\bar{X}_{.1}^{(p)}, \bar{X}_{.2}^{(p)}, \dots, \bar{X}_{.N}^{(p)}],
+\]
+on cada component es calcula segons la tipologia:
+
+\begin{itemize}
+  \item \textbf{Numèrica:} mitjana aritmètica.
+  \item \textbf{Qualitativa ordenada:} moda ordinal.
+  \item \textbf{Qualitativa no ordenada:} moda simple.
+  \item \textbf{Multivaluada:} unió/mode d’elements més freqüents.
+  \item \textbf{Text lliure (mediana):}
+        seleccionem la paraula clau (o seqüència) amb
+        \textbf{mínima distància mitjana de Levenshtein} respecte les respostes del clúster.
+\end{itemize}
+
+Aquesta “mediana semàntica” és l’anàleg de la mitjana numèrica per strings.
+
+\subsection{Particularitats de la nostra implementació}
+
+La nostra implementació de l’algoritme \textit{k-means} adapta els passos generals al cas de dades d’enquestes de tipologia heterogènia:
+
+\begin{itemize}
+  \item \textbf{Inicialització:} seleccionem aleatòriament $k$ individus de les dades com a centroides inicials.
+  \item \textbf{Criteri de parada:} l’algoritme s’atura quan:
+  \begin{itemize}
+    \item cap persona canvia de clúster entre dues iteracions consecutives (convergència), o
+    \item s’arriba al nombre màxim d’iteracions establert.
+  \end{itemize}
+  \item \textbf{Clusters buits en el M-step:} si un clúster queda buit,
+        \textbf{assignem com a nou centroide un individu escollit aleatòriament}
+        entre tots els disponibles.
+  \item Per tal de calcular la distància de Levenshtein entre dos strings $s$ i $t$,
+es construeix una taula de programació dinàmica de dimensions 
+$(|s|+1) \times (|t|+1)$, on la posició $(i,j)$ conté el valor
+$L_{s,t}(i,j)$, és a dir, la distància mínima entre els prefixos
+$s[1..i]$ i $t[1..j]$.
+
+La idea fonamental és que qualsevol transformació òptima entre els dos
+prefixos ha de derivar d’una de tres operacions bàsiques:
+
+\begin{itemize}
+    \item \textbf{Inserció}: transformar $s[1..i]$ en $t[1..j-1]$ i inserir $t_j$,
+    amb un cost de $L_{s,t}(i,j-1)+1$.
+    \item \textbf{Eliminació}: transformar $s[1..i-1]$ en $t[1..j]$ i eliminar $s_i$,
+    amb un cost de $L_{s,t}(i-1,j)+1$.
+    \item \textbf{Substitució}: transformar $s[1..i-1]$ en $t[1..j-1]$ i substituir
+    $s_i$ per $t_j$, amb un cost de
+    \[
+    L_{s,t}(i-1,j-1) + 
+    \begin{cases}
+        0, & \text{si } s_i = t_j,\\
+        1, & \text{si } s_i \neq t_j.
+    \end{cases}
+    \]
+\end{itemize}
+
+Així doncs, per a $i,j > 0$, el valor de la taula s’obté aplicant:
+
+\[
+L_{s,t}(i,j)=
+\min\left\{
+\begin{aligned}
+    &L_{s,t}(i-1,j)+1,\\
+    &L_{s,t}(i,j-1)+1,\\
+    &L_{s,t}(i-1,j-1) + 
+      \begin{cases}
+          0 & \text{si } s_i = t_j,\\
+          1 & \text{si } s_i \neq t_j.
+      \end{cases}
+\end{aligned}
+\right\}.
+\]
+
+La condició base correspon a les files i columnes inicials. Si un dels
+prefixos és buit, la distància coincideix amb la longitud de l’altre prefix:
+
+\[
+L_{s,t}(i,0) = i, \qquad
+L_{s,t}(0,j) = j.
+\]
+
+Un cop omplerta tota la taula, el valor final de la distància de
+Levenshtein és $L_{s,t}(|s|,|t|)$.
+\end{itemize}
+
+Aquestes modificacions garanteixen l’estabilitat de l’algoritme i eviten fallades en cas de dades molt disperses o de dimensiò alta.
+
+\subsection{Aplicació general del procés}
+
+El flux complet és:
+
+\begin{enumerate}
+  \item Inicialitzar aleatòriament els centroides.
+  \item Assignar cada persona al clúster amb distància heterogènia mínima.
+  \item Calcular els centroides segons les regles de cada tipologia.
+  \item Si un clúster està buit, redefinir-ne el centroide aleatòriament.
+  \item Repetir fins a convergència o fins al límit d'iteracions.
+\end{enumerate}
+
+Aquesta adaptació permet extreure perfils o prototipus de comportament
+a partir de respostes d’enquestes complexes i heterogènies.
+
+
+\end{document}
+
