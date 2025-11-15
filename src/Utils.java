@@ -181,7 +181,7 @@ public class Utils {
             int index = i + 1;
 
             io.writeln("\nPregunta " + index + ":");
-            io.writeln(" Tipus (0=NUMÈRICA, 1=ÚNICA, 2=MÚLTIPLE, 3=ORDENADA, 4=LLIURE)");
+            io.writeln(" Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)");
             io.write("   Introdueix el tipus: ");
             int tipus = io.readint();
             io.readline();
@@ -228,7 +228,7 @@ public class Utils {
         io.writeln("  línia 3: id creador (enter)");
         io.writeln("  línia 4: nombre de preguntes");
         io.writeln("  després, per cada pregunta:");
-        io.writeln("    línia: tipus (0..4)");
+        io.writeln("    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE))");
         io.writeln("    línia: text pregunta");
         io.writeln("    si tipus és 1,2,3:");
         io.writeln("       línia: nombre d'opcions");
@@ -485,8 +485,8 @@ public class Utils {
         io.writeln("Introduiex tipus (nomes numero):");
         io.writeln(" - 0:Numerica");
         io.writeln(" - 1:Unica");
-        io.writeln(" - 2:Multiple");
-        io.writeln(" - 3:Ordenada");
+        io.writeln(" - 2:Ordenada");
+        io.writeln(" - 3:Multiple");
         io.writeln(" - 4:Lliure");
         String tipus = io.readword();
 
