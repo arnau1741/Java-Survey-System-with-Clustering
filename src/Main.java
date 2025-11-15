@@ -23,9 +23,9 @@ public class Main {
                     case 3 -> Utils.consultarEnquesta(io, ctrl); //prueba hecha
                     case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl); //prueba hecha
                     case 5 -> Utils.consultarRespostesEnquesta(io, ctrl); //prueba hecha
-                    case 6 -> Utils.respondreEnquesta(io, ctrl);
-                    case 7 -> Utils.exportarEnquesta(io, ctrl);
-                    case 8 -> Utils.importarRespostes(io, ctrl);
+                    case 6 -> Utils.respondreEnquesta(io, ctrl); //prueba hecha
+                    case 7 -> Utils.exportarEnquesta(io, ctrl); //prueba hecha
+                    case 8 -> Utils.importarRespostes(io, ctrl); //prueba hecha
                     case 9 -> io.writeln("--");//Utils.exportarResposta(io, ctrl);
                     case 10 -> Utils.consultarPerfil(io, ctrl);
                     case 11 -> Utils.modificarEnquesta(io, ctrl); //prueba hecha
