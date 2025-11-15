@@ -4,9 +4,8 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matcher.*;
 
-public class TestUnitariAdministrador {
+public class TestUnitariAdministrador_Stub {
 
     private PerfilAdministrador admin;
 
@@ -28,8 +27,8 @@ public class TestUnitariAdministrador {
 
     @Test
     public void testAfegirEnquestaAdministrada() {
-        Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
-        Enquesta enquesta2 = new Enquesta(2, "Titol2", "Desc2", 3, new java.util.ArrayList<>());
+        Enquesta enquesta = new EnquestaStub(1);
+        Enquesta enquesta2 = new EnquestaStub(2);
         admin.afegirEnquestaAdministrada(enquesta);
         assertThat(admin.enquestaAdministrada(1), equalTo(true));
         assertThat(admin.enquestaAdministrada(2), equalTo(false));
@@ -39,8 +38,8 @@ public class TestUnitariAdministrador {
 
     @Test
     public void testEliminarEnquestaAdministrada() {
-        Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
-        Enquesta enquesta2 = new Enquesta(2, "Titol2", "Desc2", 3, new java.util.ArrayList<>());
+        Enquesta enquesta = new EnquestaStub(1);
+        Enquesta enquesta2 = new EnquestaStub(2);
         admin.afegirEnquestaAdministrada(enquesta);
         admin.afegirEnquestaAdministrada(enquesta2);
         admin.eliminarEnquestaAdministrada(1);
@@ -52,8 +51,8 @@ public class TestUnitariAdministrador {
 
     @Test
     public void testGetEnquestesAdministrades() {
-        Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
-        Enquesta enquesta2 = new Enquesta(2, "Titol2", "Desc2", 3, new java.util.ArrayList<>());
+        Enquesta enquesta = new EnquestaStub(1);
+        Enquesta enquesta2 = new EnquestaStub(2);
         admin.afegirEnquestaAdministrada(enquesta);
         admin.afegirEnquestaAdministrada(enquesta2);
         java.util.List<Enquesta> enquestes = admin.getEnquestesAdministrades();
@@ -71,7 +70,7 @@ public class TestUnitariAdministrador {
 
     @Test
     public void testEliminarEnquestaInexistent() {
-        Enquesta enquesta = new Enquesta(1, "Titol1", "Desc1", 2, new java.util.ArrayList<>());
+        Enquesta enquesta = new EnquestaStub(1);
         admin.afegirEnquestaAdministrada(enquesta);
 
         admin.eliminarEnquestaAdministrada(99);
