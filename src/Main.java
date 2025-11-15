@@ -22,7 +22,7 @@ public class Main {
                     case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl);
                     case 3 -> Utils.consultarEnquesta(io, ctrl); //prueba hecha
                     case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl); //prueba hecha
-                    case 5 -> Utils.consultarRespostesEnquesta(io, ctrl);
+                    case 5 -> Utils.consultarRespostesEnquesta(io, ctrl); //prueba hecha
                     case 6 -> Utils.respondreEnquesta(io, ctrl);
                     case 7 -> Utils.exportarEnquesta(io, ctrl);
                     case 8 -> Utils.importarRespostes(io, ctrl);
