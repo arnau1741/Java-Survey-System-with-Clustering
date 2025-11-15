@@ -519,19 +519,22 @@ public class Utils {
 
         io.writeln("Introduexi l'id de l'usuari");
         int idUsuari = io.readint();
-        List<String> info = ctrl.consultarEnquestaAmbPreguntes(idEnquesta);
-        for (String line : info) {
-            io.writeln(line);
+        List<String> respostesActuals = ctrl.getRespostesEnquestaPerUsuari(idEnquesta, idUsuari);
+        for (String resposta : respostesActuals) {
+            io.writeln(resposta);
         }
 
-        List<String> respostes = ctrl.consultarRespostesEnquesta(idEnquesta);
-        for (String line : respostes) {
-            io.writeln(line);
-        }
-
+        io.writeln();
         io.writeln("Quina pregunta vols modificar? (introdueix el número de pregunta):");
-        int numPregunta = io.readint();
-
+        int idxPregunta = io.readint();
+        io.writeln("Introdueix la nova resposta:");
+        String novaResposta = io.readword();
+        int codierr = ctrl.modificarRespostaEnquesta(idEnquesta, idUsuari, idxPregunta, novaResposta);
+        if (codierr == 0) {
+            io.writeln("Resposta modificada correctament.");
+        } else {
+            io.writeln("Error en modificar la resposta. Codi d'error: " + codierr);
+        }
     }
 
 

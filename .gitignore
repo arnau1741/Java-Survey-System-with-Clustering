@@ -34,3 +34,4 @@ bin/
 # Ignore Gradle build output directory
 build
 .idea/workspace.xml
+.idea/workspace.xml

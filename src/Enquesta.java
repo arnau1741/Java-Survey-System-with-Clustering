@@ -266,6 +266,12 @@ public class Enquesta {
         preguntes.set(idxPregunta, novaPregunta);
     }
 
+
+    public boolean participa(int id) {
+        Map<Integer, Resposta> respostesMap = preguntes.get(0).getRespostes();
+        return respostesMap.containsKey(id);
+    }
+
     /*
     public boolean participa(int id) {
         if (id < 0) throw new IllegalArgumentException("L'id de l'usuari no pot ser negatiu.");

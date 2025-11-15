@@ -486,6 +486,79 @@ public class CtrlDomini {
         return -3; // Codi error: Tipus d'usuari desconegut
     }
 
+
+    public List<String> getRespostesEnquestaPerUsuari(int idEnquesta, int idUsuari) {
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        List<String> respostesStr = new ArrayList<>();
+        List<Resposta> respostes = enq.getRespostesUsuari(idUsuari);
+        if (respostes == null) {
+            return respostesStr; // Retorna llista buida si no hi ha respostes
+        }
+        int idx = 0;
+        for (Pregunta p : enq.getPreguntesObj()) {
+            respostesStr.add("Pregunta: " + p.getText());
+            List<String> opcions = p.getOpcions();
+            if (opcions != null){
+                respostesStr.add("Opcions:");
+                for (String opcio : opcions) {
+                    respostesStr.add("  * Opció: " + opcio);
+                }
+            }
+            Resposta r = respostes.get(idx);
+            respostesStr.add("Resposta: " + r.getText(opcions));
+            idx++;
+        }
+        return respostesStr;
+    }
+
+    private int comprovarRespostaValid(Pregunta p, String resposta) {
+        int tipus = p.getTipus();
+        List<String> opcions = p.getOpcions();
+        switch (tipus) {
+            case 0: // NUMERICA
+                try {
+                    Double.parseDouble(resposta);
+                    return 1; // És vàlida
+                } catch (NumberFormatException e) {
+                    return -1; // No és vàlida
+                }
+            case 1: // UNICA
+            case 2: // ORDENADA
+            case 3: // MULTIPLE
+                if (opcions.contains(resposta)) {
+                    return 1; // És vàlida
+                } else {
+                    return -1; // No és vàlida
+                }
+            case 4: // LLIURE
+                return 1; // Sempre és vàlida
+            default:
+                return -1; // Tipus desconegut
+        }
+    }
+
+    private boolean enquestaTeRespostaUsuari(Enquesta enq, int idUsuari) {
+        return enq.participa(idUsuari);
+    }
+
+    public int modificarRespostaEnquesta(int idEnquesta, int idUsuari, int idxPregunta, String novaResposta) {
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (!enquestaTeRespostaUsuari(enq, idUsuari)) {
+            return -2; // Codi error: L'usuari no ha respost l'enquesta
+        }
+        List<Resposta> respostes = enq.getRespostesUsuari(idUsuari);
+        if (respostes == null || idxPregunta < 0 || idxPregunta >= respostes.size()) {
+            return -1; // Codi error: Resposta no existeix
+        }
+        Pregunta p = enq.getPreguntesObj().get(idxPregunta);
+        //Resposta novaRespObj = new Resposta(novaResposta, p.getTipus());
+        //respostes.set(idxPregunta, novaRespObj);
+        return 1; // Èxit
+    }
+    
+
+
+
     /**
      * Funcio per a consultar el perfil d'un usuari
      * @param id identificador de l'usuari
