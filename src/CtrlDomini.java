@@ -511,29 +511,29 @@ public class CtrlDomini {
         return respostesStr;
     }
 
-    private int comprovarRespostaValid(Pregunta p, String resposta) {
+    private boolean comprovarRespostaValid(Pregunta p, String resposta) {
         int tipus = p.getTipus();
         List<String> opcions = p.getOpcions();
         switch (tipus) {
             case 0: // NUMERICA
                 try {
                     Double.parseDouble(resposta);
-                    return 1; // És vàlida
+                    return true; // És vàlida
                 } catch (NumberFormatException e) {
-                    return -1; // No és vàlida
+                    return false; // No és vàlida
                 }
             case 1: // UNICA
             case 2: // ORDENADA
             case 3: // MULTIPLE
                 if (opcions.contains(resposta)) {
-                    return 1; // És vàlida
+                    return true; // És vàlida
                 } else {
-                    return -1; // No és vàlida
+                    return false; // No és vàlida
                 }
             case 4: // LLIURE
-                return 1; // Sempre és vàlida
+                return true; // Sempre és vàlida
             default:
-                return -1; // Tipus desconegut
+                return false; // Tipus desconegut
         }
     }
 
@@ -541,18 +541,43 @@ public class CtrlDomini {
         return enq.participa(idUsuari);
     }
 
+    private Enquesta getEnquesta(int idEnquesta) {
+        try {
+            return ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public int modificarRespostaEnquesta(int idEnquesta, int idUsuari, int idxPregunta, String novaResposta) {
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        Enquesta enq;
+        try{
+            enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        } catch (Exception e) {
+            return -1; // Codi error: Enquesta no existeix
+        }
+
+
         if (!enquestaTeRespostaUsuari(enq, idUsuari)) {
             return -2; // Codi error: L'usuari no ha respost l'enquesta
         }
+
         List<Resposta> respostes = enq.getRespostesUsuari(idUsuari);
-        if (respostes == null || idxPregunta < 0 || idxPregunta >= respostes.size()) {
-            return -1; // Codi error: Resposta no existeix
+        if(respostes == null || idxPregunta < 0 || idxPregunta >= respostes.size()) {
+            return -3; // Codi error: Índex de pregunta invàlid
+        }
+
+        if(!comprovarRespostaValid(enq.getPreguntesObj().get(idxPregunta), novaResposta)) {
+            return -4; // Codi error: Resposta invàlida per a la pregunta
         }
         Pregunta p = enq.getPreguntesObj().get(idxPregunta);
-        //Resposta novaRespObj = new Resposta(novaResposta, p.getTipus());
-        //respostes.set(idxPregunta, novaRespObj);
+        int tipus = p.getTipus();
+        if (tipus == 1){
+            //
+
+        }
+        
+
         return 1; // Èxit
     }
     

@@ -63,9 +63,6 @@ public class CtrlDominiMantEnquesta {
      */
     public Enquesta getEnquesta(int idEnquesta) {
         Enquesta enq = enquestes.get(idEnquesta);
-        if (enq == null) {
-            throw new NoSuchElementException("No se encontró la encuesta con el ID " + idEnquesta);
-        }
         return enq;
     }
 
