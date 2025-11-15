@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Pruebas/prova_consultarEnquesta.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
@@ -89,7 +90,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/lib/objenesis-3.4.jar",
+    "last_opened_file_path": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/Pruebas",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -138,6 +139,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Pruebas" />
       <recent name="$PROJECT_DIR$/lib" />
       <recent name="$PROJECT_DIR$/Archivos tex, pdf etc" />
     </key>
@@ -145,7 +147,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestUnitariEnquesta_Mock.testGetPreguntesObj">
+  <component name="RunManager">
     <configuration name="TestUnitariEnquesta_Mock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
@@ -244,7 +246,7 @@
       <workItem from="1763144963501" duration="4517000" />
       <workItem from="1763217695506" duration="80000" />
       <workItem from="1763214244952" duration="3330000" />
-      <workItem from="1763225711818" duration="13584000" />
+      <workItem from="1763225711818" duration="14232000" />
     </task>
     <servers />
   </component>

@@ -1,0 +1,25 @@
+2
+enquesta_cafe
+2
+enquesta_musica
+3
+0
+3
+1
+1
+Prova consultar_enquesta
+Prova consultar_enquesta
+3
+1
+1
+Prova consultar_enquesta
+1
+Prova consultar_enquesta
+3
+2
+0
+
+
+
+
+

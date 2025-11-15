@@ -18,10 +18,9 @@ public class Main {
 
                 switch (opcio) {
                     case 0 -> io.writeln("\nSortint...");
-
                     case 1 -> Utils.crearEnquestaManual(io, ctrl); //prueba hecha
                     case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl);
-                    case 3 -> Utils.consultarEnquesta(io, ctrl);
+                    case 3 -> Utils.consultarEnquesta(io, ctrl); //prueba hecha
                     case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl);
                     case 5 -> Utils.consultarRespostesEnquesta(io, ctrl);
                     case 6 -> Utils.respondreEnquesta(io, ctrl);
@@ -35,7 +34,6 @@ public class Main {
                     case 14 -> Utils.esborrarResposta(io,ctrl); //prueba hecha
                     case 15 -> Utils.clustering(io, ctrl);
                     case 16 -> ctrl.mostrarEnquestesAmbPreguntesIRespostes();
-
                     default -> io.writeln("\n[ERROR] Opció no vàlida. Torna-ho a intentar.\n");
                 }
 
