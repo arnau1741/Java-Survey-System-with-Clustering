@@ -175,8 +175,8 @@ public class CtrlDomini {
         //borrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
         //borrar de usuarios //si queremos hacer esto, implementar la logica en crear
-        Usuari usuari = ctrlDominiMantUsuari.getUsuari(idUsuari);
-        usuari.eliminarEnquesta(idEnquesta);
+        //Usuari usuari = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        //usuari.eliminarEnquesta(idEnquesta);
     }
 
     /**
@@ -331,8 +331,10 @@ public class CtrlDomini {
     public void mostrarEnquestesAmbPreguntesIRespostes() {
         int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
         System.out.println("Número d'enquestes: " + numEnquestes);
-        for (int i = 0; i < numEnquestes; i++) {
+        Map<Integer, Enquesta> enquestes = ctrlDominiMantEnquesta.getEnquestesObj();
+        for (Integer i : enquestes.keySet()) {
             Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(i);
+
             System.out.println("ID creador: " + enq.getId() + ", Títol: " + enq.getTitol() + ", Descripció: " + enq.getDescripcio());
             List<Pregunta> preguntes = enq.getPreguntesObj();
             System.out.println("Preguntes i respostes:");

@@ -96,4 +96,7 @@ public class CtrlDominiMantEnquesta {
     }
 
 
+    public Map<Integer,Enquesta> getEnquestesObj() {
+        return enquestes;
+    }
 }

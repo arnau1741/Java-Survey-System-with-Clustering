@@ -18,6 +18,7 @@ public class Utils {
      * @throws Exception si hi ha un error d'entrada/sortida
      */
     public static void mostrarMenu(inout io) throws Exception {
+        /*
         io.writeln("======================================");
         io.writeln("              ENQUESTES");
         io.writeln("======================================");
@@ -36,6 +37,8 @@ public class Utils {
         io.writeln(" 13) Esborrar enquesta");
         io.writeln(" 14) Esborrar resposta");
         io.writeln(" 15) Clustering d'usuaris");
+        */
+
 
         /*
         io.writeln(" 10) Crear usuari");
@@ -113,13 +116,12 @@ public class Utils {
         int idx = 0;
         int size = preguntes.size();
         while(idx < size){
+            String tipus = preguntes.get(idx);
+            idx++;
             String enunciat = preguntes.get(idx);
             idx++;
-            int tipus = Integer.parseInt(enunciat);
-            enunciat = preguntes.get(idx);
-            idx++;
             io.writeln("\nPregunta: " + enunciat);
-            if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, MULTIPLE, ORDENADA
+            if (tipus.equals("UNICA") || tipus.equals("MULTIPLE") || tipus.equals("ORDENADA")) { //UNICA, MULTIPLE, ORDENADA
                 int numOpcions = Integer.parseInt(preguntes.get(idx));
                 idx++;
                 io.writeln("Opcions:");
@@ -132,16 +134,17 @@ public class Utils {
                 String resposta = io.readline();
                 respostesUsuari.add(resposta);
             }
-            else if (tipus == 0) { //NUMERICA
+            else if (tipus.equals("NUMERICA")) { //NUMERICA
                 io.write("Introdueix la teva resposta numèrica: ");
                 String resposta = io.readline();
                 respostesUsuari.add(resposta);
             }
-            else if (tipus == 4) { //LLIURE
+            else if (tipus.equals("LLIURE")) { //LLIURE
                 io.write("Introdueix la teva resposta lliure: ");
                 String resposta = io.readline();
                 respostesUsuari.add(resposta);
             }
+            idx++;
         }
         ctrl.respondreEnquesta(idEnquesta, idUsuari, respostesUsuari);
         io.writeln("\n[OK] Enquesta resposta correctament!\n");
@@ -452,7 +455,7 @@ public class Utils {
         int idEnquesta = io.readint();
         io.writeln("Introduiex l'Id de l'usuari");
         int idUsuari =io.readint();
-        ctrl.eliminarEnquesta(idEnquesta, idUsuari);
+        ctrl.eliminarEnquesta(idUsuari, idEnquesta);
     }
 
 
