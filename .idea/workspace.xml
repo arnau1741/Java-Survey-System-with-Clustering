@@ -6,7 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestador.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/TestUnitariEnquestador.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/TestUnitariEnquestador.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/allclasses-index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-16.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-16.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-17.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-17.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/index-files/index-7.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/overview-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestador.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquestador_Mock.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +89,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/lib",
+    "last_opened_file_path": "/home/arnau-hern-ndez/IdeaProjects/subgrup-prop21.5/lib/mockito-core-5.20.0.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -134,17 +145,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNull">
-    <configuration name="TestKmeans.testDistanciaNoOrdenadaUnica" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="subgrup-prop21.5" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestKmeans" />
-      <option name="METHOD_NAME" value="testDistanciaNoOrdenadaUnica" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.TestUnitariEnquestador_Mock">
     <configuration name="TestKmeans.testDistanciaNoOrdenadaUnicaDif" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
@@ -185,6 +186,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestUnitariEnquestador_Mock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="subgrup-prop21.5" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquestador_Mock" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -195,7 +205,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnica" />
+      <item itemvalue="JUnit.TestUnitariEnquestador_Mock" />
       <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaDif" />
       <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaEq" />
       <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNonNull" />
@@ -203,11 +213,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestUnitariEnquestador_Mock" />
         <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNull" />
         <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaNullNonNull" />
         <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaDif" />
         <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnicaEq" />
-        <item itemvalue="JUnit.TestKmeans.testDistanciaNoOrdenadaUnica" />
       </list>
     </recent_temporary>
   </component>
@@ -235,7 +245,7 @@
       <workItem from="1763144963501" duration="4517000" />
       <workItem from="1763217695506" duration="80000" />
       <workItem from="1763214244952" duration="3330000" />
-      <workItem from="1763225711818" duration="3188000" />
+      <workItem from="1763225711818" duration="3553000" />
     </task>
     <servers />
   </component>

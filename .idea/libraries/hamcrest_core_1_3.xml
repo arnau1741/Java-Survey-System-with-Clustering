@@ -4,6 +4,9 @@
       <root url="jar://$PROJECT_DIR$/lib/hamcrest-core-1.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/junit-4.12.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/mockito-core-5.20.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/byte-buddy-agent-1.18.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/byte-buddy-1.18.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/objenesis-3.4.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
