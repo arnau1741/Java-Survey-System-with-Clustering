@@ -1,8 +1,10 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class TestUnitariEnquestat_Stub {
 
@@ -10,13 +12,17 @@ public class TestUnitariEnquestat_Stub {
 
     @Before
     public void setUp() {
-        enquestat = new PerfilEnquestat(
-                0,"Anna", "1234",
-                "anna@gmail.com");
-        enquestat2 = new PerfilEnquestat(
-                1,"Maria", "abcd",
-                "maria@gmail.com");
+        enquestat = new PerfilEnquestat(0,"Anna","1234","anna@gmail.com");
+        enquestat2 = new PerfilEnquestat(1,"Maria","abcd","maria@gmail.com");
     }
+
+    private EnquestaStub stub(int id) {
+        return new EnquestaStub(id);
+    }
+
+    // ---------------------------------------------------------------------
+    //                           TESTS DEL CONSTRUCTOR
+    // ---------------------------------------------------------------------
 
     @Test
     public void constructorInicialitzaCorrectament() {
@@ -33,26 +39,35 @@ public class TestUnitariEnquestat_Stub {
         assertThat(enquestat2.isBlocked(), equalTo(false));
     }
 
+    // ---------------------------------------------------------------------
+    //                     TESTS D'AFEGIR ENQUESTES REALITZADES
+    // ---------------------------------------------------------------------
+
     @Test
     public void afegirEnquestaRealitzadaFuncionaCorrectament() {
-        Enquesta enquesta = new EnquestaStub(1);
-        Enquesta enquesta2 = new EnquestaStub(2);
+        Enquesta en1 = stub(1);
+        Enquesta en2 = stub(2);
 
-        enquestat.afegirEnquestaRealitzada(enquesta);
+        enquestat.afegirEnquestaRealitzada(en1);
+
         assertThat(enquestat.haRealitzatEnquesta(1), equalTo(true));
         assertThat(enquestat.haRealitzatEnquesta(2), equalTo(false));
 
-        enquestat.afegirEnquestaRealitzada(enquesta2);
+        enquestat.afegirEnquestaRealitzada(en2);
         assertThat(enquestat.haRealitzatEnquesta(2), equalTo(true));
     }
 
+    // ---------------------------------------------------------------------
+    //                     TESTS D'ELIMINAR ENQUESTES REALITZADES
+    // ---------------------------------------------------------------------
+
     @Test
     public void eliminarEnquestaRealitzadaFuncionaCorrectament() {
-        Enquesta enquesta = new EnquestaStub(1);
-        Enquesta enquesta2 = new EnquestaStub(2);
+        Enquesta en1 = stub(1);
+        Enquesta en2 = stub(2);
 
-        enquestat.afegirEnquestaRealitzada(enquesta);
-        enquestat.afegirEnquestaRealitzada(enquesta2);
+        enquestat.afegirEnquestaRealitzada(en1);
+        enquestat.afegirEnquestaRealitzada(en2);
 
         assertThat(enquestat.haRealitzatEnquesta(1), equalTo(true));
         assertThat(enquestat.haRealitzatEnquesta(2), equalTo(true));
@@ -66,32 +81,48 @@ public class TestUnitariEnquestat_Stub {
     }
 
     @Test
-    public void getEnquestesRealitzadesFuncionaCorrectament() {
-        Enquesta enquesta1 = new EnquestaStub(1);
-        Enquesta enquesta2 = new EnquestaStub(2);
-
-        enquestat.afegirEnquestaRealitzada(enquesta1);
-        enquestat.afegirEnquestaRealitzada(enquesta2);
-
-        assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(2));
-        assertThat(enquestat.getEnquestesRealitzades().get(0).getId(), equalTo(1));
-        assertThat(enquestat.getEnquestesRealitzades().get(1).getId(), equalTo(2));
-    }
-
-    @Test
-    public void testEliminarDeLlistaBuida() {
+    public void eliminarDeLlistaBuida_NoProdueixCanvisNiErrors() {
         enquestat.eliminarEnquestaRealitzada(1);
         assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(0));
     }
 
     @Test
-    public void testEliminarEnquestaInexistent() {
-        Enquesta enquesta = new EnquestaStub(1);
-        enquestat.afegirEnquestaRealitzada(enquesta);
+    public void eliminarEnquestaInexistent_NoModificaLaLlista() {
+        Enquesta en1 = stub(1);
+        enquestat.afegirEnquestaRealitzada(en1);
 
         enquestat.eliminarEnquestaRealitzada(99);
 
         assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(1));
         assertThat(enquestat.haRealitzatEnquesta(1), equalTo(true));
+    }
+
+    @Test
+    public void eliminarEnquestaAmbIdNegatiu_NoFaRes() {
+        Enquesta en1 = stub(1);
+        enquestat.afegirEnquestaRealitzada(en1);
+
+        enquestat.eliminarEnquestaRealitzada(-5);
+
+        assertThat(enquestat.getEnquestesRealitzades().size(), equalTo(1));
+    }
+
+    // ---------------------------------------------------------------------
+    //                           CONSULTA DE LLISTA
+    // ---------------------------------------------------------------------
+
+    @Test
+    public void getEnquestesRealitzades_RetornaLlistaAmbOrdreCorrecte() {
+        Enquesta en1 = stub(1);
+        Enquesta en2 = stub(2);
+
+        enquestat.afegirEnquestaRealitzada(en1);
+        enquestat.afegirEnquestaRealitzada(en2);
+
+        List<Enquesta> llista = enquestat.getEnquestesRealitzades();
+
+        assertThat(llista.size(), equalTo(2));
+        assertThat(llista.get(0), equalTo(en1));
+        assertThat(llista.get(1), equalTo(en2));
     }
 }
