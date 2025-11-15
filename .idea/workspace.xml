@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6209c3cc-661a-4f3b-9337-c1580b742505" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquesta.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestUnitarios/TestUnitariEnquesta.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +69,8 @@
     "JUnit.TestUnitariEnquesta.executor": "Run",
     "JUnit.TestUnitariEnquesta.testGetPreguntes.executor": "Debug",
     "JUnit.TestUnitariEnquesta.testGetters.executor": "Run",
+    "JUnit.TestUnitariEnquesta_Mock.executor": "Run",
+    "JUnit.TestUnitariEnquesta_Mock.testGetPreguntesObj.executor": "Debug",
     "JUnit.TestUnitariEnquestador_Mock.afegirEnquestaAssignadaFuncionaCorrectament.executor": "Run",
     "JUnit.TestUnitariEnquestador_Mock.executor": "Run",
     "JUnit.TestUnitariEnquestador_Stub.executor": "Run",
@@ -143,7 +144,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestUnitariEnquesta_Mock">
+  <component name="RunManager" selected="JUnit.TestUnitariEnquesta_Mock.testGetPreguntesObj">
     <configuration name="TestUnitariEnquesta_Mock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
@@ -163,21 +164,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestUnitariEnquesta_Mock.testGetPreguntesObj" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="subgrup-prop21.5" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquesta_Mock" />
+      <option name="METHOD_NAME" value="testGetPreguntesObj" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestUnitariEnquesta_Mock.testGetters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="TestUnitariEnquesta_Mock" />
       <option name="METHOD_NAME" value="testGetters" />
       <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestUnitariEnquestador_Stub" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="subgrup-prop21.5" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquestador_Stub" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -203,17 +205,17 @@
     <list>
       <item itemvalue="JUnit.TestUnitariEnquesta_Mock" />
       <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetPreguntes" />
+      <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetPreguntesObj" />
       <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetters" />
-      <item itemvalue="JUnit.TestUnitariEnquestador_Stub" />
       <item itemvalue="JUnit.TestUnitariEnquestat_Stub" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetPreguntesObj" />
         <item itemvalue="JUnit.TestUnitariEnquesta_Mock" />
         <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetPreguntes" />
         <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetters" />
         <item itemvalue="JUnit.TestUnitariEnquestat_Stub" />
-        <item itemvalue="JUnit.TestUnitariEnquestador_Stub" />
       </list>
     </recent_temporary>
   </component>
@@ -241,7 +243,7 @@
       <workItem from="1763144963501" duration="4517000" />
       <workItem from="1763217695506" duration="80000" />
       <workItem from="1763214244952" duration="3330000" />
-      <workItem from="1763225711818" duration="11133000" />
+      <workItem from="1763225711818" duration="11488000" />
     </task>
     <servers />
   </component>
