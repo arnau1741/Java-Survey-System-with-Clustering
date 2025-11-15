@@ -1,10 +1,13 @@
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matcher.*;
+import org.mockito.Mockito.*;
 
 public class TestUnitariEnquestador {
 
