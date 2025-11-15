@@ -143,30 +143,30 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestUnitariEnquesta">
-    <configuration name="TestUnitariEnquesta" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TestUnitariEnquesta_Mock">
+    <configuration name="TestUnitariEnquesta_Mock" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquesta" />
+      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquesta_Mock" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestUnitariEnquesta.testGetPreguntes" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestUnitariEnquesta_Mock.testGetPreguntes" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquesta" />
+      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquesta_Mock" />
       <option name="METHOD_NAME" value="testGetPreguntes" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestUnitariEnquesta.testGetters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestUnitariEnquesta_Mock.testGetters" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="subgrup-prop21.5" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquesta" />
+      <option name="MAIN_CLASS_NAME" value="TestUnitariEnquesta_Mock" />
       <option name="METHOD_NAME" value="testGetters" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -201,17 +201,17 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JUnit.TestUnitariEnquesta" />
-      <item itemvalue="JUnit.TestUnitariEnquesta.testGetPreguntes" />
-      <item itemvalue="JUnit.TestUnitariEnquesta.testGetters" />
+      <item itemvalue="JUnit.TestUnitariEnquesta_Mock" />
+      <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetPreguntes" />
+      <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetters" />
       <item itemvalue="JUnit.TestUnitariEnquestador_Stub" />
       <item itemvalue="JUnit.TestUnitariEnquestat_Stub" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestUnitariEnquesta" />
-        <item itemvalue="JUnit.TestUnitariEnquesta.testGetPreguntes" />
-        <item itemvalue="JUnit.TestUnitariEnquesta.testGetters" />
+        <item itemvalue="JUnit.TestUnitariEnquesta_Mock" />
+        <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetPreguntes" />
+        <item itemvalue="JUnit.TestUnitariEnquesta_Mock.testGetters" />
         <item itemvalue="JUnit.TestUnitariEnquestat_Stub" />
         <item itemvalue="JUnit.TestUnitariEnquestador_Stub" />
       </list>
