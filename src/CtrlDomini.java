@@ -146,7 +146,7 @@ public class CtrlDomini {
         // afegir respostes a l'enquesta
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
-            return -2; // Enquesta no existeix
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         }
 
         // llegim el nombre de respostes (primer linia)
@@ -236,10 +236,17 @@ public class CtrlDomini {
         KMeans kmeans = new KMeans(k, maxIterations);
         kmeans.fit(enq);
         int[] labels = kmeans.getLabels();
+
+        List<Pregunta> preguntes = enq.getPreguntesObj();
+        Map<Integer, Resposta> respostesPregunta0 = preguntes.get(0).getRespostes();
         Map<Integer, Integer> resultat = new HashMap<>();
         int n = enq.getNumRespostes();
+
+        Object[] idArray = respostesPregunta0.keySet().toArray();
+        //idUsuari a label
         for (int i = 0; i < n; i++) {
-            resultat.put(i, labels[i]);
+            int idUsuari = (int) idArray[i];
+            resultat.put(idUsuari, labels[i]);
         }
         return resultat;
     }
@@ -352,42 +359,6 @@ public class CtrlDomini {
         return result;
     }
 
-    /**
-     * Funcio per a transformar les preguntes en format string a objectes Pregunta
-     * @param preguntes Llista de preguntes en format text
-     * @return Llista de preguntes en format objecte Pregunta
-     * @throws IllegalArgumentException
-     */
-    //////////////////////// Funcions auxiliars ///////////////////////////////
-    private List<Pregunta> transformaPreguntesAObj (List<String> preguntes) throws IllegalArgumentException {
-        List <Pregunta> preguntesObj = new ArrayList<>();
-        int size = preguntes.size();
-        int idx = 0;
-        while (idx < size) {
-            String enunciat = preguntes.get(idx);
-            int tipus = Integer.parseInt(enunciat);
-            idx++;
-            enunciat = preguntes.get(idx);
-            idx++;
-            if (tipus == 1 || tipus == 2 || tipus == 3) { // UNICA, ORDENADA, MULTIPLE
-                int numOpcions = Integer.parseInt(preguntes.get(idx));
-                idx++;
-                List<String> opcions = new ArrayList<>();
-                for (int i = 0; i < numOpcions; i++) {
-                    String opcio = preguntes.get(idx);
-                    opcions.add(opcio);
-                    idx++;
-                }
-                Pregunta p = new Pregunta(enunciat, tipus, opcions);
-                preguntesObj.add(p);
-            }
-            else if (tipus == 0 || tipus == 4) { // NUMERICA, LLIURE
-                Pregunta p = new Pregunta(enunciat, tipus, null);
-                preguntesObj.add(p);
-            }
-        }
-        return preguntesObj;
-    }
 
     /**
      * Funcio per a crear un usuari enquestat
@@ -573,19 +544,6 @@ public class CtrlDomini {
      */
     private boolean enquestaTeRespostaUsuari(Enquesta enq, int idUsuari) {
         return enq.participa(idUsuari);
-    }
-
-    /**
-     * Funcio per a obtenir una enquesta
-     * @param idEnquesta identificador de l'enquesta
-     * @return enquesta, l'enquesta amb l'identificador donat, null si no existeix
-     */
-    private Enquesta getEnquesta(Integer idEnquesta) {
-        try {
-            return ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     /**

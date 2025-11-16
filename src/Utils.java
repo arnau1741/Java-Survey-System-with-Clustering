@@ -502,10 +502,23 @@ public class Utils {
             io.readline();
 
             Map<Integer, Integer> result = ctrl.clustering(idEnquesta, k, maxIter);
-            for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
-                io.writeln("Usuari ID: " + entry.getKey() + " -> Cluster: " + entry.getValue());
+            for (int clusterId = 0; clusterId < k; clusterId++) {
+                io.writeln("Cluster " + clusterId + ":");
+                boolean first = true;
+                for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
+                    if (entry.getValue() == clusterId) {
+                        if (first) {
+                            io.write(" Usuari IDs: [");
+                            first = false;
+                        } else {
+                            io.write(", ");
+                        }
+                        io.write(Integer.toString(entry.getKey()));
+                    }
+                }
+                io.writeln("]");
             }
-            io.writeln("\n[OK] Clustering realitzat correctament!\n");
+
         }
         catch (Exception e){
             try {

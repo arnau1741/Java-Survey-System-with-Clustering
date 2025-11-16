@@ -1,9 +1,6 @@
 // import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -216,7 +213,7 @@ public class Enquesta {
      * Retorna la llista de preguntes de l'enquesta
      * @return llista de preguntes de l'enquesta
      */
-    public List<Pregunta> getPreguntesObj() { return Collections.unmodifiableList(preguntes); }
+    public List<Pregunta> getPreguntesObj() { return preguntes; }
 
     /**
      * Retorna el nombre de preguntes de l'enquesta
