@@ -15,12 +15,10 @@ prova
 16
 7
 0
-<<<<<<< HEAD
 mostrar_enquesta_preguntes_sortida1
 7
 1
 mostrar_enquesta_preguntes_sortida2
-=======
 archiu_exportar1
 7
 1
@@ -28,6 +26,5 @@ archiu_exportar2
 7
 2
 archiu_exportar3
->>>>>>> 12e2dbadb0d8442d19418deae9346f620ddfb788
 0
 

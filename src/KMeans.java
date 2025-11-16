@@ -43,11 +43,11 @@ public class KMeans{
      * Ajusta el model KMeans a les dades proporcionades
      * @param data les dades d'entrada (Enquesta)
      */
-    public void fit(Enquesta data) {
+    public void fit(Enquesta data) throws KmeansExcepcio {
         int n = data.getNumRespostes();
-        if (n == 0) throw new IllegalArgumentException("There is no data");
+        if (n == 0) throw new KmeansExcepcio("There is no data");
         int dim = data.getNumPreguntes();
-        if (k > n) throw new IllegalArgumentException("k can not be greater than the number of points");
+        if (k > n) throw new KmeansExcepcio("k can not be greater than the number of points");
 
         centroids = initCentroidsRandom(data, k);
         System.out.println("Initial centroids:");

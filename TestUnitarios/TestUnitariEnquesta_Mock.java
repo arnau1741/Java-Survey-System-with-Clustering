@@ -104,11 +104,11 @@ public class TestUnitariEnquesta_Mock {
         when(preguntaMock1.getRespostes()).thenReturn(mapa1);
         when(preguntaMock2.getRespostes()).thenReturn(mapa2);
 
-        List<Resposta> respostes = Arrays.asList(respostaMock1, respostaMock2);
+        List<String> respostes = Arrays.asList("25.5", "2");
         enquesta.afegeixResposta(5, respostes);
 
-        verify(preguntaMock1, times(1)).addResposta(respostaMock1, 5);
-        verify(preguntaMock2, times(1)).addResposta(respostaMock2, 5);
+        verify(preguntaMock1, times(1)).addResposta(any(Resposta.class), eq(5));
+        verify(preguntaMock2, times(1)).addResposta(any(Resposta.class), eq(5));
     }
 
     @Test
@@ -118,14 +118,14 @@ public class TestUnitariEnquesta_Mock {
         when(preguntaMock1.getRespostes()).thenReturn(mapa1);
         when(preguntaMock2.getRespostes()).thenReturn(mapa2);
 
-        List<Resposta> respostes1 = Arrays.asList(respostaMock1, respostaMock2);
-        List<Resposta> respostes2 = Arrays.asList(respostaMock2, respostaMock1);
+        List<String> respostes1 = Arrays.asList("25.5", "2");
+        List<String> respostes2 = Arrays.asList("30.0", "1");
 
         enquesta.afegeixResposta(5, respostes1);
         enquesta.afegeixResposta(6, respostes2);
 
-        verify(preguntaMock1, times(2)).addResposta(any(), anyInt());
-        verify(preguntaMock2, times(2)).addResposta(any(), anyInt());
+        verify(preguntaMock1, times(2)).addResposta(any(Resposta.class), anyInt());
+        verify(preguntaMock2, times(2)).addResposta(any(Resposta.class), anyInt());
     }
 
     @Test
@@ -190,11 +190,9 @@ public class TestUnitariEnquesta_Mock {
         verify(preguntaMock1, times(1)).getNumRespostes();
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testGetNumRespostesEnquestaVacia() {
         List<Pregunta> preguntesVacias = new ArrayList<>();
         Enquesta enqVacia = new Enquesta(3, "Buit", "Buit", 1, preguntesVacias);
-
-        assertThat(enqVacia.getNumRespostes(), equalTo(0));
     }
 }
