@@ -199,7 +199,7 @@ public class CtrlDomini {
 
     /**
      * Funcio per a esborrar les respostes d'una enquesta d'un enquestat
-     * @param idUsuari identificador de l'usuari que esborra la resposta
+     * @param idEnquesta identificador de l'usuari que esborra la resposta
      * @param idEnquesta identificador de l'enquesta
      * @param idEnquestat identificador de l'usuari que ha respost l'enquesta
      */
