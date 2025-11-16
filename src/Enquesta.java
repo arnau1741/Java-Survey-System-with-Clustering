@@ -32,6 +32,7 @@ public class Enquesta {
      * @param descripcio de l'enquesta
      * @param idCreador de l'usuari
      * @param preguntes de l'enquesta
+     * @throws IllegalArgumentException si la llista de preguntes no té almenys una pregunta
      */
     public Enquesta(Integer id, String titol, String descripcio, Integer idCreador, List<Pregunta> preguntes) throws IllegalArgumentException{
         if (preguntes == null || preguntes.isEmpty()) {
@@ -49,6 +50,7 @@ public class Enquesta {
      * @param respostesStr llista de respostes en format String
      * @return llista d'objectes Resposta
      * @throws IllegalArgumentException si alguna resposta no és vàlida segons el tipus de pregunta
+     * @throws IllegalArgumentException si el tipus de pregunta és desconegut
      */
     public List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
         System.out.println("Convirtiendo respuestas de String a objetos Resposta...");
@@ -329,7 +331,7 @@ public class Enquesta {
      * @param idUsuari de l'usuari que modifica
      * @param idxPregunta de l'enquesta a modificar
      * @param novaResposta de la pregunta d'una enquesta
-     * @throws UsuariNoHaResposEnquesta
+     * @throws UsuariNoHaResposEnquesta si l'usuari no ha respost a la pregunta de l'enquesta
      */
     public void modificarRespostaUsuari(int idUsuari, int idxPregunta, Resposta novaResposta) throws UsuariNoHaResposEnquesta {
         Pregunta p = preguntes.get(idxPregunta);

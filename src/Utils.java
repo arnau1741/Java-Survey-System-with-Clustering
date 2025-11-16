@@ -91,6 +91,7 @@ public class Utils {
      * Permet consultar totes les enquestes amb preguntes i respostes
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
     public static void consultarEnquestesAmbPreguntesIRespostes(inout io, CtrlDomini ctrl){
         try{
@@ -116,6 +117,7 @@ public class Utils {
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     * @throws Exception si la resposta no és vàlida
      */
     public static void respondreEnquesta(inout io, CtrlDomini ctrl) {
         try{
@@ -256,6 +258,8 @@ public class Utils {
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no es pot crear
+     * @throws Exception si el format del fitxer és invàlid
+     * @throws Exception si el path es incorrecte
      */
     public static void crearEnquestaDesDeFitxer(inout io, CtrlDomini ctrl) {
         try{
@@ -340,6 +344,8 @@ public class Utils {
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     * @throws Exception si el format del fitxer és invàlid
+     * @throws Exception si el path es incorrecte
      */
     public static void importarRespostes(inout io, CtrlDomini ctrl) {
         try{
@@ -485,6 +491,7 @@ public class Utils {
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     * @throws Exception si el clustering falla
      */
     public static void clustering(inout io, CtrlDomini ctrl) {
         try{
@@ -546,7 +553,7 @@ public class Utils {
      * Esborra l'enquesta identificada per idEnquesta d'un usuari
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
-     * @throws Exception
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
     public static void esborrarEnquesta(inout io, CtrlDomini ctrl) {
         try{
@@ -570,7 +577,7 @@ public class Utils {
      * Esborra la resposta d'una enquesta d'un enquestat
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
-     * @throws Exception
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
     public static void esborrarResposta(inout io, CtrlDomini ctrl) {
         try{
@@ -594,7 +601,7 @@ public class Utils {
      * Modifica una pregunta d'una enquesta
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
-     * @throws Exception
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
     public static void modificarEnquesta(inout io, CtrlDomini ctrl) {
         try{
@@ -656,7 +663,8 @@ public class Utils {
      * Permet modifica una resposta d'una enquesta que hagi realitzat un usuari
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
-     * @throws Exception
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     * @throws Exception si la resposta no és vàlida
      */
     public static void modificarResposta(inout io, CtrlDomini ctrl) {
         try{

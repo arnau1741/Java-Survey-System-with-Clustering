@@ -140,6 +140,7 @@ public class Pregunta {
      * @param resposta a afegir
      * @param idUsuari identificador de l'usuari que fa la resposta (-1 si no està registrat)
      * @return 1 si s'ha afegit correctament, 0 si ja existeix una resposta per aquest usuari
+     * @throws IllegalArgumentException si ja existeix una resposta per aquest usuari
      */
     public Integer addResposta(Resposta resposta, int idUsuari) throws IllegalArgumentException {
         if (idUsuari == -1) { // Usuari no registrat
@@ -187,6 +188,7 @@ public class Pregunta {
      * Calcula la moda de les respostes per a preguntes UNICA, MULTIPLE, ORDENADA
      * @return la resposta moda
      * @throws UnsupportedOperationException si la pregunta no és d'aquests tipus
+     * @throws IllegalStateException si no es pot calcular la moda
      */
     public Resposta getRespostaModa(){
         if (tipus == 1 ||tipus == 2 || tipus==3){

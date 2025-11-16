@@ -33,6 +33,7 @@ public class CtrlDominiMantEnquesta {
     /**
      * Elimina una enquesta de la col·lecció d'enquestes
      * @param idEnquesta de l'enquesta a eliminar
+     * @throws EnquestaNoExisteixException si no existeix l'enquesta amb l'id donat
      */
     public void eliminarEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         if (enquestes.containsKey(idEnquesta)) {
@@ -76,6 +77,7 @@ public class CtrlDominiMantEnquesta {
      * Obtenir les preguntes d'una enquesta donat el seu id
      * @param idEnquesta de l'enquesta
      * @return llista de preguntes de l'enquesta, llista buida si no es troba l'enquesta
+     * @throws EnquestaNoExisteixException si no existeix l'enquesta amb l'id donat
      */
     public List<String> getPreguntesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         Enquesta enq = enquestes.get(idEnquesta);
@@ -113,7 +115,7 @@ public class CtrlDominiMantEnquesta {
      * @param idCreador de l'enquesta
      * @param preguntes de l'enquesta
      * @return el numero de preguntes que te la nova enquesta
-     * @throws InvalidFormatEnquesta
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta és invàlid
      */
     public int novaEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
         List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntes);
@@ -134,8 +136,8 @@ public class CtrlDominiMantEnquesta {
      * @param idUsuari que importa l'enquesta
      * @param path que conte el fitxer de l'enquesta
      * @return retorna el numero de preguntes que te la nova enquesta importada
-     * @throws InvalidFormatEnquesta
-     * @throws FileNotFound
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta és invàlid
+     * @throws FileNotFound Si no es troba el fitxer a la ruta especificada
      */
     public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
         // llegir fitxer
@@ -219,6 +221,9 @@ public class CtrlDominiMantEnquesta {
      * @param idxPregunta index de la pregunta a modificar
      * @param novaPregunta llista de strings amb la nova pregunta
      * @return 1 si s'ha modificat correctament
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
+     * @throws InvalidFormatEnquesta si el format de la nova pregunta es invàlid
+     * @throws IndexOutOfBoundsException si l'índex de la pregunta està fora de rang
      */
     //deberiamos hacer mas versiones en un futuro.
     public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws EnquestaNoExisteixException,InvalidFormatEnquesta {
