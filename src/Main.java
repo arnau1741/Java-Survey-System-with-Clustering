@@ -18,20 +18,20 @@ public class Main {
 
                 switch (opcio) {
                     case 0 -> io.writeln("\nSortint...");
-                    case 1 -> Utils.crearEnquestaManual(io, ctrl); //prueba hecha
-                    case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl); //prueba hecha
-                    case 3 -> Utils.consultarEnquesta(io, ctrl); //prueba hecha
-                    case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl); //prueba hecha
-                    case 5 -> Utils.consultarRespostesEnquesta(io, ctrl); //prueba hecha
-                    case 6 -> Utils.respondreEnquesta(io, ctrl); //prueba hecha
-                    case 7 -> Utils.exportarEnquesta(io, ctrl); //prueba hecha
-                    case 8 -> Utils.importarRespostes(io, ctrl); //prueba hecha
+                    case 1 -> Utils.crearEnquestaManual(io, ctrl);
+                    case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl);
+                    case 3 -> Utils.consultarEnquesta(io, ctrl);
+                    case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl);
+                    case 5 -> Utils.consultarRespostesEnquesta(io, ctrl);
+                    case 6 -> Utils.respondreEnquesta(io, ctrl);
+                    case 7 -> Utils.exportarEnquesta(io, ctrl);
+                    case 8 -> Utils.importarRespostes(io, ctrl);
                     case 9 -> io.writeln("--");//Utils.exportarResposta(io, ctrl);
                     case 10 -> Utils.consultarPerfil(io, ctrl);
-                    case 11 -> Utils.modificarEnquesta(io, ctrl); //prueba hecha
+                    case 11 -> Utils.modificarEnquesta(io, ctrl);
                     case 12 -> Utils.modificarResposta(io, ctrl);
-                    case 13 -> Utils.esborrarEnquesta(io,ctrl); //prueba hecha
-                    case 14 -> Utils.esborrarResposta(io,ctrl); //prueba hecha
+                    case 13 -> Utils.esborrarEnquesta(io,ctrl);
+                    case 14 -> Utils.esborrarResposta(io,ctrl);
                     case 15 -> Utils.clustering(io, ctrl);
                     case 16 -> ctrl.mostrarEnquestesAmbPreguntesIRespostes();
                     default -> io.writeln("\n[ERROR] Opció no vàlida. Torna-ho a intentar.\n");
@@ -48,31 +48,6 @@ public class Main {
             }
         }
     }
-/*
-    private static String inicialitzarRutaBase() {
-        String dir = System.getProperty("user.dir");
-
-        // Para IntelliJ: si estamos ejecutando desde out/production, ajustar la ruta
-        if (dir.contains("out") && dir.contains("production")) {
-            dir = new File(dir).getParentFile().getParentFile().getAbsolutePath();
-        }
-
-        File pruebasDir = new File(dir, "Pruebas");
-
-        // Si no existe, crear la carpeta
-        if (!pruebasDir.exists()) {
-            pruebasDir.mkdirs();
-        }
-
-        return pruebasDir.getAbsolutePath();
-    }
-    */
-
-    // ========================= MENÚ =========================
-
-
-
-
 
 }
 
