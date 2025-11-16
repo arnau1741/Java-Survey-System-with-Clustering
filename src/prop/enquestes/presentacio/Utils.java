@@ -1,3 +1,4 @@
+package prop.enquestes.presentacio;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -7,6 +8,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import prop.enquestes.controladors.CtrlDomini;
 
 public class Utils {
     public static String Base_path;

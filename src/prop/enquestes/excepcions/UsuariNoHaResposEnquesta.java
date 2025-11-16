@@ -1,3 +1,4 @@
+package prop.enquestes.excepcions;
 public class UsuariNoHaResposEnquesta extends Exception {
     public UsuariNoHaResposEnquesta() {
         super("L'usuari no ha respost l'enquesta.");

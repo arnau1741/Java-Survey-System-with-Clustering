@@ -1,3 +1,4 @@
+package prop.enquestes.excepcions;
 public class FileNotFound extends Exception {
     public FileNotFound() {
         super("El fitxer no s'ha trobat.");

@@ -1,3 +1,4 @@
+package prop.enquestes.domini;
 import java.util.List;
 import java.util.ArrayList;
 

@@ -1,3 +1,4 @@
+package prop.enquestes.excepcions;
 public class InvalidFormatEnquesta extends Exception {
     public InvalidFormatEnquesta() {
         super("L'enquesta té un format invàlid.");

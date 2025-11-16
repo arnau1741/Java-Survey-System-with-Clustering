@@ -1,3 +1,4 @@
+package prop.enquestes.excepcions;
 public class InvalidFormatResposta extends Exception {
     public InvalidFormatResposta() {
         super("El format de la resposta és invàlid.");

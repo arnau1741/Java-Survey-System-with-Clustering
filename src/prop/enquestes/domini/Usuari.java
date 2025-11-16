@@ -1,3 +1,4 @@
+package prop.enquestes.domini;
 // patron estado para cambiar entre roles
 
 public abstract class Usuari {

@@ -1,3 +1,4 @@
+package prop.enquestes.excepcions;
 public class EnquestaNoExisteixException extends Exception {
     public EnquestaNoExisteixException() {
         super("L'enquesta no existeix.");

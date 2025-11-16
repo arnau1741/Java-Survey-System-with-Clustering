@@ -1,3 +1,4 @@
+package prop.enquestes.domini;
 import java.util.List;
 public class RespostaOrdenada extends Resposta {
     private Integer numOpcions;

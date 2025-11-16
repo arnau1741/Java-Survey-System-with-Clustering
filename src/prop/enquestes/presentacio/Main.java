@@ -1,3 +1,6 @@
+package prop.enquestes.presentacio;
+
+import prop.enquestes.controladors.CtrlDomini;
 
 public class Main {
 

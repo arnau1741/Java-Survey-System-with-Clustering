@@ -1,3 +1,4 @@
+package prop.enquestes.domini;
 import java.util.List;
 //Pre: idPregunta és un identificador vàlid de pregunta
 //Post: Crea una resposta associada a la classe

@@ -1,7 +1,28 @@
+package prop.enquestes.controladors;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import prop.enquestes.domini.Enquesta;
+import prop.enquestes.domini.PerfilAdministrador;
+import prop.enquestes.domini.PerfilEnquestador;
+import prop.enquestes.domini.PerfilEnquestat;
+import prop.enquestes.domini.Pregunta;
+import prop.enquestes.domini.Resposta;
+import prop.enquestes.domini.RespostaLliure;
+import prop.enquestes.domini.RespostaMultiple;
+import prop.enquestes.domini.RespostaNumerica;
+import prop.enquestes.domini.RespostaOrdenada;
+import prop.enquestes.domini.RespostaUnica;
+import prop.enquestes.domini.Usuari;
+import prop.enquestes.excepcions.EnquestaNoExisteixException;
+import prop.enquestes.excepcions.FileNotFound;
+import prop.enquestes.excepcions.InvalidFormatEnquesta;
+import prop.enquestes.excepcions.InvalidFormatResposta;
+import prop.enquestes.excepcions.KmeansExcepcio;
+import prop.enquestes.excepcions.UsuariNoHaResposEnquesta;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -247,6 +268,8 @@ public class CtrlDomini {
         }
         return resultat;
     }
+
+    
 
 
     //////////////////// Funciones para debug ///////////////////////////////

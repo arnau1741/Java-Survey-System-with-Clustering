@@ -1,4 +1,7 @@
+package prop.enquestes.controladors;
 import java.util.*;
+
+import prop.enquestes.domini.Usuari;
 
 public class CtrlDominiMantUsuari {
     private Map<Integer, Usuari> usuaris;
