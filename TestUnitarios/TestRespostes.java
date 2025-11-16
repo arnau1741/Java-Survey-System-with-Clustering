@@ -1,4 +1,4 @@
-
+// java
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -59,8 +59,8 @@ public class TestRespostes {
         RespostaUnica ru = new RespostaUnica(3);
         ru.setResposta(1); // Selecciona opció 1
         assertTrue(ru.EsContestat());
-        assertEquals(1, ru.getResposta());
-        assertEquals(3, ru.getNumOpcions());
+        assertEquals(Integer.valueOf(1), Integer.valueOf(ru.getResposta()));
+        assertEquals(Integer.valueOf(3), Integer.valueOf(ru.getNumOpcions()));
 
         List<String> opcions = Arrays.asList("Java", "Python", "C++");
         assertEquals("Python", ru.getText(opcions));
@@ -80,7 +80,7 @@ public class TestRespostes {
         List<Integer> seleccions = Arrays.asList(0, 2);
         rm.selecciona(seleccions);
         assertTrue(rm.EsContestat());
-        assertEquals(4, rm.getNumOpcions());
+        assertEquals(Integer.valueOf(4), Integer.valueOf(rm.getNumOpcions()));
 
         List<String> opcions = Arrays.asList("Java", "Python", "C++", "JavaScript");
         assertEquals("Java, C++", rm.getText(opcions));
@@ -192,11 +192,11 @@ public class TestRespostes {
 
         ru.setResposta(0); // Primera opció
         assertTrue(ru.EsContestat());
-        assertEquals(0, ru.getResposta());
+        assertEquals(Integer.valueOf(0), Integer.valueOf(ru.getResposta()));
 
         ru.setResposta(4); // Última opció
         assertTrue(ru.EsContestat());
-        assertEquals(4, ru.getResposta());
+        assertEquals(Integer.valueOf(4), Integer.valueOf(ru.getResposta()));
     }
 
     @Test
