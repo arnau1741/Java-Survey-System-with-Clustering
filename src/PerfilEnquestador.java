@@ -6,7 +6,6 @@ public class PerfilEnquestador extends Usuari
     private List<Enquesta> enquestesRealitzada;
 
     // Constructor
-
     /**
      * Constructor de la classe PerfilEnquestador
      * @param idUsuari de l'usuari
