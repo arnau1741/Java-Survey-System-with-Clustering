@@ -278,39 +278,6 @@ public class Enquesta {
         return false;
     }
 
-    /*
-    public void setResposta(int idUsuari, List<Resposta> respostesUsuari){
-        Integer filaMatriu = userToAnswerId.size();
-        respostes.add(respostesUsuari);
-        if (idUsuari >= 0) userToAnswerId.put(idUsuari, filaMatriu);
-        else if (idUsuari == -1) noRegistratAnswers.add(filaMatriu);
-        else throw new IllegalArgumentException("L'id de l'usuari no pot ser menor que -1.");
-    }
-
-    // Setters
-    public void setTitol(String titol) { this.titol = titol; }
-    public void setDescripcio(String descripcio) { this.descripcio = descripcio; }
-    public void setCreador(Integer idCreador) { this.idCreador = idCreador; }
-    public void setId(int id) { this.id = id; }
-    public void setPreguntes(List<Pregunta> preguntes) { this.preguntes = preguntes; }
-
-    // public LocalDateTime getDataCreacio() { return dataCreacio; }
-    // public LocalDateTime getDataFinalitzacio() { return dataFinalitzacio; }
-
-    public List<Integer> getParticipants() {
-        return new ArrayList<>(userToAnswerId.keySet());
-    }
-
-    public static Integer esNatural(String r) {
-        try {
-            Integer res = Integer.parseInt(r);  // Intenta convertir el String a un entero
-            if (res >= 0) return res;  // Si no lanza una excepción, es un entero válido
-            else return -1;
-        } catch (NumberFormatException e) {
-            return -1;  // Si lanza una excepción, no es un número entero válido
-        }
-    }*/
-
     /**
      * Mostra la informació bàsica de l'enquesta
      */
@@ -333,6 +300,13 @@ public class Enquesta {
         }
     }
 
+    /**
+     *  Funcio que modifica la resposta d'un usuari que hagi contenstat a una enquesta
+     * @param idUsuari de l'usuari que modifica
+     * @param idxPregunta de l'enquesta a modificar
+     * @param novaResposta de la pregunta d'una enquesta
+     * @throws UsuariNoHaResposEnquesta
+     */
     public void modificarRespostaUsuari(int idUsuari, int idxPregunta, Resposta novaResposta) throws UsuariNoHaResposEnquesta {
         Pregunta p = preguntes.get(idxPregunta);
         System.out.println("Modificant resposta de l'usuari " + idUsuari + " a la pregunta " + idxPregunta);
