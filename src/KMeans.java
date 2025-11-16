@@ -64,7 +64,6 @@ public class KMeans{
         }
         fet = true;
         coeficientSilhouete = coeficientSilhouete(data);
-        System.out.println("Coeficient de Silhouete: " + coeficientSilhouete);
     }
 
     /**
@@ -491,5 +490,17 @@ public class KMeans{
             totalSilhouete += s;
         }
         return totalSilhouete / n;
+    }
+
+    /**
+     * Getter del coeficient de Silhouete
+     * @return coeficient de Silhouete
+     * @throws IllegalStateException si fit() no s'ha cridat encara
+     */
+    public double getCoeficientSilhouete() {
+        if (!fet) {
+            throw new IllegalStateException("Call fit() first.");
+        }
+        return coeficientSilhouete;
     }
 }

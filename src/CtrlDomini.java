@@ -27,7 +27,6 @@ public class CtrlDomini {
      */
     ////////////////// Cas d'us - Respondre enquesta //////////////////////
     public List<String> getPreguntes(Integer idEnquesta) throws EnquestaNoExisteixException { //Final
-        System.out.println("entra a getPreguntes de CtrlDomini");
         return this.ctrlDominiMantEnquesta.getPreguntesEnquesta(idEnquesta);
     }
 
@@ -38,13 +37,11 @@ public class CtrlDomini {
      * @param respostesUsuari Llista de respostes
      */
     public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
-        System.out.println("entra a respondreEnquesta de CtrlDomini");
         Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
             throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         }
         enq.afegeixResposta(idUsuari,respostesUsuari);
-        System.out.println("salta de respondreEnquesta de CtrlDomini");
     }
 
     /**
@@ -153,8 +150,6 @@ public class CtrlDomini {
         // llegim el nombre de respostes (primer linia)
         int numRespostes = Integer.parseInt(respostesTxt.get(0));
         int numPreguntes = enq.getNumPreguntes();
-        System.out.println("NumRespostes llegides: " + numRespostes);
-        System.out.println("NumPreguntes de l'enquesta: " + numPreguntes);
 
         // llegim les respostes (a partir de la linia 1, una resposta per linia)
         List<String> respostesUsuari = new ArrayList<>();
@@ -163,10 +158,6 @@ public class CtrlDomini {
             if (i%numPreguntes == 0) {
                 // afegim la resposta a l'enquesta
                 enq.afegeixResposta(-1, respostesUsuari);
-                // netegem la llista de respostes per al següent usuari
-                // mostra les respostes afegides
-                System.out.println("Respostes afegides per usuari " + (i/numPreguntes) + ": " + respostesUsuari);
-
                 respostesUsuari.clear();
             }
         }
@@ -589,12 +580,10 @@ public class CtrlDomini {
 
 
         if (tipus == 0) {
-            System.out.println("entra a modificar resposta numerica");
             // numerica: convertir a double
             double valor = Double.parseDouble(novaResposta);
             Resposta r = new RespostaNumerica(valor);
             enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
-            System.out.println("surt de modificar resposta numerica");
         }
         else if (tipus == 1) {
             // unica: convertir a int
