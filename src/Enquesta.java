@@ -335,6 +335,9 @@ public class Enquesta {
 
     public void modificarRespostaUsuari(int idUsuari, int idxPregunta, Resposta novaResposta) throws UsuariNoHaResposEnquesta {
         Pregunta p = preguntes.get(idxPregunta);
+        System.out.println("Modificant resposta de l'usuari " + idUsuari + " a la pregunta " + idxPregunta);
+        
+        System.out.println("Nova resposta: " + novaResposta.toString());
         Map<Integer, Resposta> respostesMap = p.getRespostes();
         if (!respostesMap.containsKey(idUsuari)) {
             throw new UsuariNoHaResposEnquesta("L'usuari amb id " + idUsuari + " no ha respost aquesta pregunta.");

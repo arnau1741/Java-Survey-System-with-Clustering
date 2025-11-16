@@ -1,0 +1,649 @@
+Encuesta CIS completa
+Baròmetre fusionat gener–març 2023
+1
+48
+1
+¿Tiene Ud. la nacionalidad española?
+3
+La nacionalidad española
+La nacionalidad española y otra
+Otra nacionalidad
+2
+Pensando en todos los efectos de la pandemia del coronavirus, ¿diría Ud. que la crisis del coronavirus le preocupa mucho, bastante, poco o nada?
+7
+Mucho
+Bastante
+Regular
+Poco
+Nada
+N.S.
+N.C.
+2
+¿Está Ud. muy preocupado/a, bastante, algo, poco o nada preocupado/a por la invasión de Rusia a Ucrania?
+9
+Muy preocupado/a
+Bastante preocupado/a
+Algo preocupado/a
+Poco preocupado/a
+Nada preocupado/a
+No tiene criterio
+Le es indiferente
+N.S.
+N.C.
+2
+Refiriéndonos a la situación social de España, ¿cómo la calificaría Ud.: muy buena, buena, mala o muy mala?
+7
+Muy buena
+Buena
+Regular
+Mala
+Muy mala
+N.S.
+N.C.
+2
+¿Cómo calificaría Ud. su situación económica personal en la actualidad: muy buena, buena, mala o muy mala?
+7
+Muy buena
+Buena
+Regular
+Mala
+Muy mala
+N.S.
+N.C.
+2
+Refiriéndonos a la situación económica general de España actualmente, ¿cómo la calificaría Ud.: muy buena, buena, mala o muy mala?
+7
+Muy buena
+Buena
+Regular
+Mala
+Muy mala
+N.S.
+N.C.
+1
+¿Cuál es, a su juicio, el principal problema que existe actualmente en España?
+25
+Los peligros para la salud: COVID-19
+La crisis económica, los problemas de índole económica
+El paro
+Los problemas políticos en general
+Lo que hacen los partidos políticos
+El mal comportamiento de los/as políticos/as
+La corrupción y el fraude
+La sanidad
+Los problemas de índole social
+La inmigración
+Los problemas relacionados con la calidad del empleo
+Las pensiones
+La falta de acuerdos, unidad y capacidad de colaboración
+El funcionamiento de los servicios públicos
+La educación
+La subida de las tarifas, crisis energética
+El modelo productivo español. La falta de inversión en industrias e I+D
+La vivienda
+Guerra de Ucrania y Rusia
+El cambio climático
+La bajada de impuestos a los más ricos
+Otro
+Ninguno
+N.S.
+N.C.
+1
+¿Cuál es el problema que a Ud., personalmente, le afecta más?
+24
+Los peligros para la salud: COVID-19
+La crisis económica, los problemas de índole económica
+La subida de tarifas energéticas, crisis energética
+La incertidumbre hacia el futuro, inseguridad y miedo al futuro
+El paro
+La sanidad
+Las pensiones
+Los problemas relacionados con la calidad del empleo
+Los problemas políticos en general
+Lo que hacen los partidos políticos
+La educación
+La corrupción y el fraude
+Los problemas de índole social
+Las preocupaciones y situaciones personales
+La vivienda
+Los problemas relacionados con la juventud
+El cambio climático
+El funcionamiento de los servicios públicos
+La subida de impuestos
+La bajada de impuestos a los más ricos
+Otro
+Ninguno
+N.S.
+N.C.
+2
+¿Diría Ud. que en estos momentos el cambio climático le preocupa mucho, bastante, poco o nada?
+7
+Mucho
+Bastante
+Regular
+Poco
+Nada
+N.S.
+N.C.
+1
+¿Quién preferiría que fuese el/la presidente/a del Gobierno en estos momentos?
+12
+Pedro Sánchez
+Alberto Núñez Feijóo
+Santiago Abascal
+Yolanda Díaz
+Alberto Garzón
+Inés Arrimadas
+Íñigo Errejón
+Isabel Díaz Ayuso
+Ninguno/a de ellos/as
+Otro/a
+N.S.
+N.C.
+2
+Me gustaría que me dijera cuál es la probabilidad de que Ud. fuera a votar si mañana se celebrasen elecciones generales. Escala 0 a 10.
+13
+0 (No iría a votar seguro)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10 (Iría a votar seguro)
+N.S.
+N.C.
+1
+¿Y Ud. es de las personas que votan siempre por el mismo partido, que por lo general suelen votar por el mismo partido o según lo que más le convenza?
+8
+Votan siempre por el mismo partido
+Por lo general suelen votar por el mismo partido
+Según lo que más le convenza en ese momento votan por un partido u otro o no votan
+Votan en blanco o nulo
+No suelen votar
+Es la primera vez que votan
+N.S.
+N.C.
+1
+¿Cuándo suele Ud. decidir por qué partido político o coalición va a votar?
+7
+Lo decide mucho antes del inicio de la campaña electoral
+Lo decide al comienzo de la campaña electoral
+Lo decide durante la última semana de la campaña electoral
+Lo decide durante la jornada de reflexión
+Lo decide el mismo día de las elecciones
+Aún no ha votado en ningunas elecciones
+N.C.
+1
+A la hora de votar en unas elecciones, ¿a qué le da Ud. más importancia?
+6
+Al partido político
+Al/a la candidato/a
+Al programa
+A todo por igual
+N.S.
+N.C.
+1
+Suponiendo que mañana se celebrasen elecciones generales, ¿a qué partido votaría Ud.?
+31
+PSOE (Partido Socialista Obrero Español)
+PP (Partido Popular)
+VOX
+Unidas Podemos
+Podemos
+IU (Izquierda Unida)
+En Comú Podem
+En Común - Unidas Podemos
+Ciudadanos
+Más País
+ERC (Esquerra Republicana de Catalunya)
+JxCat (Junts per Catalunya)
+CUP
+EAJ-PNV (Partido Nacionalista Vasco)
+EH Bildu
+CC-PNC (Coalición Canaria – Partido Nacionalista Canario)
+Nueva Canarias
+UPN (Unión del Pueblo Navarro)
+Compromís
+BNG (Bloque Nacionalista Galego)
+PRC (Partido Regionalista de Cantabria)
+Teruel Existe
+PACMA (Partido Animalista)
+FAC (Foro Asturias)
+Otro partido
+Voto nulo
+En blanco
+No votaría
+No sabe todavía
+N.S.
+N.C.
+1
+En el caso de que finalmente no votase por el partido que me ha dicho, ¿a qué otro partido votaría Ud.?
+31
+PSOE (Partido Socialista Obrero Español)
+PP (Partido Popular)
+VOX
+Unidas Podemos
+Podemos
+IU (Izquierda Unida)
+En Comú Podem
+En Común - Unidas Podemos
+Ciudadanos
+Más País
+ERC (Esquerra Republicana de Catalunya)
+JxCat (Junts per Catalunya)
+CUP
+EAJ-PNV (Partido Nacionalista Vasco)
+EH Bildu
+CC-PNC (Coalición Canaria – Partido Nacionalista Canario)
+Nueva Canarias
+UPN (Unión del Pueblo Navarro)
+Compromís
+BNG (Bloque Nacionalista Galego)
+PRC (Partido Regionalista de Cantabria)
+Teruel Existe
+PACMA (Partido Animalista)
+FAC (Foro Asturias)
+No votaría a ningún otro partido
+Otro partido
+Nulo
+En blanco
+No votaría
+N.S.
+N.C.
+1
+Sin ningún compromiso por su parte, ¿me podría decir por qué partido siente Ud. más simpatía?
+28
+PSOE (Partido Socialista Obrero Español)
+PP (Partido Popular)
+VOX
+Unidas Podemos
+Podemos
+IU (Izquierda Unida)
+En Comú Podem
+En Común - Unidas Podemos
+Ciudadanos
+Más País
+ERC (Esquerra Republicana de Catalunya)
+JxCat (Junts per Catalunya)
+CUP
+EAJ-PNV (Partido Nacionalista Vasco)
+EH Bildu
+CC-PNC (Coalición Canaria – Partido Nacionalista Canario)
+Nueva Canarias
+UPN (Unión del Pueblo Navarro)
+Compromís
+BNG (Bloque Nacionalista Galego)
+PRC (Partido Regionalista de Cantabria)
+Teruel Existe
+PACMA (Partido Animalista)
+FAC (Foro Asturias)
+Otro partido
+Ninguno
+N.S.
+N.C.
+2
+Situándose en una escala que va del 1 al 10, en la que 1 significa “lo más a la izquierda” y 10 “lo más a la derecha”, ¿en qué casilla se colocaría Ud.?
+12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+N.S.
+N.C.
+1
+¿Conoce a Pedro Sánchez?
+3
+Sí
+No
+N.C.
+1
+¿Conoce a Alberto Núñez Feijóo?
+3
+Sí
+No
+N.C.
+1
+¿Conoce a Yolanda Díaz?
+3
+Sí
+No
+N.C.
+1
+¿Conoce a Santiago Abascal?
+3
+Sí
+No
+N.C.
+1
+¿Conoce a Inés Arrimadas?
+3
+Sí
+No
+N.C.
+1
+¿Conoce a Íñigo Errejón?
+3
+Sí
+No
+N.C.
+2
+Valoración de Pedro Sánchez (1 = muy mal, 10 = muy bien)
+12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+N.S.
+N.C.
+2
+Valoración de Alberto Núñez Feijóo (1 = muy mal, 10 = muy bien)
+12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+N.S.
+N.C.
+2
+Valoración de Yolanda Díaz (1 = muy mal, 10 = muy bien)
+12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+N.S.
+N.C.
+2
+Valoración de Santiago Abascal (1 = muy mal, 10 = muy bien)
+12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+N.S.
+N.C.
+2
+Valoración de Inés Arrimadas (1 = muy mal, 10 = muy bien)
+12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+N.S.
+N.C.
+2
+Valoración de Íñigo Errejón (1 = muy mal, 10 = muy bien)
+12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+N.S.
+N.C.
+1
+El presidente del Gobierno, Pedro Sánchez, ¿le inspira a Ud. mucha confianza, bastante confianza, poca o ninguna confianza?
+6
+Mucha confianza
+Bastante confianza
+Poca confianza
+Ninguna confianza
+N.S.
+N.C.
+1
+¿Y el líder del principal partido de la oposición, Alberto Núñez Feijóo, le inspira, personalmente, mucha confianza, bastante, poca o ninguna confianza?
+6
+Mucha confianza
+Bastante confianza
+Poca confianza
+Ninguna confianza
+N.S.
+N.C.
+1
+En las elecciones generales del 10 de noviembre de 2019, ¿qué hizo Ud.?
+6
+Votó
+No votó
+No tenía edad para votar
+No tenía derecho a voto
+No recuerda
+N.C.
+1
+¿Y podría decirme a qué partido o coalición votó en las elecciones generales del 10 de noviembre de 2019?
+27
+PSOE (Partido Socialista Obrero Español)
+PP (Partido Popular)
+VOX
+Unidas Podemos
+Podemos
+IU (Izquierda Unida)
+En Comú Podem
+En Común - Unidas Podemos
+Ciudadanos
+Más País
+ERC (Esquerra Republicana de Catalunya)
+JxCat (Junts per Catalunya)
+CUP
+EAJ-PNV (Partido Nacionalista Vasco)
+EH Bildu
+CCa-PNC-NC
+Navarra Suma (UPN)
+Més Compromís
+BNG (Bloque Nacionalista Galego)
+PRC (Partido Regionalista de Cantabria)
+Teruel Existe
+PACMA (Partido Animalista)
+Otros partidos
+En blanco
+Voto nulo
+No recuerda
+N.C.
+1
+En todo caso, ¿qué partido considera más cercano a sus propias ideas?
+28
+PSOE (Partido Socialista Obrero Español)
+PP (Partido Popular)
+VOX
+Unidas Podemos
+Podemos
+IU (Izquierda Unida)
+En Comú Podem
+En Común - Unidas Podemos
+Ciudadanos
+Más País
+ERC (Esquerra Republicana de Catalunya)
+JxCat (Junts per Catalunya)
+CUP
+EAJ-PNV (Partido Nacionalista Vasco)
+EH Bildu
+CC-PNC (Coalición Canaria – Partido Nacionalista Canario)
+Nueva Canarias
+UPN (Unión del Pueblo Navarro)
+Compromís
+BNG (Bloque Nacionalista Galego)
+PRC (Partido Regionalista de Cantabria)
+Teruel Existe
+PACMA (Partido Animalista)
+FAC (Foro Asturias)
+Otro partido
+Ninguno
+N.S.
+N.C.
+1
+¿Ha ido Ud. a la escuela o cursado algún tipo de estudios?
+4
+No, es analfabeto/a
+No, pero sabe leer y escribir
+Sí, ha ido a la escuela
+N.C.
+0
+Indique el curso más alto completado en esos estudios (número).
+4
+Indique el nombre oficial de los estudios cursados.
+1
+Indique el nivel de estudios más alto que ha cursado.
+17
+Menos de 5 años de escolarización
+Educación primaria
+F.P. Básica / Programas de cualificación profesional inicial
+Educación secundaria (ESO, EGB, Graduado Escolar)
+FP de grado medio
+Bachillerato (incluye COU, PREU)
+FP de grado superior
+Arquitectura o ingeniería técnica
+Diplomatura
+Grado universitario
+Licenciatura
+Arquitectura o ingeniería superior
+Máster oficial universitario
+Doctorado
+Títulos propios de posgrado
+Otros estudios
+N.S. / N.C.
+1
+¿Cómo se define Ud. en materia religiosa?
+7
+Católico/a practicante
+Católico/a no practicante
+Creyente de otra religión
+Agnóstico/a
+Indiferente / No creyente
+Ateo/a
+N.C.
+1
+¿Con qué frecuencia asiste Ud. a misa u otros oficios religiosos?
+7
+Nunca
+Casi nunca
+Varias veces al año
+Dos o tres veces al mes
+Todos los domingos y festivos
+Varias veces a la semana
+N.C.
+1
+¿Cuál es su estado civil?
+6
+Casado/a
+Soltero/a
+Viudo/a
+Separado/a
+Divorciado/a
+N.C.
+1
+¿En qué situación laboral se encuentra Ud. actualmente?
+9
+Trabaja
+Jubilado/a o pensionista (ha trabajado)
+Pensionista (no ha trabajado antes)
+En paro y ha trabajado
+En paro y busca primer empleo
+Estudiante
+Trabajo doméstico no remunerado
+Otra situación
+N.C.
+1
+¿Ud. trabaja como...?
+7
+Asalariado/a por cuenta ajena
+Empresario/a o profesional con asalariados/as
+Autónomo/a sin asalariados/as
+Ayuda familiar sin remuneración reglamentada
+Miembro de una cooperativa
+Otra situación
+N.C.
+1
+¿Cuál es su ocupación actual?
+12
+Directores/as y gerentes
+Profesionales científicos/as e intelectuales
+Técnicos/as y profesionales de nivel medio
+Personal de apoyo administrativo
+Trabajadores/as de servicios y vendedores/as
+Agricultores/as y trabajadores/as agropecuarios/as
+Operarios/as y artesanos/as
+Operadores/as de instalaciones y maquinaria
+Ocupaciones elementales
+Ocupaciones militares y policiales
+Otra ocupación
+N.C.
+1
+¿De cuántos ingresos netos mensuales dispone su hogar, entre todos sus miembros?
+8
+Más de 5000 €
+De 3901 a 5000 €
+De 2701 a 3900 €
+De 1801 a 2700 €
+De 1100 a 1800 €
+Menos de 1100 €
+N.S.
+N.C.
+1
+¿A qué clase social diría Ud. que pertenece?
+13
+Clase alta
+Clase media-alta
+Clase media-media
+Clase media-baja
+Clase trabajadora/obrera
+Clase baja
+Clase pobre
+Infraclase
+Proletariado
+A los de abajo
+Excluidos/as
+Otra
+N.C.
+1
+En su opinión, la sinceridad de la persona entrevistada ha sido...
+6
+Mucha
+Bastante
+Poca
+Ninguna
+N.S.
+N.C.

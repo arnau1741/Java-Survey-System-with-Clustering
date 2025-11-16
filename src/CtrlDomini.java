@@ -637,10 +637,12 @@ public class CtrlDomini {
 
 
         if (tipus == 0) {
+            System.out.println("entra a modificar resposta numerica");
             // numerica: convertir a double
             double valor = Double.parseDouble(novaResposta);
             Resposta r = new RespostaNumerica(valor);
             enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
+            System.out.println("surt de modificar resposta numerica");
         }
         else if (tipus == 1) {
             // unica: convertir a int
