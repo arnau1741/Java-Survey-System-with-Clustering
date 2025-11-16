@@ -74,12 +74,12 @@ public class CtrlDominiMantEnquesta {
      * @param idEnquesta de l'enquesta
      * @return llista de preguntes de l'enquesta, llista buida si no es troba l'enquesta
      */
-    public List<String> getPreguntesEnquesta(int idEnquesta) {
+    public List<String> getPreguntesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         Enquesta enq = enquestes.get(idEnquesta);
-        if (enq != null) {
-            return enq.getPreguntes();
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         }
-        return Collections.emptyList();  // Devuelve una lista vacía si no se encuentra la encuesta
+        return enq.getPreguntes(); // Devuelve una lista vacía si no se encuentra la encuesta
     }
 
     /**
@@ -164,7 +164,12 @@ public class CtrlDominiMantEnquesta {
             enunciat = preguntes.get(idx);
             idx++;
             if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, ORDENADA, MULTIPLE
-                int numOpcions = Integer.parseInt(preguntes.get(idx));
+                int numOpcions;
+                try{
+                    numOpcions = Integer.parseInt(preguntes.get(idx));
+                } catch (NumberFormatException e) {
+                    throw new InvalidFormatEnquesta("Format invàlid de l'enquesta: nombre d'opcions no és un enter.");
+                }  
                 idx++;
                 List<String> opcions = new ArrayList<>();
                 for (int i = 0; i < numOpcions; i++) {
@@ -178,6 +183,9 @@ public class CtrlDominiMantEnquesta {
             else if (tipus == 0 || tipus == 4) { //NUMERICA, LLIURE
                 Pregunta p = new Pregunta(enunciat, tipus, null);
                 preguntesObj.add(p);
+            }
+            else{
+                throw new InvalidFormatEnquesta("Format invàlid de l'enquesta: tipus de pregunta desconegut.");
             }
         }
         return preguntesObj;

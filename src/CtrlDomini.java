@@ -26,7 +26,7 @@ public class CtrlDomini {
      * @return Llista de preguntes en format text
      */
     ////////////////// Cas d'us - Respondre enquesta //////////////////////
-    public List<String> getPreguntes(Integer idEnquesta){ //Final
+    public List<String> getPreguntes(Integer idEnquesta) throws EnquestaNoExisteixException { //Final
         System.out.println("entra a getPreguntes de CtrlDomini");
         return this.ctrlDominiMantEnquesta.getPreguntesEnquesta(idEnquesta);
     }
@@ -37,11 +37,13 @@ public class CtrlDomini {
      * @param idUsuari Identificador de l'usuari que respon l'enquesta
      * @param respostesUsuari Llista de respostes
      */
-    public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari) {
-        Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+    public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         System.out.println("entra a respondreEnquesta de CtrlDomini");
-        List<Resposta> respostesObj = enq.stringARespostes(respostesUsuari);
-        enq.afegeixResposta(idUsuari, respostesObj);
+        Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
+        enq.afegeixResposta(idUsuari,respostesUsuari);
         System.out.println("salta de respondreEnquesta de CtrlDomini");
     }
 
@@ -75,10 +77,10 @@ public class CtrlDomini {
      * @return Llista de strings amb la informacio de l'enquesta
      */
     /////////////////////// Cas d'us - Exportar enquesta //////////////////
-    public List<String> exportarEnquesta(Integer id) {
+    public List<String> exportarEnquesta(Integer id) throws EnquestaNoExisteixException {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(id);
         if (enq == null) {
-            return null;
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + id + " no existeix.");
         }
         List <String> exportat = new ArrayList<>();
         exportat.add("==== Informacio enquesta ====");
@@ -128,7 +130,7 @@ public class CtrlDomini {
     ////////////////////// Cas d'us - Importar respostes ////////////////////
     /// leer: (numPreguntas, PREGUNTA1, PREGUNTA2, ...PREGUNTAn, RESPUESTA1, RESPUESTA2, ... RESPUESTAm)
     /// RESPUESTAj = (resp1, resp2,... respn)
-    public int importarRespostes(int idUsuari, String path, Integer idEnquesta){
+    public int importarRespostes(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         // llegir fitxer
         List<String> respostesTxt = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -159,8 +161,7 @@ public class CtrlDomini {
             respostesUsuari.add(respostesTxt.get(i));
             if (i%numPreguntes == 0) {
                 // afegim la resposta a l'enquesta
-                List<Resposta> respostesObj = enq.stringARespostes(respostesUsuari);
-                enq.afegeixResposta(-1, respostesObj);
+                enq.afegeixResposta(-1, respostesUsuari);
                 // netegem la llista de respostes per al següent usuari
                 // mostra les respostes afegides
                 System.out.println("Respostes afegides per usuari " + (i/numPreguntes) + ": " + respostesUsuari);
@@ -266,8 +267,11 @@ public class CtrlDomini {
      * @return result, llista de strings amb la informacio de l'enquesta
      */
     ////////////////////// Cas d'us - Consultar enquesta ////////////////////
-    public List<String> consultarEnquesta(Integer idEnquesta) {
+    public List<String> consultarEnquesta(Integer idEnquesta) throws EnquestaNoExisteixException{
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
         List<String> result = new ArrayList<>();
         result.add("Enquesta: " + idEnquesta);
         result.add("Titol: " + enq.getTitol());
@@ -281,11 +285,14 @@ public class CtrlDomini {
      * @param idEnquesta identificador de l'enquesta
      * @return result, llista de strings amb la informacio de l'enquesta i les seves preguntes
      */
-    public List<String> consultarEnquestaAmbPreguntes(Integer idEnquesta) {
+    public List<String> consultarEnquestaAmbPreguntes(Integer idEnquesta) throws EnquestaNoExisteixException {
         List<String> result = new ArrayList<>();
         result = consultarEnquesta(idEnquesta);
 
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
         List<String> preguntes = enq.getPreguntes();
         result.add("Preguntes:");
         for (String p : preguntes) {
@@ -299,9 +306,14 @@ public class CtrlDomini {
      * @param idEnquesta identificador de l'enquesta
      * @return result, llista de strings amb la informacio de l'enquesta, les seves preguntes i respostes
      */
-    public List<String> consultarRespostesEnquesta(Integer idEnquesta){
+    public List<String> consultarRespostesEnquesta(Integer idEnquesta) throws EnquestaNoExisteixException {
         List<String> result = new ArrayList<>();
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
+
         List<Pregunta> preguntes = enq.getPreguntesObj();
         for (Pregunta p : preguntes) {
             result.add("Pregunta: " + p.getText());
