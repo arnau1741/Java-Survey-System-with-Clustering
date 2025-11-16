@@ -1,4 +1,4 @@
-//patron estado para cambiar entre roles
+// patron estado para cambiar entre roles
 
 public abstract class Usuari {
     private String nomUsuari;
@@ -23,38 +23,38 @@ public abstract class Usuari {
         this.blocked = false;
     }
 
-    //Get functions
+    // Getters
     /**
-     * Retorna l'id de l'usuari
-     * @return int idUsuari
+     * Retorna l'identificador de l'usuari
+     * @return idUsuari
      */
     public int getId() { return idUsuari; }
 
     /**
      * Retorna el nom de l'usuari
-     * @return string nomUsuari
+     * @return nomUsuari
      */
     public String getUsuari() { return nomUsuari; }
 
     /**
      * Retorna la contrasenya de l'usuari
-     * @return string contrasenya
+     * @return contrasenya
      */
     public String getContrasenya() { return contrasenya; }
 
     /**
      * Retorna l'email de l'usuari
-     * @return string email
+     * @return email
      */
     public String getEmail() { return email; }
 
     /**
-     * Retorna si l'usuari esta bloquejat
-     * @return boolean blocked
+     * Retorna true si l'usuari esta bloquejat, false en cas contrari
+     * @return blocked
      */
     public boolean isBlocked() { return blocked; }
 
-    //Set functions
+    // Setters
     /**
      * Modifica el nom de l'usuari
      * @param usuari nou nom de l'usuari
@@ -86,4 +86,3 @@ public abstract class Usuari {
      */
     public abstract void eliminarEnquesta(int idEnquesta);
 }
-
