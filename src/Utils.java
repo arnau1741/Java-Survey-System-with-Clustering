@@ -525,7 +525,7 @@ public class Utils {
                 }
                 io.writeln("]");
             }
-
+            io.writeln("\n[OK] Clustering realitzat correctament!\n");
         }
         catch (Exception e){
             try {
