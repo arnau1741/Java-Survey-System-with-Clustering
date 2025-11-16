@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
- * Classe Enquesta
+ * Classe Enquesta: futures implementacions
  * Es una Lista de preguntes i una Matriu de respostes
  * Las respuestas de los usuarios no registrados es -1 y
  * las filas que usa en la matriz de respuestas
@@ -17,19 +17,17 @@ import java.util.Map;
  */
 
 public class Enquesta {
-    // Representa una enquesta concreta: id, titol, descripcio, creador, preguntes, respostes, participants
     private Integer id;
     private String titol;
     private String descripcio;
     private Integer idCreador;
     private List<Pregunta> preguntes;
 
-    // posem les dates com atributs, creem una classe Data i es relaciona?
+    // futures implementacions
     // private LocalDateTime dataCreacio;
     // private LocalDateTime dataFinalitzacio;
 
     // Constructora
-
     /**
      * Funcio constructora de la classe Enquesta
      * @param id de l'enquesta
@@ -48,8 +46,6 @@ public class Enquesta {
         this.idCreador = idCreador;
         this.preguntes = preguntes;
     }
-
-    // converteix les respostes de String a objectes Resposta
 
     /**
      * Converteix una llista de respostes en format String a una llista d'objectes Resposta
@@ -106,8 +102,6 @@ public class Enquesta {
         return respostesObj;
     }
 
-    // retorna els textos de les preguntes
-
     /**
      * Retorna una llista de textos de les preguntes de l'enquesta
      * @return llista de textos de les preguntes
@@ -123,7 +117,6 @@ public class Enquesta {
         List<String> textsPreguntes = new ArrayList<>();
         for (Pregunta p : preguntes) {
             int tipus = p.getTipus(); // NUMERICA, UNICA, MULTIPLE, ORDENADA, LLIURE
-            //textsPreguntes.add(Integer.toString(tipus));
             textsPreguntes.add(tipusToString.get(tipus));
             textsPreguntes.add(p.getText());
             if (tipus == 1) { // UNICA
@@ -167,7 +160,6 @@ public class Enquesta {
     }
 
     // Getters
-
     /**
      * Retorna l'id de l'enquesta
      * @return id de l'enquesta
@@ -270,32 +262,22 @@ public class Enquesta {
         preguntes.set(idxPregunta, novaPregunta);
     }
 
-
+    /**
+     * Comprova si un usuari ha participat en l'enquesta
+     * @param id de l'usuari
+     * @return true si l'usuari ha participat, false en cas contrari
+     */
     public boolean participa(int id) {
-        Map<Integer, Resposta> respostesMap = preguntes.get(0).getRespostes();
-        return respostesMap.containsKey(id);
-    }
-
-    /*
-    public boolean participa(int id) {
-        if (id < 0) throw new IllegalArgumentException("L'id de l'usuari no pot ser negatiu.");
-
-        for (Integer userId : userToAnswerId.keySet()) {
-            if (userId.equals(id)) {
+        for (Pregunta p : preguntes) {
+            Map<Integer, Resposta> respostesMap = p.getRespostes();
+            if (respostesMap.containsKey(id)) {
                 return true;
             }
         }
         return false;
     }
 
-    public Integer obtenFilaIdUsuari(int idUsuari) {
-        return userToAnswerId.get(idUsuari);
-    }
-
-    public List<Resposta> getRespostesUsuari(Integer filaMatriu) {
-        return Collections.unmodifiableList(respostes.get(filaMatriu));
-    }
-
+    /*
     public void setResposta(int idUsuari, List<Resposta> respostesUsuari){
         Integer filaMatriu = userToAnswerId.size();
         respostes.add(respostesUsuari);
