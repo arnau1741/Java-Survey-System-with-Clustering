@@ -1,0 +1,20 @@
+Enquesta sobre els hàbits quotidians
+Descobrim els teus hàbits diaris
+10
+4
+0
+Quantes hores dorms normalment cada nit?
+0
+Quants cafes prens al dia?
+1
+Quin transport utilitzes habitualment?
+3
+Cotxe
+Transport públic
+Bicicleta
+3
+Quins esports practiques?
+3
+Futbol
+Correr
+Natació
