@@ -4,9 +4,9 @@ Es valua el nivel de la prova realizada
 101
 3
 0
-Que nivel de el programa (0 - 100)?
+Que nivel del programa (0 - 100)?
 4
-Diu l'algoritme que has utilitzat?
+Menciona l'algoritme que has utilitzat?
 2
 Que programas has utilitzat?
 3
@@ -18,7 +18,7 @@ c
 102
 70
 bfs
-1,2
+1
 6
 0
 103

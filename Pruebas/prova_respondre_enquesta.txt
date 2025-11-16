@@ -11,5 +11,9 @@ guitarra
 0
 7
 0
+<<<<<<< HEAD
 respondre_enquesta_sortida1
+=======
+archiu_exportar
+>>>>>>> 12e2dbadb0d8442d19418deae9346f620ddfb788
 0

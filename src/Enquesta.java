@@ -53,7 +53,7 @@ public class Enquesta {
      * @return llista d'objectes Resposta
      * @throws IllegalArgumentException si alguna resposta no és vàlida segons el tipus de pregunta
      */
-    private List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
+    public List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
         System.out.println("Convirtiendo respuestas de String a objetos Resposta...");
         List<Resposta> respostesObj = new ArrayList<>();
         // for (String r : respostesStr) {
@@ -63,42 +63,32 @@ public class Enquesta {
             int tipusPregunta = preguntes.get(index).getTipus();
 
             if (tipusPregunta == 0) {// NUMERICA
-                Double resposta;
-                resposta = Double.parseDouble(r);
-                RespostaNumerica respostaNumerica = new RespostaNumerica(resposta);
-                respostesObj.add(respostaNumerica);
+                try {
+                    RespostaNumerica respostaNumerica = new RespostaNumerica(Double.parseDouble(r));
+                    respostesObj.add(respostaNumerica);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Resposta numèrica invàlida: " + r);
+                }
             } else if (tipusPregunta == 1) { // UNICA
                 int numOpcions = preguntes.get(index).getNumOpcions();
-                int resposta = Integer.parseInt(r);
-                if (resposta < 0 || resposta >= numOpcions) {
-                    throw new IllegalArgumentException("Resposta invàlida per a pregunta UNICA: " + resposta);
-                }
                 RespostaUnica respostaUnica = new RespostaUnica(numOpcions);
-                respostaUnica.setResposta(resposta);
+                respostaUnica.setResposta(Integer.parseInt(r));
                 respostesObj.add(respostaUnica);
             } else if (tipusPregunta == 2) { // ORDENADA
                 int numOpcions = preguntes.get(index).getNumOpcions();
-                int resposta = Integer.parseInt(r);
-                if (resposta < 0 || resposta >= numOpcions) {
-                    throw new IllegalArgumentException("Resposta invàlida per a pregunta ORDENADA: " + resposta);
-                }
                 RespostaOrdenada respostaOrdenada = new RespostaOrdenada(numOpcions);
                 respostaOrdenada.setResposta(Integer.parseInt(r));
                 respostesObj.add(respostaOrdenada);
             } else if (tipusPregunta == 3) {// MULTIPLE
+                System.out.println("entra");
                 int numOpcions = preguntes.get(index).getNumOpcions();
                 RespostaMultiple respostaMultiple = new RespostaMultiple(numOpcions);
                 // Convertir String a
-                int resposta;
                 List<Integer> seleccionades = new ArrayList<>();
                 String[] parts = r.split(","); // Suponemos que las opciones están separadas por comas
                 System.out.println("entra2");
                 for (String part : parts) {
-                    resposta = Integer.parseInt(part.trim());
-                    if (resposta < 0 || resposta >= numOpcions) {
-                        throw new IllegalArgumentException("Resposta invàlida per a pregunta MULTIPLE: " + resposta);
-                    }
-                    seleccionades.add(resposta);
+                    seleccionades.add(Integer.parseInt(part.trim()));
                 }
                 respostaMultiple.selecciona(seleccionades);
                 respostesObj.add(respostaMultiple);
@@ -160,22 +150,12 @@ public class Enquesta {
      * @param idUsuari de l'usuari
      * @param respostes de l'usuari
      */
-    public void afegeixResposta(Integer idUsuari, List<String> respostes)throws InvalidFormatEnquesta {
-        List<Resposta> respostesObj;
-        try{
-            respostesObj = stringARespostes(respostes);
-        }
-        catch (IllegalArgumentException e){
-            throw new InvalidFormatEnquesta("Format invàlid de les respostes: " + e.getMessage());
-        }
-        for (int i = 0; i < preguntes.size(); i++) {
+    public void afegeixResposta(Integer idUsuari, List<Resposta> respostes){
+        int size = preguntes.size();
+        for (int i = 0; i < size; i++) {
             Pregunta p = preguntes.get(i);
-            Resposta r = respostesObj.get(i);
-            try {
-                p.addResposta(r, idUsuari);
-            } catch (IllegalArgumentException e) {
-                throw new InvalidFormatEnquesta("Error en afegir resposta: " + e.getMessage());
-            }
+            Resposta r = respostes.get(i);
+            p.addResposta(r, idUsuari);
         }
     }
 
