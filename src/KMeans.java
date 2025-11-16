@@ -395,7 +395,7 @@ public class KMeans{
                     dp[i][j] = j; // Deletion
                 } else if (j == 0) {
                     dp[i][j] = i; // Insertion
-                } else if (a.charAt(i) == b.charAt(j)) {
+                } else if (a.charAt(i-1) == b.charAt(j-1)) {
                     dp[i][j] = Math.min(dp[i - 1][j], // Deletion
                                 Math.min(dp[i][j - 1], // Insertion
                                 dp[i - 1][j - 1])); // Substitution
@@ -409,11 +409,14 @@ public class KMeans{
         return dp[a.length()][b.length()];
     }
 
-    private double distanciaLliure(RespostaLliure a, RespostaLliure b) {
+    public double distanciaLliure(RespostaLliure a, RespostaLliure b) {
         int lenA = a.length();
         int lenB = b.length();
         if (lenA == 0 && lenB == 0) {
             return 0.0; // Distancia zero si les dues respostes son buides
+        }
+        if (lenA == 0 || lenB == 0) {
+            return 1.0; // Distancia máxima si alguna respuesta es vacía
         }
         double maxLen = Math.max(lenA, lenB);
         double absLenDif = Math.abs(lenA - lenB);
