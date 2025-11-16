@@ -191,7 +191,7 @@ public class TestUnitariEnquesta_Mock {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testExcepcioPreguntesVacias() {
+    public void testGetNumRespostesEnquestaVacia() {
         List<Pregunta> preguntesVacias = new ArrayList<>();
         Enquesta enqVacia = new Enquesta(3, "Buit", "Buit", 1, preguntesVacias);
     }
