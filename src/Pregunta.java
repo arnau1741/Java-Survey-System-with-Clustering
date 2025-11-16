@@ -147,6 +147,10 @@ public class Pregunta {
             minKeyRespostes--;
 
             if (tipus == 0) { // NUMERICA
+                //resposta puede tener el valor null si no se ha contestado
+                if (((RespostaNumerica) resposta).getValor() == null) {
+                    return 1;
+                }
                 double valor = ((RespostaNumerica) resposta).getValor();
                 if (respostes.size() == 1) {
                     minValue = valor;

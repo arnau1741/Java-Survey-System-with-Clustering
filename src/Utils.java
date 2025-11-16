@@ -266,7 +266,7 @@ public class Utils {
             io.writeln("  línia 3: id creador (enter)");
             io.writeln("  línia 4: nombre de preguntes");
             io.writeln("  després, per cada pregunta:");
-            io.writeln("    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE))");
+            io.writeln("    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))");
             io.writeln("    línia: text pregunta");
             io.writeln("    si tipus és 1,2,3:");
             io.writeln("       línia: nombre d'opcions");

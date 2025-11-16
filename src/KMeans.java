@@ -188,6 +188,9 @@ public class KMeans{
                 if (data.getPreguntesObj().get(d).getTipus() == 0){
                     //numerica
                     RespostaNumerica rPoint = (RespostaNumerica) point.get(d);
+                    if (rPoint.getValor() == null) {
+                        continue; // Saltar si la respuesta es nula
+                    }
                     RespostaNumerica rCentroid = (RespostaNumerica) newCentroids.get(cluster).get(d);
                     if (rCentroid == null) {
                         rCentroid = new RespostaNumerica(rPoint.getValor());
@@ -264,10 +267,18 @@ public class KMeans{
         if (a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
         }
-        if (a == null || b == null) {
+        else if (a == null || b == null) {
+            return 1.0; // Distancia máxima si alguna respuesta es nula
+        }
+        Double valA = a.getValor();
+        Double valB = b.getValor();
+        if (valA == null && valB == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        if (valA == null || valB == null) {
             return max - min; // Distancia máxima si alguna respuesta es nula
         }
-        return Math.abs(a.getValor() - b.getValor()) / (max - min);
+        return Math.abs(valA - valB) / (max - min);
     }
 
     /**
@@ -278,6 +289,12 @@ public class KMeans{
      * @return distància normalitzada entre a i b
      */
     public double distanciaOrdenada (RespostaOrdenada a, RespostaOrdenada b, int numOpcions) {
+        if( a == null && b == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        else if (a == null || b == null) {
+            return 1.0; // Distancia máxima si alguna respuesta es nula
+        }
         Integer ordenA = a.getOrdre();
         Integer ordenB = b.getOrdre();
         if (ordenA == null && ordenB == null) {
@@ -296,6 +313,12 @@ public class KMeans{
      * @return distància entre a i b
      */
     public double distanciaNoOrdenadaUnica(RespostaUnica a, RespostaUnica b) {
+        if( a == null && b == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        else if (a == null || b == null) {
+            return 1.0; // Distancia máxima si alguna respuesta es nula
+        }
         Integer resA = a.getResposta();
         Integer resB = b.getResposta();
         if (resA == null && resB == null) {
@@ -314,16 +337,23 @@ public class KMeans{
      * @return distància entre a i b
      */
     public double distanciaNoOrdenadaMultiple(RespostaMultiple a, RespostaMultiple b) {
-        if (a == null && b == null) {
+        if( a == null && b == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
         }
-        if (a == null || b == null) {
+        else if (a == null || b == null) {
+            return 1.0; // Distancia máxima si alguna respuesta es nula
+        }
+        List<Integer> resA = a.getRespostes();
+        List<Integer> resB = b.getRespostes();
+
+        if (resA == null && resB == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        if (resA == null || resB == null) {
             return 1.0; // Distancia máxima si alguna respuesta es nula
         }
 
         // Calcular coeficient de Jaccard
-        List<Integer> resA = a.getRespostes();
-        List<Integer> resB = b.getRespostes();
         List<Integer> union = new ArrayList<>(resA);
         for (Integer r : resB) {
             if (!union.contains(r)) {
@@ -375,6 +405,12 @@ public class KMeans{
      * @return distància entre a i b usant l'algorisme de Levenshtein
      */
     public double distanciaLliure(RespostaLliure a, RespostaLliure b) {
+        if (a == null && b == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        if (a == null || b == null) {
+            return 1.0; // Distancia máxima si alguna respuesta es nula
+        }
         int lenA = a.length();
         int lenB = b.length();
         if (lenA == 0 && lenB == 0) {

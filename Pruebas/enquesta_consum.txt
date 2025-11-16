@@ -1,0 +1,69 @@
+Encuesta sobre Hábitos y Preferencias
+Una encuesta para entender mejor tus gustos y rutinas diarias.
+101
+12
+0
+¿Cuántos años tienes?
+2
+¿Con qué frecuencia haces deporte semanalmente?
+4
+Casi nunca
+1-2 veces por semana
+3-4 veces por semana
+Casi cada día
+1
+¿Cuál es tu medio de transporte principal?
+5
+Coche privado
+Transporte público (bus, metro, tren)
+Bicicleta / Patinete
+Moto
+A pie
+0
+¿Cuántas horas duermes de media cada noche?
+3
+¿Qué géneros musicales te gustan? (Marca todos los que apliquen)
+6
+Pop
+Rock
+Electrónica
+Hip-Hop / Rap
+Clásica
+Música latina
+4
+¿Cuál es tu hobby principal?
+1
+¿Cuál es tu estación del año preferida?
+4
+Primavera
+Verano
+Otoño
+Invierno
+2
+¿Cómo valorarías tu satisfacción con tu trabajo/estudios actuales?
+5
+Muy insatisfecho/a
+Insatisfecho/a
+Neutral
+Satisfecho/a
+Muy satisfecho/a
+0
+¿Cuántos cafés o tés tomas al día?
+3
+¿Qué plataformas de streaming utilizas habitualmente?
+6
+Netflix
+HBO Max / Max
+Disney+
+Amazon Prime Video
+YouTube Premium
+Ninguna de las anteriores
+4
+¿Qué es lo que más valoras en una amistad?
+2
+¿Cómo de familiarizado/a estás con la inteligencia artificial?
+4
+Nada familiarizado/a
+Poco familiarizado/a
+Bastante familiarizado/a
+Muy familiarizado/a (experto/a)

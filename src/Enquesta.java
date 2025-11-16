@@ -176,12 +176,15 @@ public class Enquesta {
      */
     public void afegeixResposta(Integer idUsuari, List<String> respostes){
         int size = preguntes.size();
+        System.out.println("entra");
         List<Resposta> respostesUsuari = stringARespostes(respostes);
+        System.out.println("despues de string a respostes");
         for (int i = 0; i < size; i++) {
             Pregunta p = preguntes.get(i);
             Resposta r = respostesUsuari.get(i);
             p.addResposta(r, idUsuari);
         }
+        System.out.println("SALE");
     }
 
     // Getters

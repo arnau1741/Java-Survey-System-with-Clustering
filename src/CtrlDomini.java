@@ -24,6 +24,7 @@ public class CtrlDomini {
      * Retorna les preguntes de l'enquesta amb id donat
      * @param idEnquesta Identificador de l'enquesta
      * @return Llista de preguntes en format text
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
      */
     ////////////////// Cas d'us - Respondre enquesta //////////////////////
     public List<String> getPreguntes(Integer idEnquesta) throws EnquestaNoExisteixException { //Final
