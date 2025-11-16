@@ -51,7 +51,7 @@ public class RespostaUnica extends Resposta {
      */
     @Override
     public String getText(List<String> opcions) {
-        System.out.println("ha entrado a unica " + opcions.get(resposta));
+        System.out.println("Ha entrat a unica " + opcions.get(resposta));
         return opcions.get(resposta);
     }
 }
