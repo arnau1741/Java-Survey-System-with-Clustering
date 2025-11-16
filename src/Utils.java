@@ -36,6 +36,7 @@ public class Utils {
         io.writeln(" 13) Esborrar enquesta");
         io.writeln(" 14) Esborrar resposta");
         io.writeln(" 15) Clustering d'usuaris");
+        io.writeln(" 16) Mostrar enquestes amb preguntes i respostes");
 
 
         /*
