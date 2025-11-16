@@ -53,12 +53,8 @@ public class CtrlDomini {
      * @param preguntes Llista de preguntes
      */
     /////////////////////// Cas d'us - Crear enquesta //////////////////////
-    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) { //Final
-        List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntes);
-        int id = ctrlDominiMantEnquesta.getIdEnquestaNova();
-        Enquesta novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntesObj);
-        this.ctrlDominiMantEnquesta.addEnquesta(novaEnquesta);
-
+    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta { //Final
+        this.ctrlDominiMantEnquesta.novaEnquesta(titol, descripcio, idCreador, preguntes);
     }
 
     /**
@@ -68,34 +64,9 @@ public class CtrlDomini {
      * @return 1 si s'ha importat correctament, -1 si hi ha un error llegint el fitxer
      */
     /////////////////////// Cas d'us - Importar enquesta //////////////////
-    public int importarEnquesta(int idUsuari, String path){
-        // llegir fitxer
-        List<String> enquestaTxt = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                enquestaTxt.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1; // Error al leer el archivo
-        }
-
-        // extreure titol, descripcio i preguntes
-        String titol = enquestaTxt.get(0);
-        String descripcio = enquestaTxt.get(1);
-        List<String> preguntesTxt = new ArrayList<>();
-        for (int i = 2; i < enquestaTxt.size(); i++) {
-            preguntesTxt.add(enquestaTxt.get(i));
-        }
-
-        // crear enquesta
-        Integer idEnquesta = ctrlDominiMantEnquesta.getIdEnquestaNova();
-        List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntesTxt);
-        Enquesta novaEnquesta = new Enquesta(idEnquesta, titol, descripcio, idUsuari, preguntesObj);
-        this.ctrlDominiMantEnquesta.addEnquesta(novaEnquesta);
-
-        return 1; // Èxit
+    public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
+        int numPreguntes = this.ctrlDominiMantEnquesta.importarEnquesta(idUsuari, path);
+        return numPreguntes;
     }
 
     /**
@@ -220,21 +191,9 @@ public class CtrlDomini {
      * @param novaPregunta llista de strings amb la nova pregunta
      * @return 1 si s'ha modificat correctament
      */
-    ////////////////////// Cas d'us - Modificar pregunta ////////////////////
-    public int modificarPreguntaEnquesta(Integer idEnquesta, int idxPregunta, List<String> novaPregunta){
-        // esborrar totes les respostes de l'enquesta
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        List<Pregunta> preguntes = enq.getPreguntesObj();
-
-        // esborrar respostes només de la pregunta a modificar
-        preguntes.get(idxPregunta).eliminarTotesRespostes();
-
-        // crear la nova pregunta
-        List<Pregunta> preguntesObj = transformaPreguntesAObj(novaPregunta);
-        // assignar la nova pregunta a l'enquesta
-        enq.canviarPregunta(idxPregunta, preguntesObj.get(0));
-
-        return 1; // Èxit
+    //deberiamos hacer mas versiones en un futuro.
+    public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws InvalidFormatEnquesta {
+        return ctrlDominiMantEnquesta.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
     }
 
     /**

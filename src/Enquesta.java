@@ -38,7 +38,10 @@ public class Enquesta {
      * @param idCreador de l'usuari
      * @param preguntes de l'enquesta
      */
-    public Enquesta(Integer id, String titol, String descripcio, Integer idCreador, List<Pregunta> preguntes) {
+    public Enquesta(Integer id, String titol, String descripcio, Integer idCreador, List<Pregunta> preguntes) throws IllegalArgumentException{
+        if (preguntes == null || preguntes.isEmpty()) {
+            throw new IllegalArgumentException("L'enquesta ha de tenir almenys una pregunta.");
+        }
         this.id = id;
         this.titol = titol;
         this.descripcio = descripcio;

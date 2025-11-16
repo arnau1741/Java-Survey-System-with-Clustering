@@ -1,8 +1,13 @@
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class CtrlDominiMantEnquesta {
     private Map<Integer, Enquesta> enquestes;
     private Integer ultimIdEnquesta = 0;
+
+    // Constructor que inicializa la colección de encuestas
 
     /**
      * Constructor de la classe CtrlDominiMantEnquesta
@@ -10,6 +15,7 @@ public class CtrlDominiMantEnquesta {
     public CtrlDominiMantEnquesta() {
         enquestes = new HashMap<>();
     }
+
 
     /**
      * Afegeix una enquesta a la col·lecció d'enquestes
@@ -28,14 +34,14 @@ public class CtrlDominiMantEnquesta {
      * Elimina una enquesta de la col·lecció d'enquestes
      * @param idEnquesta de l'enquesta a eliminar
      */
-    public void eliminarEnquesta(Integer idEnquesta) {
+    public void eliminarEnquesta(int idEnquesta) {
         if (enquestes.containsKey(idEnquesta)) {
             enquestes.remove(idEnquesta);
         }
     }
 
     /**
-     * Obtén el número total d'enquestes
+     * Obtén el número total de encuestas
      * @return número d'enquestes
      */
     public int getNumEnquestes() {
@@ -43,26 +49,23 @@ public class CtrlDominiMantEnquesta {
     }
 
     /**
-     * Obtenir un identificador nou per a una enquesta
-     * @return tmp, un identificador nou
+     * Obtenir un id nou per a una enquesta
+     * @return id nou
      */
-    public Integer getIdEnquestaNova() {
-        Integer tmp = ultimIdEnquesta;
+    public int getIdEnquestaNova() {
+        int tmp = ultimIdEnquesta;
         ultimIdEnquesta++;
         return tmp;
     }
 
     /**
-     * Obtenir una enquesta donat el seu identificador
+     * Obtenir una enquesta donat el seu id
      * @param idEnquesta de l'enquesta a obtenir
-     * @return enquesta amb l'identificador donat
-     * @throws NoSuchElementException si no existeix l'enquesta amb l'identificador donat
+     * @return enquesta amb l'id donat
+     * @throws NoSuchElementException si no existeix l'enquesta amb l'id donat
      */
-    public Enquesta getEnquesta(Integer idEnquesta) {
+    public Enquesta getEnquesta(int idEnquesta) {
         Enquesta enq = enquestes.get(idEnquesta);
-        if (enq == null) {
-            throw new NoSuchElementException("No existeix una enquesta amb l'identificador donat: " + idEnquesta);
-        }
         return enq;
     }
 
@@ -76,7 +79,7 @@ public class CtrlDominiMantEnquesta {
         if (enq != null) {
             return enq.getPreguntes();
         }
-        return Collections.emptyList();
+        return Collections.emptyList();  // Devuelve una lista vacía si no se encuentra la encuesta
     }
 
     /**
@@ -92,11 +95,116 @@ public class CtrlDominiMantEnquesta {
         }
     }
 
-    /**
-     * Getter de les enquestes
-     * @return map d'enquestes
-     */
+
     public Map<Integer,Enquesta> getEnquestesObj() {
         return enquestes;
+    }
+
+
+    public int novaEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
+        List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntes);
+        int id = getIdEnquestaNova();
+        Enquesta novaEnquesta;
+        try{
+            novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntesObj);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidFormatEnquesta("No s'ha pogut crear l'enquesta: " + e.getMessage());
+        }
+        addEnquesta(novaEnquesta);
+        return preguntesObj.size();
+    }
+
+
+    public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
+        // llegir fitxer
+        List<String> enquestaTxt = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                enquestaTxt.add(line);
+            }
+        } catch (IOException e) {
+            throw new FileNotFound("No s'ha pogut trobar el fitxer a la ruta especificada: " + path);
+        }
+
+        // extreure titol, descripcio i preguntes
+        String titol = enquestaTxt.get(0);
+        String descripcio = enquestaTxt.get(1);
+        List<String> preguntesTxt = new ArrayList<>();
+        for (int i = 2; i < enquestaTxt.size(); i++) {
+            preguntesTxt.add(enquestaTxt.get(i));
+        }
+
+        // crear enquesta
+        int numPreguntes = novaEnquesta(titol, descripcio, idUsuari, preguntesTxt);
+        return numPreguntes;
+    }
+
+    /**
+     * Funcio per a transformar les preguntes en format string a objectes Pregunta
+     * @param preguntes Llista de preguntes en format text
+     * @return Llista de preguntes en format objecte Pregunta
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta és invàlid
+     */
+    //////////////////////// Funcions auxiliars ///////////////////////////////
+    //Transforma les preguntes en format text a objectes Pregunta
+    private List<Pregunta> transformaPreguntesAObj (List<String> preguntes) throws InvalidFormatEnquesta {
+        List <Pregunta> preguntesObj = new ArrayList<>();
+        int size = preguntes.size();
+        int idx = 0;
+        while (idx < size) {
+            String enunciat = preguntes.get(idx);
+            int tipus;
+            try{
+                tipus = Integer.parseInt(enunciat);
+            } catch (NumberFormatException e) {
+                throw new InvalidFormatEnquesta("Format invàlid de l'enquesta: tipus de pregunta no és un enter.");
+            }
+            idx++;
+            enunciat = preguntes.get(idx);
+            idx++;
+            if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, ORDENADA, MULTIPLE
+                int numOpcions = Integer.parseInt(preguntes.get(idx));
+                idx++;
+                List<String> opcions = new ArrayList<>();
+                for (int i = 0; i < numOpcions; i++) {
+                    String opcio = preguntes.get(idx);
+                    opcions.add(opcio);
+                    idx++;
+                }
+                Pregunta p = new Pregunta(enunciat, tipus, opcions);
+                preguntesObj.add(p);
+            }
+            else if (tipus == 0 || tipus == 4) { //NUMERICA, LLIURE
+                Pregunta p = new Pregunta(enunciat, tipus, null);
+                preguntesObj.add(p);
+            }
+        }
+        return preguntesObj;
+    }
+
+    /**
+     * Funcio per a modificar una pregunta d'una enquesta
+     * @param idEnquesta identificador de l'enquesta per la pregunta que vol modificar
+     * @param idxPregunta index de la pregunta a modificar
+     * @param novaPregunta llista de strings amb la nova pregunta
+     * @return 1 si s'ha modificat correctament
+     */
+    //deberiamos hacer mas versiones en un futuro.
+    public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws InvalidFormatEnquesta {
+        //borrar todas las respuestas
+        Enquesta enq = getEnquesta(idEnquesta);
+        List<Pregunta> preguntes = enq.getPreguntesObj();
+        for (Pregunta p : preguntes) {
+            p.eliminarTotesRespostes();
+        }
+
+        //crear la nueva pregunta
+        List<Pregunta> preguntesObj = transformaPreguntesAObj(novaPregunta);
+        //assignar la nueva pregunta a la enquesta
+        enq.canviarPregunta(idxPregunta, preguntesObj.get(0));
+        //setearla como nueva pregunta
+
+        return 1; // Èxit
     }
 }
