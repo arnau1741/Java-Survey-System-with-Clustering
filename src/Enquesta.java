@@ -150,11 +150,12 @@ public class Enquesta {
      * @param idUsuari de l'usuari
      * @param respostes de l'usuari
      */
-    public void afegeixResposta(Integer idUsuari, List<Resposta> respostes){
+    public void afegeixResposta(Integer idUsuari, List<String> respostes){
         int size = preguntes.size();
+        List<Resposta> respostesUsuari = stringARespostes(respostes);
         for (int i = 0; i < size; i++) {
             Pregunta p = preguntes.get(i);
-            Resposta r = respostes.get(i);
+            Resposta r = respostesUsuari.get(i);
             p.addResposta(r, idUsuari);
         }
     }
