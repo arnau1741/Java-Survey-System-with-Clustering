@@ -341,9 +341,9 @@ public class Utils {
         io.writeln("Introdueix l'ID de l'enquesta a exportar: ");
         int id = io.readint();
 
-        //io.write("Introdueix el path on guardar (ex: sortida.txt): ");
-        //String path = io.readword();
-        String path = Base_path + File.separator + "sortida" + id + ".txt";
+        io.write("Introdueix el fitxer on es guardar (sense extencio): ");
+        String fitxer = io.readword();
+        String path = Base_path + File.separator + fitxer + ".txt";
         List<String> export = ctrl.exportarEnquesta(id);
         if (export == null) {
             io.writeln("Enquesta no trobada.");

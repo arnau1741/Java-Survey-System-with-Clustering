@@ -9,7 +9,7 @@ public class Main {
         CtrlDomini ctrl = new CtrlDomini();
         inout io = new inout();
         int opcio = -1;
-        Utils.Base_path = inicialitzarRutaBase();
+        Utils.Base_path = "Pruebas";
 
         try {
             do {
@@ -48,7 +48,7 @@ public class Main {
             }
         }
     }
-
+/*
     private static String inicialitzarRutaBase() {
         String dir = System.getProperty("user.dir");
 
@@ -66,6 +66,7 @@ public class Main {
 
         return pruebasDir.getAbsolutePath();
     }
+    */
 
     // ========================= MENÚ =========================
 
