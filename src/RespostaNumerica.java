@@ -42,5 +42,4 @@ public class RespostaNumerica extends Resposta {
         }
         return valor.toString();
     }
-
 }
