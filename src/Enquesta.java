@@ -18,10 +18,10 @@ import java.util.Map;
 
 public class Enquesta {
     // Representa una enquesta concreta: id, titol, descripcio, creador, preguntes, respostes, participants
-    private int id;
+    private Integer id;
     private String titol;
     private String descripcio;
-    private int idCreador;
+    private Integer idCreador;
     private List<Pregunta> preguntes;
 
     // posem les dates com atributs, creem una classe Data i es relaciona?
@@ -38,7 +38,7 @@ public class Enquesta {
      * @param idCreador de l'usuari
      * @param preguntes de l'enquesta
      */
-    public Enquesta(int id, String titol, String descripcio, int idCreador, List<Pregunta> preguntes) {
+    public Enquesta(Integer id, String titol, String descripcio, Integer idCreador, List<Pregunta> preguntes) {
         this.id = id;
         this.titol = titol;
         this.descripcio = descripcio;
@@ -154,7 +154,7 @@ public class Enquesta {
      * @param idUsuari de l'usuari
      * @param respostes de l'usuari
      */
-    public void afegeixResposta(int idUsuari, List<Resposta> respostes){
+    public void afegeixResposta(Integer idUsuari, List<Resposta> respostes){
         int size = preguntes.size();
         for (int i = 0; i < size; i++) {
             Pregunta p = preguntes.get(i);
@@ -169,7 +169,7 @@ public class Enquesta {
      * Retorna l'id de l'enquesta
      * @return id de l'enquesta
      */
-    public int getId() { return id;}
+    public Integer getId() { return id;}
 
     /**
      * Retorna el títol de l'enquesta
@@ -187,7 +187,7 @@ public class Enquesta {
      * Retorna l'id del creador de l'enquesta
      * @return id del creador de l'enquesta
      */
-    public int getCreador() { return idCreador;}
+    public Integer getCreador() { return idCreador;}
 
     /**
      * Retorna la llista de preguntes de l'enquesta
@@ -208,6 +208,7 @@ public class Enquesta {
     public int getNumRespostes() {
         if (preguntes.isEmpty()) return 0;
         Pregunta primeraPregunta = preguntes.getFirst();
+        // S'assumeix que totes les preguntes tenen el mateix nombre de respostes
         return primeraPregunta.getNumRespostes();
     }
 
@@ -216,7 +217,7 @@ public class Enquesta {
      * @param idUsuari de l'usuari
      * @return llista de respostes de l'usuari
      */
-    public List<Resposta> getRespostesUsuari(int idUsuari) {
+    public List<Resposta> getRespostesUsuari(Integer idUsuari) {
         List<Resposta> respostesUsuari = new ArrayList<>();
         for (Pregunta p : preguntes) {
             Map<Integer, Resposta> respostesMap = p.getRespostes();
