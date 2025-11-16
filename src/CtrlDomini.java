@@ -28,7 +28,6 @@ public class CtrlDomini {
      */
     ////////////////// Cas d'us - Respondre enquesta //////////////////////
     public List<String> getPreguntes(Integer idEnquesta) throws EnquestaNoExisteixException { //Final
-        System.out.println("entra a getPreguntes de CtrlDomini");
         return this.ctrlDominiMantEnquesta.getPreguntesEnquesta(idEnquesta);
     }
 
@@ -39,13 +38,11 @@ public class CtrlDomini {
      * @param respostesUsuari Llista de respostes
      */
     public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
-        System.out.println("entra a respondreEnquesta de CtrlDomini");
         Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
             throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         }
         enq.afegeixResposta(idUsuari,respostesUsuari);
-        System.out.println("salta de respondreEnquesta de CtrlDomini");
     }
 
     /**
@@ -76,6 +73,7 @@ public class CtrlDomini {
      * Funcio per a exportar una enquesta
      * @param id de l'enquesta a exportar
      * @return Llista de strings amb la informacio de l'enquesta
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
      */
     /////////////////////// Cas d'us - Exportar enquesta //////////////////
     public List<String> exportarEnquesta(Integer id) throws EnquestaNoExisteixException {
@@ -153,8 +151,6 @@ public class CtrlDomini {
         // llegim el nombre de respostes (primer linia)
         int numRespostes = Integer.parseInt(respostesTxt.get(0));
         int numPreguntes = enq.getNumPreguntes();
-        System.out.println("NumRespostes llegides: " + numRespostes);
-        System.out.println("NumPreguntes de l'enquesta: " + numPreguntes);
 
         // llegim les respostes (a partir de la linia 1, una resposta per linia)
         List<String> respostesUsuari = new ArrayList<>();
@@ -163,10 +159,6 @@ public class CtrlDomini {
             if (i%numPreguntes == 0) {
                 // afegim la resposta a l'enquesta
                 enq.afegeixResposta(-1, respostesUsuari);
-                // netegem la llista de respostes per al següent usuari
-                // mostra les respostes afegides
-                System.out.println("Respostes afegides per usuari " + (i/numPreguntes) + ": " + respostesUsuari);
-
                 respostesUsuari.clear();
             }
         }
@@ -203,6 +195,8 @@ public class CtrlDomini {
      * @param idEnquesta identificador de l'usuari que esborra la resposta
      * @param idEnquesta identificador de l'enquesta
      * @param idEnquestat identificador de l'usuari que ha respost l'enquesta
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
+     * @throws UsuariNoHaResposEnquesta si l'usuari no ha respost l'enquesta amb id donat
      */
     ////////////////////// Cas d'us - Esborrar resposta ////////////////////
     public void esborrarRespostaEnquesta(Integer idEnquesta, int idEnquestat) throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta {
@@ -227,6 +221,8 @@ public class CtrlDomini {
      * @param k nombre de clústers
      * @param maxIterations nombre màxim d'iteracions
      * @return resultat, map amb l'identificador de la resposta i el clúster assignat
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
+     * @throws KmeansExcepcio si hi ha un error en l'algoritme K-means
      */
     ////////////////////// Cas d'us - clustering //////////////////////
     public Map<Integer, Integer> clustering(Integer idEnquesta, int k, int maxIterations) throws EnquestaNoExisteixException, KmeansExcepcio {
@@ -258,6 +254,7 @@ public class CtrlDomini {
      * Funcio per a mostrar les enquestes i les seves preguntes i respostes
      * @param idEnquesta identificador de l'enquesta
      * @return result, llista de strings amb la informacio de l'enquesta
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
      */
     ////////////////////// Cas d'us - Consultar enquesta ////////////////////
     public List<String> consultarEnquesta(Integer idEnquesta) throws EnquestaNoExisteixException{
@@ -277,6 +274,7 @@ public class CtrlDomini {
      * Funcio per a mostrar les enquestes amb preguntes
      * @param idEnquesta identificador de l'enquesta
      * @return result, llista de strings amb la informacio de l'enquesta i les seves preguntes
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
      */
     public List<String> consultarEnquestaAmbPreguntes(Integer idEnquesta) throws EnquestaNoExisteixException {
         List<String> result = new ArrayList<>();
@@ -298,6 +296,7 @@ public class CtrlDomini {
      * Funcio per a consultar les enquestes amb preguntes i respostes
      * @param idEnquesta identificador de l'enquesta
      * @return result, llista de strings amb la informacio de l'enquesta, les seves preguntes i respostes
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
      */
     public List<String> consultarRespostesEnquesta(Integer idEnquesta) throws EnquestaNoExisteixException {
         List<String> result = new ArrayList<>();
@@ -328,7 +327,7 @@ public class CtrlDomini {
     /**
      * Funcio que consulta i retorna una llista d'una esquesta idEnquesta amb les seves preguntes i respostes
      * @return una llista d'una esquesta idEnquesta amb les seves preguntes i respostes
-     * @throws EnquestaNoExisteixException
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
      */
     public List<String> consultarEnquestesAmbPreguntesIRespostes() throws EnquestaNoExisteixException {
         int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
@@ -460,6 +459,8 @@ public class CtrlDomini {
      * @param idEnquesta identificador de l'enquesta
      * @param idUsuari identificador de l'usuari
      * @return respostesStr, llista de strings amb les preguntes i respostes de l'usuari
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
+     * @throws UsuariNoHaResposEnquesta si l'usuari no ha respost l'enquesta amb id donat
      */
     public List<String> getRespostesEnquestaPerUsuari(Integer idEnquesta, int idUsuari) throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta{
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
@@ -554,6 +555,10 @@ public class CtrlDomini {
      * @param idxPregunta index de la pregunta a modificar
      * @param novaResposta nova resposta en format text
      * @return 1 si s'ha modificat correctament, -1 si l'enquesta no existeix, -2 si l'usuari no ha respost l'enquesta, -3 si l'índex de la pregunta és invàlid, -4 si la nova resposta no és vàlida
+     * @throws EnquestaNoExisteixException si l'enquesta no existeix
+     * @throws UsuariNoHaResposEnquesta si l'usuari no ha respost l'enquesta amb id donat
+     * @throws InvalidFormatResposta si la nova resposta no és vàlida per a la pregunta
+     * @throws InvalidFormatResposta si l'índex de la pregunta és invàlid
      */
     public int modificarRespostaEnquesta(Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta) throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta, InvalidFormatResposta {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
@@ -576,12 +581,10 @@ public class CtrlDomini {
 
 
         if (tipus == 0) {
-            System.out.println("entra a modificar resposta numerica");
             // numerica: convertir a double
             double valor = Double.parseDouble(novaResposta);
             Resposta r = new RespostaNumerica(valor);
             enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
-            System.out.println("surt de modificar resposta numerica");
         }
         else if (tipus == 1) {
             // unica: convertir a int

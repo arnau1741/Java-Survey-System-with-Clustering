@@ -32,3 +32,4 @@ enquesta_habitsQuotidians
 0
 2
 10
+0
