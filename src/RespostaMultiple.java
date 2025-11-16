@@ -35,7 +35,7 @@ public class RespostaMultiple extends Resposta{
      * Getter del nombre d'opcions
      * @return nombre d'opcions disponibles
      */
-    public int getNumOpcions() {
+    public Integer getNumOpcions() {
         return numOpcions;
     }
 

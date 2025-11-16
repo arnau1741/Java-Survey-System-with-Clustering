@@ -1,16 +1,16 @@
 import java.util.List;
 
 public class RespostaUnica extends Resposta {
-    private int resposta; //ha de ser entre 0 i numOpcions -1
-    private int numOpcions;
+    private Integer resposta; //ha de ser entre 0 i numOpcions -1
+    private Integer numOpcions;
 
     /**
      * Constructor de la classe RespostaUnica
      * @param numOpcions nombre d'opcions disponibles
      */
-    public RespostaUnica(int numOpcions) {
+    public RespostaUnica(Integer numOpcions) {
         super();
-        this.resposta = -1; // Indica que no s'ha contestat encara
+        this.resposta = null; // Indica que no s'ha contestat encara
         this.numOpcions = numOpcions;
     }
 
@@ -19,7 +19,7 @@ public class RespostaUnica extends Resposta {
      * @param resposta opció seleccionada
      * @return 1 si l'operació és correcta, 0 si l'opció és invàlida
      */
-    public int setResposta(int resposta) {
+    public Integer setResposta(Integer resposta) {
         if (resposta < 0 || resposta >= numOpcions) {
             return 0; // Opció invàlida
         }
@@ -32,7 +32,7 @@ public class RespostaUnica extends Resposta {
      * Getter del nombre d'opcions
      * @return nombre d'opcions disponibles
      */
-    public int getNumOpcions() {
+    public Integer getNumOpcions() {
         return numOpcions;
     }
 
@@ -40,7 +40,7 @@ public class RespostaUnica extends Resposta {
      * Getter de la resposta seleccionada
      * @return resposta seleccionada
      */
-    public int getResposta() {
+    public Integer getResposta() {
         return resposta;
     }
 
@@ -51,6 +51,10 @@ public class RespostaUnica extends Resposta {
      */
     @Override
     public String getText(List<String> opcions) {
+        if (resposta == null) {
+            System.out.println("Unica: Ha entrat a no contestat");
+            return "";
+        }
         System.out.println("Ha entrat a unica " + opcions.get(resposta));
         return opcions.get(resposta);
     }

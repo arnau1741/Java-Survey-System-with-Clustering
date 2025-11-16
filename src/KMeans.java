@@ -54,6 +54,10 @@ public class KMeans{
         for (List<Resposta> centroid : centroids) {
             for (Resposta r : centroid) {
                 if (r != null) {
+                    System.out.println("entra");
+                    System.out.println(data.getPreguntesObj().get(centroid.indexOf(r)).getOpcions());
+                    //mostrar tipus de resposta
+                    System.out.println(data.getPreguntesObj().get(centroid.indexOf(r)).getTipus());
                     System.out.print(r.getText(data.getPreguntesObj().get(centroid.indexOf(r)).getOpcions()) + " | ");
                 } else {
                     System.out.print("null | ");
@@ -195,6 +199,7 @@ public class KMeans{
      * @return índex del centroid més proper
      */
     private int closestCentroid(List<Resposta> point, List<List<Resposta>> centroids, List<Pregunta> preguntes) {
+        System.out.println("Calculant centroid més proper...");
         int bestIndex = 0;
         double bestDist = distance(point, centroids.get(0), preguntes);
         System.out.println("Distàncies al punt:");
@@ -325,14 +330,14 @@ public class KMeans{
      * @return distància normalitzada entre a i b
      */
     public double distanciaOrdenada (RespostaOrdenada a, RespostaOrdenada b, int numOpcions) {
-        if (a == null && b == null) {
-            return 0.0; // Distancia cero si ambas respuestas son nulas
-        }
-        if (a == null || b == null) {
-            return 1.0; // Distancia máxima si alguna respuesta es nula
-        }
         Integer ordenA = a.getOrdre();
         Integer ordenB = b.getOrdre();
+        if (ordenA == null && ordenB == null) {
+            return 0.0; // Distancia cero si ambas respuestas son nulas
+        }
+        if (ordenA == null || ordenB == null) {
+            return 1.0; // Distancia máxima si alguna respuesta es nula
+        }
         return Math.abs(ordenA - ordenB)/(numOpcions - 1);
     }
 
@@ -343,12 +348,12 @@ public class KMeans{
      * @return distància entre a i b
      */
     public double distanciaNoOrdenadaUnica(RespostaUnica a, RespostaUnica b) {
-        int resA = a.getResposta();
-        int resB = b.getResposta();
-        if (resA == -1 && resB == -1) {
+        Integer resA = a.getResposta();
+        Integer resB = b.getResposta();
+        if (resA == null && resB == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
         }
-        if (resA == -1 || resB == -1) {
+        if (resA == null || resB == null) {
             return 1.0; // Distancia máxima si alguna respuesta es nula
         }
         return resA == resB ? 0.0 : 1.0;
@@ -395,7 +400,7 @@ public class KMeans{
                     dp[i][j] = j; // Deletion
                 } else if (j == 0) {
                     dp[i][j] = i; // Insertion
-                } else if (a.charAt(i) == b.charAt(j)) {
+                } else if (a.charAt(i-1) == b.charAt(j-1)) {
                     dp[i][j] = Math.min(dp[i - 1][j], // Deletion
                                 Math.min(dp[i][j - 1], // Insertion
                                 dp[i - 1][j - 1])); // Substitution
@@ -409,7 +414,7 @@ public class KMeans{
         return dp[a.length()][b.length()];
     }
 
-    private double distanciaLliure(RespostaLliure a, RespostaLliure b) {
+    public double distanciaLliure(RespostaLliure a, RespostaLliure b) {
         int lenA = a.length();
         int lenB = b.length();
         if (lenA == 0 && lenB == 0) {
@@ -447,12 +452,12 @@ public class KMeans{
                 case 1: // UNICA
                     sum += distanciaNoOrdenadaUnica((RespostaUnica) ra, (RespostaUnica) rb);
                     break;
-                case 2: // MULTIPLE
-                    sum += distanciaNoOrdenadaMultiple((RespostaMultiple) ra, (RespostaMultiple) rb);
-                    break;
-                case 3: // ORDENADA
+                case 2: // ORDENADA
                     int numOpcions = p.getNumOpcions();
                     sum += distanciaOrdenada((RespostaOrdenada) ra, (RespostaOrdenada) rb, numOpcions);
+                    break;
+                case 3: // MULTIPLE
+                    sum += distanciaNoOrdenadaMultiple((RespostaMultiple) ra, (RespostaMultiple) rb);
                     break;
                 case 4: // LLIURE
                     sum += distanciaLliure((RespostaLliure) ra, (RespostaLliure) rb);

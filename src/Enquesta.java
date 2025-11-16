@@ -63,6 +63,11 @@ public class Enquesta {
             int tipusPregunta = preguntes.get(index).getTipus();
 
             if (tipusPregunta == 0) {// NUMERICA
+                if (r == null || r.isEmpty()) {
+                    RespostaNumerica respostaNumerica = new RespostaNumerica(null);
+                    respostesObj.add(respostaNumerica);
+                    continue;
+                }
                 try {
                     RespostaNumerica respostaNumerica = new RespostaNumerica(Double.parseDouble(r));
                     respostesObj.add(respostaNumerica);
@@ -70,16 +75,33 @@ public class Enquesta {
                     throw new IllegalArgumentException("Resposta numèrica invàlida: " + r);
                 }
             } else if (tipusPregunta == 1) { // UNICA
+                if (r == null || r.isEmpty()) {
+                    RespostaUnica respostaUnica = new RespostaUnica(preguntes.get(index).getNumOpcions());
+                    respostesObj.add(respostaUnica);
+                    continue;
+                }
                 int numOpcions = preguntes.get(index).getNumOpcions();
                 RespostaUnica respostaUnica = new RespostaUnica(numOpcions);
                 respostaUnica.setResposta(Integer.parseInt(r));
                 respostesObj.add(respostaUnica);
             } else if (tipusPregunta == 2) { // ORDENADA
+                if (r == null || r.isEmpty()) {
+                    int numOpcions = preguntes.get(index).getNumOpcions();
+                    RespostaOrdenada respostaOrdenada = new RespostaOrdenada(numOpcions);
+                    respostesObj.add(respostaOrdenada);
+                    continue;
+                }
                 int numOpcions = preguntes.get(index).getNumOpcions();
                 RespostaOrdenada respostaOrdenada = new RespostaOrdenada(numOpcions);
                 respostaOrdenada.setResposta(Integer.parseInt(r));
                 respostesObj.add(respostaOrdenada);
             } else if (tipusPregunta == 3) {// MULTIPLE
+                if (r == null || r.isEmpty()) {
+                    int numOpcions = preguntes.get(index).getNumOpcions();
+                    RespostaMultiple respostaMultiple = new RespostaMultiple(numOpcions);
+                    respostesObj.add(respostaMultiple);
+                    continue;
+                }
                 System.out.println("entra");
                 int numOpcions = preguntes.get(index).getNumOpcions();
                 RespostaMultiple respostaMultiple = new RespostaMultiple(numOpcions);
@@ -93,6 +115,11 @@ public class Enquesta {
                 respostaMultiple.selecciona(seleccionades);
                 respostesObj.add(respostaMultiple);
             } else if (tipusPregunta == 4) { // LLIURE
+                if (r == null || r.isEmpty()) {
+                    RespostaLliure respostaLliure = new RespostaLliure("");
+                    respostesObj.add(respostaLliure);
+                    continue;
+                }
                 RespostaLliure respostaLliure = new RespostaLliure(r);
                 respostesObj.add(respostaLliure);
             } else {

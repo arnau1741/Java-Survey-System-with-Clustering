@@ -1,7 +1,7 @@
 Encuesta CIS completa
 Baròmetre fusionat gener–març 2023
 1
-48
+50
 1
 ¿Tiene Ud. la nacionalidad española?
 3
@@ -89,7 +89,117 @@ Ninguno
 N.S.
 N.C.
 1
+¿Cuál es, a su juicio, el segundo problema que existe actualmente en España?
+25
+Los peligros para la salud: COVID-19
+La crisis económica, los problemas de índole económica
+El paro
+Los problemas políticos en general
+Lo que hacen los partidos políticos
+El mal comportamiento de los/as políticos/as
+La corrupción y el fraude
+La sanidad
+Los problemas de índole social
+La inmigración
+Los problemas relacionados con la calidad del empleo
+Las pensiones
+La falta de acuerdos, unidad y capacidad de colaboración
+El funcionamiento de los servicios públicos
+La educación
+La subida de las tarifas, crisis energética
+El modelo productivo español. La falta de inversión en industrias e I+D
+La vivienda
+Guerra de Ucrania y Rusia
+El cambio climático
+La bajada de impuestos a los más ricos
+Otro
+Ninguno
+N.S.
+N.C.
+1
+¿Cuál es, a su juicio, el tercer problema que existe actualmente en España?
+25
+Los peligros para la salud: COVID-19
+La crisis económica, los problemas de índole económica
+El paro
+Los problemas políticos en general
+Lo que hacen los partidos políticos
+El mal comportamiento de los/as políticos/as
+La corrupción y el fraude
+La sanidad
+Los problemas de índole social
+La inmigración
+Los problemas relacionados con la calidad del empleo
+Las pensiones
+La falta de acuerdos, unidad y capacidad de colaboración
+El funcionamiento de los servicios públicos
+La educación
+La subida de las tarifas, crisis energética
+El modelo productivo español. La falta de inversión en industrias e I+D
+La vivienda
+Guerra de Ucrania y Rusia
+El cambio climático
+La bajada de impuestos a los más ricos
+Otro
+Ninguno
+N.S.
+N.C.
+1
 ¿Cuál es el problema que a Ud., personalmente, le afecta más?
+24
+Los peligros para la salud: COVID-19
+La crisis económica, los problemas de índole económica
+La subida de tarifas energéticas, crisis energética
+La incertidumbre hacia el futuro, inseguridad y miedo al futuro
+El paro
+La sanidad
+Las pensiones
+Los problemas relacionados con la calidad del empleo
+Los problemas políticos en general
+Lo que hacen los partidos políticos
+La educación
+La corrupción y el fraude
+Los problemas de índole social
+Las preocupaciones y situaciones personales
+La vivienda
+Los problemas relacionados con la juventud
+El cambio climático
+El funcionamiento de los servicios públicos
+La subida de impuestos
+La bajada de impuestos a los más ricos
+Otro
+Ninguno
+N.S.
+N.C.
+1
+¿Cuál es el problema que a Ud., personalmente, le afecta más(Segundo)?
+24
+Los peligros para la salud: COVID-19
+La crisis económica, los problemas de índole económica
+La subida de tarifas energéticas, crisis energética
+La incertidumbre hacia el futuro, inseguridad y miedo al futuro
+El paro
+La sanidad
+Las pensiones
+Los problemas relacionados con la calidad del empleo
+Los problemas políticos en general
+Lo que hacen los partidos políticos
+La educación
+La corrupción y el fraude
+Los problemas de índole social
+Las preocupaciones y situaciones personales
+La vivienda
+Los problemas relacionados con la juventud
+El cambio climático
+El funcionamiento de los servicios públicos
+La subida de impuestos
+La bajada de impuestos a los más ricos
+Otro
+Ninguno
+N.S.
+N.C.
+1
+¿Cuál es el problema que a Ud., personalmente, le afecta más (Tercero)?
 24
 Los peligros para la salud: COVID-19
 La crisis económica, los problemas de índole económica
@@ -521,10 +631,6 @@ No, es analfabeto/a
 No, pero sabe leer y escribir
 Sí, ha ido a la escuela
 N.C.
-0
-Indique el curso más alto completado en esos estudios (número).
-4
-Indique el nombre oficial de los estudios cursados.
 1
 Indique el nivel de estudios más alto que ha cursado.
 17
