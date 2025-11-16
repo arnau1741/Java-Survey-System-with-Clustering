@@ -33,7 +33,7 @@ public class Main {
                     case 13 -> Utils.esborrarEnquesta(io,ctrl);
                     case 14 -> Utils.esborrarResposta(io,ctrl);
                     case 15 -> Utils.clustering(io, ctrl);
-                    case 16 -> ctrl.mostrarEnquestesAmbPreguntesIRespostes();
+                    case 16 -> Utils.consultarEnquestesAmbPreguntesIRespostes(io, ctrl);
                     default -> io.writeln("\n[ERROR] Opció no vàlida. Torna-ho a intentar.\n");
                 }
 
