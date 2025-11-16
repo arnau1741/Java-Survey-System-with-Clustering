@@ -17,6 +17,12 @@ prova
 prova
 4
 2
+7
+0
+consultar_enquesta_pregunta_1
+7
+1
+consultar_enquesta_pregunta_2
 0
 
 

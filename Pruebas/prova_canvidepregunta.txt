@@ -21,4 +21,13 @@ importarRespostesSatisfaccion
 Pregunta de prova
 0
 16
+7
+0
+canvidepregunta1
+7
+1
+canvidepregunta2
+7
+2
+canvidepregunta3
 0
