@@ -1,10 +1,7 @@
 import java.util.*;
 
 public class Pregunta {
-    //Necessitem un tipus per la pregunta per aixi definir la resposta
-    //En aquest cas es fara l'us de enums pero es pot fer refactoring si cal
-
-    //public enum Tipus {NUMERICA, LLIURE, UNICA, MULTIPLE, ORDENADA}
+    // public enum Tipus {NUMERICA, LLIURE, UNICA, MULTIPLE, ORDENADA}
 
     private String text;
     private Integer tipus;
@@ -15,7 +12,7 @@ public class Pregunta {
     private double minValue; // Per a preguntes NUMERICA
     private double maxValue; // Per a preguntes NUMERICA
 
-    //Format Pregunta_qualsevol? -- Defineix tipus de resposta
+    // Format Pregunta_qualsevol? -- Defineix tipus de resposta
 
     /**
      * Constructor de la classe Pregunta
@@ -32,7 +29,7 @@ public class Pregunta {
         if (tipus == 0 || tipus == 4) {
             this.numOpcions = 0; // No s'aplica per a NUMERICA i LLIURE
             this.opcions = null;
-        } else if (tipus == 1 || tipus == 2 || tipus == 3) { //UNICA, MULTIPLE, ORDENADA
+        } else if (tipus == 1 || tipus == 2 || tipus == 3) { // UNICA, MULTIPLE, ORDENADA
             this.numOpcions = opcions.size();
             this.opcions = new ArrayList<>(opcions);
         } else {
@@ -41,8 +38,7 @@ public class Pregunta {
 
     }
 
-    // getters
-
+    // Getters
     /**
      * Getter de la pregunta
      * @return la pròpia pregunta
