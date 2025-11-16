@@ -73,15 +73,25 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
-    public static void consultarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introdueix el Id de l'enquesta");
-        Integer idEnquesta = io.readint();
+    public static void consultarEnquesta(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("Introdueix el Id de l'enquesta");
+            int idEnquesta = io.readint();
 
-        List<String> result = ctrl.consultarEnquesta(idEnquesta);
-        for (String line : result) {
-            io.writeln(line);
+            List<String> result = ctrl.consultarEnquesta(idEnquesta);
+            for (String line : result) {
+                io.writeln(line);
+            }
+        }
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
         }
     }
+
 
     // ==================== Funcionalitats ====================
 
@@ -93,56 +103,66 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
-    public static void respondreEnquesta(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("\n--- RESPONDRE ENQUESTA ---");
-        io.write("Introdueix l'ID de l'enquesta: ");
-        Integer idEnquesta = io.readint();
-        io.readline();
+    public static void respondreEnquesta(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("\n--- RESPONDRE ENQUESTA ---");
+            io.write("Introdueix l'ID de l'enquesta: ");
+            int idEnquesta = io.readint();
+            io.readline();
 
-        io.write("Introdueix l'ID de l'usuari que respon l'enquesta: ");
-        int idUsuari = io.readint();
-        io.readline();
+            io.write("Introdueix l'ID de l'usuari que respon l'enquesta: ");
+            int idUsuari = io.readint();
+            io.readline();
 
-        List<String> preguntes = ctrl.getPreguntes(idEnquesta);
-        List<String> respostesUsuari = new ArrayList<>();
+            List<String> preguntes = ctrl.getPreguntes(idEnquesta);
+            List<String> respostesUsuari = new ArrayList<>();
 
-        io.writeln("\nRespon les següents preguntes:");
-        int idx = 0;
-        int size = preguntes.size();
-        while(idx < size){
-            String tipus = preguntes.get(idx);
-            idx++;
-            String enunciat = preguntes.get(idx);
-            idx++;
-            io.writeln("\nPregunta: " + enunciat);
-            if (tipus.equals("UNICA") || tipus.equals("MULTIPLE") || tipus.equals("ORDENADA")) { //UNICA, MULTIPLE, ORDENADA
-                int numOpcions = Integer.parseInt(preguntes.get(idx));
+            io.writeln("\nRespon les següents preguntes:");
+            int idx = 0;
+            int size = preguntes.size();
+            while(idx < size){
+                String tipus = preguntes.get(idx);
                 idx++;
-                io.writeln("Opcions:");
-                for (int i = 0; i < numOpcions; i++) {
-                    String opcio = preguntes.get(idx);
+                String enunciat = preguntes.get(idx);
+                idx++;
+                io.writeln("\nPregunta: " + enunciat);
+                if (tipus.equals("UNICA") || tipus.equals("MULTIPLE") || tipus.equals("ORDENADA")) { //UNICA, MULTIPLE, ORDENADA
+                    int numOpcions = Integer.parseInt(preguntes.get(idx));
                     idx++;
-                    io.writeln(" " + (i) + ") " + opcio);
+                    io.writeln("Opcions:");
+                    for (int i = 0; i < numOpcions; i++) {
+                        String opcio = preguntes.get(idx);
+                        idx++;
+                        io.writeln(" " + (i) + ") " + opcio);
+                    }
+                    io.write("Introdueix la teva resposta (números separats per comes si és múltiple): ");
+                    String resposta = io.readline();
+                    respostesUsuari.add(resposta);
                 }
-                io.write("Introdueix la teva resposta (números separats per comes si és múltiple): ");
-                String resposta = io.readline();
-                respostesUsuari.add(resposta);
+                else if (tipus.equals("NUMERICA")) { //NUMERICA
+                    io.write("Introdueix la teva resposta numèrica: ");
+                    String resposta = io.readline();
+                    respostesUsuari.add(resposta);
+                }
+                else if (tipus.equals("LLIURE")) { //LLIURE
+                    io.write("Introdueix la teva resposta lliure: ");
+                    String resposta = io.readline();
+                    respostesUsuari.add(resposta);
+                }
+                idx++;
             }
-            else if (tipus.equals("NUMERICA")) { //NUMERICA
-                io.write("Introdueix la teva resposta numèrica: ");
-                String resposta = io.readline();
-                respostesUsuari.add(resposta);
-            }
-            else if (tipus.equals("LLIURE")) { //LLIURE
-                io.write("Introdueix la teva resposta lliure: ");
-                String resposta = io.readline();
-                respostesUsuari.add(resposta);
-            }
-            idx++;
+            ctrl.respondreEnquesta(idEnquesta, idUsuari, respostesUsuari);
+            io.writeln("\n[OK] Enquesta resposta correctament!\n");
         }
-        ctrl.respondreEnquesta(idEnquesta, idUsuari, respostesUsuari);
-        io.writeln("\n[OK] Enquesta resposta correctament!\n");
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
+        }
     }
+
 
     // ==================== CREACIÓ MANUAL D'ENQUESTA ====================
     /**
@@ -151,57 +171,73 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no es pot crear
      */
-    public static void crearEnquestaManual(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("\n--- CREACIÓ D'ENQUESTA (MANUAL) ---");
+    public static void crearEnquestaManual(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("\n--- CREACIÓ D'ENQUESTA (MANUAL) ---");
 
-        io.write("Títol: ");
-        String titol = io.readline();
+            io.write("Títol: ");
+            String titol = io.readline();
 
-        io.write("Descripció: ");
-        String descripcio = io.readline();
+            io.write("Descripció: ");
+            String descripcio = io.readline();
 
-        io.write("ID del creador (enter): ");
-        int idCreador = io.readint();
-        io.readline();
-
-        io.write("Nombre de preguntes: ");
-        int numPreguntes = io.readint();
-        io.readline();
-
-        List<String> preguntes = new ArrayList<>();
-
-        for (int i = 0; i < numPreguntes; i++) {
-            int index = i + 1;
-
-            io.writeln("\nPregunta " + index + ":");
-            io.writeln(" Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)");
-            io.write("   Introdueix el tipus: ");
-            int tipus = io.readint();
+            io.write("ID del creador (enter): ");
+            int idCreador = io.readint();
             io.readline();
 
-            io.write("   Text de la pregunta: ");
-            String textPregunta = io.readline();
+            io.write("Nombre de preguntes: ");
+            int numPreguntes = io.readint();
+            io.readline();
+            while (numPreguntes <= 0) {
+                io.writeln("[ERROR] El nombre de preguntes ha de ser major que 0.");
+                io.write("Nombre de preguntes: ");
+                numPreguntes = io.readint();
+                io.readline();
+            }
 
-            preguntes.add(Integer.toString(tipus));
-            preguntes.add(textPregunta);
+            List<String> preguntes = new ArrayList<>();
 
-            if (tipus == 1 || tipus == 2 || tipus == 3) {
-                io.write("   Nombre d'opcions: ");
-                int numOpcions = io.readint();
+            for (int i = 0; i < numPreguntes; i++) {
+                int index = i + 1;
+
+                io.writeln("\nPregunta " + index + ":");
+                io.writeln(" Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)");
+                io.write("   Introdueix el tipus: ");
+                int tipus = io.readint();
                 io.readline();
 
-                preguntes.add(Integer.toString(numOpcions));
-                for (int j = 0; j < numOpcions; j++) {
-                    io.write("     Opció " + (j + 1) + ": ");
-                    String opcio = io.readline();
-                    preguntes.add(opcio);
+                io.write("   Text de la pregunta: ");
+                String textPregunta = io.readline();
+
+                preguntes.add(Integer.toString(tipus));
+                preguntes.add(textPregunta);
+
+                if (tipus == 1 || tipus == 2 || tipus == 3) {
+                    io.write("   Nombre d'opcions: ");
+                    int numOpcions = io.readint();
+                    io.readline();
+
+                    preguntes.add(Integer.toString(numOpcions));
+                    for (int j = 0; j < numOpcions; j++) {
+                        io.write("     Opció " + (j + 1) + ": ");
+                        String opcio = io.readline();
+                        preguntes.add(opcio);
+                    }
                 }
             }
-        }
 
-        ctrl.crearEnquesta(titol, descripcio, idCreador, preguntes);
-        io.writeln("\n[OK] Enquesta creada correctament!\n");
+            ctrl.crearEnquesta(titol, descripcio, idCreador, preguntes);
+            io.writeln("\n[OK] Enquesta creada correctament!\n");
+        }
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
+        }
     }
+
 
     // ==================== CREACIÓ DES DE FITXER ====================
     /**
@@ -210,31 +246,32 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no es pot crear
      */
-    public static void crearEnquestaDesDeFitxer(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("\n--- CREACIÓ D'ENQUESTA DES DE FITXER ---");
-        io.writeln("Format esperat del fitxer:");
-        io.writeln("  línia 1: títol");
-        io.writeln("  línia 2: descripció");
-        io.writeln("  línia 3: id creador (enter)");
-        io.writeln("  línia 4: nombre de preguntes");
-        io.writeln("  després, per cada pregunta:");
-        io.writeln("    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE))");
-        io.writeln("    línia: text pregunta");
-        io.writeln("    si tipus és 1,2,3:");
-        io.writeln("       línia: nombre d'opcions");
-        io.writeln("       següents línies: cada opció\n");
+    public static void crearEnquestaDesDeFitxer(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("\n--- CREACIÓ D'ENQUESTA DES DE FITXER ---");
+            io.writeln("Format esperat del fitxer:");
+            io.writeln("  línia 1: títol");
+            io.writeln("  línia 2: descripció");
+            io.writeln("  línia 3: id creador (enter)");
+            io.writeln("  línia 4: nombre de preguntes");
+            io.writeln("  després, per cada pregunta:");
+            io.writeln("    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE))");
+            io.writeln("    línia: text pregunta");
+            io.writeln("    si tipus és 1,2,3:");
+            io.writeln("       línia: nombre d'opcions");
+            io.writeln("       següents línies: cada opció\n");
 
-        io.writeln("Introdueix el nombre de fitxer d'enquesta (sense extensió): ");
-        String fitxer = io.readword().trim();
-        String path = Base_path + File.separator + fitxer + ".txt";
-        io.writeln("Llegint fitxer: " + path);
-        File f = new File(path);
-        if (!f.exists()) {
-            io.writeln("No s'ha trobat el fitxer!");
-            return;
-        }
+            io.writeln("Introdueix el nombre de fitxer d'enquesta (sense extensió): ");
+            String fitxer = io.readword().trim();
+            String path = Base_path + File.separator + fitxer + ".txt";
+            io.writeln("Llegint fitxer: " + path);
+            File f = new File(path);
+            if (!f.exists()) {
+                io.writeln("No s'ha trobat el fitxer!");
+                return;
+            }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            BufferedReader br = new BufferedReader(new FileReader(path));
             String titol = llegirObligatori(br, "Falta títol");
             String descripcio = llegirObligatori(br, "Falta descripció");
 
@@ -271,16 +308,19 @@ public class Utils {
                         preguntes.add(opcio);
                     }
                 }
+                ctrl.crearEnquesta(titol, descripcio, idCreador, preguntes);
+                io.writeln("\n[OK] Enquesta creada correctament des del fitxer!\n");
             }
-
-            ctrl.crearEnquesta(titol, descripcio, idCreador, preguntes);
-            io.writeln("\n[OK] Enquesta creada correctament des del fitxer!\n");
-
-        } catch (IOException e) {
-            io.writeln("\n[ERROR] No s'ha pogut llegir el fitxer: " + e.getMessage() + "\n");
-        } catch (IllegalArgumentException e) {
-            io.writeln("\n[ERROR FORMAT FITXER] " + e.getMessage() + "\n");
         }
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
+        }
+
+
     }
 
     // ==================== IMPORTAR RESPOSTES ====================
@@ -290,28 +330,37 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
-    public static void importarRespostes(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("\n--- IMPORTAR RESPOSTES DES DE FITXER ---");
-        io.write("Introdueix l'ID de l'usuari que respon l'enquesta: ");
-        int idUsuari = io.readint();
-        io.readline();
+    public static void importarRespostes(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("\n--- IMPORTAR RESPOSTES DES DE FITXER ---");
+            io.write("Introdueix l'ID de l'usuari que respon l'enquesta: ");
+            int idUsuari = io.readint();
+            io.readline();
 
-        io.write("Introdueix l'ID de l'enquesta: ");
-        int idEnquesta = io.readint();
-        io.readline();
+            io.write("Introdueix l'ID de l'enquesta: ");
+            int idEnquesta = io.readint();
+            io.readline();
 
-        io.write("Introdueix el nombre de fitxer de respostes (sense extensió): ");
-        String fitxer = io.readword().trim();
-        String path = Base_path + File.separator + fitxer + ".txt";
-        io.writeln("Llegint fitxer: " + path);
-        File f = new File(path);
-        if (!f.exists()) {
-            io.writeln("No s'ha trobat el fitxer!");
-            return;
+            io.write("Introdueix el nombre de fitxer de respostes (sense extensió): ");
+            String fitxer = io.readword().trim();
+            String path = Base_path + File.separator + fitxer + ".txt";
+            io.writeln("Llegint fitxer: " + path);
+            File f = new File(path);
+            if (!f.exists()) {
+                io.writeln("No s'ha trobat el fitxer!");
+                return;
+            }
+
+            int numRespostesImportades = ctrl.importarRespostes(idUsuari, path, idEnquesta);
+            io.writeln("\n[OK] Respostes importades correctament! Total respostes importades: " + numRespostesImportades + "\n");
         }
-
-        int numRespostesImportades = ctrl.importarRespostes(idUsuari, path, idEnquesta);
-        io.writeln("\n[OK] Respostes importades correctament! Total respostes importades: " + numRespostesImportades + "\n");
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
+        }
     }
 
 
@@ -322,22 +371,29 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
-    public static void exportarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introdueix l'ID de l'enquesta a exportar: ");
-        int id = io.readint();
+    public static void exportarEnquesta(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("Introdueix l'ID de l'enquesta a exportar: ");
+            int id = io.readint();
 
-        io.write("Introdueix el fitxer on es guardar (sense extencio): ");
-        String fitxer = io.readword();
-        String path = Base_path + File.separator + fitxer + ".txt";
-        List<String> export = ctrl.exportarEnquesta(id);
-        if (export == null) {
-            io.writeln("Enquesta no trobada.");
-            return;
+            io.write("Introdueix el fitxer on es guardar (sense extencio): ");
+            String fitxer = io.readword();
+            String path = Base_path + File.separator + fitxer + ".txt";
+            List<String> export;
+            export = ctrl.exportarEnquesta(id);
+            writeAllLines(path, export);
+            io.writeln("Enquesta exportada correctament a: " + path);
         }
-
-        writeAllLines(path, export);
-        io.writeln("Enquesta exportada correctament a: " + path);
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
+        }
     }
+
+
 
     // ==================== CONSULTAR PERFIL USUARI ====================
     /**
@@ -346,12 +402,20 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'usuari no existeix
      */
-    public static void consultarPerfil(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introduiex l'Id del usuari");
-        int idUsuari = io.readint();
-        List<String> perfil = ctrl.consultarPerfil(idUsuari);
-        for (String line : perfil) {
-            io.writeln(line);
+    public static void consultarPerfil(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("Introduiex l'Id del usuari");
+            int idUsuari = io.readint();
+            List<String> perfil = ctrl.consultarPerfil(idUsuari);
+            for (String line : perfil) {
+                io.writeln(line);
+            }
+        }catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
         }
     }
 
@@ -372,12 +436,23 @@ public class Utils {
     }
 
     // ==================== CONSULTAR RESULTATS ENQUESTA ====================
-    public static void consultarRespostesEnquesta(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introdueix l'ID de l'enquesta a consultar les respostes: ");
-        int id = io.readint();
-        List<String> respostes = ctrl.consultarRespostesEnquesta(id);
-        for (String line : respostes) {
-            io.writeln(line);
+
+
+    public static void consultarRespostesEnquesta(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("Introdueix l'ID de l'enquesta a consultar les respostes: ");
+            int id = io.readint();
+            List<String> respostes = ctrl.consultarRespostesEnquesta(id);
+            for (String line : respostes) {
+                io.writeln(line);
+            }
+        }
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
         }
     }
 

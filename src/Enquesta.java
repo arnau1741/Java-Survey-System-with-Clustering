@@ -59,10 +59,9 @@ public class Enquesta {
         // for (String r : respostesStr) {
         for (int index = 0; index < respostesStr.size(); index++) {
             String r = respostesStr.get(index);
-            System.out.println("entra a respuesta de String a objetos Resposta: " + r);
             // int index = respostesStr.indexOf(r);
             int tipusPregunta = preguntes.get(index).getTipus();
-            System.out.println("Tipus de pregunta: " + tipusPregunta);
+
             if (tipusPregunta == 0) {// NUMERICA
                 try {
                     RespostaNumerica respostaNumerica = new RespostaNumerica(Double.parseDouble(r));
@@ -76,15 +75,10 @@ public class Enquesta {
                 respostaUnica.setResposta(Integer.parseInt(r));
                 respostesObj.add(respostaUnica);
             } else if (tipusPregunta == 2) { // ORDENADA
-                System.out.println("entra");
                 int numOpcions = preguntes.get(index).getNumOpcions();
-                System.out.println("numOpcions: " + numOpcions);
                 RespostaOrdenada respostaOrdenada = new RespostaOrdenada(numOpcions);
-                System.out.println("r: " + r);
                 respostaOrdenada.setResposta(Integer.parseInt(r));
-                System.out.println(respostaOrdenada.getResposta());
                 respostesObj.add(respostaOrdenada);
-                System.out.println("afegida");
             } else if (tipusPregunta == 3) {// MULTIPLE
                 System.out.println("entra");
                 int numOpcions = preguntes.get(index).getNumOpcions();

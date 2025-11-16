@@ -141,7 +141,7 @@ public class Pregunta {
      * @param idUsuari identificador de l'usuari que fa la resposta (-1 si no està registrat)
      * @return 1 si s'ha afegit correctament, 0 si ja existeix una resposta per aquest usuari
      */
-    public Integer addResposta(Resposta resposta, int idUsuari) {
+    public Integer addResposta(Resposta resposta, int idUsuari) throws IllegalArgumentException {
         if (idUsuari == -1) { // Usuari no registrat
             respostes.put(minKeyRespostes, resposta);
             minKeyRespostes--;
@@ -163,7 +163,7 @@ public class Pregunta {
             return 1;
         }
         if (respostes.containsKey(idUsuari)) {
-            return 0; // Ja existeix una resposta per aquest usuari
+            throw new IllegalArgumentException("Ja existeix una resposta per l'usuari amb id " + idUsuari);
         }
         respostes.put(idUsuari, resposta);
         if (tipus == 0) { // NUMERICA
