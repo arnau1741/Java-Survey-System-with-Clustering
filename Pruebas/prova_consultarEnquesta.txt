@@ -17,6 +17,12 @@ Prova consultar_enquesta
 Prova consultar_enquesta
 3
 2
+7
+0
+prova_crear_enquesta_sortida1
+7
+1
+prova_crear_enquesta_sortida2
 0
 
 

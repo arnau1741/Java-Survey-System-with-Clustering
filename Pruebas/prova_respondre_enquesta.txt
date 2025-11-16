@@ -9,4 +9,7 @@ enquesta_musica
 guitarra
 5
 0
+7
+0
+respondre_enquesta_sortida1
 0

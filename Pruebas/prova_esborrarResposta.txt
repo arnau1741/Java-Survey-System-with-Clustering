@@ -30,5 +30,8 @@ bfs
 14
 0
 102
+7
+0
+esborrarResposta_sortida1
 0
 

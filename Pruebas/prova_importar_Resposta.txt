@@ -8,4 +8,7 @@ importarRespostesCafe
 16
 5
 0
+7
+0
+importar_resposta_sortida1
 0
