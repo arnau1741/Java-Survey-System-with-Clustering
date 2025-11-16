@@ -180,8 +180,8 @@ public class CtrlDomini {
         // esborrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
         // esborrar d'usuaris
-        Usuari usuari = ctrlDominiMantUsuari.getUsuari(idUsuari);
-        usuari.eliminarEnquesta(idEnquesta);
+        //Usuari usuari = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        //usuari.eliminarEnquesta(idEnquesta);
     }
 
     /**

@@ -19,7 +19,7 @@ public class Main {
                 switch (opcio) {
                     case 0 -> io.writeln("\nSortint...");
                     case 1 -> Utils.crearEnquestaManual(io, ctrl); //prueba hecha
-                    case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl);
+                    case 2 -> Utils.crearEnquestaDesDeFitxer(io, ctrl); //prueba hecha
                     case 3 -> Utils.consultarEnquesta(io, ctrl); //prueba hecha
                     case 4 -> Utils.consultarEnquestaAmbPreguntes(io, ctrl); //prueba hecha
                     case 5 -> Utils.consultarRespostesEnquesta(io, ctrl); //prueba hecha
