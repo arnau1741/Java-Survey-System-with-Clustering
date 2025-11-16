@@ -1,4 +1,3 @@
-
 import java.util.List;
 import java.util.ArrayList;
 
@@ -20,7 +19,7 @@ public class RespostaMultiple extends Resposta{
      * @param seleccionat llista d'opcions seleccionades
      * @return 1 si l'operació és correcta, 0 si hi ha una opció invàlida
      */
-    public int selecciona (List<Integer> seleccionat) {
+    public int selecciona(List<Integer> seleccionat) {
         this.respostes = new ArrayList<>();
         for (Integer opcio : seleccionat) {
             if (opcio < 0 || opcio >= numOpcions) {
