@@ -225,9 +225,8 @@ public class Utils {
                     }
                 }
             }
-
-            ctrl.crearEnquesta(titol, descripcio, idCreador, preguntes);
             io.writeln("\n[OK] Enquesta creada correctament!\n");
+            ctrl.crearEnquesta(titol, descripcio, idCreador, preguntes);
         }
         catch (Exception e){
             try {
@@ -308,9 +307,9 @@ public class Utils {
                         preguntes.add(opcio);
                     }
                 }
-                ctrl.crearEnquesta(titol, descripcio, idCreador, preguntes);
-                io.writeln("\n[OK] Enquesta creada correctament des del fitxer!\n");
             }
+            ctrl.crearEnquesta(titol, descripcio, idCreador, preguntes);
+            io.writeln("\n[OK] Enquesta creada correctament des del fitxer!\n");
         }
         catch (Exception e){
             try {
@@ -426,12 +425,21 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
-    public static void consultarEnquestaAmbPreguntes(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introdueix l'ID de l'enquesta a consultar: ");
-        int id = io.readint();
-        List<String> info = ctrl.consultarEnquestaAmbPreguntes(id);
-        for (String line : info) {
-            io.writeln(line);
+    public static void consultarEnquestaAmbPreguntes(inout io, CtrlDomini ctrl)  {
+        try{
+            io.writeln("Introdueix l'ID de l'enquesta a consultar: ");
+            int id = io.readint();
+            List<String> info = ctrl.consultarEnquestaAmbPreguntes(id);
+            for (String line : info) {
+                io.writeln(line);
+            }
+        }
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
         }
     }
 

@@ -107,11 +107,12 @@ public class CtrlDominiMantEnquesta {
         Enquesta novaEnquesta;
         try{
             novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntesObj);
+            addEnquesta(novaEnquesta);
+            return preguntesObj.size();
         } catch (IllegalArgumentException e) {
             throw new InvalidFormatEnquesta("No s'ha pogut crear l'enquesta: " + e.getMessage());
         }
-        addEnquesta(novaEnquesta);
-        return preguntesObj.size();
+
     }
 
 
