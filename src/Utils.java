@@ -544,23 +544,27 @@ public class Utils {
 
         io.writeln("Introdueix tipus (nomes numero):");
         io.writeln(" - 0:Numerica");
-        io.writeln(" - 1:Unica");
+        io.writeln(" - 1:No ordenada Unica");
         io.writeln(" - 2:Ordenada");
-        io.writeln(" - 3:Multiple");
+        io.writeln(" - 3:No ordenada Multiple");
         io.writeln(" - 4:Lliure");
         String tipus = io.readword();
 
         novaPregunta.add(text);
         novaPregunta.add(tipus);
 
-        if(!tipus.equals("0") || !tipus.equals("4")) {
-            io.writeln("Introdueix el numero d'opcions");
-            int numero = io.readint();
-            io.writeln("Indica les opcions");
-            for(int i = 0; i < numero; i++) {
-                novaPregunta.add(io.readword());
+        if (tipus.equals("1") || tipus.equals("2") || tipus.equals("3")) {
+            io.writeln("Introdueix el nombre d'opcions");
+            int numOpcions = io.readint();
+            novaPregunta.add(Integer.toString(numOpcions));
+            for (int i = 0; i < numOpcions; i++) {
+                io.writeln("Introdueix la opcio " + (i + 1));
+                String opcio = io.readword();
+                novaPregunta.add(opcio);
             }
         }
+
+
 
         int resultat = ctrl.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
         if (resultat == 1) {
