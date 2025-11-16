@@ -15,7 +15,6 @@ public class TestRespostes {
     @Test
     public void testRespostaNumerica() {
         RespostaNumerica rn = new RespostaNumerica(7.5);
-        //rn.validar();
         assertTrue(rn.EsContestat());
         assertEquals("7.5", rn.getText(null));
         assertEquals(7.5, rn.getValor(), 0.001);
@@ -31,7 +30,6 @@ public class TestRespostes {
     @Test
     public void testRespostaLliure() {
         RespostaLliure rl = new RespostaLliure("Comentari de prova");
-        //rl.validar();
         assertTrue(rl.EsContestat());
         assertEquals("Comentari de prova", rl.getText(null));
     }
@@ -60,7 +58,6 @@ public class TestRespostes {
     public void testRespostaUnica() {
         RespostaUnica ru = new RespostaUnica(3);
         ru.setResposta(1); // Selecciona opció 1
-        //ru.validar();
         assertTrue(ru.EsContestat());
         assertEquals(1, ru.getResposta());
         assertEquals(3, ru.getNumOpcions());
@@ -181,7 +178,7 @@ public class TestRespostes {
     @Test
     public void testRespostaLliureTextCaractersSpecials() {
         // Text amb caràcters especials
-        // Es te pensat en fer una excepcio si facilita al Kmeans, si no, no es fa
+        // tenim pensat fer una excepcio si facilita al Kmeans, si no, no es fa
         String textEspecial = "Resposta amb ñ, ç, àèìòù i símbols: !@#$%^&*()";
         RespostaLliure rl = new RespostaLliure(textEspecial);
         assertTrue(rl.EsContestat());
@@ -228,7 +225,7 @@ public class TestRespostes {
         RespostaMultiple rm = new RespostaMultiple(3);
         List<Integer> buida = new ArrayList<>();
         int resultat = rm.selecciona(buida);
-        //En ser buida no s'executa i per tant es cert i s'executa amb exit
+        // En ser buida no s'executa i, per tant, es cert i s'executa amb exit
         assertEquals(1, resultat);
         assertFalse(rm.EsContestat()); // No hi ha seleccions
         assertTrue(rm.getRespostes().isEmpty());
@@ -243,5 +240,4 @@ public class TestRespostes {
         assertEquals(1, resultat);
         assertTrue(rm.EsContestat());
     }
-
 }
