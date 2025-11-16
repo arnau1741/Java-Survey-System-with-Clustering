@@ -110,9 +110,7 @@ public class Utils {
         }
     }
 
-
     // ==================== Funcionalitats ====================
-
 
     //=================== RESPONDRE ENQUESTA ====================
     /**
@@ -180,7 +178,6 @@ public class Utils {
             }
         }
     }
-
 
     // ==================== CREACIÓ MANUAL D'ENQUESTA ====================
     /**
@@ -254,7 +251,6 @@ public class Utils {
             }
         }
     }
-
 
     // ==================== CREACIÓ DES DE FITXER ====================
     /**
@@ -380,7 +376,6 @@ public class Utils {
         }
     }
 
-
     // ==================== EXPORTAR ENQUESTA ====================
     /**
      * Exporta una enquesta a un fitxer
@@ -409,8 +404,6 @@ public class Utils {
             }
         }
     }
-
-
 
     // ==================== CONSULTAR PERFIL USUARI ====================
     /**
@@ -462,8 +455,6 @@ public class Utils {
     }
 
     // ==================== CONSULTAR RESULTATS ENQUESTA ====================
-
-
     public static void consultarRespostesEnquesta(inout io, CtrlDomini ctrl) {
         try{
             io.writeln("Introdueix l'ID de l'enquesta a consultar les respostes: ");
