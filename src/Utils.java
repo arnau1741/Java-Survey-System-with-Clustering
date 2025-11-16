@@ -652,10 +652,10 @@ public class Utils {
             io.writeln();
             io.writeln("Quina pregunta vols modificar? (introdueix el número de pregunta):");
             int idxPregunta = io.readint();
-            io.writeln("Introdueix la nova resposta:");
+            io.writeln("Introdueix la nova resposta: (per múltiples respostes, separa-les per comes)");
             String novaResposta = io.readword();
             int codierr = ctrl.modificarRespostaEnquesta(idEnquesta, idUsuari, idxPregunta, novaResposta);
-            if (codierr == 0) {
+            if (codierr == 1) {
                 io.writeln("Resposta modificada correctament.");
             } else {
                 io.writeln("Error en modificar la resposta. Codi d'error: " + codierr);

@@ -332,4 +332,13 @@ public class Enquesta {
             System.out.println("Pregunta " + (i+1) + ": " + p.getText() + " (Tipus: " + p.getTipus() + ")");
         }
     }
+
+    public void modificarRespostaUsuari(int idUsuari, int idxPregunta, Resposta novaResposta) throws UsuariNoHaResposEnquesta {
+        Pregunta p = preguntes.get(idxPregunta);
+        Map<Integer, Resposta> respostesMap = p.getRespostes();
+        if (!respostesMap.containsKey(idUsuari)) {
+            throw new UsuariNoHaResposEnquesta("L'usuari amb id " + idUsuari + " no ha respost aquesta pregunta.");
+        }
+        respostesMap.put(idUsuari, novaResposta);
+    }
 }

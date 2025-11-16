@@ -551,7 +551,27 @@ public class CtrlDomini {
                     return false; // No és vàlida
                 }
             case 1: // UNICA
+                try {
+                    int idx = Integer.parseInt(resposta);
+                    if (idx >= 0 && idx < opcions.size()) {
+                        return true; // És vàlida
+                    } else {
+                        return false; // No és vàlida
+                    }
+                } catch (NumberFormatException e) {
+                    return false; // No és vàlida
+                }
             case 2: // ORDENADA
+                try {
+                    int idx = Integer.parseInt(resposta);
+                    if (idx >= 0 && idx < opcions.size()) {
+                        return true; // És vàlida
+                    } else {
+                        return false; // No és vàlida
+                    }
+                } catch (NumberFormatException e) {
+                    return false; // No és vàlida
+                }
             case 3: // MULTIPLE
                 if (opcions.contains(resposta)) {
                     return true; // És vàlida
@@ -610,31 +630,29 @@ public class CtrlDomini {
         }
 
         Pregunta p = enq.getPreguntesObj().get(idxPregunta);
+        int tipus = p.getTipus();
         if (!comprovarRespostaValid(p, novaResposta)) {
             throw new InvalidFormatResposta("La nova resposta '" + novaResposta + "' no és vàlida per a la pregunta: " + p.getText());
         }
 
-        int tipus = p.getTipus();
-        if(comprovarRespostaValid(p, novaResposta)){
-            throw new InvalidFormatResposta("La nova resposta '" + novaResposta + "' no és vàlida per a la pregunta: " + p.getText());
-        }
+
         if (tipus == 0) {
             // numerica: convertir a double
             double valor = Double.parseDouble(novaResposta);
             Resposta r = new RespostaNumerica(valor);
-            respostes.set(idxPregunta, r);
+            enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
         }
         else if (tipus == 1) {
             // unica: convertir a int
             int idxOpcio = p.getOpcions().indexOf(novaResposta);
             RespostaUnica r = new RespostaUnica(idxOpcio);
-            respostes.set(idxPregunta, r);
+            enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
         }
         else if (tipus == 2) {
             // ordenada: convertir a int
             int idxOpcio = p.getOpcions().indexOf(novaResposta);
             RespostaOrdenada r = new RespostaOrdenada(idxOpcio);
-            respostes.set(idxPregunta, r);
+            enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
         }
         else if (tipus == 3) {
             // multiple: convertir a llista d'int
@@ -646,12 +664,12 @@ public class CtrlDomini {
             }
             RespostaMultiple r = new RespostaMultiple(p.getNumOpcions());
             r.selecciona(idxOpcions);
-            respostes.set(idxPregunta, r);
+            enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
         }
         else if (tipus == 4) {
             // lliure: text
             RespostaLliure r = new RespostaLliure(novaResposta);
-            respostes.set(idxPregunta, r);
+            enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
         }
 
         return 1; // Èxit
