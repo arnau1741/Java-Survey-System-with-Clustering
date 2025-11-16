@@ -14,4 +14,7 @@ Opcio A
 Opcio B
 Opcio C
 16
+7
+0
+crear_enquesta_manual_1
 0

@@ -9,4 +9,10 @@ enquesta_satisfaccion
 1
 101
 16
+7
+0
+eliminarEnquesta_sortida_1
+7
+2
+eliminarEnquesta_sortida_2
 0

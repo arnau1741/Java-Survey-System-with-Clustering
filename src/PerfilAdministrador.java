@@ -7,7 +7,6 @@ public class PerfilAdministrador extends Usuari
     private List<Enquesta> enquestesRealitzada;
 
     // Constructor
-
     /**
      * Constructor de PerfilAdministrador
      * @param idUsuari de l' usuari
@@ -145,5 +144,4 @@ public class PerfilAdministrador extends Usuari
         eliminarEnquestaAssignada(idEnquesta);
         eliminarEnquestaRealitzada(idEnquesta);
     }
-
 }
