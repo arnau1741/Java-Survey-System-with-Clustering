@@ -50,46 +50,13 @@ public class KMeans{
         if (k > n) throw new KmeansExcepcio("k can not be greater than the number of points");
 
         centroids = initCentroidsRandom(data, k);
-        System.out.println("Initial centroids:");
-        for (List<Resposta> centroid : centroids) {
-            for (Resposta r : centroid) {
-                if (r != null) {
-                    System.out.println("entra");
-                    System.out.println(data.getPreguntesObj().get(centroid.indexOf(r)).getOpcions());
-                    //mostrar tipus de resposta
-                    System.out.println(data.getPreguntesObj().get(centroid.indexOf(r)).getTipus());
-                    System.out.print(r.getText(data.getPreguntesObj().get(centroid.indexOf(r)).getOpcions()) + " | ");
-                } else {
-                    System.out.print("null | ");
-                }
-            }
-            System.out.println();
-        }
 
         labels = new int[n];
         Arrays.fill(labels, -1);
 
         for (int iter = 0; iter < maxIterations; iter++) {
             boolean changed = assignClusters(data);
-            System.out.println("Labels:");
-            for (int label : labels) {
-                System.out.print(label + " | ");
-            }
-            System.out.println();
             updateCentroids(data, dim);
-
-            System.out.println("Iteration " + (iter + 1) + " completed.");
-            System.out.println("Centroids:");
-            for (List<Resposta> centroid : centroids) {
-                for (Resposta r : centroid) {
-                    if (r != null) {
-                        System.out.print(r.getText(data.getPreguntesObj().get(centroid.indexOf(r)).getOpcions()) + " | ");
-                    } else {
-                        System.out.print("null | ");
-                    }
-                }
-                System.out.println();
-            }
 
             if (!changed) {
                 break;
@@ -162,8 +129,6 @@ public class KMeans{
      * @return true si alguna etiqueta ha canviat, false en cas contrari
      */
     private boolean assignClusters(Enquesta data) {
-        System.out.println("Assigning clusters...");
-        System.out.println();
         boolean changed = false;
         int numRespostes = data.getNumRespostes();
         for (int i = 0; i < numRespostes; i++) {
@@ -174,19 +139,6 @@ public class KMeans{
                 labels[i] = newLabel;
                 changed = true;
             }
-
-            //mostrar les respostes i la seva assignacio a clúster
-            System.out.print("Punt " + i + ": ");
-            for (Resposta r : point) {
-                if (r != null) {
-                    System.out.print(r.getText(data.getPreguntesObj().get(point.indexOf(r)).getOpcions()) + " | ");
-                } else {
-                    System.out.print("null | ");
-                }
-            }
-            System.out.print("-> Cluster: " + newLabel);
-            System.out.println();
-
         }
         return changed;
     }
@@ -199,15 +151,11 @@ public class KMeans{
      * @return índex del centroid més proper
      */
     private int closestCentroid(List<Resposta> point, List<List<Resposta>> centroids, List<Pregunta> preguntes) {
-        System.out.println("Calculant centroid més proper...");
         int bestIndex = 0;
         double bestDist = distance(point, centroids.get(0), preguntes);
-        System.out.println("Distàncies al punt:");
-        System.out.println("Centroid 0: " + bestDist);
 
         for (int c = 1; c < centroids.size(); c++) {
             double dist = distance(point, centroids.get(c), preguntes);
-            System.out.println("Centroid " + c + ": " + dist);
             if (dist < bestDist) {
                 bestDist = dist;
                 bestIndex = c;
@@ -391,6 +339,12 @@ public class KMeans{
         return 1.0 - ((double) interseccioCount / union.size());
     }
 
+    /**
+     * Calcula la distància de levenshtein entre dues respostes lliures
+     * @param a resposta lliure a
+     * @param b resposta lliure b
+     * @return distància entre a i b usant DP
+     */
     private double levenshteinDistance(String a, String b) {
         int[][] dp = new int[a.length() + 1][b.length() + 1];
 
@@ -414,6 +368,12 @@ public class KMeans{
         return dp[a.length()][b.length()];
     }
 
+    /**
+     * Calcula la distància entre dues respostes lliures
+     * @param a resposta lliure a
+     * @param b resposta lliure b
+     * @return distància entre a i b usant l'algorisme de Levenshtein
+     */
     public double distanciaLliure(RespostaLliure a, RespostaLliure b) {
         int lenA = a.length();
         int lenB = b.length();
@@ -473,7 +433,11 @@ public class KMeans{
         return sum;
     }
 
-//////////////////////// Funcions distancia locals /////////////////////////////// 
+/**
+ * Calcula el coeficient de Silhouete per a l'enquesta donada
+ * @param data l'enquesta amb les respostes 
+ * @return coeficient de Silhouete
+ */
     private double coeficientSilhouete(Enquesta data){
         if (!fet) {
             throw new IllegalStateException("Call fit() first.");
