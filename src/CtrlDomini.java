@@ -199,7 +199,7 @@ public class CtrlDomini {
 
     /**
      * Funcio per a esborrar les respostes d'una enquesta d'un enquestat
-     * @param idUsuari identificador de l'usuari que esborra la resposta
+     * @param idEnquesta identificador de l'usuari que esborra la resposta
      * @param idEnquesta identificador de l'enquesta
      * @param idEnquestat identificador de l'usuari que ha respost l'enquesta
      */
@@ -318,55 +318,35 @@ public class CtrlDomini {
     }
 
     /**
-     * Funcio per a mostrar les enquestes amb preguntes i respostes
+     * Funcio que consulta i retorna una llista d'una esquesta idEnquesta amb les seves preguntes i respostes
+     * @return una llista d'una esquesta idEnquesta amb les seves preguntes i respostes
+     * @throws EnquestaNoExisteixException
      */
-    public void mostrarEnquestesAmbPreguntesIRespostes() {
+    public List<String> consultarEnquestesAmbPreguntesIRespostes() throws EnquestaNoExisteixException {
         int numEnquestes = ctrlDominiMantEnquesta.getNumEnquestes();
-        System.out.println("Número d'enquestes: " + numEnquestes);
+        List<String> result = new ArrayList<>();
         Map<Integer, Enquesta> enquestes = ctrlDominiMantEnquesta.getEnquestesObj();
-        for (Integer i : enquestes.keySet()) {
-            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(i);
+        result.add("Numero d'enquesta: " + numEnquestes);
+        for (Integer idEnquesta : enquestes.keySet()) {
+            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+            if (enq == null) {
+                throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+            }
 
-            System.out.println("ID creador: " + enq.getId() + ", Títol: " + enq.getTitol() + ", Descripció: " + enq.getDescripcio());
             List<Pregunta> preguntes = enq.getPreguntesObj();
-            System.out.println("Preguntes i respostes:");
             for (Pregunta p : preguntes) {
-                System.out.println("- Pregunta: " + p.getText());
-                Map<Integer, Resposta> respostes = p.getRespostes();
+                result.add("Pregunta: " + p.getText());
                 List<String> opcions = p.getOpcions();
-                if (opcions != null){
+                if (opcions != null) {
+                    result.add("Opcions:");
                     for (String opcio : opcions) {
-                        System.out.println("  * Opció: " + opcio);
+                        result.add("  * Opció: " + opcio);
                     }
                 }
+                Map<Integer, Resposta> respostes = p.getRespostes();
                 for (Map.Entry<Integer, Resposta> entry : respostes.entrySet()) {
-                    System.out.println("  - Usuari ID: " + entry.getKey() + ", Resposta: " + entry.getValue().getText(opcions));
+                    result.add("  - Usuari ID: " + entry.getKey() + ", Resposta: " + entry.getValue().getText(opcions));
                 }
-            }
-        }
-    }
-    public List<String> consultarEnquestaAmbPreguntesIRespostes(int idEnquesta) throws EnquestaNoExisteixException {
-        List<String> result = new ArrayList<>();
-        result = consultarEnquestaAmbPreguntes(idEnquesta);
-
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        if (enq == null) {
-            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
-        }
-
-        List<Pregunta> preguntes = enq.getPreguntesObj();
-        for (Pregunta p : preguntes) {
-            result.add("Pregunta: " + p.getText());
-            List<String> opcions = p.getOpcions();
-            if (opcions != null){
-                result.add("Opcions:");
-                for (String opcio : opcions) {
-                    result.add("  * Opció: " + opcio);
-                }
-            }
-            Map<Integer, Resposta> respostes = p.getRespostes();
-            for (Map.Entry<Integer, Resposta> entry : respostes.entrySet()) {
-                result.add("  - Usuari ID: " + entry.getKey() + ", Resposta: " + entry.getValue().getText(opcions));
             }
         }
         return result;

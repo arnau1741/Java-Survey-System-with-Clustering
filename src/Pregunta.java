@@ -216,6 +216,10 @@ public class Pregunta {
         minKeyRespostes = -1;
     }
 
+    /**
+     * Funcio que retorna el contingut de la pregunta en String
+     * @return la informacio de la pregunta (text i tipus)
+     */
     @Override
     public String toString() {
         return "Pregunta Text: " + text + ", Tipus: " + opcions.get(tipus);

@@ -28,7 +28,7 @@ public class Utils {
         io.writeln(" 6) Respon enquesta");
         io.writeln(" 7) Exportar enquesta");
         io.writeln(" 8) Importar respostes");
-        io.writeln(" 9) Exportar respostes");
+        io.writeln(" 9) Exportar respostes (No usar)");
         io.writeln(" 10) Consultar usuari");
         io.writeln(" 11) Modificar enquesta");
         io.writeln(" 12) Modificar resposta");
@@ -36,13 +36,8 @@ public class Utils {
         io.writeln(" 14) Esborrar resposta");
         io.writeln(" 15) Clustering d'usuaris");
         io.writeln(" 16) Mostrar enquestes amb preguntes i respostes");
-
-
         /*
         io.writeln(" 16) Crear usuari");
-        io.writeln(" 17) Consultar respostes");
-        io.writeln(" 18) Modificar enquesta");
-        io.writeln(" 19) Esborrar enquesta");
          */
         io.writeln(" 0) Sortir");
         io.writeln("======================================");
@@ -92,11 +87,14 @@ public class Utils {
         }
     }
 
-    public void consultarEnquestaAmbPreguntesIRespostes(inout io, CtrlDomini ctrl){
+    /**
+     * Permet consultar totes les enquestes amb preguntes i respostes
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     */
+    public static void consultarEnquestesAmbPreguntesIRespostes(inout io, CtrlDomini ctrl){
         try{
-            io.writeln("Introdueix l'ID de l'enquesta a consultar: ");
-            int id = io.readint();
-            List<String> info = ctrl.consultarEnquestaAmbPreguntesIRespostes(id);
+            List<String> info = ctrl.consultarEnquestesAmbPreguntesIRespostes();
             for (String line : info) {
                 io.writeln(line);
             }
@@ -455,6 +453,13 @@ public class Utils {
     }
 
     // ==================== CONSULTAR RESULTATS ENQUESTA ====================
+
+    /**
+     * Permet consultar una enquesta amb les seves respostes
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     */
     public static void consultarRespostesEnquesta(inout io, CtrlDomini ctrl) {
         try{
             io.writeln("Introdueix l'ID de l'enquesta a consultar les respostes: ");
@@ -474,6 +479,13 @@ public class Utils {
     }
 
     // ===================== CLUSTERING =====================
+
+    /**
+     * Peret aplicar el clustering sobre les preguntes d'una enquesta per veure la semblança en les respostes
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
+     */
     public static void clustering(inout io, CtrlDomini ctrl) {
         try{
             io.writeln("\n--- CLUSTERING D'USUARIS ---");
@@ -626,6 +638,13 @@ public class Utils {
     }
 
     // ===================== MODIFICAR RESPOSTA =====================
+
+    /**
+     * Permet modifica una resposta d'una enquesta que hagi realitzat un usuari
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception
+     */
     public static void modificarResposta(inout io, CtrlDomini ctrl) {
         try{
             io.writeln("Introdueix l'id de l'enquesta");

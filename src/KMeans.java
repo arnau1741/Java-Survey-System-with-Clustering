@@ -420,6 +420,9 @@ public class KMeans{
         if (lenA == 0 && lenB == 0) {
             return 0.0; // Distancia zero si les dues respostes son buides
         }
+        if (lenA == 0 || lenB == 0) {
+            return 1.0; // Distancia máxima si alguna respuesta es vacía
+        }
         double maxLen = Math.max(lenA, lenB);
         double absLenDif = Math.abs(lenA - lenB);
 

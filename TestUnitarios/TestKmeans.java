@@ -1,6 +1,10 @@
 //Test per la classe KMeans, inicialment nomes farem proves a les distancies
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class TestKmeans {
@@ -23,11 +27,37 @@ public class TestKmeans {
     }
 
     //modificar constructora RespostaOrdenada y codigo afectado
+    @Test
     public void testDisanciaOrdenada(){
         int k = 10;
         int maxIterations = 100;
-        RespostaOrdenada a = new RespostaOrdenada(10);
+        int numOpcions = 5;
+        RespostaOrdenada a = new RespostaOrdenada(numOpcions);
+        RespostaOrdenada b = new RespostaOrdenada(numOpcions);
+        a.setResposta(2);
+        b.setResposta(4);
+
+        kmeans = new KMeans(k,maxIterations);
+        double res = kmeans.distanciaOrdenada(a, b, numOpcions);
+        assertEquals(0.5, res, 0.001);
     }
+
+    @Test
+    public void testDistanciaOrdenadaSameOrder() {
+        int k = 2;
+        int maxIterations = 100;
+        kmeans = new KMeans(k, maxIterations);
+
+        int numOpcions = 5;
+        RespostaOrdenada a = new RespostaOrdenada(numOpcions);
+        RespostaOrdenada b = new RespostaOrdenada(numOpcions);
+        a.setResposta(2);
+        b.setResposta(2);
+
+        double res = kmeans.distanciaOrdenada(a, b, numOpcions);
+        assertEquals(0.0, res, 0.0);
+    }
+
     @Test
     public void testDistanciaNoOrdenadaUnicaNullNull(){
         //test con las dos respuestas no incializadas
@@ -89,12 +119,113 @@ public class TestKmeans {
         assertEquals(0.0, res, 0.0);
     }
 
+    @Test
+    public void testDistanciaNoOrdenadaMultipleNullNull() {
+        RespostaMultiple a = null;
+        RespostaMultiple b = null;
 
-    public void testDistanciaNoOrdenadaMultiple(){
+        k = 2;
+        maxIterations = 100;
+        kmeans = new KMeans(k, maxIterations);
 
+        double res = kmeans.distanciaNoOrdenadaMultiple(a, b);
+        assertEquals(0.0, res, 0.0);
     }
 
+    @Test
+    public void testDistanciaNoOrdenadaMultipleNullNonNull() {
+        int numOpcions = 10;
+        RespostaMultiple a = null;
+        RespostaMultiple b = new RespostaMultiple(numOpcions);
+        List<Integer> lista = new ArrayList<>();
+        lista.add(1);
+        lista.add(2);
+        b.selecciona(lista);
 
-    
-    
+        int k = 2;
+        int maxIterations = 100;
+        kmeans = new KMeans(k, maxIterations);
+
+        double res = kmeans.distanciaNoOrdenadaMultiple(a, b);
+        assertEquals(1.0, res, 0.0);
+    }
+
+    @Test
+    public void testDistanciaNoOrdenadaMultipleIdentical() {
+        k = 2;
+        maxIterations = 100;
+        kmeans = new KMeans(k, maxIterations);
+        int numOpcions = 10;
+        RespostaMultiple a = new RespostaMultiple(numOpcions);
+        List<Integer>  lista = new ArrayList<>();
+        lista.add(1);
+        lista.add(2);
+        lista.add(3);
+        a.selecciona(lista);
+
+        RespostaMultiple b = new RespostaMultiple(numOpcions);
+        List<Integer> lista1 = new ArrayList<>();
+        lista1.add(1);
+        lista1.add(2);
+        lista1.add(3);
+        b.selecciona(lista1);
+
+        double res = kmeans.distanciaNoOrdenadaMultiple(a, b);
+        assertEquals(0.0, res, 0.0);
+    }
+
+    @Test
+    public void testDistanciaLliure() {
+        RespostaLliure a = new RespostaLliure("hola");
+        RespostaLliure b = new RespostaLliure("hola");
+
+        k = 2;
+        maxIterations = 100;
+        kmeans = new KMeans(k, maxIterations);
+
+        double res = kmeans.distanciaLliure(a, b);
+        assertEquals(0.0, res, 0.001);
+    }
+
+    @Test
+    public void testDistanciaLliureDifferent() {
+        RespostaLliure a = new RespostaLliure("hola");
+        RespostaLliure b = new RespostaLliure("adeu");
+
+        k = 2;
+        maxIterations = 100;
+        kmeans = new KMeans(k, maxIterations);
+
+        double res = kmeans.distanciaLliure(a, b);
+        // Debería ser mayor que 0
+        assertTrue(res > 0.0);
+    }
+
+    @Test
+    public void testDistanciaLliureEmpty() {
+        RespostaLliure a = new RespostaLliure("");
+        RespostaLliure b = new RespostaLliure("");
+
+        k = 2;
+        maxIterations = 100;
+        kmeans = new KMeans(k, maxIterations);
+
+        double res = kmeans.distanciaLliure(a, b);
+        assertEquals(0.0, res, 0.0);
+    }
+
+    @Test
+    public void testDistanciaLliureOneEmpty() {
+        RespostaLliure a = new RespostaLliure("");
+        RespostaLliure b = new RespostaLliure("text");
+
+        k = 2;
+        maxIterations = 100;
+        kmeans = new KMeans(k, maxIterations);
+
+        double res = kmeans.distanciaLliure(a, b);
+        // Debería ser 1.0 cuando una es vacía y la otra no
+        assertEquals(1.0, res, 0.001);
+    }
+
 }
