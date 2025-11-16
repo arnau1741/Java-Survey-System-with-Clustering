@@ -13,5 +13,14 @@ prova
 4
 prova
 16
+7
+0
+archiu_exportar1
+7
+1
+archiu_exportar2
+7
+2
+archiu_exportar3
 0
 
