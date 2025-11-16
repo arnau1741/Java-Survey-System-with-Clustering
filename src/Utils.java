@@ -92,6 +92,24 @@ public class Utils {
         }
     }
 
+    public void consultarEnquestaAmbPreguntesIRespostes(inout io, CtrlDomini ctrl){
+        try{
+            io.writeln("Introdueix l'ID de l'enquesta a consultar: ");
+            int id = io.readint();
+            List<String> info = ctrl.consultarEnquestaAmbPreguntesIRespostes(id);
+            for (String line : info) {
+                io.writeln(line);
+            }
+        }
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
+        }
+    }
+
 
     // ==================== Funcionalitats ====================
 
@@ -426,12 +444,21 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception si hi ha un error d'entrada/sortida o l'enquesta no existeix
      */
-    public static void consultarEnquestaAmbPreguntes(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introdueix l'ID de l'enquesta a consultar: ");
-        int id = io.readint();
-        List<String> info = ctrl.consultarEnquestaAmbPreguntes(id);
-        for (String line : info) {
-            io.writeln(line);
+    public static void consultarEnquestaAmbPreguntes(inout io, CtrlDomini ctrl) {
+        try {
+            io.writeln("Introdueix l'ID de l'enquesta a consultar: ");
+            int id = io.readint();
+            List<String> info = ctrl.consultarEnquestaAmbPreguntes(id);
+            for (String line : info) {
+                io.writeln(line);
+            }
+        }
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
         }
     }
 
@@ -457,25 +484,34 @@ public class Utils {
     }
 
     // ===================== CLUSTERING =====================
-    public static void clustering(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("\n--- CLUSTERING D'USUARIS ---");
-        io.write("Introdueix l'ID de l'enquesta: ");
-        int idEnquesta = io.readint();
-        io.readline();
+    public static void clustering(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("\n--- CLUSTERING D'USUARIS ---");
+            io.write("Introdueix l'ID de l'enquesta: ");
+            int idEnquesta = io.readint();
+            io.readline();
 
-        io.write("Introdueix el nombre de clusters (k): ");
-        int k = io.readint();
-        io.readline();
+            io.write("Introdueix el nombre de clusters (k): ");
+            int k = io.readint();
+            io.readline();
 
-        io.write("Introdueix nombre maxim d'iteracions: ");
-        int maxIter = io.readint();
-        io.readline();
+            io.write("Introdueix nombre maxim d'iteracions: ");
+            int maxIter = io.readint();
+            io.readline();
 
-        Map<Integer, Integer> result = ctrl.clustering(idEnquesta, k, maxIter);
-        for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
-            io.writeln("Usuari ID: " + entry.getKey() + " -> Cluster: " + entry.getValue());
+            Map<Integer, Integer> result = ctrl.clustering(idEnquesta, k, maxIter);
+            for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
+                io.writeln("Usuari ID: " + entry.getKey() + " -> Cluster: " + entry.getValue());
+            }
+            io.writeln("\n[OK] Clustering realitzat correctament!\n");
         }
-        io.writeln("\n[OK] Clustering realitzat correctament!\n");
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
+        }
     }
 
     /**
@@ -497,12 +533,21 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception
      */
-    public static void esborrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introduiex l'index de l'enquesta a esborrar");
-        int idEnquesta = io.readint();
-        io.writeln("Introduiex l'Id de l'usuari");
-        int idUsuari =io.readint();
-        ctrl.eliminarEnquesta(idUsuari, idEnquesta);
+    public static void esborrarEnquesta(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("Introduiex l'index de l'enquesta a esborrar");
+            int idEnquesta = io.readint();
+            io.writeln("Introduiex l'Id de l'usuari");
+            int idUsuari =io.readint();
+            ctrl.eliminarEnquesta(idUsuari, idEnquesta);
+        }
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
+        }
     }
 
     // ===================== ESBORRAR RESPOSTA =====================
@@ -512,14 +557,21 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception
      */
-    public static void esborrarResposta(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introduiex l'index de l'enquesta a esborrar");
-        int idEnquesta = io.readint();
-        io.writeln("Introduiex l'Id de l'enquestat");
-        int idEnquestat =io.readint();
-        //Suposem usuari 1 perque l'implementacio es fara mes endavant
-        int Usuari = 1;
-        ctrl.esborrarRespostaEnquesta(Usuari, idEnquesta, idEnquestat);
+    public static void esborrarResposta(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("Introduiex l'index de l'enquesta a esborrar");
+            int idEnquesta = io.readint();
+            io.writeln("Introduiex l'Id de l'enquestat");
+            int idEnquestat =io.readint();
+            ctrl.esborrarRespostaEnquesta(idEnquesta, idEnquestat);
+        }
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
+        }
     }
 
     // ===================== MODIFICAR ENQUESTA =====================
@@ -529,75 +581,93 @@ public class Utils {
      * @param ctrl controlador de domini
      * @throws Exception
      */
-    public static void modificarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
-        consultarEnquestaAmbPreguntes(io, ctrl);
-        io.writeln("Introdueix l'index de l'enquesta a modificar");
-        int idEnquesta = io.readint();
+    public static void modificarEnquesta(inout io, CtrlDomini ctrl) {
+        try{
+            consultarEnquestaAmbPreguntes(io, ctrl);
+            io.writeln("Introdueix l'index de l'enquesta a modificar");
+            int idEnquesta = io.readint();
 
-        io.writeln("Introdueix l'index de la pregunta");
-        int idxPregunta = io.readint();
+            io.writeln("Introdueix l'index de la pregunta");
+            int idxPregunta = io.readint();
 
-        List<String> novaPregunta = new ArrayList<>();
+            List<String> novaPregunta = new ArrayList<>();
 
-        io.writeln("Introdueix pregunta");
-        String text = io.readword();
+            io.writeln("Introdueix pregunta");
+            String text = io.readword();
 
-        io.writeln("Introdueix tipus (nomes numero):");
-        io.writeln(" - 0:Numerica");
-        io.writeln(" - 1:No ordenada Unica");
-        io.writeln(" - 2:Ordenada");
-        io.writeln(" - 3:No ordenada Multiple");
-        io.writeln(" - 4:Lliure");
-        String tipus = io.readword();
+            io.writeln("Introdueix tipus (nomes numero):");
+            io.writeln(" - 0:Numerica");
+            io.writeln(" - 1:No ordenada Unica");
+            io.writeln(" - 2:Ordenada");
+            io.writeln(" - 3:No ordenada Multiple");
+            io.writeln(" - 4:Lliure");
+            String tipus = io.readword();
 
-        novaPregunta.add(text);
-        novaPregunta.add(tipus);
+            novaPregunta.add(text);
+            novaPregunta.add(tipus);
 
-        if (tipus.equals("1") || tipus.equals("2") || tipus.equals("3")) {
-            io.writeln("Introdueix el nombre d'opcions");
-            int numOpcions = io.readint();
-            novaPregunta.add(Integer.toString(numOpcions));
-            for (int i = 0; i < numOpcions; i++) {
-                io.writeln("Introdueix la opcio " + (i + 1));
-                String opcio = io.readword();
-                novaPregunta.add(opcio);
+            if (tipus.equals("1") || tipus.equals("2") || tipus.equals("3")) {
+                io.writeln("Introdueix el nombre d'opcions");
+                int numOpcions = io.readint();
+                novaPregunta.add(Integer.toString(numOpcions));
+                for (int i = 0; i < numOpcions; i++) {
+                    io.writeln("Introdueix la opcio " + (i + 1));
+                    String opcio = io.readword();
+                    novaPregunta.add(opcio);
+                }
+            }
+
+
+
+            int resultat = ctrl.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
+            if (resultat == 1) {
+                io.writeln("S'ha esborrat correctament");
+            }
+            else {
+                io.writeln("Problema: l'enquesta no s'ha esborrat");
             }
         }
-
-
-
-        int resultat = ctrl.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
-        if (resultat == 1) {
-            io.writeln("S'ha esborrat correctament");
-        }
-        else {
-            io.writeln("Problema: l'enquesta no s'ha esborrat");
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
         }
 
     }
 
     // ===================== MODIFICAR RESPOSTA =====================
-    public static void modificarResposta(inout io, CtrlDomini ctrl) throws Exception {
-        io.writeln("Introdueix l'id de l'enquesta");
-        int idEnquesta = io.readint();
+    public static void modificarResposta(inout io, CtrlDomini ctrl) {
+        try{
+            io.writeln("Introdueix l'id de l'enquesta");
+            int idEnquesta = io.readint();
 
-        io.writeln("Introduexi l'id de l'usuari");
-        int idUsuari = io.readint();
-        List<String> respostesActuals = ctrl.getRespostesEnquestaPerUsuari(idEnquesta, idUsuari);
-        for (String resposta : respostesActuals) {
-            io.writeln(resposta);
+            io.writeln("Introduexi l'id de l'usuari");
+            int idUsuari = io.readint();
+            List<String> respostesActuals = ctrl.getRespostesEnquestaPerUsuari(idEnquesta, idUsuari);
+            for (String resposta : respostesActuals) {
+                io.writeln(resposta);
+            }
+
+            io.writeln();
+            io.writeln("Quina pregunta vols modificar? (introdueix el número de pregunta):");
+            int idxPregunta = io.readint();
+            io.writeln("Introdueix la nova resposta:");
+            String novaResposta = io.readword();
+            int codierr = ctrl.modificarRespostaEnquesta(idEnquesta, idUsuari, idxPregunta, novaResposta);
+            if (codierr == 0) {
+                io.writeln("Resposta modificada correctament.");
+            } else {
+                io.writeln("Error en modificar la resposta. Codi d'error: " + codierr);
+            }
         }
-
-        io.writeln();
-        io.writeln("Quina pregunta vols modificar? (introdueix el número de pregunta):");
-        int idxPregunta = io.readint();
-        io.writeln("Introdueix la nova resposta:");
-        String novaResposta = io.readword();
-        int codierr = ctrl.modificarRespostaEnquesta(idEnquesta, idUsuari, idxPregunta, novaResposta);
-        if (codierr == 0) {
-            io.writeln("Resposta modificada correctament.");
-        } else {
-            io.writeln("Error en modificar la resposta. Codi d'error: " + codierr);
+        catch (Exception e){
+            try {
+                io.writeln("\n[ERROR] " + e.getMessage() + "\n");
+            } catch (Exception ignored) {
+                // Si ni tan sols podem escriure l'error, no fem res més
+            }
         }
     }
 

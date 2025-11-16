@@ -256,7 +256,7 @@ public class Enquesta {
      * @param novaPregunta nova pregunta a afegir
      * @throws IndexOutOfBoundsException si l'índex de la pregunta està fora de rang
      */
-    public void canviarPregunta(int idxPregunta, Pregunta novaPregunta) {
+    public void canviarPregunta(int idxPregunta, Pregunta novaPregunta) throws IndexOutOfBoundsException {
         if (idxPregunta < 0 || idxPregunta >= preguntes.size()) {
             throw new IndexOutOfBoundsException("Índex de pregunta fora de rang: " + idxPregunta);
         }

@@ -34,9 +34,12 @@ public class CtrlDominiMantEnquesta {
      * Elimina una enquesta de la col·lecció d'enquestes
      * @param idEnquesta de l'enquesta a eliminar
      */
-    public void eliminarEnquesta(int idEnquesta) {
+    public void eliminarEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         if (enquestes.containsKey(idEnquesta)) {
             enquestes.remove(idEnquesta);
+        }
+        else {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         }
     }
 
@@ -199,9 +202,12 @@ public class CtrlDominiMantEnquesta {
      * @return 1 si s'ha modificat correctament
      */
     //deberiamos hacer mas versiones en un futuro.
-    public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws InvalidFormatEnquesta {
+    public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws EnquestaNoExisteixException,InvalidFormatEnquesta {
         //borrar todas las respuestas
         Enquesta enq = getEnquesta(idEnquesta);
+        if(enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
         List<Pregunta> preguntes = enq.getPreguntesObj();
         for (Pregunta p : preguntes) {
             p.eliminarTotesRespostes();
@@ -210,7 +216,11 @@ public class CtrlDominiMantEnquesta {
         //crear la nueva pregunta
         List<Pregunta> preguntesObj = transformaPreguntesAObj(novaPregunta);
         //assignar la nueva pregunta a la enquesta
-        enq.canviarPregunta(idxPregunta, preguntesObj.get(0));
+        try {
+            enq.canviarPregunta(idxPregunta, preguntesObj.get(0));
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidFormatEnquesta("Índex de pregunta fora de rang: " + idxPregunta);
+        }   
         //setearla como nueva pregunta
 
         return 1; // Èxit

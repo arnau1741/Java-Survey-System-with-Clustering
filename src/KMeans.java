@@ -47,6 +47,7 @@ public class KMeans{
         int n = data.getNumRespostes();
         if (n == 0) throw new IllegalArgumentException("There is no data");
         int dim = data.getNumPreguntes();
+        if (k > n) throw new IllegalArgumentException("k can not be greater than the number of points");
 
         centroids = initCentroidsRandom(data, k);
         System.out.println("Initial centroids:");

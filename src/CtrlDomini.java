@@ -177,7 +177,7 @@ public class CtrlDomini {
      * @param idUsuari identificador de l'usuari que elimina l'enquesta
      * @param idEnquesta identificador de l'enquesta a eliminar
      */
-    public void eliminarEnquesta(int idUsuari, Integer idEnquesta){
+    public void eliminarEnquesta(int idUsuari, Integer idEnquesta) throws EnquestaNoExisteixException {
         // esborrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
         // esborrar d'usuaris
@@ -193,7 +193,7 @@ public class CtrlDomini {
      * @return 1 si s'ha modificat correctament
      */
     //deberiamos hacer mas versiones en un futuro.
-    public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws InvalidFormatEnquesta {
+    public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         return ctrlDominiMantEnquesta.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
     }
 
@@ -204,37 +204,19 @@ public class CtrlDomini {
      * @param idEnquestat identificador de l'usuari que ha respost l'enquesta
      */
     ////////////////////// Cas d'us - Esborrar resposta ////////////////////
-    public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat){
-            /*
-
-            if (!ctrlDominiMantEnquesta.existeixEnquesta(idEnquesta)) {
-                System.out.println("Error: Enquesta no existeix");
-                return -1; // Codi error: Enquesta no existeix
-            }
-
-            boolean esCreador = ctrlDominiMantEnquesta.esCreadorEnquesta(idEnquesta, idUsuari);
-            boolean esElMateixUsuari = (idUsuari == idEnquestat);
-
-            if (!esCreador && !esElMateixUsuari) {
-                System.out.println("Error: Sense permisos per esborrar resposta");
-                return -2; // Codi error: Sense permisos
-            }
-            */
-
-        // Obtenir l'enquesta i eliminar la resposta
+    public void esborrarRespostaEnquesta(Integer idEnquesta, int idEnquestat) throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        int respostesEliminades = 0;
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
+        if (!enq.participa(idEnquestat)) {
+            throw new UsuariNoHaResposEnquesta("L'usuari amb id " + idEnquestat + " no ha respost l'enquesta amb id " + idEnquesta + ".");
+        }
         for (Pregunta pregunta : enq.getPreguntesObj()) {
             Map<Integer, Resposta> respostes = pregunta.getRespostes();
             if (respostes.containsKey(idEnquestat)) {
                 respostes.remove(idEnquestat);
-                respostesEliminades++;
             }
-        }
-        if (respostesEliminades > 0) {
-            System.out.println("Eliminades " + respostesEliminades + " respostes");
-        } else {
-            System.out.println("Error: No s'han trobat respostes per eliminar");
         }
     }
 
@@ -246,8 +228,11 @@ public class CtrlDomini {
      * @return resultat, map amb l'identificador de la resposta i el clúster assignat
      */
     ////////////////////// Cas d'us - clustering //////////////////////
-    public Map<Integer, Integer> clustering(Integer idEnquesta, int k, int maxIterations) {
+    public Map<Integer, Integer> clustering(Integer idEnquesta, int k, int maxIterations) throws EnquestaNoExisteixException, KmeansExcepcio {
         Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
         KMeans kmeans = new KMeans(k, maxIterations);
         kmeans.fit(enq);
         int[] labels = kmeans.getLabels();
@@ -359,6 +344,32 @@ public class CtrlDomini {
                 }
             }
         }
+    }
+    public List<String> consultarEnquestaAmbPreguntesIRespostes(int idEnquesta) throws EnquestaNoExisteixException {
+        List<String> result = new ArrayList<>();
+        result = consultarEnquestaAmbPreguntes(idEnquesta);
+
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
+
+        List<Pregunta> preguntes = enq.getPreguntesObj();
+        for (Pregunta p : preguntes) {
+            result.add("Pregunta: " + p.getText());
+            List<String> opcions = p.getOpcions();
+            if (opcions != null){
+                result.add("Opcions:");
+                for (String opcio : opcions) {
+                    result.add("  * Opció: " + opcio);
+                }
+            }
+            Map<Integer, Resposta> respostes = p.getRespostes();
+            for (Map.Entry<Integer, Resposta> entry : respostes.entrySet()) {
+                result.add("  - Usuari ID: " + entry.getKey() + ", Resposta: " + entry.getValue().getText(opcions));
+            }
+        }
+        return result;
     }
 
     /**
@@ -498,12 +509,12 @@ public class CtrlDomini {
      * @param idUsuari identificador de l'usuari
      * @return respostesStr, llista de strings amb les preguntes i respostes de l'usuari
      */
-    public List<String> getRespostesEnquestaPerUsuari(Integer idEnquesta, int idUsuari) {
+    public List<String> getRespostesEnquestaPerUsuari(Integer idEnquesta, int idUsuari) throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta{
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         List<String> respostesStr = new ArrayList<>();
         List<Resposta> respostes = enq.getRespostesUsuari(idUsuari);
         if (respostes == null) {
-            return respostesStr; // Retorna llista buida si no hi ha respostes
+            throw new UsuariNoHaResposEnquesta("L'usuari amb id " + idUsuari + " no ha respost l'enquesta amb id " + idEnquesta + ".");
         }
         int idx = 0;
         for (Pregunta p : enq.getPreguntesObj()) {
@@ -585,22 +596,22 @@ public class CtrlDomini {
      * @param novaResposta nova resposta en format text
      * @return 1 si s'ha modificat correctament, -1 si l'enquesta no existeix, -2 si l'usuari no ha respost l'enquesta, -3 si l'índex de la pregunta és invàlid, -4 si la nova resposta no és vàlida
      */
-    public int modificarRespostaEnquesta(Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta) {
+    public int modificarRespostaEnquesta(Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta) throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta, InvalidFormatResposta {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        if (enq == null) return -1; // Codi error: Enquesta no existeix
+        if (enq == null) throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
 
         if (!enquestaTeRespostaUsuari(enq, idUsuari)) {
-            return -2; // Codi error: L'usuari no ha respost l'enquesta
+            throw new UsuariNoHaResposEnquesta("L'usuari amb id " + idUsuari + " no ha respost l'enquesta amb id " + idEnquesta + ".");
         }
 
         List<Resposta> respostes = enq.getRespostesUsuari(idUsuari);
-        if (respostes == null || idxPregunta < 0 || idxPregunta >= respostes.size()) {
-            return -3; // Codi error: Índex de pregunta invàlid
+        if (idxPregunta < 0 || idxPregunta >= respostes.size()) {
+            throw new InvalidFormatResposta("L'índex de la pregunta " + idxPregunta + " és invàlid.");
         }
 
         Pregunta p = enq.getPreguntesObj().get(idxPregunta);
         if (!comprovarRespostaValid(p, novaResposta)) {
-            return -4; // Codi error: Resposta invàlida per a la pregunta
+            throw new InvalidFormatResposta("La nova resposta '" + novaResposta + "' no és vàlida per a la pregunta: " + p.getText());
         }
 
         int tipus = p.getTipus();
