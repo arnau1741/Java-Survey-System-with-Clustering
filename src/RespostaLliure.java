@@ -22,11 +22,19 @@ public class RespostaLliure extends Resposta{
         setContestat(text != null && !text.isBlank());
     }
 
+    /**
+     * Funcio que obte la mida d'un text
+     * @return la mida del text
+     */
     public int length() {
         if (text == null) return 0;
         return text.length();
     }
 
+    /**
+     *  Getter del text de la resposta
+     * @return la resposta
+     */
     public String getResposta() {
         return text;
     }
