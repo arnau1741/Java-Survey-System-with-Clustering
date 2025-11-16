@@ -343,5 +343,6 @@ public class Enquesta {
             throw new UsuariNoHaResposEnquesta("L'usuari amb id " + idUsuari + " no ha respost aquesta pregunta.");
         }
         respostesMap.put(idUsuari, novaResposta);
+
     }
 }

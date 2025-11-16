@@ -76,7 +76,7 @@ public class Utils {
     public static void consultarEnquesta(inout io, CtrlDomini ctrl) {
         try{
             io.writeln("Introdueix el Id de l'enquesta");
-            int idEnquesta = io.readint();
+            Integer idEnquesta = io.readint();
 
             List<String> result = ctrl.consultarEnquesta(idEnquesta);
             for (String line : result) {
@@ -110,9 +110,7 @@ public class Utils {
         }
     }
 
-
     // ==================== Funcionalitats ====================
-
 
     //=================== RESPONDRE ENQUESTA ====================
     /**
@@ -125,7 +123,7 @@ public class Utils {
         try{
             io.writeln("\n--- RESPONDRE ENQUESTA ---");
             io.write("Introdueix l'ID de l'enquesta: ");
-            int idEnquesta = io.readint();
+            Integer idEnquesta = io.readint();
             io.readline();
 
             io.write("Introdueix l'ID de l'usuari que respon l'enquesta: ");
@@ -180,7 +178,6 @@ public class Utils {
             }
         }
     }
-
 
     // ==================== CREACIÓ MANUAL D'ENQUESTA ====================
     /**
@@ -254,7 +251,6 @@ public class Utils {
             }
         }
     }
-
 
     // ==================== CREACIÓ DES DE FITXER ====================
     /**
@@ -355,7 +351,7 @@ public class Utils {
             io.readline();
 
             io.write("Introdueix l'ID de l'enquesta: ");
-            int idEnquesta = io.readint();
+            Integer idEnquesta = io.readint();
             io.readline();
 
             io.write("Introdueix el nombre de fitxer de respostes (sense extensió): ");
@@ -379,7 +375,6 @@ public class Utils {
             }
         }
     }
-
 
     // ==================== EXPORTAR ENQUESTA ====================
     /**
@@ -409,8 +404,6 @@ public class Utils {
             }
         }
     }
-
-
 
     // ==================== CONSULTAR PERFIL USUARI ====================
     /**
@@ -462,8 +455,6 @@ public class Utils {
     }
 
     // ==================== CONSULTAR RESULTATS ENQUESTA ====================
-
-
     public static void consultarRespostesEnquesta(inout io, CtrlDomini ctrl) {
         try{
             io.writeln("Introdueix l'ID de l'enquesta a consultar les respostes: ");
@@ -487,7 +478,7 @@ public class Utils {
         try{
             io.writeln("\n--- CLUSTERING D'USUARIS ---");
             io.write("Introdueix l'ID de l'enquesta: ");
-            int idEnquesta = io.readint();
+            Integer idEnquesta = io.readint();
             io.readline();
 
             io.write("Introdueix el nombre de clusters (k): ");
@@ -535,7 +526,7 @@ public class Utils {
     public static void esborrarEnquesta(inout io, CtrlDomini ctrl) {
         try{
             io.writeln("Introduiex l'index de l'enquesta a esborrar");
-            int idEnquesta = io.readint();
+            Integer idEnquesta = io.readint();
             io.writeln("Introduiex l'Id de l'usuari");
             int idUsuari =io.readint();
             ctrl.eliminarEnquesta(idUsuari, idEnquesta);
@@ -559,9 +550,9 @@ public class Utils {
     public static void esborrarResposta(inout io, CtrlDomini ctrl) {
         try{
             io.writeln("Introduiex l'index de l'enquesta a esborrar");
-            int idEnquesta = io.readint();
+            Integer idEnquesta = io.readint();
             io.writeln("Introduiex l'Id de l'enquestat");
-            int idEnquestat =io.readint();
+            int idEnquestat = io.readint();
             ctrl.esborrarRespostaEnquesta(idEnquesta, idEnquestat);
         }
         catch (Exception e){
@@ -584,7 +575,7 @@ public class Utils {
         try{
             consultarEnquestaAmbPreguntes(io, ctrl);
             io.writeln("Introdueix l'index de l'enquesta a modificar");
-            int idEnquesta = io.readint();
+            Integer idEnquesta = io.readint();
 
             io.writeln("Introdueix l'index de la pregunta");
             int idxPregunta = io.readint();
@@ -616,8 +607,6 @@ public class Utils {
                 }
             }
 
-
-
             int resultat = ctrl.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
             if (resultat == 1) {
                 io.writeln("S'ha esborrat correctament");
@@ -640,7 +629,7 @@ public class Utils {
     public static void modificarResposta(inout io, CtrlDomini ctrl) {
         try{
             io.writeln("Introdueix l'id de l'enquesta");
-            int idEnquesta = io.readint();
+            Integer idEnquesta = io.readint();
 
             io.writeln("Introduexi l'id de l'usuari");
             int idUsuari = io.readint();

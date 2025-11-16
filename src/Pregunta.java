@@ -76,7 +76,7 @@ public class Pregunta {
      * @return el map de respostes de la pregunta
      */
     public Map<Integer, Resposta> getRespostes() {
-        return Collections.unmodifiableMap(respostes);
+        return respostes;
     }
 
     /**
