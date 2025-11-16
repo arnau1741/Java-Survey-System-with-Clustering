@@ -462,7 +462,7 @@ public class CtrlDomini {
         if (usuari instanceof PerfilEnquestat){
             PerfilEnquestador nouEnquestador = new PerfilEnquestador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
             nouEnquestador.afegirEnquestaAssignada(enq);
-            ctrlDominiMantUsuari.reemplacarUsuari(usuari, nouEnquestador);
+            ctrlDominiMantUsuari.substituirUsuari(usuari, nouEnquestador);
             return 1; // Èxit
         } else if(usuari instanceof PerfilEnquestador){
             PerfilEnquestador enquestador = (PerfilEnquestador) usuari;
@@ -503,12 +503,12 @@ public class CtrlDomini {
         if (usuari instanceof PerfilEnquestat){
             PerfilAdministrador nouAdministrador = new PerfilAdministrador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
             nouAdministrador.afegirEnquestaAdministrada(enq);
-            ctrlDominiMantUsuari.reemplacarUsuari(usuari, nouAdministrador);
+            ctrlDominiMantUsuari.substituirUsuari(usuari, nouAdministrador);
             return 1; // Èxit
         } else if(usuari instanceof PerfilEnquestador){
             PerfilAdministrador nouAdministrador = new PerfilAdministrador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
             nouAdministrador.afegirEnquestaAdministrada(enq);
-            ctrlDominiMantUsuari.reemplacarUsuari(usuari, nouAdministrador);
+            ctrlDominiMantUsuari.substituirUsuari(usuari, nouAdministrador);
             return 1; // Èxit
         } else if (usuari instanceof PerfilAdministrador){
             PerfilAdministrador admin = (PerfilAdministrador) usuari;

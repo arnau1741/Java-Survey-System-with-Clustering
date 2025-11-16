@@ -27,9 +27,9 @@ public class CtrlDominiMantUsuari {
     }
 
     /**
-     * Retorna l'usuari amb l'id especificat
+     * Retorna l'usuari amb l'identificador especificat
      * @param idUsuari de l'usuari a retornar
-     * @return usuari amb l'id especificat
+     * @return usuari amb l'identificador especificat
      */
     public Usuari getUsuari(int idUsuari) {
         return usuaris.get(idUsuari);
@@ -37,7 +37,7 @@ public class CtrlDominiMantUsuari {
 
     /**
      * Comprova si existeix un usuari amb el nom especificat
-     * @param nomUsuari del usuari a cercar
+     * @param nomUsuari de l'usuari a cercar
      * @return true si existeix, false en cas contrari
      */
     public boolean existeixUsuari(String nomUsuari) {
@@ -50,7 +50,7 @@ public class CtrlDominiMantUsuari {
     }
 
     /**
-     * Comprova si existeix un usuari amb l'id especificat
+     * Comprova si existeix un usuari amb l'identificador especificat
      * @param IdUsuari de l'usuari a cercar
      * @return true si existeix, false en cas contrari
      */
@@ -73,12 +73,12 @@ public class CtrlDominiMantUsuari {
     }
 
     /**
-     * Reemplaca un usuari antic per un usuari nou
-     * Aquesta funcio cambiara quan s'apliqui el patro estat en futures entregues
-     * @param usuariAntic a ser reemplaçat
-     * @param usuariNou a reemplaçar
+     * Substitueix un usuari antic per un usuari nou
+     * Aquesta funcio canviarà quan s'apliqui el patro estat en futures entregues
+     * @param usuariAntic a ser substituït
+     * @param usuariNou a substituir
      */
-    public void reemplacarUsuari(Usuari usuariAntic, Usuari usuariNou) {
+    public void substituirUsuari(Usuari usuariAntic, Usuari usuariNou) {
         usuaris.put(usuariAntic.getId(), usuariNou);
     }
     
