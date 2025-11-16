@@ -615,6 +615,9 @@ public class CtrlDomini {
         }
 
         int tipus = p.getTipus();
+        if(comprovarRespostaValid(p, novaResposta)){
+            throw new InvalidFormatResposta("La nova resposta '" + novaResposta + "' no és vàlida per a la pregunta: " + p.getText());
+        }
         if (tipus == 0) {
             // numerica: convertir a double
             double valor = Double.parseDouble(novaResposta);
@@ -628,6 +631,12 @@ public class CtrlDomini {
             respostes.set(idxPregunta, r);
         }
         else if (tipus == 2) {
+            // ordenada: convertir a int
+            int idxOpcio = p.getOpcions().indexOf(novaResposta);
+            RespostaOrdenada r = new RespostaOrdenada(idxOpcio);
+            respostes.set(idxPregunta, r);
+        }
+        else if (tipus == 3) {
             // multiple: convertir a llista d'int
             String[] parts = novaResposta.split(",");
             List<Integer> idxOpcions = new ArrayList<>();
@@ -637,12 +646,6 @@ public class CtrlDomini {
             }
             RespostaMultiple r = new RespostaMultiple(p.getNumOpcions());
             r.selecciona(idxOpcions);
-            respostes.set(idxPregunta, r);
-        }
-        else if (tipus == 3) {
-            // ordenada: convertir a int
-            int idxOpcio = p.getOpcions().indexOf(novaResposta);
-            RespostaOrdenada r = new RespostaOrdenada(idxOpcio);
             respostes.set(idxPregunta, r);
         }
         else if (tipus == 4) {
