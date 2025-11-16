@@ -98,12 +98,23 @@ public class CtrlDominiMantEnquesta {
         }
     }
 
-
+    /**
+     * Obte totes les enquestes existents
+     * @return un map d'enquestes amb primer parametre com l'id i el segon com l'enquesta
+     */
     public Map<Integer,Enquesta> getEnquestesObj() {
         return enquestes;
     }
 
-
+    /**
+     *  Crea una nova enquesta al repositori del map enquestes
+     * @param titol de l'enquesta
+     * @param descripcio de l'enquesta
+     * @param idCreador de l'enquesta
+     * @param preguntes de l'enquesta
+     * @return el numero de preguntes que te la nova enquesta
+     * @throws InvalidFormatEnquesta
+     */
     public int novaEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
         List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntes);
         int id = getIdEnquestaNova();
@@ -118,7 +129,14 @@ public class CtrlDominiMantEnquesta {
 
     }
 
-
+    /**
+     *  Funcio que importa una enquesta d'un fitxer txt
+     * @param idUsuari que importa l'enquesta
+     * @param path que conte el fitxer de l'enquesta
+     * @return retorna el numero de preguntes que te la nova enquesta importada
+     * @throws InvalidFormatEnquesta
+     * @throws FileNotFound
+     */
     public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
         // llegir fitxer
         List<String> enquestaTxt = new ArrayList<>();

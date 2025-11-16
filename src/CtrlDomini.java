@@ -347,9 +347,9 @@ public class CtrlDomini {
     }
 
     /**
-     * Funcio que retorna una llista d'una esquesta idEnquesta amb les seves preguntes i respostes
-     * @param idEnquesta
-     * @return
+     * Funcio que consulta i retorna una llista d'una esquesta idEnquesta amb les seves preguntes i respostes
+     * @param idEnquesta de l'enquesta
+     * @return una llista d'una esquesta idEnquesta amb les seves preguntes i respostes
      * @throws EnquestaNoExisteixException
      */
     public List<String> consultarEnquestaAmbPreguntesIRespostes(int idEnquesta) throws EnquestaNoExisteixException {
