@@ -11,9 +11,8 @@ import java.util.Map;
 public class Utils {
     public static String Base_path;
 
-
     /**
-     * Mostra el menú principal
+     * Mètode que mostra el menú principal
      * @param io objecte d'entrada/sortida
      * @throws Exception si hi ha un error d'entrada/sortida
      */
@@ -39,16 +38,15 @@ public class Utils {
 
 
         /*
-        io.writeln(" 10) Crear usuari");
-        io.writeln(" 12) Consultar respostes");
-        io.writeln(" 13) Modificar enquesta");
-        io.writeln(" 14) Esborrar enquesta");
+        io.writeln(" 16) Crear usuari");
+        io.writeln(" 17) Consultar respostes");
+        io.writeln(" 18) Modificar enquesta");
+        io.writeln(" 19) Esborrar enquesta");
          */
         io.writeln(" 0) Sortir");
         io.writeln("======================================");
         io.write("Selecciona una opció: ");
     }
-
 
     /**
      * Llegeix una opció de menú
@@ -67,7 +65,7 @@ public class Utils {
         return opcio;
     }
 
-
+    // ==================== CONSULTAR ENQUESTA ====================
     /**
      * Mostra una enquesta donat el seu Id
      * @param io objecte d'entrada/sortida
@@ -76,7 +74,7 @@ public class Utils {
      */
     public static void consultarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix el Id de l'enquesta");
-        int idEnquesta = io.readint();
+        Integer idEnquesta = io.readint();
 
         List<String> result = ctrl.consultarEnquesta(idEnquesta);
         for (String line : result) {
@@ -84,13 +82,10 @@ public class Utils {
         }
     }
 
-
     // ==================== Funcionalitats ====================
 
 
     //=================== RESPONDRE ENQUESTA ====================
-
-
     /**
      * Permet respondre una enquesta
      * @param io objecte d'entrada/sortida
@@ -100,7 +95,7 @@ public class Utils {
     public static void respondreEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("\n--- RESPONDRE ENQUESTA ---");
         io.write("Introdueix l'ID de l'enquesta: ");
-        int idEnquesta = io.readint();
+        Integer idEnquesta = io.readint();
         io.readline();
 
         io.write("Introdueix l'ID de l'usuari que respon l'enquesta: ");
@@ -148,10 +143,7 @@ public class Utils {
         io.writeln("\n[OK] Enquesta resposta correctament!\n");
     }
 
-
     // ==================== CREACIÓ MANUAL D'ENQUESTA ====================
-
-
     /**
      * Crea una enquesta manualment
      * @param io objecte d'entrada/sortida
@@ -210,10 +202,7 @@ public class Utils {
         io.writeln("\n[OK] Enquesta creada correctament!\n");
     }
 
-
     // ==================== CREACIÓ DES DE FITXER ====================
-
-
     /**
      * Crea una enquesta des de fitxer
      * @param io objecte d'entrada/sortida
@@ -293,10 +282,7 @@ public class Utils {
         }
     }
 
-
     // ==================== IMPORTAR RESPOSTES ====================
-
-
     /**
      * Importa respostes des d'un fitxer
      * @param io objecte d'entrada/sortida
@@ -329,8 +315,6 @@ public class Utils {
 
 
     // ==================== EXPORTAR ENQUESTA ====================
-
-
     /**
      * Exporta una enquesta a un fitxer
      * @param io objecte d'entrada/sortida
@@ -354,11 +338,7 @@ public class Utils {
         io.writeln("Enquesta exportada correctament a: " + path);
     }
 
-
-
     // ==================== CONSULTAR PERFIL USUARI ====================
-
-
     /**
      * Permet consultar el perfil d'un usuari
      * @param io objecte d'entrada/sortida
@@ -374,9 +354,7 @@ public class Utils {
         }
     }
 
-
     // ==================== CONSULTAR ENQUESTA ====================
-
     /**
      * Permet consultar una enquesta amb les seves preguntes
      * @param io objecte d'entrada/sortida
@@ -392,10 +370,7 @@ public class Utils {
         }
     }
 
-
     // ==================== CONSULTAR RESULTATS ENQUESTA ====================
-
-
     public static void consultarRespostesEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix l'ID de l'enquesta a consultar les respostes: ");
         int id = io.readint();
@@ -405,9 +380,7 @@ public class Utils {
         }
     }
 
-
     // ===================== CLUSTERING =====================
-
     public static void clustering(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("\n--- CLUSTERING D'USUARIS ---");
         io.write("Introdueix l'ID de l'enquesta: ");
@@ -441,13 +414,13 @@ public class Utils {
         }
     }
 
+    // ==================== ESBORRAR ENQUESTA =====================
     /**
      * Esborra l'enquesta identificada per idEnquesta d'un usuari
      * @param io objecte d'entrada/sortida
      * @param ctrl controlador de domini
      * @throws Exception
      */
-    // ===================== Esborrar enquestes =====================
     public static void esborrarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introduiex l'index de l'enquesta a esborrar");
         int idEnquesta = io.readint();
@@ -456,8 +429,13 @@ public class Utils {
         ctrl.eliminarEnquesta(idUsuari, idEnquesta);
     }
 
-
-    // ===================== Esborrar Resposta =====================
+    // ===================== ESBORRAR RESPOSTA =====================
+    /**
+     * Esborra la resposta d'una enquesta d'un enquestat
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception
+     */
     public static void esborrarResposta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introduiex l'index de l'enquesta a esborrar");
         int idEnquesta = io.readint();
@@ -468,13 +446,19 @@ public class Utils {
         ctrl.esborrarRespostaEnquesta(Usuari, idEnquesta, idEnquestat);
     }
 
-    // ===================== Modificar enquesta =====================
+    // ===================== MODIFICAR ENQUESTA =====================
+    /**
+     * Modifica una pregunta d'una enquesta
+     * @param io objecte d'entrada/sortida
+     * @param ctrl controlador de domini
+     * @throws Exception
+     */
     public static void modificarEnquesta(inout io, CtrlDomini ctrl) throws Exception {
         consultarEnquestaAmbPreguntes(io, ctrl);
-        io.writeln("Introduiex l'index de l'enquesta a modificar");
+        io.writeln("Introdueix l'index de l'enquesta a modificar");
         int idEnquesta = io.readint();
 
-        io.writeln("Introduiex l'index de la pregunta");
+        io.writeln("Introdueix l'index de la pregunta");
         int idxPregunta = io.readint();
 
         List<String> novaPregunta = new ArrayList<>();
@@ -482,7 +466,7 @@ public class Utils {
         io.writeln("Introdueix pregunta");
         String text = io.readword();
 
-        io.writeln("Introduiex tipus (nomes numero):");
+        io.writeln("Introdueix tipus (nomes numero):");
         io.writeln(" - 0:Numerica");
         io.writeln(" - 1:Unica");
         io.writeln(" - 2:Ordenada");
@@ -512,7 +496,7 @@ public class Utils {
 
     }
 
-    // ===================== Modificar resposta =====================
+    // ===================== MODIFICAR RESPOSTA =====================
     public static void modificarResposta(inout io, CtrlDomini ctrl) throws Exception {
         io.writeln("Introdueix l'id de l'enquesta");
         int idEnquesta = io.readint();
@@ -537,10 +521,7 @@ public class Utils {
         }
     }
 
-
-
     // ===================== HELPERS FITXER =====================
-
     /**
      * Llegeix una línia obligatòria del BufferedReader
      * @param br bufferedReader
