@@ -19,18 +19,18 @@
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
---- CREACIÓ D'ENQUESTA (MANUAL) ---
-Títol: Descripció: ID del creador (enter): Nombre de preguntes: 
+Selecciona una opciÃ³:
+--- CREACIÃ“ D'ENQUESTA (MANUAL) ---
+TÃ­tol: DescripciÃ³: ID del creador (enter): Nombre de preguntes:
 Pregunta 1:
- Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)
-   Introdueix el tipus:    Text de la pregunta: 
+ Tipus (0=NUMÃˆRICA, 1=ÃšNICA, 2=ORDENADA, 3=MÃšLTIPLE, 4=LLIURE)
+   Introdueix el tipus:    Text de la pregunta:
 Pregunta 2:
- Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)
-   Introdueix el tipus:    Text de la pregunta: 
+ Tipus (0=NUMÃˆRICA, 1=ÃšNICA, 2=ORDENADA, 3=MÃšLTIPLE, 4=LLIURE)
+   Introdueix el tipus:    Text de la pregunta:
 Pregunta 3:
- Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)
-   Introdueix el tipus:    Text de la pregunta:    Nombre d'opcions:      Opció 1:      Opció 2:      Opció 3: 
+ Tipus (0=NUMÃˆRICA, 1=ÃšNICA, 2=ORDENADA, 3=MÃšLTIPLE, 4=LLIURE)
+   Introdueix el tipus:    Text de la pregunta:    Nombre d'opcions:      OpciÃ³ 1:      OpciÃ³ 2:      OpciÃ³ 3:
 [OK] Enquesta creada correctament!
 
 ======================================
@@ -54,21 +54,21 @@ Pregunta 3:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
+Selecciona una opciÃ³:
 --- RESPONDRE ENQUESTA ---
-Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta: 
-Respon les següents preguntes:
+Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta:
+Respon les segÃ¼ents preguntes:
 
 Pregunta: Que nivel del programa (0 - 100)?
-Introdueix la teva resposta numèrica: 
+Introdueix la teva resposta numÃ¨rica:
 Pregunta: Menciona l'algoritme que has utilitzat?
-Introdueix la teva resposta lliure: 
+Introdueix la teva resposta lliure:
 Pregunta: Que programas has utilitzat?
 Opcions:
  0) java
  1) c++
  2) c
-Introdueix la teva resposta (números separats per comes si és múltiple): entra
+Introdueix la teva resposta (nÃºmeros separats per comes si Ã©s mÃºltiple): entra
 Convirtiendo respuestas de String a objetos Resposta...
 despues de string a respostes
 SALE
@@ -96,21 +96,21 @@ SALE
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
+Selecciona una opciÃ³:
 --- RESPONDRE ENQUESTA ---
-Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta: 
-Respon les següents preguntes:
+Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta:
+Respon les segÃ¼ents preguntes:
 
 Pregunta: Que nivel del programa (0 - 100)?
-Introdueix la teva resposta numèrica: 
+Introdueix la teva resposta numÃ¨rica:
 Pregunta: Menciona l'algoritme que has utilitzat?
-Introdueix la teva resposta lliure: 
+Introdueix la teva resposta lliure:
 Pregunta: Que programas has utilitzat?
 Opcions:
  0) java
  1) c++
  2) c
-Introdueix la teva resposta (números separats per comes si és múltiple): entra
+Introdueix la teva resposta (nÃºmeros separats per comes si Ã©s mÃºltiple): entra
 Convirtiendo respuestas de String a objetos Resposta...
 despues de string a respostes
 SALE
@@ -138,7 +138,7 @@ SALE
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: Numero d'enquesta: 1
+Selecciona una opciÃ³: Numero d'enquesta: 1
 Pregunta: Que nivel del programa (0 - 100)?
   - Usuari ID: 102, Resposta: 70.0
   - Usuari ID: 103, Resposta: 20.0
@@ -147,9 +147,9 @@ Pregunta: Menciona l'algoritme que has utilitzat?
   - Usuari ID: 103, Resposta: bfs
 Pregunta: Que programas has utilitzat?
 Opcions:
-  * Opció: java
-  * Opció: c++
-  * Opció: c
+  * OpciÃ³: java
+  * OpciÃ³: c++
+  * OpciÃ³: c
   - Usuari ID: 102, Resposta: c++
   - Usuari ID: 103, Resposta: java
 ======================================
@@ -173,7 +173,7 @@ Opcions:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: Introduiex l'index de l'enquesta a esborrar
+Selecciona una opciÃ³: Introduiex l'index de l'enquesta a esborrar
 Introduiex l'Id de l'enquestat
 ======================================
               ENQUESTES
@@ -196,7 +196,7 @@ Introduiex l'Id de l'enquestat
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
+Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a exportar:
 Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\esborrarResposta_sortida1.txt
 ======================================
               ENQUESTES
@@ -219,5 +219,5 @@ Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correcta
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
+Selecciona una opciÃ³:
 Sortint...

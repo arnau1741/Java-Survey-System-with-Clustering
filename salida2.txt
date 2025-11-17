@@ -1,0 +1,1 @@
+java -cp bin prop.enquestes.presentacio.Main < Pruebas/.txt > Pruebas/salida_.txt
