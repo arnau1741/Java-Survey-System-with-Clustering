@@ -19,21 +19,21 @@
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
---- CREACIÃ“ D'ENQUESTA DES DE FITXER ---
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
 Format esperat del fitxer:
-  lÃ­nia 1: tÃ­tol
-  lÃ­nia 2: descripciÃ³
-  lÃ­nia 3: id creador (enter)
-  lÃ­nia 4: nombre de preguntes
-  desprÃ©s, per cada pregunta:
-    lÃ­nia: tipus (0..4) (Tipus (0=NUMÃˆRICA, 1=NO ORDENADA ÃšNICA, 2=ORDENADA ÃšNICA, 3=NO ORDENADA MÃšLTIPLE, 4=LLIURE))
-    lÃ­nia: text pregunta
-    si tipus Ã©s 1,2,3:
-       lÃ­nia: nombre d'opcions
-       segÃ¼ents lÃ­nies: cada opciÃ³
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
 
-Introdueix el nombre de fitxer d'enquesta (sense extensiÃ³):
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
 Llegint fitxer: Pruebas\enquesta_cafe.txt
 
 [OK] Enquesta creada correctament des del fitxer!
@@ -59,19 +59,19 @@ Llegint fitxer: Pruebas\enquesta_cafe.txt
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
+Selecciona una opció: 
 --- RESPONDRE ENQUESTA ---
-Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta:
-Respon les segÃ¼ents preguntes:
+Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta: 
+Respon les següents preguntes:
 
-Pregunta: Quants cafÃ¨s prens al dia?
-Introdueix la teva resposta numÃ¨rica:
-Pregunta: Prefereixes el cafÃ¨ amb llet o sense?
+Pregunta: Quants cafès prens al dia?
+Introdueix la teva resposta numèrica: 
+Pregunta: Prefereixes el cafè amb llet o sense?
 Opcions:
  0) Amb llet
  1) Sense llet
  2) Altres
-Introdueix la teva resposta (nÃºmeros separats per comes si Ã©s mÃºltiple): entra
+Introdueix la teva resposta (números separats per comes si és múltiple): entra
 Convirtiendo respuestas de String a objetos Resposta...
 entra
 entra2
@@ -101,14 +101,14 @@ SALE
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Numero d'enquesta: 1
-Pregunta: Quants cafÃ¨s prens al dia?
+Selecciona una opció: Numero d'enquesta: 1
+Pregunta: Quants cafès prens al dia?
   - Usuari ID: 0, Resposta: 2.0
-Pregunta: Prefereixes el cafÃ¨ amb llet o sense?
+Pregunta: Prefereixes el cafè amb llet o sense?
 Opcions:
-  * OpciÃ³: Amb llet
-  * OpciÃ³: Sense llet
-  * OpciÃ³: Altres
+  * Opció: Amb llet
+  * Opció: Sense llet
+  * Opció: Altres
   - Usuari ID: 0, Resposta: Altres
 ======================================
               ENQUESTES
@@ -131,19 +131,19 @@ Opcions:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'id de l'enquesta
+Selecciona una opció: Introdueix l'id de l'enquesta
 Introduexi l'id de l'usuari
-Pregunta: Quants cafÃ¨s prens al dia?
+Pregunta: Quants cafès prens al dia?
 Resposta: 2.0
-Pregunta: Prefereixes el cafÃ¨ amb llet o sense?
+Pregunta: Prefereixes el cafè amb llet o sense?
 Opcions:
-  * OpciÃ³: Amb llet
-  * OpciÃ³: Sense llet
-  * OpciÃ³: Altres
+  * Opció: Amb llet
+  * Opció: Sense llet
+  * Opció: Altres
 Resposta: Altres
 
-Quina pregunta vols modificar? (introdueix el nÃºmero de pregunta):
-Introdueix la nova resposta: (per mÃºltiples respostes, separa-les per comes)
+Quina pregunta vols modificar? (introdueix el número de pregunta):
+Introdueix la nova resposta: (per múltiples respostes, separa-les per comes)
 Resposta modificada correctament.
 ======================================
               ENQUESTES
@@ -166,14 +166,14 @@ Resposta modificada correctament.
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Numero d'enquesta: 1
-Pregunta: Quants cafÃ¨s prens al dia?
+Selecciona una opció: Numero d'enquesta: 1
+Pregunta: Quants cafès prens al dia?
   - Usuari ID: 0, Resposta: 12000.0
-Pregunta: Prefereixes el cafÃ¨ amb llet o sense?
+Pregunta: Prefereixes el cafè amb llet o sense?
 Opcions:
-  * OpciÃ³: Amb llet
-  * OpciÃ³: Sense llet
-  * OpciÃ³: Altres
+  * Opció: Amb llet
+  * Opció: Sense llet
+  * Opció: Altres
   - Usuari ID: 0, Resposta: Altres
 ======================================
               ENQUESTES
@@ -196,7 +196,7 @@ Opcions:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a exportar:
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
 Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\salida.txt
 ======================================
               ENQUESTES
@@ -219,5 +219,5 @@ Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correcta
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
+Selecciona una opció: 
 Sortint...

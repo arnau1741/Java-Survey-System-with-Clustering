@@ -19,21 +19,21 @@
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
---- CREACIÃ“ D'ENQUESTA DES DE FITXER ---
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
 Format esperat del fitxer:
-  lÃ­nia 1: tÃ­tol
-  lÃ­nia 2: descripciÃ³
-  lÃ­nia 3: id creador (enter)
-  lÃ­nia 4: nombre de preguntes
-  desprÃ©s, per cada pregunta:
-    lÃ­nia: tipus (0..4) (Tipus (0=NUMÃˆRICA, 1=NO ORDENADA ÃšNICA, 2=ORDENADA ÃšNICA, 3=NO ORDENADA MÃšLTIPLE, 4=LLIURE))
-    lÃ­nia: text pregunta
-    si tipus Ã©s 1,2,3:
-       lÃ­nia: nombre d'opcions
-       segÃ¼ents lÃ­nies: cada opciÃ³
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
 
-Introdueix el nombre de fitxer d'enquesta (sense extensiÃ³):
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
 Llegint fitxer: Pruebas\enquesta_musica.txt
 
 [OK] Enquesta creada correctament des del fitxer!
@@ -59,18 +59,18 @@ Llegint fitxer: Pruebas\enquesta_musica.txt
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a consultar:
+Selecciona una opció: Introdueix l'ID de l'enquesta a consultar: 
 Enquesta: 0
-Titol: Enquesta sobre mÃºsica
-DescripciÃ³: Descobrim els teus gustos musicals.
-NÂº de preguntes: 2
+Titol: Enquesta sobre música
+Descripció: Descobrim els teus gustos musicals.
+Nº de preguntes: 2
 Preguntes:
 - ORDENADA
-- Quins gÃ¨neres escoltes habitualment?
+- Quins gèneres escoltes habitualment?
 - 3
 - Pop
 - Rock
-- ClÃ ssica
+- Clàssica
 - - - -
 - LLIURE
 - Quin instrument t'agradaria aprendre?
@@ -96,17 +96,17 @@ Preguntes:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
+Selecciona una opció: 
 --- RESPONDRE ENQUESTA ---
-Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta:
-Respon les segÃ¼ents preguntes:
+Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta: 
+Respon les següents preguntes:
 
-Pregunta: Quins gÃ¨neres escoltes habitualment?
+Pregunta: Quins gèneres escoltes habitualment?
 Opcions:
  0) Pop
  1) Rock
- 2) ClÃ ssica
-Introdueix la teva resposta (nÃºmeros separats per comes si Ã©s mÃºltiple):
+ 2) Clàssica
+Introdueix la teva resposta (números separats per comes si és múltiple): 
 Pregunta: Quin instrument t'agradaria aprendre?
 Introdueix la teva resposta lliure: entra
 Convirtiendo respuestas de String a objetos Resposta...
@@ -136,12 +136,12 @@ SALE
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a consultar les respostes:
-Pregunta: Quins gÃ¨neres escoltes habitualment?
+Selecciona una opció: Introdueix l'ID de l'enquesta a consultar les respostes: 
+Pregunta: Quins gèneres escoltes habitualment?
 Opcions:
-  * OpciÃ³: Pop
-  * OpciÃ³: Rock
-  * OpciÃ³: ClÃ ssica
+  * Opció: Pop
+  * Opció: Rock
+  * Opció: Clàssica
   - Usuari ID: 1, Resposta: Rock
 Pregunta: Quin instrument t'agradaria aprendre?
   - Usuari ID: 1, Resposta: guitarra
@@ -166,8 +166,8 @@ Pregunta: Quin instrument t'agradaria aprendre?
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a exportar:
-Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas/respondre_enquesta_sortida1.txt
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
+Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\respondre_enquesta_sortida1.txt
 ======================================
               ENQUESTES
 ======================================
@@ -189,8 +189,8 @@ Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correcta
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
-[ERROR] OpciÃ³ no vÃ lida. Torna-ho a intentar.
+Selecciona una opció: 
+[ERROR] Opció no vàlida. Torna-ho a intentar.
 
 ======================================
               ENQUESTES
@@ -213,5 +213,5 @@ Selecciona una opciÃ³:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
+Selecciona una opció: 
 Sortint...

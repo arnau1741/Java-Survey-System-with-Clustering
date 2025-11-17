@@ -19,21 +19,21 @@
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
---- CREACIÃ“ D'ENQUESTA DES DE FITXER ---
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
 Format esperat del fitxer:
-  lÃ­nia 1: tÃ­tol
-  lÃ­nia 2: descripciÃ³
-  lÃ­nia 3: id creador (enter)
-  lÃ­nia 4: nombre de preguntes
-  desprÃ©s, per cada pregunta:
-    lÃ­nia: tipus (0..4) (Tipus (0=NUMÃˆRICA, 1=NO ORDENADA ÃšNICA, 2=ORDENADA ÃšNICA, 3=NO ORDENADA MÃšLTIPLE, 4=LLIURE))
-    lÃ­nia: text pregunta
-    si tipus Ã©s 1,2,3:
-       lÃ­nia: nombre d'opcions
-       segÃ¼ents lÃ­nies: cada opciÃ³
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
 
-Introdueix el nombre de fitxer d'enquesta (sense extensiÃ³):
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
 Llegint fitxer: Pruebas\enquesta_cafe.txt
 
 [OK] Enquesta creada correctament des del fitxer!
@@ -59,11 +59,11 @@ Llegint fitxer: Pruebas\enquesta_cafe.txt
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix el Id de l'enquesta
+Selecciona una opció: Introdueix el Id de l'enquesta
 Enquesta: 0
-Titol: Enquesta sobre el consum de cafÃ¨
-DescripciÃ³: Petita enquesta sobre hÃ bits de consum de cafÃ¨.
-NÂº de preguntes: 2
+Titol: Enquesta sobre el consum de cafè
+Descripció: Petita enquesta sobre hàbits de consum de cafè.
+Nº de preguntes: 2
 ======================================
               ENQUESTES
 ======================================
@@ -85,21 +85,21 @@ NÂº de preguntes: 2
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
---- CREACIÃ“ D'ENQUESTA DES DE FITXER ---
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
 Format esperat del fitxer:
-  lÃ­nia 1: tÃ­tol
-  lÃ­nia 2: descripciÃ³
-  lÃ­nia 3: id creador (enter)
-  lÃ­nia 4: nombre de preguntes
-  desprÃ©s, per cada pregunta:
-    lÃ­nia: tipus (0..4) (Tipus (0=NUMÃˆRICA, 1=NO ORDENADA ÃšNICA, 2=ORDENADA ÃšNICA, 3=NO ORDENADA MÃšLTIPLE, 4=LLIURE))
-    lÃ­nia: text pregunta
-    si tipus Ã©s 1,2,3:
-       lÃ­nia: nombre d'opcions
-       segÃ¼ents lÃ­nies: cada opciÃ³
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
 
-Introdueix el nombre de fitxer d'enquesta (sense extensiÃ³):
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
 Llegint fitxer: Pruebas\enquesta_musica.txt
 
 [OK] Enquesta creada correctament des del fitxer!
@@ -125,11 +125,11 @@ Llegint fitxer: Pruebas\enquesta_musica.txt
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix el Id de l'enquesta
+Selecciona una opció: Introdueix el Id de l'enquesta
 Enquesta: 1
-Titol: Enquesta sobre mÃºsica
-DescripciÃ³: Descobrim els teus gustos musicals.
-NÂº de preguntes: 2
+Titol: Enquesta sobre música
+Descripció: Descobrim els teus gustos musicals.
+Nº de preguntes: 2
 ======================================
               ENQUESTES
 ======================================
@@ -151,15 +151,15 @@ NÂº de preguntes: 2
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
---- CREACIÃ“ D'ENQUESTA (MANUAL) ---
-TÃ­tol: DescripciÃ³: ID del creador (enter): Nombre de preguntes:
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA (MANUAL) ---
+Títol: Descripció: ID del creador (enter): Nombre de preguntes: 
 Pregunta 1:
- Tipus (0=NUMÃˆRICA, 1=ÃšNICA, 2=ORDENADA, 3=MÃšLTIPLE, 4=LLIURE)
-   Introdueix el tipus:    Text de la pregunta:
+ Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)
+   Introdueix el tipus:    Text de la pregunta: 
 Pregunta 2:
- Tipus (0=NUMÃˆRICA, 1=ÃšNICA, 2=ORDENADA, 3=MÃšLTIPLE, 4=LLIURE)
-   Introdueix el tipus:    Text de la pregunta:
+ Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)
+   Introdueix el tipus:    Text de la pregunta: 
 [OK] Enquesta creada correctament!
 
 ======================================
@@ -183,11 +183,11 @@ Pregunta 2:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a consultar:
+Selecciona una opció: Introdueix l'ID de l'enquesta a consultar: 
 Enquesta: 2
 Titol: Prova
-DescripciÃ³: prova
-NÂº de preguntes: 2
+Descripció: prova 
+Nº de preguntes: 2
 Preguntes:
 - LLIURE
 - prova
@@ -216,7 +216,7 @@ Preguntes:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a exportar:
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
 Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\consultar_enquesta_pregunta_1.txt
 ======================================
               ENQUESTES
@@ -239,7 +239,7 @@ Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correcta
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a exportar:
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
 Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\consultar_enquesta_pregunta_2.txt
 ======================================
               ENQUESTES
@@ -262,5 +262,5 @@ Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correcta
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
+Selecciona una opció: 
 Sortint...

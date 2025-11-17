@@ -16,7 +16,7 @@ Respostes:
   - Usuari ID: -6, Resposta: 5.0
   - Usuari ID: -7, Resposta: 7.0
   - Usuari ID: -8, Resposta: 8.0
-  - Usuari ID: 103, Resposta: 16.0
+  - Usuari ID: 103, Resposta: 7.0
   - Usuari ID: -9, Resposta: 4.0
   - Usuari ID: -10, Resposta: 6.0
   - Usuari ID: -11, Resposta: 10.0

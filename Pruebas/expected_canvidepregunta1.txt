@@ -6,7 +6,7 @@ Creador ID: 101
 Numero de preguntes: 2
 
 ==== Preguntes i respostes ====
-Pregunta: 1: Pregunta
+Pregunta: 1: Pregunta de prova
 No hi ha respostes.
 
 Pregunta: 2: Prefereixes el cafè amb llet o sense?

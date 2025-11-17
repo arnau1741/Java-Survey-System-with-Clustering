@@ -19,21 +19,21 @@
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
---- CREACIÃ“ D'ENQUESTA DES DE FITXER ---
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
 Format esperat del fitxer:
-  lÃ­nia 1: tÃ­tol
-  lÃ­nia 2: descripciÃ³
-  lÃ­nia 3: id creador (enter)
-  lÃ­nia 4: nombre de preguntes
-  desprÃ©s, per cada pregunta:
-    lÃ­nia: tipus (0..4) (Tipus (0=NUMÃˆRICA, 1=NO ORDENADA ÃšNICA, 2=ORDENADA ÃšNICA, 3=NO ORDENADA MÃšLTIPLE, 4=LLIURE))
-    lÃ­nia: text pregunta
-    si tipus Ã©s 1,2,3:
-       lÃ­nia: nombre d'opcions
-       segÃ¼ents lÃ­nies: cada opciÃ³
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
 
-Introdueix el nombre de fitxer d'enquesta (sense extensiÃ³):
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
 Llegint fitxer: Pruebas\enquesta_cafe.txt
 
 [OK] Enquesta creada correctament des del fitxer!
@@ -59,21 +59,21 @@ Llegint fitxer: Pruebas\enquesta_cafe.txt
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
---- CREACIÃ“ D'ENQUESTA DES DE FITXER ---
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
 Format esperat del fitxer:
-  lÃ­nia 1: tÃ­tol
-  lÃ­nia 2: descripciÃ³
-  lÃ­nia 3: id creador (enter)
-  lÃ­nia 4: nombre de preguntes
-  desprÃ©s, per cada pregunta:
-    lÃ­nia: tipus (0..4) (Tipus (0=NUMÃˆRICA, 1=NO ORDENADA ÃšNICA, 2=ORDENADA ÃšNICA, 3=NO ORDENADA MÃšLTIPLE, 4=LLIURE))
-    lÃ­nia: text pregunta
-    si tipus Ã©s 1,2,3:
-       lÃ­nia: nombre d'opcions
-       segÃ¼ents lÃ­nies: cada opciÃ³
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
 
-Introdueix el nombre de fitxer d'enquesta (sense extensiÃ³):
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
 Llegint fitxer: Pruebas\enquesta_satisfaccion.txt
 
 [OK] Enquesta creada correctament des del fitxer!
@@ -99,9 +99,9 @@ Llegint fitxer: Pruebas\enquesta_satisfaccion.txt
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
+Selecciona una opció: 
 --- IMPORTAR RESPOSTES DES DE FITXER ---
-Introdueix l'ID de l'usuari que respon l'enquesta: Introdueix l'ID de l'enquesta: Introdueix el nombre de fitxer de respostes (sense extensiÃ³): Llegint fitxer: Pruebas\importarRespostesCafe.txt
+Introdueix l'ID de l'usuari que respon l'enquesta: Introdueix l'ID de l'enquesta: Introdueix el nombre de fitxer de respostes (sense extensió): Llegint fitxer: Pruebas\importarRespostesCafe.txt
 entra
 Convirtiendo respuestas de String a objetos Resposta...
 entra
@@ -204,9 +204,9 @@ SALE
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
+Selecciona una opció: 
 --- IMPORTAR RESPOSTES DES DE FITXER ---
-Introdueix l'ID de l'usuari que respon l'enquesta: Introdueix l'ID de l'enquesta: Introdueix el nombre de fitxer de respostes (sense extensiÃ³): Llegint fitxer: Pruebas\importarRespostesSatisfaccion.txt
+Introdueix l'ID de l'usuari que respon l'enquesta: Introdueix l'ID de l'enquesta: Introdueix el nombre de fitxer de respostes (sense extensió): Llegint fitxer: Pruebas\importarRespostesSatisfaccion.txt
 entra
 Convirtiendo respuestas de String a objetos Resposta...
 despues de string a respostes
@@ -275,13 +275,13 @@ SALE
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
+Selecciona una opció: 
 --- RESPONDRE ENQUESTA ---
-Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta:
-Respon les segÃ¼ents preguntes:
+Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta: 
+Respon les següents preguntes:
 
-Pregunta: Â¿En quÃ© medida recomendarÃ­as nuestro servicio? (1-10)
-Introdueix la teva resposta numÃ¨rica: entra
+Pregunta: ¿En qué medida recomendarías nuestro servicio? (1-10)
+Introdueix la teva resposta numèrica: entra
 Convirtiendo respuestas de String a objetos Resposta...
 despues de string a respostes
 SALE
@@ -309,17 +309,84 @@ SALE
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a consultar:
+Selecciona una opció: Numero d'enquesta: 2
+Pregunta: Quants cafès prens al dia?
+  - Usuari ID: -1, Resposta: 3.0
+  - Usuari ID: -2, Resposta: 5.0
+  - Usuari ID: -3, Resposta: 0.0
+  - Usuari ID: -4, Resposta: 2.0
+  - Usuari ID: -5, Resposta: 4.0
+  - Usuari ID: -6, Resposta: 3.0
+  - Usuari ID: -7, Resposta: 0.0
+  - Usuari ID: -8, Resposta: 2.0
+  - Usuari ID: -9, Resposta: 1.0
+  - Usuari ID: -10, Resposta: 5.0
+  - Usuari ID: -11, Resposta: 4.0
+  - Usuari ID: -12, Resposta: 1.0
+  - Usuari ID: -13, Resposta: 1.0
+Pregunta: Prefereixes el cafè amb llet o sense?
+Opcions:
+  * Opció: Amb llet
+  * Opció: Sense llet
+  * Opció: Altres
+  - Usuari ID: -1, Resposta: Sense llet
+  - Usuari ID: -2, Resposta: Altres
+  - Usuari ID: -3, Resposta: Amb llet
+  - Usuari ID: -4, Resposta: Sense llet
+  - Usuari ID: -5, Resposta: Amb llet
+  - Usuari ID: -6, Resposta: Sense llet
+  - Usuari ID: -7, Resposta: Altres
+  - Usuari ID: -8, Resposta: Amb llet
+  - Usuari ID: -9, Resposta: Sense llet
+  - Usuari ID: -10, Resposta: Amb llet
+  - Usuari ID: -11, Resposta: Altres
+  - Usuari ID: -12, Resposta: Altres
+  - Usuari ID: -13, Resposta: Altres
+Pregunta: ¿En qué medida recomendarías nuestro servicio? (1-10)
+  - Usuari ID: -1, Resposta: 7.0
+  - Usuari ID: -2, Resposta: 8.0
+  - Usuari ID: -3, Resposta: 9.0
+  - Usuari ID: -4, Resposta: 6.0
+  - Usuari ID: -5, Resposta: 10.0
+  - Usuari ID: -6, Resposta: 5.0
+  - Usuari ID: -7, Resposta: 7.0
+  - Usuari ID: -8, Resposta: 8.0
+  - Usuari ID: 103, Resposta: 7.0
+  - Usuari ID: -9, Resposta: 4.0
+  - Usuari ID: -10, Resposta: 6.0
+  - Usuari ID: -11, Resposta: 10.0
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix l'ID de l'enquesta a consultar: 
 Enquesta: 0
-Titol: Enquesta sobre el consum de cafÃ¨
-DescripciÃ³: Petita enquesta sobre hÃ bits de consum de cafÃ¨.
-NÂº de preguntes: 2
+Titol: Enquesta sobre el consum de cafè
+Descripció: Petita enquesta sobre hàbits de consum de cafè.
+Nº de preguntes: 2
 Preguntes:
 - NUMERICA
-- Quants cafÃ¨s prens al dia?
+- Quants cafès prens al dia?
 - - - -
 - MULTIPLE
-- Prefereixes el cafÃ¨ amb llet o sense?
+- Prefereixes el cafè amb llet o sense?
 - 3
 - Amb llet
 - Sense llet
@@ -327,7 +394,7 @@ Preguntes:
 - - - -
 Introdueix l'index de l'enquesta a modificar
 Introdueix l'index de la pregunta
-Introdueix pregunta
+Introdueix nova pregunta
 Introdueix tipus (nomes numero):
  - 0:Numerica
  - 1:No ordenada Unica
@@ -356,14 +423,14 @@ S'ha esborrat correctament
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Numero d'enquesta: 2
-Pregunta: Pregunta
-Pregunta: Prefereixes el cafÃ¨ amb llet o sense?
+Selecciona una opció: Numero d'enquesta: 2
+Pregunta: Pregunta de prova
+Pregunta: Prefereixes el cafè amb llet o sense?
 Opcions:
-  * OpciÃ³: Amb llet
-  * OpciÃ³: Sense llet
-  * OpciÃ³: Altres
-Pregunta: Â¿En quÃ© medida recomendarÃ­as nuestro servicio? (1-10)
+  * Opció: Amb llet
+  * Opció: Sense llet
+  * Opció: Altres
+Pregunta: ¿En qué medida recomendarías nuestro servicio? (1-10)
   - Usuari ID: -1, Resposta: 7.0
   - Usuari ID: -2, Resposta: 8.0
   - Usuari ID: -3, Resposta: 9.0
@@ -372,7 +439,7 @@ Pregunta: Â¿En quÃ© medida recomendarÃ­as nuestro servicio? (1-10)
   - Usuari ID: -6, Resposta: 5.0
   - Usuari ID: -7, Resposta: 7.0
   - Usuari ID: -8, Resposta: 8.0
-  - Usuari ID: 103, Resposta: 16.0
+  - Usuari ID: 103, Resposta: 7.0
   - Usuari ID: -9, Resposta: 4.0
   - Usuari ID: -10, Resposta: 6.0
   - Usuari ID: -11, Resposta: 10.0
@@ -397,7 +464,7 @@ Pregunta: Â¿En quÃ© medida recomendarÃ­as nuestro servicio? (1-10)
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a exportar:
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
 Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\canvidepregunta1.txt
 ======================================
               ENQUESTES
@@ -420,7 +487,7 @@ Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correcta
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a exportar:
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
 Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\canvidepregunta2.txt
 ======================================
               ENQUESTES
@@ -443,8 +510,8 @@ Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correcta
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³: Introdueix l'ID de l'enquesta a exportar:
-Introdueix el fitxer on es guardar (sense extencio):
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
+Introdueix el fitxer on es guardar (sense extencio): 
 [ERROR] L'enquesta amb id 2 no existeix.
 
 ======================================
@@ -468,5 +535,5 @@ Introdueix el fitxer on es guardar (sense extencio):
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opciÃ³:
+Selecciona una opció: 
 Sortint...
