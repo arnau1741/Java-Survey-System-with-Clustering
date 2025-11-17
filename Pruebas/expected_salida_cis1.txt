@@ -19,8 +19,8 @@
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
-[ERROR] Opció no vàlida. Torna-ho a intentar.
+Selecciona una opciÃ³:
+[ERROR] OpciÃ³ no vÃ lida. Torna-ho a intentar.
 
 ======================================
               ENQUESTES
@@ -43,8 +43,8 @@ Selecciona una opció:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
-[ERROR] Opció no vàlida. Torna-ho a intentar.
+Selecciona una opciÃ³:
+[ERROR] OpciÃ³ no vÃ lida. Torna-ho a intentar.
 
 ======================================
               ENQUESTES
@@ -67,9 +67,9 @@ Selecciona una opció:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
---- CREACIÓ D'ENQUESTA (MANUAL) ---
-Títol: Descripció: ID del creador (enter): 
+Selecciona una opciÃ³:
+--- CREACIÃ“ D'ENQUESTA (MANUAL) ---
+TÃ­tol: DescripciÃ³: ID del creador (enter):
 [ERROR] For input string: ""
 
 ======================================
@@ -93,8 +93,8 @@ Títol: Descripció: ID del creador (enter):
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
-[ERROR] Opció no vàlida. Torna-ho a intentar.
+Selecciona una opciÃ³:
+[ERROR] OpciÃ³ no vÃ lida. Torna-ho a intentar.
 
 ======================================
               ENQUESTES
@@ -117,7 +117,7 @@ Selecciona una opció:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: Introdueix el Id de l'enquesta
+Selecciona una opciÃ³: Introdueix el Id de l'enquesta
 
 [ERROR] For input string: ""
 
@@ -142,8 +142,8 @@ Selecciona una opció: Introdueix el Id de l'enquesta
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
-[ERROR] Opció no vàlida. Torna-ho a intentar.
+Selecciona una opciÃ³:
+[ERROR] OpciÃ³ no vÃ lida. Torna-ho a intentar.
 
 ======================================
               ENQUESTES
@@ -166,8 +166,8 @@ Selecciona una opció:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
-[ERROR] Opció no vàlida. Torna-ho a intentar.
+Selecciona una opciÃ³:
+[ERROR] OpciÃ³ no vÃ lida. Torna-ho a intentar.
 
 ======================================
               ENQUESTES
@@ -190,8 +190,8 @@ Selecciona una opció:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
-[ERROR] Opció no vàlida. Torna-ho a intentar.
+Selecciona una opciÃ³:
+[ERROR] OpciÃ³ no vÃ lida. Torna-ho a intentar.
 
 ======================================
               ENQUESTES
@@ -214,21 +214,21 @@ Selecciona una opció:
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
---- CREACIÓ D'ENQUESTA DES DE FITXER ---
+Selecciona una opciÃ³:
+--- CREACIÃ“ D'ENQUESTA DES DE FITXER ---
 Format esperat del fitxer:
-  línia 1: títol
-  línia 2: descripció
-  línia 3: id creador (enter)
-  línia 4: nombre de preguntes
-  després, per cada pregunta:
-    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
-    línia: text pregunta
-    si tipus és 1,2,3:
-       línia: nombre d'opcions
-       següents línies: cada opció
+  lÃ­nia 1: tÃ­tol
+  lÃ­nia 2: descripciÃ³
+  lÃ­nia 3: id creador (enter)
+  lÃ­nia 4: nombre de preguntes
+  desprÃ©s, per cada pregunta:
+    lÃ­nia: tipus (0..4) (Tipus (0=NUMÃˆRICA, 1=NO ORDENADA ÃšNICA, 2=ORDENADA ÃšNICA, 3=NO ORDENADA MÃšLTIPLE, 4=LLIURE))
+    lÃ­nia: text pregunta
+    si tipus Ã©s 1,2,3:
+       lÃ­nia: nombre d'opcions
+       segÃ¼ents lÃ­nies: cada opciÃ³
 
-Introdueix el nombre de fitxer d'enquesta (sense extensió): 
+Introdueix el nombre de fitxer d'enquesta (sense extensiÃ³):
 
 [ERROR] Index 80 out of bounds for length 80
 
@@ -253,5 +253,5 @@ Introdueix el nombre de fitxer d'enquesta (sense extensió):
  16) Mostrar enquestes amb preguntes i respostes
  0) Sortir
 ======================================
-Selecciona una opció: 
+Selecciona una opciÃ³:
 [ERROR NO CONTROLAT] Index 80 out of bounds for length 80
