@@ -628,8 +628,9 @@ public class Utils {
             io.writeln(" - 4:Lliure");
             String tipus = io.readword();
 
-            novaPregunta.add(text);
             novaPregunta.add(tipus);
+            novaPregunta.add(text);
+
 
             if (tipus.equals("1") || tipus.equals("2") || tipus.equals("3")) {
                 io.writeln("Introdueix el nombre d'opcions");
