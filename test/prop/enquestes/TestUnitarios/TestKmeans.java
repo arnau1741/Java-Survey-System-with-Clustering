@@ -1,9 +1,13 @@
-//Test per la classe KMeans, inicialment nomes farem proves a les distancies
+package prop.enquestes.TestUnitarios;//Test per la classe KMeans, inicialment nomes farem proves a les distancies
 
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import prop.enquestes.controladors.KMeans;
+import prop.enquestes.domini.*;
+
 
 import static org.junit.Assert.*;
 

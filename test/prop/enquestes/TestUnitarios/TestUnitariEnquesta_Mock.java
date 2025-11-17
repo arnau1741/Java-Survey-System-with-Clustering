@@ -1,6 +1,10 @@
+package  prop.enquestes.TestUnitarios;
 import org.junit.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import prop.enquestes.domini.Enquesta;
+import prop.enquestes.domini.Pregunta;
+import prop.enquestes.domini.Resposta;
 
 import java.util.*;
 

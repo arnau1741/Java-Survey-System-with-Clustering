@@ -1,6 +1,13 @@
+package prop.enquestes.TestUnitarios;
+
 import org.junit.Before;
 import org.junit.Test;
+import prop.enquestes.domini.Enquesta;
+import prop.enquestes.domini.EnquestaStub;
+import prop.enquestes.domini.PerfilAdministrador;
+import prop.enquestes.domini.Pregunta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -21,6 +28,9 @@ public class TestUnitariAdministrador_Stub {
     private EnquestaStub stub(int id) {
         return new EnquestaStub(id);
     }
+    private EnquestaStub stub(int id, List<Pregunta> preguntes) {
+        return new EnquestaStub(id, preguntes);
+    }
 
     @Test
     public void testConstructor_CorrectInitialization() {
@@ -33,8 +43,11 @@ public class TestUnitariAdministrador_Stub {
 
     @Test
     public void testAfegirEnquestaAdministrada_AddsCorrectly() {
-        Enquesta enq1 = stub(1);
-        Enquesta enq2 = stub(2);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
+        Enquesta enq2 = stub(2, preguntes);
 
         admin.afegirEnquestaAdministrada(enq1);
 
@@ -50,8 +63,11 @@ public class TestUnitariAdministrador_Stub {
 
     @Test
     public void testEliminarEnquestaAdministrada_RemovesCorrectly() {
-        Enquesta enq1 = stub(1);
-        Enquesta enq2 = stub(2);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
+        Enquesta enq2 = stub(2, preguntes);
 
         admin.afegirEnquestaAdministrada(enq1);
         admin.afegirEnquestaAdministrada(enq2);
@@ -68,8 +84,11 @@ public class TestUnitariAdministrador_Stub {
 
     @Test
     public void testGetEnquestesAdministrades_ReturnsListInOrder() {
-        Enquesta enq1 = stub(1);
-        Enquesta enq2 = stub(2);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
+        Enquesta enq2 = stub(2, preguntes);
 
         admin.afegirEnquestaAdministrada(enq1);
         admin.afegirEnquestaAdministrada(enq2);
@@ -94,7 +113,10 @@ public class TestUnitariAdministrador_Stub {
 
     @Test
     public void testEliminarEnquestaInexistent_DoesNotModifyList() {
-        Enquesta enq1 = stub(1);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
         admin.afegirEnquestaAdministrada(enq1);
 
         admin.eliminarEnquestaAdministrada(99);
@@ -106,7 +128,10 @@ public class TestUnitariAdministrador_Stub {
 
     @Test
     public void testEliminarAmbIdNegatiu_DoesNothing() {
-        Enquesta enq1 = stub(1);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
         admin.afegirEnquestaAdministrada(enq1);
 
         admin.eliminarEnquestaAdministrada(-10);

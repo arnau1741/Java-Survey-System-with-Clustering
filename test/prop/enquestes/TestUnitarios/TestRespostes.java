@@ -1,5 +1,9 @@
+package prop.enquestes.TestUnitarios;
+
 // java
 import org.junit.Test;
+import prop.enquestes.domini.*;
+
 import static org.junit.Assert.*;
 
 import java.util.*;

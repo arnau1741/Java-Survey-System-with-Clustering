@@ -1,6 +1,12 @@
+package prop.enquestes.TestUnitarios;
 import org.junit.Before;
 import org.junit.Test;
+import prop.enquestes.domini.Enquesta;
+import prop.enquestes.domini.EnquestaStub;
+import prop.enquestes.domini.PerfilEnquestat;
+import prop.enquestes.domini.Pregunta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,6 +24,9 @@ public class TestUnitariEnquestat_Stub {
 
     private EnquestaStub stub(int id) {
         return new EnquestaStub(id);
+    }
+    private EnquestaStub stub(int id, List<Pregunta> preguntes) {
+        return new EnquestaStub(id, preguntes);
     }
 
     // ---------------------------------------------------------------------
@@ -45,8 +54,11 @@ public class TestUnitariEnquestat_Stub {
 
     @Test
     public void afegirEnquestaRealitzadaFuncionaCorrectament() {
-        Enquesta en1 = stub(1);
-        Enquesta en2 = stub(2);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta en1 = stub(1, preguntes);
+        Enquesta en2 = stub(2, preguntes);
 
         enquestat.afegirEnquestaRealitzada(en1);
 
@@ -63,8 +75,11 @@ public class TestUnitariEnquestat_Stub {
 
     @Test
     public void eliminarEnquestaRealitzadaFuncionaCorrectament() {
-        Enquesta en1 = stub(1);
-        Enquesta en2 = stub(2);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta en1 = stub(1, preguntes);
+        Enquesta en2 = stub(2, preguntes);
 
         enquestat.afegirEnquestaRealitzada(en1);
         enquestat.afegirEnquestaRealitzada(en2);
@@ -88,7 +103,11 @@ public class TestUnitariEnquestat_Stub {
 
     @Test
     public void eliminarEnquestaInexistent_NoModificaLaLlista() {
-        Enquesta en1 = stub(1);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta en1 = stub(1, preguntes);
+
         enquestat.afegirEnquestaRealitzada(en1);
 
         enquestat.eliminarEnquestaRealitzada(99);
@@ -99,7 +118,11 @@ public class TestUnitariEnquestat_Stub {
 
     @Test
     public void eliminarEnquestaAmbIdNegatiu_NoFaRes() {
-        Enquesta en1 = stub(1);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta en1 = stub(1, preguntes);
+
         enquestat.afegirEnquestaRealitzada(en1);
 
         enquestat.eliminarEnquestaRealitzada(-5);
@@ -113,8 +136,11 @@ public class TestUnitariEnquestat_Stub {
 
     @Test
     public void getEnquestesRealitzades_RetornaLlistaAmbOrdreCorrecte() {
-        Enquesta en1 = stub(1);
-        Enquesta en2 = stub(2);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta en1 = stub(1, preguntes);
+        Enquesta en2 = stub(2, preguntes);
 
         enquestat.afegirEnquestaRealitzada(en1);
         enquestat.afegirEnquestaRealitzada(en2);

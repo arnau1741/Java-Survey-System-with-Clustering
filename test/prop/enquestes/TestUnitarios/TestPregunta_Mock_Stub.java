@@ -1,7 +1,11 @@
+package prop.enquestes.TestUnitarios;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import prop.enquestes.domini.Pregunta;
+import prop.enquestes.domini.Resposta;
 
 import java.util.Arrays;
 

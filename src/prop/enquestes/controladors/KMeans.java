@@ -306,15 +306,16 @@ public class KMeans{
         else if (a == null || b == null) {
             return 1.0; // Distancia máxima si alguna respuesta es nula
         }
-        Integer ordenA = a.getOrdre();
-        Integer ordenB = b.getOrdre();
+        Double ordenA = 1.0*a.getOrdre();
+        Double ordenB = 1.0*b.getOrdre();
         if (ordenA == null && ordenB == null) {
             return 0.0; // Distancia cero si ambas respuestas son nulas
         }
         if (ordenA == null || ordenB == null) {
             return 1.0; // Distancia máxima si alguna respuesta es nula
         }
-        return Math.abs(ordenA - ordenB)/(numOpcions - 1);
+        Double num1 = 1.0*numOpcions;
+        return Math.abs(ordenA - ordenB)/(num1 - 1.0);
     }
 
     /**

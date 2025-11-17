@@ -1,6 +1,12 @@
+package prop.enquestes.TestUnitarios;
 import org.junit.Before;
 import org.junit.Test;
+import prop.enquestes.domini.Enquesta;
+import prop.enquestes.domini.EnquestaStub;
+import prop.enquestes.domini.PerfilEnquestador;
+import prop.enquestes.domini.Pregunta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -19,6 +25,10 @@ public class TestUnitariEnquestador_Stub {
 
     private EnquestaStub stub(int id) {
         return new EnquestaStub(id);
+    }
+
+    private EnquestaStub stub(int id, List<Pregunta> preguntes) {
+        return new EnquestaStub(id, preguntes);
     }
 
     // --------------------------
@@ -40,8 +50,11 @@ public class TestUnitariEnquestador_Stub {
 
     @Test
     public void afegirEnquestaAssignadaFuncionaCorrectament() {
-        Enquesta enq1 = stub(1);
-        Enquesta enq2 = stub(2);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
+        Enquesta enq2 = stub(2, preguntes);
 
         enquestador.afegirEnquestaAssignada(enq1);
         enquestador.afegirEnquestaAssignada(enq2);
@@ -52,7 +65,10 @@ public class TestUnitariEnquestador_Stub {
 
     @Test
     public void eliminarEnquestaAssignadaFuncionaCorrectament() {
-        Enquesta enq1 = stub(1);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
         enquestador.afegirEnquestaAssignada(enq1);
 
         enquestador.eliminarEnquestaAssignada(1);
@@ -69,7 +85,11 @@ public class TestUnitariEnquestador_Stub {
 
     @Test
     public void eliminarEnquestaInexistent_NoModificaLaLlista() {
-        Enquesta enq1 = stub(1);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
+
         enquestador.afegirEnquestaAssignada(enq1);
 
         enquestador.eliminarEnquestaAssignada(99);
@@ -80,7 +100,11 @@ public class TestUnitariEnquestador_Stub {
 
     @Test
     public void eliminarEnquestaAmbIdNegatiu_NoFaRes() {
-        Enquesta enq1 = stub(1);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
+
         enquestador.afegirEnquestaAssignada(enq1);
 
         enquestador.eliminarEnquestaAssignada(-10);
@@ -94,8 +118,12 @@ public class TestUnitariEnquestador_Stub {
 
     @Test
     public void getEnquestesAssignades_RetornaLlistaEnOrdreCorrecte() {
-        Enquesta enq1 = stub(1);
-        Enquesta enq2 = stub(2);
+        List<Pregunta> preguntes = new ArrayList<>();
+        Pregunta p = new Pregunta("titulo", 0, null);
+        preguntes.add(p);
+        Enquesta enq1 = stub(1, preguntes);
+        Enquesta enq2 = stub(2, preguntes);
+
 
         enquestador.afegirEnquestaAssignada(enq1);
         enquestador.afegirEnquestaAssignada(enq2);
