@@ -617,8 +617,8 @@ public class Utils {
 
             List<String> novaPregunta = new ArrayList<>();
 
-            io.writeln("Introdueix pregunta");
-            String text = io.readword();
+            io.writeln("Introdueix nova pregunta");
+            String text = io.readline();
 
             io.writeln("Introdueix tipus (nomes numero):");
             io.writeln(" - 0:Numerica");
@@ -626,7 +626,7 @@ public class Utils {
             io.writeln(" - 2:Ordenada");
             io.writeln(" - 3:No ordenada Multiple");
             io.writeln(" - 4:Lliure");
-            String tipus = io.readword();
+            String tipus = io.readline();
 
             novaPregunta.add(tipus);
             novaPregunta.add(text);
@@ -638,7 +638,7 @@ public class Utils {
                 novaPregunta.add(Integer.toString(numOpcions));
                 for (int i = 0; i < numOpcions; i++) {
                     io.writeln("Introdueix la opcio " + (i + 1));
-                    String opcio = io.readword();
+                    String opcio = io.readline();
                     novaPregunta.add(opcio);
                 }
             }
@@ -686,7 +686,7 @@ public class Utils {
             io.writeln("Quina pregunta vols modificar? (introdueix el número de pregunta):");
             int idxPregunta = io.readint();
             io.writeln("Introdueix la nova resposta: (per múltiples respostes, separa-les per comes)");
-            String novaResposta = io.readword();
+            String novaResposta = io.readline();
             int codierr = ctrl.modificarRespostaEnquesta(idEnquesta, idUsuari, idxPregunta, novaResposta);
             if (codierr == 1) {
                 io.writeln("Resposta modificada correctament.");
