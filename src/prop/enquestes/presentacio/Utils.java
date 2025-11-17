@@ -75,6 +75,7 @@ public class Utils {
         try{
             io.writeln("Introdueix el Id de l'enquesta");
             Integer idEnquesta = io.readint();
+            io.readline();
 
             List<String> result = ctrl.consultarEnquesta(idEnquesta);
             for (String line : result) {
@@ -394,6 +395,7 @@ public class Utils {
         try{
             io.writeln("Introdueix l'ID de l'enquesta a exportar: ");
             int id = io.readint();
+            io.readline();
 
             io.write("Introdueix el fitxer on es guardar (sense extencio): ");
             String fitxer = io.readword();
@@ -423,6 +425,7 @@ public class Utils {
         try{
             io.writeln("Introduiex l'Id del usuari");
             int idUsuari = io.readint();
+            io.readline();
             List<String> perfil = ctrl.consultarPerfil(idUsuari);
             for (String line : perfil) {
                 io.writeln(line);
@@ -447,6 +450,7 @@ public class Utils {
         try {
             io.writeln("Introdueix l'ID de l'enquesta a consultar: ");
             int id = io.readint();
+            io.readline();
             List<String> info = ctrl.consultarEnquestaAmbPreguntes(id);
             for (String line : info) {
                 io.writeln(line);
@@ -473,6 +477,7 @@ public class Utils {
         try{
             io.writeln("Introdueix l'ID de l'enquesta a consultar les respostes: ");
             int id = io.readint();
+            io.readline();
             List<String> respostes = ctrl.consultarRespostesEnquesta(id);
             for (String line : respostes) {
                 io.writeln(line);
@@ -562,8 +567,10 @@ public class Utils {
         try{
             io.writeln("Introduiex l'index de l'enquesta a esborrar");
             Integer idEnquesta = io.readint();
+            io.readline();
             io.writeln("Introduiex l'Id de l'usuari");
             int idUsuari =io.readint();
+            io.readline();
             ctrl.eliminarEnquesta(idUsuari, idEnquesta);
         }
         catch (Exception e){
@@ -586,8 +593,10 @@ public class Utils {
         try{
             io.writeln("Introduiex l'index de l'enquesta a esborrar");
             Integer idEnquesta = io.readint();
+            io.readline();
             io.writeln("Introduiex l'Id de l'enquestat");
             int idEnquestat = io.readint();
+            io.readline();
             ctrl.esborrarRespostaEnquesta(idEnquesta, idEnquestat);
         }
         catch (Exception e){
@@ -611,9 +620,12 @@ public class Utils {
             consultarEnquestaAmbPreguntes(io, ctrl);
             io.writeln("Introdueix l'index de l'enquesta a modificar");
             Integer idEnquesta = io.readint();
+            io.readline();
 
             io.writeln("Introdueix l'index de la pregunta");
             int idxPregunta = io.readint();
+            io.readline();
+
 
             List<String> novaPregunta = new ArrayList<>();
 
@@ -635,6 +647,7 @@ public class Utils {
             if (tipus.equals("1") || tipus.equals("2") || tipus.equals("3")) {
                 io.writeln("Introdueix el nombre d'opcions");
                 int numOpcions = io.readint();
+                io.readline();
                 novaPregunta.add(Integer.toString(numOpcions));
                 for (int i = 0; i < numOpcions; i++) {
                     io.writeln("Introdueix la opcio " + (i + 1));
@@ -674,9 +687,11 @@ public class Utils {
         try{
             io.writeln("Introdueix l'id de l'enquesta");
             Integer idEnquesta = io.readint();
+            io.readline();
 
             io.writeln("Introduexi l'id de l'usuari");
             int idUsuari = io.readint();
+            io.readline();
             List<String> respostesActuals = ctrl.getRespostesEnquestaPerUsuari(idEnquesta, idUsuari);
             for (String resposta : respostesActuals) {
                 io.writeln(resposta);
@@ -685,6 +700,7 @@ public class Utils {
             io.writeln();
             io.writeln("Quina pregunta vols modificar? (introdueix el número de pregunta):");
             int idxPregunta = io.readint();
+            io.readline();
             io.writeln("Introdueix la nova resposta: (per múltiples respostes, separa-les per comes)");
             String novaResposta = io.readline();
             int codierr = ctrl.modificarRespostaEnquesta(idEnquesta, idUsuari, idxPregunta, novaResposta);
