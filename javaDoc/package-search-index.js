@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"prop.enquestes.controladors"},{"l":"prop.enquestes.domini"},{"l":"prop.enquestes.excepcions"},{"l":"prop.enquestes.presentacio"}];updateSearchResults();
