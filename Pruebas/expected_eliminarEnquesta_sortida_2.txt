@@ -1,0 +1,11 @@
+==== Informacio enquesta ====
+ID: 2
+Titol: Encuesta sobre satisfacción del cliente
+Descripcio: Por favor, califique su satisfacción con nuestro servicio.
+Creador ID: 12345
+Numero de preguntes: 1
+
+==== Preguntes i respostes ====
+Pregunta: 1: ¿En qué medida recomendarías nuestro servicio? (1-10)
+No hi ha respostes.
+

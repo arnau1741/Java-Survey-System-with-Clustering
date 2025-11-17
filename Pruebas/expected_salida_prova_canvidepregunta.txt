@@ -1,0 +1,472 @@
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
+Format esperat del fitxer:
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
+
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
+Llegint fitxer: Pruebas\enquesta_cafe.txt
+
+[OK] Enquesta creada correctament des del fitxer!
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
+Format esperat del fitxer:
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
+
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
+Llegint fitxer: Pruebas\enquesta_satisfaccion.txt
+
+[OK] Enquesta creada correctament des del fitxer!
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- IMPORTAR RESPOSTES DES DE FITXER ---
+Introdueix l'ID de l'usuari que respon l'enquesta: Introdueix l'ID de l'enquesta: Introdueix el nombre de fitxer de respostes (sense extensió): Llegint fitxer: Pruebas\importarRespostesCafe.txt
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+entra
+entra2
+despues de string a respostes
+SALE
+
+[OK] Respostes importades correctament! Total respostes importades: 13
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- IMPORTAR RESPOSTES DES DE FITXER ---
+Introdueix l'ID de l'usuari que respon l'enquesta: Introdueix l'ID de l'enquesta: Introdueix el nombre de fitxer de respostes (sense extensió): Llegint fitxer: Pruebas\importarRespostesSatisfaccion.txt
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+
+[OK] Respostes importades correctament! Total respostes importades: 11
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- RESPONDRE ENQUESTA ---
+Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta: 
+Respon les següents preguntes:
+
+Pregunta: ¿En qué medida recomendarías nuestro servicio? (1-10)
+Introdueix la teva resposta numèrica: entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+
+[OK] Enquesta resposta correctament!
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix l'ID de l'enquesta a consultar: 
+Enquesta: 0
+Titol: Enquesta sobre el consum de cafè
+Descripció: Petita enquesta sobre hàbits de consum de cafè.
+Nº de preguntes: 2
+Preguntes:
+- NUMERICA
+- Quants cafès prens al dia?
+- - - -
+- MULTIPLE
+- Prefereixes el cafè amb llet o sense?
+- 3
+- Amb llet
+- Sense llet
+- Altres
+- - - -
+Introdueix l'index de l'enquesta a modificar
+Introdueix l'index de la pregunta
+Introdueix pregunta
+Introdueix tipus (nomes numero):
+ - 0:Numerica
+ - 1:No ordenada Unica
+ - 2:Ordenada
+ - 3:No ordenada Multiple
+ - 4:Lliure
+S'ha esborrat correctament
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Numero d'enquesta: 2
+Pregunta: Pregunta
+Pregunta: Prefereixes el cafè amb llet o sense?
+Opcions:
+  * Opció: Amb llet
+  * Opció: Sense llet
+  * Opció: Altres
+Pregunta: ¿En qué medida recomendarías nuestro servicio? (1-10)
+  - Usuari ID: -1, Resposta: 7.0
+  - Usuari ID: -2, Resposta: 8.0
+  - Usuari ID: -3, Resposta: 9.0
+  - Usuari ID: -4, Resposta: 6.0
+  - Usuari ID: -5, Resposta: 10.0
+  - Usuari ID: -6, Resposta: 5.0
+  - Usuari ID: -7, Resposta: 7.0
+  - Usuari ID: -8, Resposta: 8.0
+  - Usuari ID: 103, Resposta: 16.0
+  - Usuari ID: -9, Resposta: 4.0
+  - Usuari ID: -10, Resposta: 6.0
+  - Usuari ID: -11, Resposta: 10.0
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
+Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\canvidepregunta1.txt
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
+Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\canvidepregunta2.txt
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
+Introdueix el fitxer on es guardar (sense extencio): 
+[ERROR] L'enquesta amb id 2 no existeix.
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+Sortint...

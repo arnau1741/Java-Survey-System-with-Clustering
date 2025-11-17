@@ -1,0 +1,20 @@
+==== Informacio enquesta ====
+ID: 0
+Titol: Enquesta sobre música
+Descripcio: Descobrim els teus gustos musicals.
+Creador ID: 102
+Numero de preguntes: 2
+
+==== Preguntes i respostes ====
+Pregunta: 1: Quins gèneres escoltes habitualment?
+Opcions:
+  * Opció 1: Pop
+  * Opció 2: Rock
+  * Opció 3: Clàssica
+Respostes:
+  - Usuari ID: 1, Resposta: Rock
+
+Pregunta: 2: Quin instrument t'agradaria aprendre?
+Respostes:
+  - Usuari ID: 1, Resposta: guitarra
+

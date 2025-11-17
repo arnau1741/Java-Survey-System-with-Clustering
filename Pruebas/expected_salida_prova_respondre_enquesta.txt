@@ -1,0 +1,217 @@
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
+Format esperat del fitxer:
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
+
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
+Llegint fitxer: Pruebas\enquesta_musica.txt
+
+[OK] Enquesta creada correctament des del fitxer!
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix l'ID de l'enquesta a consultar: 
+Enquesta: 0
+Titol: Enquesta sobre música
+Descripció: Descobrim els teus gustos musicals.
+Nº de preguntes: 2
+Preguntes:
+- ORDENADA
+- Quins gèneres escoltes habitualment?
+- 3
+- Pop
+- Rock
+- Clàssica
+- - - -
+- LLIURE
+- Quin instrument t'agradaria aprendre?
+- - - -
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- RESPONDRE ENQUESTA ---
+Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta: 
+Respon les següents preguntes:
+
+Pregunta: Quins gèneres escoltes habitualment?
+Opcions:
+ 0) Pop
+ 1) Rock
+ 2) Clàssica
+Introdueix la teva resposta (números separats per comes si és múltiple): 
+Pregunta: Quin instrument t'agradaria aprendre?
+Introdueix la teva resposta lliure: entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+
+[OK] Enquesta resposta correctament!
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix l'ID de l'enquesta a consultar les respostes: 
+Pregunta: Quins gèneres escoltes habitualment?
+Opcions:
+  * Opció: Pop
+  * Opció: Rock
+  * Opció: Clàssica
+  - Usuari ID: 1, Resposta: Rock
+Pregunta: Quin instrument t'agradaria aprendre?
+  - Usuari ID: 1, Resposta: guitarra
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
+Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\respondre_enquesta_sortida1.txt
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+[ERROR] Opció no vàlida. Torna-ho a intentar.
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+Sortint...

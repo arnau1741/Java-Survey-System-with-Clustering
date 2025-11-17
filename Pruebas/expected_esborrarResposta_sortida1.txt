@@ -1,0 +1,24 @@
+==== Informacio enquesta ====
+ID: 0
+Titol: Enquesta de prova sobre programacio
+Descripcio: Es valua el nivel de la prova realizada
+Creador ID: 101
+Numero de preguntes: 3
+
+==== Preguntes i respostes ====
+Pregunta: 1: Que nivel del programa (0 - 100)?
+Respostes:
+  - Usuari ID: 103, Resposta: 20.0
+
+Pregunta: 2: Menciona l'algoritme que has utilitzat?
+Respostes:
+  - Usuari ID: 103, Resposta: bfs
+
+Pregunta: 3: Que programas has utilitzat?
+Opcions:
+  * Opció 1: java
+  * Opció 2: c++
+  * Opció 3: c
+Respostes:
+  - Usuari ID: 103, Resposta: java
+

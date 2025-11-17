@@ -1,0 +1,223 @@
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA (MANUAL) ---
+Títol: Descripció: ID del creador (enter): Nombre de preguntes: 
+Pregunta 1:
+ Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)
+   Introdueix el tipus:    Text de la pregunta: 
+Pregunta 2:
+ Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)
+   Introdueix el tipus:    Text de la pregunta: 
+Pregunta 3:
+ Tipus (0=NUMÈRICA, 1=ÚNICA, 2=ORDENADA, 3=MÚLTIPLE, 4=LLIURE)
+   Introdueix el tipus:    Text de la pregunta:    Nombre d'opcions:      Opció 1:      Opció 2:      Opció 3: 
+[OK] Enquesta creada correctament!
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- RESPONDRE ENQUESTA ---
+Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta: 
+Respon les següents preguntes:
+
+Pregunta: Que nivel del programa (0 - 100)?
+Introdueix la teva resposta numèrica: 
+Pregunta: Menciona l'algoritme que has utilitzat?
+Introdueix la teva resposta lliure: 
+Pregunta: Que programas has utilitzat?
+Opcions:
+ 0) java
+ 1) c++
+ 2) c
+Introdueix la teva resposta (números separats per comes si és múltiple): entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+
+[OK] Enquesta resposta correctament!
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- RESPONDRE ENQUESTA ---
+Introdueix l'ID de l'enquesta: Introdueix l'ID de l'usuari que respon l'enquesta: 
+Respon les següents preguntes:
+
+Pregunta: Que nivel del programa (0 - 100)?
+Introdueix la teva resposta numèrica: 
+Pregunta: Menciona l'algoritme que has utilitzat?
+Introdueix la teva resposta lliure: 
+Pregunta: Que programas has utilitzat?
+Opcions:
+ 0) java
+ 1) c++
+ 2) c
+Introdueix la teva resposta (números separats per comes si és múltiple): entra
+Convirtiendo respuestas de String a objetos Resposta...
+despues de string a respostes
+SALE
+
+[OK] Enquesta resposta correctament!
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Numero d'enquesta: 1
+Pregunta: Que nivel del programa (0 - 100)?
+  - Usuari ID: 102, Resposta: 70.0
+  - Usuari ID: 103, Resposta: 20.0
+Pregunta: Menciona l'algoritme que has utilitzat?
+  - Usuari ID: 102, Resposta: bfs
+  - Usuari ID: 103, Resposta: bfs
+Pregunta: Que programas has utilitzat?
+Opcions:
+  * Opció: java
+  * Opció: c++
+  * Opció: c
+  - Usuari ID: 102, Resposta: c++
+  - Usuari ID: 103, Resposta: java
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introduiex l'index de l'enquesta a esborrar
+Introduiex l'Id de l'enquestat
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix l'ID de l'enquesta a exportar: 
+Introdueix el fitxer on es guardar (sense extencio): Enquesta exportada correctament a: Pruebas\esborrarResposta_sortida1.txt
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+Sortint...

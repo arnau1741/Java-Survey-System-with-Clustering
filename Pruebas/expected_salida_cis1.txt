@@ -1,0 +1,257 @@
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+[ERROR] Opció no vàlida. Torna-ho a intentar.
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+[ERROR] Opció no vàlida. Torna-ho a intentar.
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA (MANUAL) ---
+Títol: Descripció: ID del creador (enter): 
+[ERROR] For input string: ""
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+[ERROR] Opció no vàlida. Torna-ho a intentar.
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: Introdueix el Id de l'enquesta
+
+[ERROR] For input string: ""
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+[ERROR] Opció no vàlida. Torna-ho a intentar.
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+[ERROR] Opció no vàlida. Torna-ho a intentar.
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+[ERROR] Opció no vàlida. Torna-ho a intentar.
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+--- CREACIÓ D'ENQUESTA DES DE FITXER ---
+Format esperat del fitxer:
+  línia 1: títol
+  línia 2: descripció
+  línia 3: id creador (enter)
+  línia 4: nombre de preguntes
+  després, per cada pregunta:
+    línia: tipus (0..4) (Tipus (0=NUMÈRICA, 1=NO ORDENADA ÚNICA, 2=ORDENADA ÚNICA, 3=NO ORDENADA MÚLTIPLE, 4=LLIURE))
+    línia: text pregunta
+    si tipus és 1,2,3:
+       línia: nombre d'opcions
+       següents línies: cada opció
+
+Introdueix el nombre de fitxer d'enquesta (sense extensió): 
+
+[ERROR] Index 80 out of bounds for length 80
+
+======================================
+              ENQUESTES
+======================================
+ 1) Crear enquesta manualment
+ 2) Crear enquesta des de fitxer
+ 3) Mostrar enquesta
+ 4) Mostrar enquesta amb preguntes
+ 5) Mostrar respostes d'una enquesta
+ 6) Respon enquesta
+ 7) Exportar enquesta
+ 8) Importar respostes
+ 9) Exportar respostes (No usar)
+ 10) Consultar usuari
+ 11) Modificar enquesta
+ 12) Modificar resposta
+ 13) Esborrar enquesta
+ 14) Esborrar resposta
+ 15) Clustering d'usuaris
+ 16) Mostrar enquestes amb preguntes i respostes
+ 0) Sortir
+======================================
+Selecciona una opció: 
+[ERROR NO CONTROLAT] Index 80 out of bounds for length 80

@@ -1,0 +1,14 @@
+==== Informacio enquesta ====
+ID: 2
+Titol: prova
+Descripcio: prova
+Creador ID: 3
+Numero de preguntes: 2
+
+==== Preguntes i respostes ====
+Pregunta: 1: prova
+No hi ha respostes.
+
+Pregunta: 2: prova
+No hi ha respostes.
+

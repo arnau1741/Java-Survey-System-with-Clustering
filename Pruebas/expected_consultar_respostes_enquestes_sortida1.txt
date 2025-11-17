@@ -1,0 +1,20 @@
+==== Informacio enquesta ====
+ID: 0
+Titol: Enquesta sobre el consum de cafè
+Descripcio: Petita enquesta sobre hàbits de consum de cafè.
+Creador ID: 101
+Numero de preguntes: 2
+
+==== Preguntes i respostes ====
+Pregunta: 1: Quants cafès prens al dia?
+Respostes:
+  - Usuari ID: 0, Resposta: 1.0
+
+Pregunta: 2: Prefereixes el cafè amb llet o sense?
+Opcions:
+  * Opció 1: Amb llet
+  * Opció 2: Sense llet
+  * Opció 3: Altres
+Respostes:
+  - Usuari ID: 0, Resposta: Amb llet
+

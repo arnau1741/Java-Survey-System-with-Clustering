@@ -1,0 +1,21 @@
+==== Informacio enquesta ====
+ID: 0
+Titol: Enquesta de Prova
+Descripcio: Comprovacio de les preguntes
+Creador ID: 1
+Numero de preguntes: 3
+
+==== Preguntes i respostes ====
+Pregunta: 1: Quina edat tens?
+No hi ha respostes.
+
+Pregunta: 2: Que opines del servei?
+No hi ha respostes.
+
+Pregunta: 3: Quines opcions prefereixes?
+Opcions:
+  * Opció 1: Opcio A
+  * Opció 2: Opcio B
+  * Opció 3: Opcio C
+No hi ha respostes.
+
