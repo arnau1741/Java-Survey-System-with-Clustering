@@ -10,13 +10,9 @@ public class VistaPrincipal {
 
     private JButton btnIniciarSessio = new JButton("Iniciar Sessio");
     private JButton btnCrearUsuari = new JButton("Crear Usuari");
-    private JButton btnConvidat = new JButton("Convidat")
+    private JButton btnConvidat = new JButton("Convidat");
     private JButton btnSortir = new JButton("Sortir");
-    private JButton iniciarSessióButton;
-    private JPanel panel1;
-    private JButton crearUsuariButton;
-    private JButton convidatButton;
-    private JButton sortirButton;
+
 
     public VistaPrincipal(CtrlPresentacio ctrlPre) {
         iCtrlPresentacio = ctrlPre;
@@ -41,11 +37,11 @@ public class VistaPrincipal {
         // === LISTENERS ===
 
         btnIniciarSessio.addActionListener(e -> {
-            //iCtrlPresentacio.mostrarVistaIniciarSessio();
+            iCtrlPresentacio.mostrarVistaIniciarSessio();
         });
 
         btnCrearUsuari.addActionListener(e -> {
-            //iCtrlPresentacio.mostrarVistaCrearUsuari();
+            iCtrlPresentacio.mostrarVistaCrearUsuari();
         });
 
         btnSortir.addActionListener(e -> {
@@ -56,5 +52,9 @@ public class VistaPrincipal {
 
     public void hacerVisible(boolean b) {
         ventana.setVisible(b);
+    }
+
+    public void tancar() {
+        ventana.dispose();
     }
 }

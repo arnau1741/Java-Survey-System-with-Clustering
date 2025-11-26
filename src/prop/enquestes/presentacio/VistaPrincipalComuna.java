@@ -8,32 +8,60 @@ import javax.swing.*;
 
 public class VistaPrincipalComuna extends JFrame {
 
-    private Usuari usuari;
+    private CtrlPresentacio ctrl;
+    private int idUsuari;
+    private String nomUsuari; ///Nomes pot ser "ADMIN", "ENQUESTADOR", "ENQUESTAT"
 
-    private JPanel contentPanel;
+    private JPanel contentPanel = new JPanel();
     private JButton importarEnquestaButton;
-    private JButton crearEnquestaButton;
+    private JButton crearEnquestaButton = new JButton("Crear Enquesta");
     private JButton consultarPerfilButton;
-    private JButton respondreEnquestaButton;
-    private JButton consultarRecomanacionsButton;
-    private JButton sortirButton;
+    private JButton respondreEnquestaButton = new JButton("Responder Enquesta");
+    private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
+    private JButton btnrolExtra = new  JButton("Rol Extra");
+    private JButton sortirButton =  new JButton("Sortir");
 
-    public VistaPrincipalComuna(Usuari usuari) {
-        this.usuari = usuari;
-
+    public VistaPrincipalComuna(CtrlPresentacio ctrl, int idUsuario, String nomUsuari) {
+        this.ctrl = ctrl;
+        this.idUsuari = idUsuario;
+        this.nomUsuari = nomUsuari;
         initComponents();
         configureUsuari();    // Configura visibilitat segons tipus d'usuari
         // setupListeners();     // Configura els listeners dels botons
-
-        setLocationRelativeTo(null); // Centrar pantalla
-        setTitle("Pantalla Principal");
+        contentPanel.add(crearEnquestaButton);
+        contentPanel.add(respondreEnquestaButton);
+        contentPanel.add(consultarRecomanacionsButton);
+        contentPanel.add(btnrolExtra);
+        contentPanel.add(sortirButton);
+        add(contentPanel);
     }
 
     private void initComponents() {
+        setTitle("Menu Usuari - " + nomUsuari);
+        setSize(400, 400);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        sortirButton.addActionListener(e -> {
+            dispose();
+        });
 
     }
 
     private void configureUsuari() {
+        String rol = ctrl.obtenirRol(idUsuari);
+        switch(rol){
+            case "ADMINISTRADOR":
+                btnrolExtra.setText("ADMIN");
+                break;
+            case "ENQUESTADOR" :
+                btnrolExtra.setText("ENQUESTADOR");
+                break;
+            case "ENQUESTAT":
+                btnrolExtra.setText("ENQUESTAT");
+                break;
+        }
+        /*
         if (usuari instanceof PerfilAdministrador) {
             crearEnquestaButton.setVisible(true);
             importarEnquestaButton.setVisible(true);
@@ -67,6 +95,12 @@ public class VistaPrincipalComuna extends JFrame {
                 consultarRecomanacionsButton.setVisible(false);
             }
         }
+        */
+
+    }
+
+    public void hacerVisible(boolean b) {
+        setVisible(b);
     }
 
     // Pots posar aquí els listeners si vols

@@ -41,6 +41,14 @@ public class CtrlDomini {
         ctrlDominiMantUsuari = new CtrlDominiMantUsuari();
     }
 
+    public CtrlDominiMantUsuari getCtrlDominiMantUsuari() {
+        return ctrlDominiMantUsuari;
+    }
+
+    public CtrlDominiMantEnquesta getCtrlDominiMantEnquesta() {
+        return ctrlDominiMantEnquesta;
+    }
+
     /**
      * Retorna les preguntes de l'enquesta amb id donat
      * @param idEnquesta Identificador de l'enquesta

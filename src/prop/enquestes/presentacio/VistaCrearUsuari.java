@@ -14,9 +14,6 @@ public class VistaCrearUsuari extends JDialog {
 
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField textField1;
-    private JPasswordField passwordField1;
-    private JTextField textField2;
 
     public VistaCrearUsuari(CtrlPresentacio c) {
         super((Frame) null, "Crear Usuari", true);
@@ -69,12 +66,20 @@ public class VistaCrearUsuari extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
+        String nom = campNom.getText();
+        String cont = campcont.getText();
+        String email = campEmail.getText();
+        int id = ctrl.crearUsuari(nom,cont,email);
+        ctrl.mostrarVistaPrincipalComuna(id);
         dispose();
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        ctrl.inicializarPresentacio();
+        dispose();
+    }
+
+    public void tancar() {
         dispose();
     }
 }

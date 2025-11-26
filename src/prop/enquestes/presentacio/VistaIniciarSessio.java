@@ -12,24 +12,31 @@ public class VistaIniciarSessio extends JDialog {
     private JPasswordField campPassword = new JPasswordField();
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JTextField textField1;
-    private JPasswordField passwordField1;
 
 
     public VistaIniciarSessio(CtrlPresentacio ctrlPre) {
         super((Frame) null, "Iniciar Sessio", true);
         ctrl = ctrlPre;
+
+        contentPane = new JPanel();
+        contentPane.setLayout(new GridLayout(4, 1, 10, 10));
+        contentPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        contentPane.add(new JLabel("ID:"));
+        contentPane.add(campID);
+        contentPane.add(new JLabel("Contrasenya:"));
+        contentPane.add(campPassword);
+        contentPane.add(buttonOK);
+        contentPane.add(buttonCancel);
+
+
         setSize(300, 200);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(2,1,10,10));
-
-        add(new JLabel("ID:"));
-        add(campID);
-        add(campPassword);
-
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+
 
 
         buttonOK.addActionListener(new ActionListener() {
@@ -62,11 +69,37 @@ public class VistaIniciarSessio extends JDialog {
 
     private void onOK() {
         // add your code here
-        dispose();
+        String txt = campID.getText().trim();
+
+        if (txt.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Has d'introduir un ID.");
+            return;
+        }
+
+        int id;
+        try {
+            id = Integer.parseInt(txt);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "L'ID ha de ser un número.");
+            return;
+        }
+
+        if (ctrl.iniciarSessio(id)) {
+
+            ctrl.mostrarVistaPrincipalComuna(id);  // Obrir la següent vista
+            dispose(); // Tancar el diàleg
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Usuari no trobat.");
+        }
     }
 
     private void onCancel() {
-        // add your code here if necessary
+        ctrl.inicializarPresentacio();
+        dispose();
+    }
+
+    public void tancar() {
         dispose();
     }
 }
