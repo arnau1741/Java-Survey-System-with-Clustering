@@ -10,7 +10,7 @@ public class VistaPrincipalComuna extends JFrame {
 
     private CtrlPresentacio ctrl;
     private int idUsuari;
-    private String nomUsuari; ///Nomes pot ser "ADMIN", "ENQUESTADOR", "ENQUESTAT"
+    private String nomUsuari; // Nomes pot ser "ADMIN", "ENQUESTADOR", "ENQUESTAT"
 
     private JPanel contentPanel = new JPanel();
     private JButton importarEnquestaButton;
@@ -18,8 +18,8 @@ public class VistaPrincipalComuna extends JFrame {
     private JButton consultarPerfilButton;
     private JButton respondreEnquestaButton = new JButton("Responder Enquesta");
     private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
-    private JButton btnrolExtra = new  JButton("Rol Extra");
-    private JButton sortirButton =  new JButton("Sortir");
+    private JButton btnrolExtra = new JButton("Rol Extra");
+    private JButton sortirButton = new JButton("Sortir");
 
     public VistaPrincipalComuna(CtrlPresentacio ctrl, int idUsuario, String nomUsuari) {
         this.ctrl = ctrl;
@@ -103,7 +103,6 @@ public class VistaPrincipalComuna extends JFrame {
         setVisible(b);
     }
 
-    // Pots posar aquí els listeners si vols
     /*private void setupListeners() {
         btnCrearEnquesta.addActionListener(e -> {
             CrearEnquestaView v = new CrearEnquestaView();
