@@ -13,12 +13,11 @@ public class VistaPrincipalComuna extends JFrame {
     private String nomUsuari; // Nomes pot ser "ADMIN", "ENQUESTADOR", "ENQUESTAT"
 
     private JPanel contentPanel = new JPanel();
-    private JButton importarEnquestaButton;
     private JButton crearEnquestaButton = new JButton("Crear Enquesta");
-    private JButton consultarPerfilButton;
+    private JButton consultarPerfilButton = new JButton("Consultar Perfil");
     private JButton respondreEnquestaButton = new JButton("Responder Enquesta");
     private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
-    private JButton btnrolExtra = new JButton("Rol Extra");
+    private JButton btnrolExtra = new JButton("Funcions avançades");
     private JButton sortirButton = new JButton("Sortir");
 
     public VistaPrincipalComuna(CtrlPresentacio ctrl, int idUsuario, String nomUsuari) {
@@ -27,8 +26,10 @@ public class VistaPrincipalComuna extends JFrame {
         this.nomUsuari = nomUsuari;
         initComponents();
         configureUsuari();    // Configura visibilitat segons tipus d'usuari
-        // setupListeners();     // Configura els listeners dels botons
+        setupListeners();     // Configura els listeners dels botons
+        contentPanel.add(consultarRecomanacionsButton);
         contentPanel.add(crearEnquestaButton);
+        contentPanel.add(consultarPerfilButton);
         contentPanel.add(respondreEnquestaButton);
         contentPanel.add(consultarRecomanacionsButton);
         contentPanel.add(btnrolExtra);
@@ -52,65 +53,31 @@ public class VistaPrincipalComuna extends JFrame {
         String rol = ctrl.obtenirRol(idUsuari);
         switch(rol){
             case "ADMINISTRADOR":
+                btnrolExtra.setVisible(true);
                 btnrolExtra.setText("ADMIN");
                 break;
             case "ENQUESTADOR" :
+                btnrolExtra.setVisible(true);
                 btnrolExtra.setText("ENQUESTADOR");
                 break;
             case "ENQUESTAT":
+                btnrolExtra.setVisible(false);
                 btnrolExtra.setText("ENQUESTAT");
                 break;
         }
-        /*
-        if (usuari instanceof PerfilAdministrador) {
-            crearEnquestaButton.setVisible(true);
-            importarEnquestaButton.setVisible(true);
-            respondreEnquestaButton.setVisible(true);
-            consultarPerfilButton.setVisible(true);
-            consultarRecomanacionsButton.setVisible(true);
-        }
-        else if (usuari instanceof PerfilEnquestador) {
-            crearEnquestaButton.setVisible(false);   // No pot crear
-            importarEnquestaButton.setVisible(true);         // Pot importar respostes
-            respondreEnquestaButton.setVisible(true);
-            consultarPerfilButton.setVisible(true);
-            consultarRecomanacionsButton.setVisible(false);
-        }
-        else if (usuari instanceof PerfilEnquestat) {
-
-            PerfilEnquestat pe = (PerfilEnquestat) usuari;
-
-            crearEnquestaButton.setVisible(false);
-            importarEnquestaButton.setVisible(false);
-            respondreEnquestaButton.setVisible(true);
-
-            if (pe.getId() != -1) {
-                // registrat
-                consultarPerfilButton.setVisible(true);          // Té perfil
-                consultarRecomanacionsButton.setVisible(true);   // Rep recomanacions
-            }
-            else {
-                // no registrat
-                consultarPerfilButton.setVisible(false);         // No hi ha perfil
-                consultarRecomanacionsButton.setVisible(false);
-            }
-        }
-        */
-
     }
 
     public void hacerVisible(boolean b) {
         setVisible(b);
     }
 
-    /*private void setupListeners() {
+    private void setupListeners() {
+        consultarPerfilButton.addActionListener(e -> {
+            ctrl.mostrarConsultarPerfil();
+        });
+        /*
         btnCrearEnquesta.addActionListener(e -> {
             CrearEnquestaView v = new CrearEnquestaView();
-            v.setVisible(true);
-        });
-
-        btnImportar.addActionListener(e -> {
-            ImportarRespostesView v = new ImportarRespostesView();
             v.setVisible(true);
         });
 
@@ -119,10 +86,7 @@ public class VistaPrincipalComuna extends JFrame {
             v.setVisible(true);
         });
 
-        btnPerfil.addActionListener(e -> {
-            PerfilView v = new PerfilView();
-            v.setVisible(true);
-        });
+
 
         btnRecomanacions.addActionListener(e -> {
             RecomanacionsView v = new RecomanacionsView();
@@ -133,5 +97,6 @@ public class VistaPrincipalComuna extends JFrame {
             dispose();  // Tancar finestra
             new LoginView().setVisible(true);
         });
-    }*/
+        */
+    }
 }

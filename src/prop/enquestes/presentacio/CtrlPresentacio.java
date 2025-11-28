@@ -1,6 +1,9 @@
 package prop.enquestes.presentacio;
 import prop.enquestes.controladors.CtrlDomini;
 import prop.enquestes.domini.Usuari;
+import prop.enquestes.excepcions.EnquestaNoExisteixException;
+
+import java.util.List;
 
 public class CtrlPresentacio {
     private CtrlDomini ctrlDomini;
@@ -8,6 +11,8 @@ public class CtrlPresentacio {
     private VistaIniciarSessio vistaIniciarSessio;
     private VistaCrearUsuari vistaCrearUsuari;
     private VistaPrincipalComuna  vistaPrincipalComuna;
+    private VistaConsultarPerfil vistaConsultarPerfil;
+    private VistaConsultarRecomanacions vistaConsultarRecomanacions;
 
     public CtrlPresentacio() {
         ctrlDomini = new CtrlDomini();
@@ -45,6 +50,16 @@ public class CtrlPresentacio {
 
     }
 
+    public void mostrarConsultarPerfil() {
+        vistaConsultarPerfil = new VistaConsultarPerfil(this);
+        vistaConsultarPerfil.setVisible(true);
+    }
+
+    public void mostrarConsultarRecomanacions() {
+        vistaConsultarRecomanacions = new VistaConsultarRecomanacions(this);
+        vistaConsultarRecomanacions.setVisible(true);
+    }
+
     // ======================
     // OPERACIONS
     // ======================
@@ -65,6 +80,16 @@ public class CtrlPresentacio {
     public String obtenirRol(int id) {
         String rol = "ADMIN";
         return rol;
+    }
+
+    public List<String> consultarEnquesta(int id) throws EnquestaNoExisteixException {
+        List<String> Enquesta = ctrlDomini.consultarEnquesta(id);
+        return Enquesta;
+    }
+
+    public List<String> consultarPerfil(int id) {
+        List<String> Perfil = ctrlDomini.consultarPerfil(id);
+        return Perfil;
     }
 
 }
