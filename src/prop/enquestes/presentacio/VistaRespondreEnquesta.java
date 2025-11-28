@@ -6,4 +6,5 @@ public class VistaRespondreEnquesta {
     private JButton sortirButton;
     private JButton OKButton;
     private JComboBox comboBox1;
+    private JTextArea textArea1;
 }
