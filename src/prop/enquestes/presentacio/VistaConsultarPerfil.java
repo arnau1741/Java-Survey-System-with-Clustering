@@ -9,22 +9,33 @@ public class VistaConsultarPerfil extends JDialog {
     private CtrlPresentacio ctrl;
 
     private JPanel contentPane = new JPanel();
-    private JTextField campID = new JTextField();
+    private JTextField campID = new JTextField(10);
     private JTextArea perfil = new JTextArea();
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    private JButton buttonOK = new JButton("OK");
+    private JButton buttonCancel = new JButton("Cancelar");
 
     public VistaConsultarPerfil(CtrlPresentacio ctrl) {
         super((Frame) null, "Consultar Perfil", true);
         this.ctrl = ctrl;
 
-        setSize(400,300);
+        setSize(450,350);
         setLocationRelativeTo(null);
-        contentPane.add(new JScrollPane(perfil), BorderLayout.CENTER);
-        contentPane.add(new JLabel("ID de l'usuari:"));
-        contentPane.add(campID);
-        contentPane.add(buttonOK);
-        contentPane.add(buttonCancel);
+        contentPane.setLayout(new BorderLayout(10, 10));
+        JPanel top = new JPanel(new FlowLayout());
+        top.add(new JLabel("ID de l'usuari:"));
+        top.add(campID);
+        contentPane.add(top, BorderLayout.NORTH);
+
+        perfil.setEditable(false);
+        JScrollPane scroll = new JScrollPane(perfil);
+        contentPane.add(scroll, BorderLayout.CENTER);
+
+        JPanel bottom = new JPanel(new FlowLayout());
+        bottom.add(buttonOK);
+        bottom.add(buttonCancel);
+        contentPane.add(bottom, BorderLayout.SOUTH);
+
+        add(contentPane);
 
         setContentPane(contentPane);
         setModal(true);
