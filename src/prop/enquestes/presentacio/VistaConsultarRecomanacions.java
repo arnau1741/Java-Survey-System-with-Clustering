@@ -7,6 +7,12 @@ import java.awt.*;
 public class VistaConsultarRecomanacions extends JDialog {
     private CtrlPresentacio ctrl;
     private JPanel contentPane;
+    private JButton enquesta = new JButton("Enquesta");
+    private JButton resposta = new JButton("Resposta");
+    private JButton clustering = new JButton("Clustering");
+    private JButton consultes = new JButton("Consultes");
+    private JTextArea info = new JTextArea();
+
     private JButton buttonCancel;
 
     public VistaConsultarRecomanacions(CtrlPresentacio ctrl) {
@@ -19,6 +25,10 @@ public class VistaConsultarRecomanacions extends JDialog {
 
         setContentPane(contentPane);
         setModal(true);
+
+        
+
+
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
