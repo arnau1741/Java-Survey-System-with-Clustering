@@ -26,7 +26,7 @@ public class VistaConsultarRecomanacions extends JDialog {
         setContentPane(contentPane);
         setModal(true);
 
-        
+
 
 
 
