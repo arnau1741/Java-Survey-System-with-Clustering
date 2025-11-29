@@ -1,7 +1,9 @@
 package prop.enquestes.presentacio;
 import prop.enquestes.controladors.CtrlDomini;
+import prop.enquestes.controladors.CtrlDominiMantUsuari;
 import prop.enquestes.domini.Usuari;
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
+import prop.enquestes.excepcions.InvalidFormatEnquesta;
 
 import java.util.List;
 
@@ -13,8 +15,10 @@ public class CtrlPresentacio {
     private VistaPrincipalComuna  vistaPrincipalComuna;
     private VistaConsultarPerfil vistaConsultarPerfil;
     private VistaConsultarRecomanacions vistaConsultarRecomanacions;
+    private VistaAdmin vistaAdmin;
+    private VistaModificarEnquesta vistaModificarEnquesta;
 
-    public CtrlPresentacio() {
+    public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
         vistaPrincipal = new VistaPrincipal(this);
     }
@@ -45,8 +49,6 @@ public class CtrlPresentacio {
         String rol = obtenirRol(idUsuari); ////S'hauria d'obtenir el rol en forma de string
         vistaPrincipalComuna = new VistaPrincipalComuna(this, idUsuari, rol);
         vistaPrincipalComuna.hacerVisible(true);
-        //if(vistaIniciarSessio != null) vistaIniciarSessio.setVisible(false);
-        //if(vistaPrincipalComuna != null) vistaPrincipalComuna.setVisible(false);
 
     }
 
@@ -58,6 +60,17 @@ public class CtrlPresentacio {
     public void mostrarConsultarRecomanacions() {
         vistaConsultarRecomanacions = new VistaConsultarRecomanacions(this);
         vistaConsultarRecomanacions.setVisible(true);
+    }
+
+    public void mostrarFuncionsAvançades() {
+        vistaAdmin = new VistaAdmin(this);
+        vistaAdmin.setVisible(true);
+    }
+
+    public void mostrarVistaModificarEnquesta() {
+        vistaModificarEnquesta = new VistaModificarEnquesta(this);
+        vistaModificarEnquesta.setVisible(true);
+
     }
 
     // ======================
@@ -78,7 +91,8 @@ public class CtrlPresentacio {
     }
 
     public String obtenirRol(int id) {
-        String rol = "ADMIN";
+        CtrlDominiMantUsuari mantUsuari = ctrlDomini.getCtrlDominiMantUsuari();
+        String rol = mantUsuari.getRolUsuari(id);
         return rol;
     }
 
@@ -90,6 +104,22 @@ public class CtrlPresentacio {
     public List<String> consultarPerfil(int id) {
         List<String> Perfil = ctrlDomini.consultarPerfil(id);
         return Perfil;
+    }
+
+    public List<String> obtenirLlistaEnquestes() throws EnquestaNoExisteixException {
+        return ctrlDomini.consultarEnquestesAmbPreguntesIRespostes();
+    }
+
+    public List<String> obtenirPreguntesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
+        return ctrlDomini.consultarEnquestaAmbPreguntes(idEnquesta);
+    }
+
+    public void eliminarEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
+        ctrlDomini.eliminarEnquesta(0, idEnquesta);
+    }
+
+    public void modificarPreguntaEnquesta(int idEnquesta, int indexPregunta, List<String> novaPreguntaText) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
+        ctrlDomini.modificarPreguntaEnquesta(idEnquesta, indexPregunta, novaPreguntaText);
     }
 
 }

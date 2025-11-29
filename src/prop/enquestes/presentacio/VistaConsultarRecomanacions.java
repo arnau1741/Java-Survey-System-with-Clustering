@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class VistaConsultarRecomanacions extends JDialog {
     private CtrlPresentacio ctrl;
-    private JPanel contentPane;
+    private JPanel contentPane = new JPanel();
     private JButton enquesta = new JButton("Enquesta");
     private JButton resposta = new JButton("Resposta");
     private JButton clustering = new JButton("Clustering");
@@ -23,12 +23,60 @@ public class VistaConsultarRecomanacions extends JDialog {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
+        contentPane.setLayout(new BorderLayout(10, 10));
         setContentPane(contentPane);
         setModal(true);
 
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new GridLayout(4,1,5,5));
+        buttonPane.add(enquesta);
+        buttonPane.add(resposta);
+        buttonPane.add(clustering);
+        buttonPane.add(consultes);
 
+        JScrollPane scrollPane = new JScrollPane(info);
+        info.setEditable(false);
+        info.setLineWrap(true);
+        info.setWrapStyleWord(true);
 
+        JPanel panelCancel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelCancel.add(buttonCancel);
 
+        contentPane.add(buttonPane, BorderLayout.WEST);
+        contentPane.add(scrollPane, BorderLayout.CENTER);
+        contentPane.add(panelCancel, BorderLayout.SOUTH);
+
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelCancel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        enquesta.addActionListener(e -> {
+            String informacion = "Informacion sobre enquestes: \n\n";
+            informacion += "- Recomanacio 1: ...";
+            informacion += "- Recomanacio 2: ...";
+            info.setText(informacion);
+        });
+
+        resposta.addActionListener(e -> {
+            String informacion = "Información sobre Respostes:\n\n";
+            informacion += "- Anàlisi de respostes...\n";
+            informacion += "- Estadístiques...\n";
+            info.setText(informacion);
+        });
+
+        clustering.addActionListener(e -> {
+            String informacion = "Información sobre Clustering:\n\n";
+            informacion += "- Grups identificats...\n";
+            informacion += "- Patrons trobats...\n";
+            info.setText(informacion);
+        });
+
+        consultes.addActionListener(e -> {
+            String informacion = "Información sobre Consultes:\n\n";
+            informacion += "- Consultes freqüents...\n";
+            informacion += "- Resultats...\n";
+            info.setText(informacion);
+        });
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

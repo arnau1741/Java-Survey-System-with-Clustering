@@ -2,7 +2,7 @@ package prop.enquestes.domini;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Usuari {
+public class Usuari {
     private String nomUsuari;
     private final int idUsuari;
     private String contrasenya;

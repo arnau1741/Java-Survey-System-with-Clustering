@@ -4,18 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import prop.enquestes.domini.Enquesta;
-import prop.enquestes.domini.PerfilAdministrador;
-import prop.enquestes.domini.PerfilEnquestador;
-import prop.enquestes.domini.PerfilEnquestat;
-import prop.enquestes.domini.Pregunta;
-import prop.enquestes.domini.Resposta;
-import prop.enquestes.domini.RespostaLliure;
-import prop.enquestes.domini.RespostaMultiple;
-import prop.enquestes.domini.RespostaNumerica;
-import prop.enquestes.domini.RespostaOrdenada;
-import prop.enquestes.domini.RespostaUnica;
-import prop.enquestes.domini.Usuari;
+import prop.enquestes.domini.*;
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
 import prop.enquestes.excepcions.FileNotFound;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
@@ -390,7 +379,6 @@ public class CtrlDomini {
         return result;
     }
 
-
     /**
      * Funcio per a crear un usuari enquestat
      * @param nomUsuari Nom de l'usuari
@@ -404,9 +392,15 @@ public class CtrlDomini {
             return 0;
         }
         int id = ctrlDominiMantUsuari.getNumUsuaris();
-        PerfilEnquestador nouEnquestador = new PerfilEnquestador(id, nomUsuari, contrasenya, email);
+        //D'alguna forma s'ha de decidir el rol per enviar-lo, es a dir rol es Admin, esnquestat o enquestador, es fa amb un if
+        UsuariState rol = new AdminState();
+        /////////////////////////
+        Usuari nouEnquestador = new Usuari(id, nomUsuari, contrasenya, email, rol);
         ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
         return id;
+        //PerfilEnquestador nouEnquestador = new PerfilEnquestador(id, nomUsuari, contrasenya, email);
+        //ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
+        //return id;
     }
 
     /**
@@ -423,6 +417,7 @@ public class CtrlDomini {
         }
         Usuari usuari = ctrlDominiMantUsuari.getUsuariPerNom(nomUsuariEnquestador);
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        /*
         if (usuari instanceof PerfilEnquestat){
             PerfilEnquestador nouEnquestador = new PerfilEnquestador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
             nouEnquestador.afegirEnquestaAssignada(enq);
@@ -449,6 +444,9 @@ public class CtrlDomini {
             return 1; // Èxit
         }
         return -4; // Codi error: Tipus d'usuari desconegut
+
+         */
+        return 1;
     }
 
     /**
@@ -464,6 +462,7 @@ public class CtrlDomini {
         }
         Usuari usuari = ctrlDominiMantUsuari.getUsuariPerNom(nomUsuariAdministrador);
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        /*
         if (usuari instanceof PerfilEnquestat){
             PerfilAdministrador nouAdministrador = new PerfilAdministrador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
             nouAdministrador.afegirEnquestaAdministrada(enq);
@@ -483,6 +482,9 @@ public class CtrlDomini {
             return 1; // Èxit
         }
         return -3; // Codi error: Tipus d'usuari desconegut
+
+         */
+        return 1;
     }
 
     /**

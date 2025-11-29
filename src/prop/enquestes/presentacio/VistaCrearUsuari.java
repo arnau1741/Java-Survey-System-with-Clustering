@@ -5,11 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class VistaCrearUsuari extends JDialog {
-    private JPanel contentPane;
+    private JPanel contentPane = new JPanel();
     private CtrlPresentacio ctrl;
 
     private JTextField campNom = new JTextField();
-    private JTextField campcont = new JTextField();
+    private JPasswordField campcont = new JPasswordField();
     private JTextField campEmail = new JTextField();
 
     private JButton buttonOK;
@@ -23,14 +23,31 @@ public class VistaCrearUsuari extends JDialog {
         setLocationRelativeTo(null);
         setLayout(new GridLayout(3, 2, 10, 10));
 
-        add(new JLabel("Nom:"));
-        add(campNom);
+        contentPane.setLayout(new BorderLayout(10, 10));
 
-        add(new JLabel("Contrasenya:"));
-        add(campcont);
+        // Panel para los campos de formulario
+        JPanel panelForm = new JPanel(new GridLayout(3, 2, 10, 10));
+        panelForm.add(new JLabel("Nom:"));
+        panelForm.add(campNom);
+        panelForm.add(new JLabel("Contrasenya:"));
+        panelForm.add(campcont);
+        panelForm.add(new JLabel("Email:"));
+        panelForm.add(campEmail);
 
-        add(new JLabel("Email:"));
-        add(campEmail);
+        // Panel para los botones
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelBotones.add(buttonOK);
+        panelBotones.add(buttonCancel);
+
+        // Añadir bordes para mejor espaciado
+        panelForm.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
+        panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Añadir componentes al contentPane
+        contentPane.add(panelForm, BorderLayout.CENTER);
+        contentPane.add(panelBotones, BorderLayout.SOUTH);
+
+        add(contentPane);
 
         setContentPane(contentPane);
         setModal(true);

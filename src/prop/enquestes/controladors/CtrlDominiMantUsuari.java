@@ -1,7 +1,7 @@
 package prop.enquestes.controladors;
 import java.util.*;
 
-import prop.enquestes.domini.Usuari;
+import prop.enquestes.domini.*;
 
 public class CtrlDominiMantUsuari {
     private Map<Integer, Usuari> usuaris;
@@ -73,6 +73,14 @@ public class CtrlDominiMantUsuari {
             }
         }
         return null;
+    }
+
+    public String getRolUsuari(int idUsuari) {
+        Usuari u = getUsuari(idUsuari);
+        UsuariState rol = u.getRol();
+        if(rol instanceof AdminState) return "ADMIN";
+        else if(rol instanceof EnquestadorState) return "ENQUESTADOR";
+        else return "ENQUESTAT";
     }
 
     /**

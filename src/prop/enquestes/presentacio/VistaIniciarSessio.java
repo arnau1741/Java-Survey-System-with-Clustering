@@ -85,7 +85,6 @@ public class VistaIniciarSessio extends JDialog {
         }
 
         if (ctrl.iniciarSessio(id)) {
-
             ctrl.mostrarVistaPrincipalComuna(id);  // Obrir la següent vista
             dispose(); // Tancar el diàleg
         }
