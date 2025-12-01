@@ -1,0 +1,98 @@
+package prop.enquestes.presentacio;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class VistaEnquestador extends JFrame {
+
+    private CtrlPresentacio ctrl;
+    private int idUsuari;
+    private String nomUsuari;
+    private String nomRol;
+
+    private JPanel contentPanel = new JPanel();
+    private JButton consultarPerfilButton = new JButton("Consultar Perfil");
+    private JButton exportarRespostesButton = new JButton("Export Respostes");
+    private JButton exportarEnquestatButton = new JButton("Export Enquesta");
+    private JButton importarRespostesButton = new JButton("Import Respostes");
+    private JButton consultarRespostesButton = new JButton("Consultar Respostes");
+    private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
+    private JButton sortirButton = new JButton("Sortir");
+
+    public VistaEnquestador(CtrlPresentacio ctrl, int idUsuari, String nomUsuari, String nomRol) {
+        this.ctrl = ctrl;
+        this.idUsuari = idUsuari;
+        this.nomUsuari = nomUsuari;
+        this.nomRol = nomRol;
+
+        initComponents();
+        setupListeners();     // Configura els listeners dels botons
+
+    }
+
+    private void initComponents() {
+        setTitle("Menu Usuari - " + nomRol);
+        setSize(400, 400);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        contentPanel.setLayout(new BorderLayout(10, 10));
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(0,1,5,5));
+
+        buttonPanel.add(consultarPerfilButton);
+        buttonPanel.add(exportarRespostesButton);
+        buttonPanel.add(exportarEnquestatButton);
+        buttonPanel.add(importarRespostesButton);
+        buttonPanel.add(consultarRespostesButton);
+        buttonPanel.add(consultarRecomanacionsButton);
+
+        JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelSortir.add(sortirButton);
+
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        panelSortir.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        contentPanel.add(buttonPanel, BorderLayout.CENTER);
+        contentPanel.add(panelSortir, BorderLayout.SOUTH);
+
+        add(contentPanel);
+
+        sortirButton.addActionListener(e -> {
+            dispose();
+        });
+
+    }
+
+    public void hacerVisible(boolean b) {
+        setVisible(b);
+    }
+
+    private void setupListeners() {
+        consultarPerfilButton.addActionListener(e -> {
+            ctrl.mostrarConsultarPerfil();
+        });
+        consultarRecomanacionsButton.addActionListener(e -> {
+            ctrl.mostrarConsultarRecomanacions();
+        });
+
+        exportarRespostesButton.addActionListener(e -> {
+            //ctrl.mostrarExportarRespostes();
+        });
+
+        exportarEnquestatButton.addActionListener(e -> {
+            //ctrl.mostrarExportarEnquestes;
+        });
+
+        importarRespostesButton.addActionListener(e -> {
+            //ctrl.mostrarImportarRespostes();
+        });
+
+        consultarRespostesButton.addActionListener(e -> {
+            //ctrl.mostrarConsultarRespostes();
+        });
+
+    }
+}

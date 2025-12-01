@@ -1,34 +1,38 @@
 package prop.enquestes.presentacio;
 
-import prop.enquestes.domini.Usuari;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class VistaPrincipalComuna extends JFrame {
-
+public class VistaEnquestat extends JFrame {
     private CtrlPresentacio ctrl;
     private int idUsuari;
-    private String nomUsuari; // Nomes pot ser "ADMIN", "ENQUESTADOR", "ENQUESTAT"
+    private String nomUsuari;
+    private String nomRol;
+
 
     private JPanel contentPanel = new JPanel();
     private JButton crearEnquestaButton = new JButton("Crear Enquesta");
     private JButton consultarPerfilButton = new JButton("Consultar Perfil");
     private JButton respondreEnquestaButton = new JButton("Responder Enquesta");
+    private JButton exportarRespostesButton = new JButton("Export Respostes");
+    private JButton exportarEnquestatButton = new JButton("Export Enquesta");
+    private JButton consultarRespostesButton = new JButton("Consultar Respostes");
     private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
-    private JButton btnrolExtra = new JButton();
     private JButton sortirButton = new JButton("Sortir");
 
-    public VistaPrincipalComuna(CtrlPresentacio ctrl, int idUsuario, String nomUsuari) {
+    public VistaEnquestat (CtrlPresentacio ctrl, int idUsuari, String nomUsuari, String nomRol) {
         this.ctrl = ctrl;
-        this.idUsuari = idUsuario;
+        this.idUsuari = idUsuari;
         this.nomUsuari = nomUsuari;
+        this.nomRol = nomRol;
+
         initComponents();
-        configureUsuari();    // Configura visibilitat segons tipus d'usuari
         setupListeners();     // Configura els listeners dels botons
     }
 
     private void initComponents() {
-        setTitle("Menu Usuari - " + nomUsuari);
+        setTitle("Menu Usuari - " + nomRol);
         setSize(400, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,8 +45,10 @@ public class VistaPrincipalComuna extends JFrame {
         buttonPanel.add(crearEnquestaButton);
         buttonPanel.add(consultarPerfilButton);
         buttonPanel.add(respondreEnquestaButton);
+        buttonPanel.add(exportarRespostesButton);
+        buttonPanel.add(exportarEnquestatButton);
+        buttonPanel.add(consultarRespostesButton);
         buttonPanel.add(consultarRecomanacionsButton);
-        buttonPanel.add(btnrolExtra);
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSortir.add(sortirButton);
@@ -59,23 +65,6 @@ public class VistaPrincipalComuna extends JFrame {
             dispose();
         });
 
-    }
-
-    private void configureUsuari() {
-        String rol = ctrl.obtenirRol(idUsuari);
-        switch(rol){
-            case "ADMIN":
-                btnrolExtra.setVisible(true);
-                btnrolExtra.setText("Funcions avançades");
-                break;
-            case "ENQUESTADOR" :
-                btnrolExtra.setVisible(true);
-                btnrolExtra.setText("Importar respostes");
-                break;
-            default:
-                btnrolExtra.setVisible(false);
-                break;
-        }
     }
 
     public void hacerVisible(boolean b) {
@@ -97,19 +86,18 @@ public class VistaPrincipalComuna extends JFrame {
             // ctrl.mostrarRespondreEnquesta();
         });
 
-        btnrolExtra.addActionListener(e -> {
-            //String rol = ctrl.obtenirRol(idUsuari);
-            //if (rol.equals("ADMIN")) {
-                //ctrl.mostrarFuncionsAvançades();
-            //} else if (rol.equals("ENQUESTADOR")) {
-                // ctrl.mostrarImportarRespostes();
-            //}
+        exportarRespostesButton.addActionListener(e -> {
+            //ctrl.mostrarExportarRespostes();
         });
-        /*
-        btnLogout.addActionListener(e -> {
-            dispose();  // Tancar finestra
-            new LoginView().setVisible(true);
+
+        exportarEnquestatButton.addActionListener(e -> {
+            //ctrl.mostrarExportarEnquestes;
         });
-        */
+
+        consultarRespostesButton.addActionListener(e -> {
+            //ctrl.mostrarConsultarRespostes();
+        });
+
     }
+
 }

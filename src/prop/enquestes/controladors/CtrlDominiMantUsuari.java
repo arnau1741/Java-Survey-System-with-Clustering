@@ -80,6 +80,7 @@ public class CtrlDominiMantUsuari {
         UsuariState rol = u.getRol();
         if(rol instanceof AdminState) return "ADMIN";
         else if(rol instanceof EnquestadorState) return "ENQUESTADOR";
+        //else if(rol instanceof ModeradorState) return "MODERADOR";
         else return "ENQUESTAT";
     }
 

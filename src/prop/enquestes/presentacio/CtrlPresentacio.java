@@ -12,10 +12,14 @@ public class CtrlPresentacio {
     private VistaPrincipal vistaPrincipal;
     private VistaIniciarSessio vistaIniciarSessio;
     private VistaCrearUsuari vistaCrearUsuari;
-    private VistaPrincipalComuna  vistaPrincipalComuna;
+    private VistaAdmin vistaAdmin;
+    private VistaEnquestador vistaEnquestador;
+    private VistaEnquestat vistaEnquestat;
+    private VistaModerador vistaModerador;
+    
     private VistaConsultarPerfil vistaConsultarPerfil;
     private VistaConsultarRecomanacions vistaConsultarRecomanacions;
-    private VistaAdmin vistaAdmin;
+
     private VistaModificarEnquesta vistaModificarEnquesta;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
@@ -46,9 +50,25 @@ public class CtrlPresentacio {
     }
 
     public void mostrarVistaPrincipalComuna(int idUsuari) {
+        ///Des d'aqui obtenim el rol i mostrem qualsevol de les vistes decidides
+        String nomUsuari = obtenirNomUsuari(idUsuari);
         String rol = obtenirRol(idUsuari); ////S'hauria d'obtenir el rol en forma de string
-        vistaPrincipalComuna = new VistaPrincipalComuna(this, idUsuari, rol);
-        vistaPrincipalComuna.hacerVisible(true);
+        if(rol.equals("ADMIN")){
+            vistaAdmin = new VistaAdmin(this, idUsuari, nomUsuari, rol);
+            vistaAdmin.setVisible(true);
+        }
+        else if(rol.equals("MODERADOR")){
+            vistaModerador = new VistaModerador(this, idUsuari, nomUsuari, rol);
+            vistaModerador.setVisible(true);
+        }
+        else if(rol.equals("ENQUESTADOR")) {
+            vistaEnquestador = new VistaEnquestador(this, idUsuari, nomUsuari, rol);
+            vistaEnquestador.setVisible(true);
+        }
+        else {
+            vistaEnquestat = new VistaEnquestat(this, idUsuari, nomUsuari, rol);
+            vistaEnquestat.setVisible(true);
+        }
 
     }
 
@@ -62,9 +82,9 @@ public class CtrlPresentacio {
         vistaConsultarRecomanacions.setVisible(true);
     }
 
-    public void mostrarFuncionsAvançades() {
-        vistaAdmin = new VistaAdmin(this);
-        vistaAdmin.setVisible(true);
+    public void mostrarVistaAdmin() {
+        //vistaAdmin = new VistaAdmin(this);
+        //vistaAdmin.setVisible(true);
     }
 
     public void mostrarVistaModificarEnquesta() {
@@ -94,6 +114,13 @@ public class CtrlPresentacio {
         CtrlDominiMantUsuari mantUsuari = ctrlDomini.getCtrlDominiMantUsuari();
         String rol = mantUsuari.getRolUsuari(id);
         return rol;
+    }
+
+    public String obtenirNomUsuari(int id) {
+       CtrlDominiMantUsuari mantUsuari = ctrlDomini.getCtrlDominiMantUsuari();
+       Usuari us = mantUsuari.getUsuari(id);
+       String nomUsuari = us.getUsuari();
+       return nomUsuari;
     }
 
     public List<String> consultarEnquesta(int id) throws EnquestaNoExisteixException {

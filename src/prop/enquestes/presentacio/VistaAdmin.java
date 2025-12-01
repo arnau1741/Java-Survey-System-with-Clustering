@@ -5,15 +5,24 @@ import java.awt.*;
 
 public class VistaAdmin extends JFrame {
     private CtrlPresentacio ctrl;
+    private int idUsuari;
+    private String nomUsuari;
+    private String nomRol;
     private JPanel contentPanel = new JPanel();
-    private JButton clustering = new JButton("Clustering");
-    private JButton modificarEnquesta = new JButton("Modificar Enquesta");
-    private JButton analisiEstadistica = new JButton("Analisi de Estadistica");
-    private JButton exportarRespostes = new JButton("Exportar Respostes");
+
+    private JButton crearEnquestaButton = new JButton("Crear Enquesta");
+    private JButton importarEnquestaButton = new JButton("Importar Enquesta");
+    private JButton consultarUsuariButton  = new JButton("Consultar Usuari");
+    private JButton enquestesRealitzadesButton = new JButton("Enquestes realitzades");
+    private JButton enquestesAdministradesButton = new JButton("Enquestes Administrades");
+    private JButton consultarRecomanacionsButton = new JButton("Consultar Recomanacions");
     private JButton sortirButton = new JButton("Sortir");
 
-    public VistaAdmin(CtrlPresentacio ctrl) {
+    public VistaAdmin(CtrlPresentacio ctrl, int idUsuari, String nomUsuari, String nomRol) {
         this.ctrl = ctrl;
+        this.idUsuari = idUsuari;
+        this.nomUsuari = nomUsuari;
+        this.nomRol = nomRol;
 
         initComponents();
         setupListeners();     // Configura els listeners dels botons
@@ -30,10 +39,13 @@ public class VistaAdmin extends JFrame {
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayout(0, 1, 10, 10));
 
-        panelBotones.add(clustering);
-        panelBotones.add(modificarEnquesta);
-        panelBotones.add(analisiEstadistica);
-        panelBotones.add(exportarRespostes);
+        panelBotones.add(crearEnquestaButton);
+        panelBotones.add(importarEnquestaButton);
+        panelBotones.add(consultarUsuariButton);
+        panelBotones.add(enquestesRealitzadesButton);
+        panelBotones.add(enquestesAdministradesButton);
+        panelBotones.add(consultarRecomanacionsButton);
+
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSortir.add(sortirButton);
@@ -55,19 +67,26 @@ public class VistaAdmin extends JFrame {
     }
 
     private void setupListeners() {
-        clustering.addActionListener(e -> {
-
+        crearEnquestaButton.addActionListener(e -> {
+            //ctrl.mostrarCrearEnquesta();
         });
-        modificarEnquesta.addActionListener(e -> {
-            ctrl.mostrarVistaModificarEnquesta();
+        importarEnquestaButton.addActionListener(e -> {
+            //ctrl.mostrarImportarEnquestes();
         });
-        analisiEstadistica.addActionListener(e -> {
-
+        consultarUsuariButton.addActionListener(e -> {
+            ctrl.mostrarConsultarPerfil();
         });
-        exportarRespostes.addActionListener(e -> {
-
+        enquestesRealitzadesButton.addActionListener(e -> {
+            //String nomEnquesta = "Realitzada"
+            //ctrl.mostrarEnquestesExtra(nomEnquesta)
         });
-
+        enquestesAdministradesButton.addActionListener(e -> {
+            //String nomEnquesta = "Administrada"
+            //ctrl.mostrarEnquestesExtra(nomEnquesta);
+        });
+        consultarRecomanacionsButton.addActionListener(e -> {
+            ctrl.mostrarConsultarRecomanacions();
+        });
 
     }
 }
