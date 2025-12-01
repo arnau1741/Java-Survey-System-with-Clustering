@@ -19,8 +19,8 @@ public class CtrlPresentacio {
     
     private VistaConsultarPerfil vistaConsultarPerfil;
     private VistaConsultarRecomanacions vistaConsultarRecomanacions;
-
     private VistaModificarEnquesta vistaModificarEnquesta;
+    private VistaConsultarEnquesta vistaConsultarEnquesta;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -82,15 +82,15 @@ public class CtrlPresentacio {
         vistaConsultarRecomanacions.setVisible(true);
     }
 
-    public void mostrarVistaAdmin() {
-        //vistaAdmin = new VistaAdmin(this);
-        //vistaAdmin.setVisible(true);
-    }
-
     public void mostrarVistaModificarEnquesta() {
         vistaModificarEnquesta = new VistaModificarEnquesta(this);
         vistaModificarEnquesta.setVisible(true);
 
+    }
+
+    public void mostrarConsultarEnquesta() {
+        vistaConsultarEnquesta = new VistaConsultarEnquesta(this);
+        vistaConsultarEnquesta.setVisible(true);
     }
 
     // ======================

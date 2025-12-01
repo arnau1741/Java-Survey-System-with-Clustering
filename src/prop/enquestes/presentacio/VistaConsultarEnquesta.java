@@ -11,30 +11,40 @@ import java.util.List;
 public class VistaConsultarEnquesta extends JDialog {
     private CtrlPresentacio ctrlPresentacio;
     private JPanel contentPane = new JPanel();
-    private JTextField campID = new JTextField();
-    private JTextArea resultat = new JTextArea();
+    private JTextField campID = new JTextField(10);
+    private JTextArea resultat = new JTextArea(20,20);
     private JButton buttonOK;
     private JButton buttonCancel;
 
     public VistaConsultarEnquesta(CtrlPresentacio ctrlPresentacio) {
         super((Frame) null, "Consultar Enquesta", null);
         this.ctrlPresentacio = ctrlPresentacio;
-        setSize(300, 150);
+        setSize(450,350);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(3,1,10,10));
 
-        contentPane.add(new JLabel("ID de l'enquesta"));
-        contentPane.add(campID);
-        contentPane.add(buttonOK);
-        contentPane.add(buttonCancel);
-        resultat.setEditable(false);
-        contentPane.add(new JScrollPane(resultat), BorderLayout.CENTER);
-        add(contentPane);
 
+        contentPane.setLayout(new BorderLayout(10, 10));
+        JPanel top = new JPanel(new FlowLayout());
+        top.add(new JLabel("ID de l'enquesta:"));
+        top.add(campID);
+        contentPane.add(top, BorderLayout.NORTH);
+
+        resultat.setEditable(false);
+        JScrollPane scroll = new JScrollPane(resultat);
+        contentPane.add(scroll, BorderLayout.CENTER);
+
+        JPanel bottom = new JPanel(new FlowLayout());
+        bottom.add(buttonOK);
+        bottom.add(buttonCancel);
+        contentPane.add(bottom, BorderLayout.SOUTH);
+
+        add(contentPane);
 
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
