@@ -12,6 +12,7 @@ public class CtrlPresentacio {
     private VistaPrincipal vistaPrincipal;
     private VistaIniciarSessio vistaIniciarSessio;
     private VistaCrearUsuari vistaCrearUsuari;
+    // afegir vista Convidat?
     private VistaAdmin vistaAdmin;
     private VistaEnquestador vistaEnquestador;
     private VistaEnquestat vistaEnquestat;
@@ -21,6 +22,7 @@ public class CtrlPresentacio {
     private VistaConsultarRecomanacions vistaConsultarRecomanacions;
     private VistaModificarEnquesta vistaModificarEnquesta;
     private VistaConsultarEnquesta vistaConsultarEnquesta;
+    private VistaCrearEnquesta vistaCrearEnquesta;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -93,6 +95,11 @@ public class CtrlPresentacio {
         vistaConsultarEnquesta.setVisible(true);
     }
 
+    public void mostrarCrearEnquesta(int idUsuari) {
+        vistaCrearEnquesta = new VistaCrearEnquesta(this, idUsuari);
+        vistaCrearEnquesta.setVisible(true);
+    }
+
     // ======================
     // OPERACIONS
     // ======================
@@ -149,4 +156,7 @@ public class CtrlPresentacio {
         ctrlDomini.modificarPreguntaEnquesta(idEnquesta, indexPregunta, novaPreguntaText);
     }
 
+    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
+        ctrlDomini.crearEnquesta(titol, descripcio, idCreador, preguntes);
+    }
 }
