@@ -76,7 +76,7 @@ public class VistaAdmin extends JFrame {
             ctrl.mostrarConsultarEnquesta();
         });
         importarEnquestaButton.addActionListener(e -> {
-            //ctrl.mostrarImportarEnquestes();
+            ctrl.mostrarImportarEnquesta(idUsuari);
         });
         consultarUsuariButton.addActionListener(e -> {
             ctrl.mostrarConsultarPerfil();
