@@ -79,7 +79,7 @@ public class VistaEnquestat extends JFrame {
             ctrl.mostrarConsultarRecomanacions();
         });
         crearEnquestaButton.addActionListener(e -> {
-            // ctrl.mostrarCrearEnquesta();
+            ctrl.mostrarCrearEnquesta(idUsuari);
         });
 
         respondreEnquestaButton.addActionListener(e -> {
