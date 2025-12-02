@@ -4,6 +4,7 @@ import prop.enquestes.controladors.CtrlDominiMantUsuari;
 import prop.enquestes.domini.Usuari;
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
+import prop.enquestes.excepcions.FileNotFound;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class CtrlPresentacio {
     private VistaModificarEnquesta vistaModificarEnquesta;
     private VistaConsultarEnquesta vistaConsultarEnquesta;
     private VistaCrearEnquesta vistaCrearEnquesta;
+    private VistaImportarEnquesta vistaImportarEnquesta;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -100,6 +102,11 @@ public class CtrlPresentacio {
         vistaCrearEnquesta.setVisible(true);
     }
 
+    public void mostrarImportarEnquesta(int idUsuari) {
+        vistaImportarEnquesta = new VistaImportarEnquesta(this, idUsuari);
+        vistaImportarEnquesta.setVisible(true);
+    }
+
     // ======================
     // OPERACIONS
     // ======================
@@ -158,5 +165,9 @@ public class CtrlPresentacio {
 
     public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
         ctrlDomini.crearEnquesta(titol, descripcio, idCreador, preguntes);
+    }
+
+    public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
+        return ctrlDomini.importarEnquesta(idUsuari, path);
     }
 }
