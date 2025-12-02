@@ -4,9 +4,13 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class VistaRespondreEnquesta extends JDialog {
+    private CtrlPresentacio ctrl;
+    private int idCreador;
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
+    private JComboBox enquestaSeleccionada;
 
     public VistaRespondreEnquesta() {
         setContentPane(contentPane);
