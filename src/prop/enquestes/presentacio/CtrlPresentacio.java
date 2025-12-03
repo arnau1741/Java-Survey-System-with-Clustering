@@ -25,6 +25,7 @@ public class CtrlPresentacio {
     private VistaConsultarEnquesta vistaConsultarEnquesta;
     private VistaCrearEnquesta vistaCrearEnquesta;
     private VistaImportarEnquesta vistaImportarEnquesta;
+    private VistaExportarEnquesta vistaExportarEnquesta;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -107,6 +108,11 @@ public class CtrlPresentacio {
         vistaImportarEnquesta.setVisible(true);
     }
 
+    public void mostrarExportarEnquesta(int idUsuari) {
+        vistaExportarEnquesta = new VistaExportarEnquesta(this, idUsuari);
+        vistaExportarEnquesta.setVisible(true);
+    }
+
     // ======================
     // OPERACIONS
     // ======================
@@ -169,5 +175,18 @@ public class CtrlPresentacio {
 
     public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
         return ctrlDomini.importarEnquesta(idUsuari, path);
+    }
+
+    public List<String> exportarEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
+        return ctrlDomini.exportarEnquesta(idEnquesta);
+    }
+
+    // funcions pel desplegable de la vistaExportarEnquesta
+    public List<Integer> getIdsEnquestes() {
+        return ctrlDomini.getIdsEnquestes();
+    }
+
+    public List<String> getTitolsEnquestes() {
+        return ctrlDomini.getTitolsEnquestes();
     }
 }
