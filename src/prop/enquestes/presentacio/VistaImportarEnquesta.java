@@ -10,6 +10,8 @@ public class VistaImportarEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
     private int idUsuari;
 
+    private static final String BASE_DIR = "."; // carpeta base: directori actual
+
     private JPanel contentPane = new JPanel();
     private JTextField fieldPath = new JTextField();
     private JButton btnSeleccionar = new JButton("Seleccionar fitxer");
@@ -27,7 +29,7 @@ public class VistaImportarEnquesta extends JDialog {
         initActions();
 
         pack();
-        setLocationRelativeTo(null); // centrar
+        setLocationRelativeTo(null);
     }
 
     private void initLayout() {
@@ -51,9 +53,7 @@ public class VistaImportarEnquesta extends JDialog {
 
     private void initActions() {
         btnSeleccionar.addActionListener(e -> seleccionarFitxer());
-
         buttonOK.addActionListener(e -> onImportar());
-
         buttonCancel.addActionListener(e -> {
             ctrl.inicializarPresentacio();
             dispose();
@@ -69,18 +69,30 @@ public class VistaImportarEnquesta extends JDialog {
     }
 
     private void seleccionarFitxer() {
-        JFileChooser fc = new JFileChooser();
+        JFileChooser fc = new JFileChooser(BASE_DIR);
         int res = fc.showOpenDialog(this);
 
         if (res == JFileChooser.APPROVE_OPTION) {
-            fieldPath.setText(fc.getSelectedFile().getAbsolutePath());
+            String pathSeleccionat = fc.getSelectedFile().getPath();
+
+            String relativePath;
+            if (pathSeleccionat.startsWith(BASE_DIR)) {
+                relativePath = pathSeleccionat.substring(BASE_DIR.length());
+                if (relativePath.startsWith("/") || relativePath.startsWith("\\")) {
+                    relativePath = relativePath.substring(1); // eliminar separador inicial
+                }
+            } else {
+                relativePath = pathSeleccionat; // si està fora, deixem absolut
+            }
+
+            fieldPath.setText(relativePath);
         }
     }
 
     private void onImportar() {
-        String path = fieldPath.getText().trim();
+        String relativePath = fieldPath.getText().trim();
 
-        if (path.isEmpty()) {
+        if (relativePath.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Has de seleccionar un fitxer.",
                     "Error",
@@ -89,11 +101,10 @@ public class VistaImportarEnquesta extends JDialog {
         }
 
         try {
-            int numPreguntes = ctrl.importarEnquesta(idUsuari, path);
+            int numPreguntes = ctrl.importarEnquesta(idUsuari, relativePath);
 
             JOptionPane.showMessageDialog(this,
-                    "Enquesta importada correctament!\n"
-                            + "Preguntes importades: " + numPreguntes,
+                    "Enquesta importada correctament!\nPreguntes importades: " + numPreguntes,
                     "Èxit",
                     JOptionPane.INFORMATION_MESSAGE);
 
