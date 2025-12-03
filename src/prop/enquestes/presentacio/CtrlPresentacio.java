@@ -6,6 +6,8 @@ import prop.enquestes.excepcions.EnquestaNoExisteixException;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
 import prop.enquestes.excepcions.FileNotFound;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CtrlPresentacio {
@@ -173,8 +175,99 @@ public class CtrlPresentacio {
         ctrlDomini.crearEnquesta(titol, descripcio, idCreador, preguntes);
     }
 
-    public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
-        return ctrlDomini.importarEnquesta(idUsuari, path);
+    public int importarEnquesta(int idUsuari, String nombreArchivo)
+            throws FileNotFound, InvalidFormatEnquesta {
+        String Base_path = "Pruebas";
+
+        try {
+            // Construir ruta completa
+            String rutaCompleta = Base_path + File.separator + nombreArchivo + ".txt";
+            File archivo = new File(rutaCompleta);
+
+            if (!archivo.exists()) {
+                throw new FileNotFound("No s'ha trobat el fitxer: " + rutaCompleta);
+            }
+
+            // Leer y procesar el archivo
+            BufferedReader br = new BufferedReader(new FileReader(archivo));
+
+            String titol = br.readLine();
+            if (titol == null || titol.trim().isEmpty()) {
+                br.close();
+                throw new InvalidFormatEnquesta("Falta títol");
+            }
+
+            String descripcio = br.readLine();
+            if (descripcio == null) {
+                br.close();
+                throw new InvalidFormatEnquesta("Falta descripció");
+            }
+
+            String idCreadorStr = br.readLine();
+            if (idCreadorStr == null) {
+                br.close();
+                throw new InvalidFormatEnquesta("Falta ID creador");
+            }
+
+            int idCreador = Integer.parseInt(idCreadorStr.trim());
+
+            String numPreguntesStr = br.readLine();
+            if (numPreguntesStr == null) {
+                br.close();
+                throw new InvalidFormatEnquesta("Falta nombre de preguntes");
+            }
+
+            int numPreguntes = Integer.parseInt(numPreguntesStr.trim());
+
+            List<String> preguntes = new ArrayList<>();
+
+            for (int i = 0; i < numPreguntes; i++) {
+                String liniaTipus = br.readLine();
+                if (liniaTipus == null) {
+                    br.close();
+                    throw new InvalidFormatEnquesta("Falta tipus de la pregunta " + (i + 1));
+                }
+
+                String textPregunta = br.readLine();
+                if (textPregunta == null) {
+                    br.close();
+                    throw new InvalidFormatEnquesta("Falta text de la pregunta " + (i + 1));
+                }
+
+                preguntes.add(liniaTipus.trim());
+                preguntes.add(textPregunta.trim());
+
+                int tipus = Integer.parseInt(liniaTipus.trim());
+                if (tipus == 1 || tipus == 2 || tipus == 3) {
+                    String liniaNumOpcions = br.readLine();
+                    if (liniaNumOpcions == null) {
+                        br.close();
+                        throw new InvalidFormatEnquesta("Falta nombre d'opcions per la pregunta " + (i + 1));
+                    }
+
+                    int numOpcions = Integer.parseInt(liniaNumOpcions.trim());
+                    preguntes.add(liniaNumOpcions.trim());
+
+                    for (int j = 0; j < numOpcions; j++) {
+                        String opcio = br.readLine();
+                        if (opcio == null) {
+                            br.close();
+                            throw new InvalidFormatEnquesta("Falta l'opció " + (j + 1) + " per la pregunta " + (i + 1));
+                        }
+                        preguntes.add(opcio.trim());
+                    }
+                }
+            }
+            br.close();
+
+            ctrlDomini.crearEnquesta(titol.trim(), descripcio.trim(), idCreador, preguntes);
+            return numPreguntes;
+
+        } catch (IOException e) {
+            throw new FileNotFound("Error llegint el fitxer: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            throw new InvalidFormatEnquesta("Format numèric incorrecte: " + e.getMessage());
+        }
     }
 
     public List<String> exportarEnquesta(int idEnquesta) throws EnquestaNoExisteixException {

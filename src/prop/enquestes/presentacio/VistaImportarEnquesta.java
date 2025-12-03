@@ -3,6 +3,8 @@ package prop.enquestes.presentacio;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+
 import prop.enquestes.excepcions.FileNotFound;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
 
@@ -70,9 +72,14 @@ public class VistaImportarEnquesta extends JDialog {
 
     private void seleccionarFitxer() {
         JFileChooser fc = new JFileChooser(BASE_DIR);
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setAcceptAllFileFilterUsed(true);
+
+
         int res = fc.showOpenDialog(this);
 
         if (res == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
             String pathSeleccionat = fc.getSelectedFile().getPath();
 
             String relativePath;
@@ -82,7 +89,11 @@ public class VistaImportarEnquesta extends JDialog {
                     relativePath = relativePath.substring(1); // eliminar separador inicial
                 }
             } else {
-                relativePath = pathSeleccionat; // si està fora, deixem absolut
+                String nombreArchivo = file.getName();
+                if (nombreArchivo.toLowerCase().endsWith(".txt")) {
+                    nombreArchivo = nombreArchivo.substring(0, nombreArchivo.length() - 4);
+                }
+                relativePath = nombreArchivo;
             }
 
             fieldPath.setText(relativePath);
