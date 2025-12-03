@@ -359,6 +359,7 @@ public class CtrlDomini {
             if (enq == null) {
                 throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
             }
+            result.add("ID: " + idEnquesta + " - " + enq.getTitol());
 
             List<Pregunta> preguntes = enq.getPreguntesObj();
             for (Pregunta p : preguntes) {

@@ -73,7 +73,7 @@ public class VistaModerador extends JFrame {
         });
 
         modificarEnquestaButton.addActionListener(e -> {
-            ctrl.mostrarVistaModificarEnquesta();
+            ctrl.mostrarVistaModificarEnquesta(idUsuari);
         });
 
         consultarRespostesButton.addActionListener(e -> {

@@ -6,6 +6,7 @@ import java.awt.*;
 public class VistaEnquestesExtresAdmin extends JFrame {
 
     private CtrlPresentacio ctrl;
+    private int idUsuari;
     private String nomEnquesta;
     private JPanel contentPanel = new JPanel();
     private JButton exportarEnquestaButton = new  JButton("Exportar enquesta");
@@ -17,9 +18,10 @@ public class VistaEnquestesExtresAdmin extends JFrame {
     private JButton donarPodersButton = new JButton("Donar poders");
     private JButton consultarRecomanacionsButton = new JButton("Consultar Recomanacions");
     private JButton sortirButton = new JButton("Sortir");
-    public VistaEnquestesExtresAdmin(CtrlPresentacio ctrl,  String nomEnquesta) {
+    public VistaEnquestesExtresAdmin(CtrlPresentacio ctrl,  String nomEnquesta, int idUsuari) {
         this.ctrl = ctrl;
         this.nomEnquesta = nomEnquesta;
+        this.idUsuari = idUsuari;
         initComponents();
         setupListeners();     // Configura els listeners dels botons
     }
@@ -73,7 +75,7 @@ public class VistaEnquestesExtresAdmin extends JFrame {
 
     public void setupListeners() {
         modificarEnquestaButton.addActionListener(e -> {
-            ctrl.mostrarVistaModificarEnquesta();
+            ctrl.mostrarVistaModificarEnquesta(idUsuari);
         });
         consultarRecomanacionsButton.addActionListener(e -> {
             ctrl.mostrarConsultarRecomanacions();

@@ -5,6 +5,7 @@ import prop.enquestes.domini.Usuari;
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
 import prop.enquestes.excepcions.FileNotFound;
+import prop.enquestes.excepcions.UsuariNoHaResposEnquesta;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -90,8 +91,8 @@ public class CtrlPresentacio {
         vistaConsultarRecomanacions.setVisible(true);
     }
 
-    public void mostrarVistaModificarEnquesta() {
-        vistaModificarEnquesta = new VistaModificarEnquesta(this);
+    public void mostrarVistaModificarEnquesta(int idUsuari) {
+        vistaModificarEnquesta = new VistaModificarEnquesta(this, idUsuari);
         vistaModificarEnquesta.setVisible(true);
 
     }
@@ -116,8 +117,8 @@ public class CtrlPresentacio {
         vistaExportarEnquesta.setVisible(true);
     }
 
-    public void mostrarEnquestesExtra(String nomEnquesta) {
-        vistaEnquestesExtresAdmin = new VistaEnquestesExtresAdmin(this, nomEnquesta);
+    public void mostrarEnquestesExtra(String nomEnquesta, int idUsuari) {
+        vistaEnquestesExtresAdmin = new VistaEnquestesExtresAdmin(this, nomEnquesta, idUsuari);
         vistaEnquestesExtresAdmin.setVisible(true);
     }
 
@@ -169,8 +170,12 @@ public class CtrlPresentacio {
         return ctrlDomini.consultarEnquestaAmbPreguntes(idEnquesta);
     }
 
-    public void eliminarEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
-        ctrlDomini.eliminarEnquesta(0, idEnquesta);
+    public void eliminarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException {
+        ctrlDomini.eliminarEnquesta(idUsuari, idEnquesta);
+    }
+
+    public void esborrarRespostaEnquesta(Integer idEnquesta, int idEnquestat) throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException {
+        ctrlDomini.esborrarRespostaEnquesta(idEnquesta, idEnquestat);
     }
 
     public void modificarPreguntaEnquesta(int idEnquesta, int indexPregunta, List<String> novaPreguntaText) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
