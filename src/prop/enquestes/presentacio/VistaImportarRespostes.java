@@ -51,10 +51,4 @@ public class VistaImportarRespostes extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        VistaImportarRespostes dialog = new VistaImportarRespostes();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 }

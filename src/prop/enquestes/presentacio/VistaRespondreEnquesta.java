@@ -8,9 +8,9 @@ public class VistaRespondreEnquesta extends JDialog {
     private int idCreador;
 
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JComboBox enquestaSeleccionada;
+    private JButton buttonOK = new JButton();
+    private JButton buttonCancel = new JButton();
+    private JComboBox comboEnquestes = new JComboBox();
 
     public VistaRespondreEnquesta() {
         setContentPane(contentPane);
