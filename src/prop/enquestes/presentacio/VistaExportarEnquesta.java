@@ -1,43 +1,139 @@
-public class VistaExportarEnquesta extends javax.swing.JDialog {
-private javax.swing.JPanel contentPane;
-private javax.swing.JButton buttonOK;
-private javax.swing.JButton buttonCancel;
+package prop.enquestes.presentacio;
 
-public VistaExportarEnquesta(){
-setContentPane(contentPane);
-setModal(true);
-getRootPane().setDefaultButton(buttonOK);
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 
-buttonOK.addActionListener(new java.awt.event.ActionListener(){public void actionPerformed(java.awt.event.ActionEvent e){onOK();}});
+public class VistaExportarEnquesta extends JDialog {
 
-buttonCancel.addActionListener(new java.awt.event.ActionListener(){public void actionPerformed(java.awt.event.ActionEvent e){onCancel();}});
+    private final CtrlPresentacio ctrl;
+    private final int idUsuari;
 
- // call onCancel() when cross is clicked
-setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-addWindowListener(new java.awt.event.WindowAdapter() {
-  public void windowClosing(java.awt.event.WindowEvent e) {
-   onCancel();
-  }
-});
+    private JPanel contentPane = new JPanel();
+    private JComboBox<String> comboEnquestes = new JComboBox<>();
+    private JButton btnExportar = new JButton("Exportar");
+    private JButton btnCancel = new JButton("Cancel·lar");
 
- // call onCancel() on ESCAPE
-contentPane.registerKeyboardAction(  new java.awt.event.ActionListener() {    public void actionPerformed(java.awt.event.ActionEvent e) {      onCancel();
-    }  },  javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0),  javax.swing.JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);}
+    private List<Integer> idsEnquestes = new ArrayList<>();
 
-private void onOK(){
- // add your code here
-dispose();
-}
+    public VistaExportarEnquesta(CtrlPresentacio ctrl, int idUsuari) {
+        this.ctrl = ctrl;
+        this.idUsuari = idUsuari;
 
-private void onCancel(){
- // add your code here if necessary
-dispose();
-}
+        setTitle("Exportar Enquesta");
+        setModal(true);
+        setContentPane(contentPane);
 
-public static void main(String[] args){
-VistaExportarEnquesta dialog = new VistaExportarEnquesta();
-dialog.pack();
-dialog.setVisible(true);
-System.exit(0);
-}
+        initLayout();
+        carregarEnquestesDesDelControlador();
+        initActions();
+
+        pack();
+        setLocationRelativeTo(null);
+    }
+
+    private void initLayout() {
+        contentPane.setLayout(new BorderLayout(10,10));
+        contentPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+        JPanel top = new JPanel(new BorderLayout(6,6));
+        top.add(new JLabel("Selecciona una enquesta:"), BorderLayout.WEST);
+        top.add(comboEnquestes, BorderLayout.CENTER);
+
+        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottom.add(btnExportar);
+        bottom.add(btnCancel);
+
+        contentPane.add(top, BorderLayout.NORTH);
+        contentPane.add(bottom, BorderLayout.SOUTH);
+    }
+
+    private void carregarEnquestesDesDelControlador() {
+        try {
+            List<Integer> ids = ctrl.getIdsEnquestes();
+            List<String> titols = ctrl.getTitolsEnquestes();
+
+            if (ids.size() != titols.size()) {
+                JOptionPane.showMessageDialog(this,
+                        "Error: Llistes d'IDs i títols no coincideixen.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            idsEnquestes.clear();
+            comboEnquestes.removeAllItems();
+
+            for (int i = 0; i < ids.size(); i++) {
+                idsEnquestes.add(ids.get(i));
+                comboEnquestes.addItem(titols.get(i));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "No s'han pogut carregar les enquestes.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void initActions() {
+        btnExportar.addActionListener(e -> onExportar());
+        btnCancel.addActionListener(e -> onCancel());
+
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
+    }
+
+    private void onExportar() {
+        int idx = comboEnquestes.getSelectedIndex();
+        if (idx < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Has de seleccionar una enquesta.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int idEnquesta = idsEnquestes.get(idx);
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Guardar enquesta com...");
+        chooser.setSelectedFile(new java.io.File(comboEnquestes.getSelectedItem() + ".txt"));
+
+        int res = chooser.showSaveDialog(this);
+        if (res != JFileChooser.APPROVE_OPTION) return;
+
+        String path = chooser.getSelectedFile().getAbsolutePath();
+
+        try {
+            List<String> contingut = ctrl.exportarEnquesta(idEnquesta);
+
+            try (FileWriter fw = new FileWriter(path)) {
+                for (String line : contingut) fw.write(line + "\n");
+            }
+
+            JOptionPane.showMessageDialog(this,
+                    "Enquesta exportada correctament!",
+                    "Èxit",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            dispose();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error en exportar: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void onCancel() {
+        dispose();
+    }
 }
