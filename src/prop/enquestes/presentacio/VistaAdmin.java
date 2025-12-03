@@ -13,6 +13,7 @@ public class VistaAdmin extends JFrame {
     private JButton crearEnquestaButton = new JButton("Crear Enquesta");
     private JButton consultarEnquestaButton = new JButton("Consultar Enquesta");
     private JButton importarEnquestaButton = new JButton("Importar Enquesta");
+    private JButton exportarEnquestaButton = new JButton("Exportar Enquesta");
     private JButton consultarUsuariButton  = new JButton("Consultar Usuari");
     private JButton enquestesRealitzadesButton = new JButton("Enquestes realitzades");
     private JButton enquestesAdministradesButton = new JButton("Enquestes Administrades");
@@ -43,6 +44,7 @@ public class VistaAdmin extends JFrame {
         panelBotones.add(crearEnquestaButton);
         panelBotones.add(consultarEnquestaButton);
         panelBotones.add(importarEnquestaButton);
+        panelBotones.add(exportarEnquestaButton);
         panelBotones.add(consultarUsuariButton);
         panelBotones.add(enquestesRealitzadesButton);
         panelBotones.add(enquestesAdministradesButton);
@@ -77,6 +79,9 @@ public class VistaAdmin extends JFrame {
         });
         importarEnquestaButton.addActionListener(e -> {
             ctrl.mostrarImportarEnquesta(idUsuari);
+        });
+        exportarEnquestaButton.addActionListener(e -> {
+            ctrl.mostrarExportarEnquesta(idUsuari);
         });
         consultarUsuariButton.addActionListener(e -> {
             ctrl.mostrarConsultarPerfil();
