@@ -87,12 +87,12 @@ public class VistaAdmin extends JFrame {
             ctrl.mostrarConsultarPerfil();
         });
         enquestesRealitzadesButton.addActionListener(e -> {
-            //String nomEnquesta = "Realitzada"
-            //ctrl.mostrarEnquestesExtra(nomEnquesta)
+            String nomEnquesta = "Realitzada";
+            ctrl.mostrarEnquestesExtra(nomEnquesta);
         });
         enquestesAdministradesButton.addActionListener(e -> {
-            //String nomEnquesta = "Administrada"
-            //ctrl.mostrarEnquestesExtra(nomEnquesta);
+            String nomEnquesta = "Administrada";
+            ctrl.mostrarEnquestesExtra(nomEnquesta);
         });
         consultarRecomanacionsButton.addActionListener(e -> {
             ctrl.mostrarConsultarRecomanacions();
