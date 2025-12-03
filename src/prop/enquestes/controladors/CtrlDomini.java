@@ -665,4 +665,13 @@ public class CtrlDomini {
         perfil.add("Email: " + us.getEmail());
         return perfil;
     }
+
+    public List<Integer> getIdsEnquestes() {
+        return ctrlDominiMantEnquesta.getIdsEnquestes();
+    }
+
+    public List<String> getTitolsEnquestes() {
+        return ctrlDominiMantEnquesta.getTitolsEnquestes();
+    }
+
 }
