@@ -148,7 +148,6 @@ public class CtrlDominiMantEnquesta {
      * @throws FileNotFound Si no es troba el fitxer a la ruta especificada
      */
     public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
-        /* funcio antiga (en principi hauria de funcionar, pero per la vista no va be --> comprovar vista)
         // llegir fitxer
         List<String> enquestaTxt = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -170,82 +169,6 @@ public class CtrlDominiMantEnquesta {
 
         // crear enquesta
         int numPreguntes = novaEnquesta(titol, descripcio, idUsuari, preguntesTxt);
-        return numPreguntes;*/
-
-        // aquesta implementacio funciona be per la vista (mirar que estic fent malament a la vista)
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            while ((line = br.readLine()) != null)
-                lines.add(line.trim());
-        } catch (IOException e) {
-            throw new FileNotFound("No s'ha pogut trobar el fitxer: " + path);
-        }
-
-        if (lines.size() < 4)
-            throw new InvalidFormatEnquesta("El fitxer és massa curt");
-
-        String titol = lines.get(0);
-        String descripcio = lines.get(1);
-        // línia 2: id creador
-        int numPreguntes;
-
-        try {
-            numPreguntes = Integer.parseInt(lines.get(3));
-        } catch (NumberFormatException e) {
-            throw new InvalidFormatEnquesta("La línia 4 ha de ser el número de preguntes.");
-        }
-
-        List<String> preguntesTxt = new ArrayList<>();
-        int i = 4;  // primera pregunta
-
-        for (int p = 0; p < numPreguntes; p++) {
-
-            // TIPUS
-            if (i >= lines.size())
-                throw new InvalidFormatEnquesta("Falta el tipus de la pregunta " + (p+1));
-
-            String tipusStr = lines.get(i++);
-            preguntesTxt.add(tipusStr);
-
-            int tipus;
-            try { tipus = Integer.parseInt(tipusStr); }
-            catch (Exception e) {
-                throw new InvalidFormatEnquesta("Tipus incorrecte a la pregunta " + (p+1));
-            }
-
-            // ENUNCIAT
-            if (i >= lines.size())
-                throw new InvalidFormatEnquesta("Falta l'enunciat de la pregunta " + (p+1));
-
-            String enunciat = lines.get(i++);
-            preguntesTxt.add(enunciat);
-
-            // OPCIONS NOMÉS SI tipus = 1,2,3
-            if (tipus == 1 || tipus == 2 || tipus == 3) {
-
-                if (i >= lines.size())
-                    throw new InvalidFormatEnquesta("Falta el nombre d'opcions a la pregunta " + (p+1));
-
-                String numOpcionsStr = lines.get(i++);
-                preguntesTxt.add(numOpcionsStr);
-
-                int numOpcions;
-                try { numOpcions = Integer.parseInt(numOpcionsStr); }
-                catch (Exception e) {
-                    throw new InvalidFormatEnquesta("Nombre d'opcions incorrecte a la pregunta " + (p+1));
-                }
-
-                for (int op = 0; op < numOpcions; op++) {
-                    if (i >= lines.size())
-                        throw new InvalidFormatEnquesta("Falta una opció a la pregunta " + (p+1));
-                    preguntesTxt.add(lines.get(i++));
-                }
-            }
-            // si tipus == 0 o 4 → no llegim opcions
-        }
-
-        numPreguntes = novaEnquesta(titol, descripcio, idUsuari, preguntesTxt);
         return numPreguntes;
     }
 
