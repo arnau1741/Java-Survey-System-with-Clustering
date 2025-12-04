@@ -38,22 +38,12 @@ public class EnquestatState extends UsuariState {
     }
 
     @Override
-    public void afegirEnquestaModerada(Usuari usuari, Enquesta e) {
-        //no fa res
-    }
-
-    @Override
     public void eliminarEnquestaRealitzada(Usuari contexto, int idEnquesta) {
         contexto.eliminarEnquestaRealitzada(idEnquesta);
     }
 
     @Override
     public void eliminarEnquestaAdministrada(Usuari usuari, int idEnquesta) {
-        //no fa res
-    }
-
-    @Override
-    public void eliminarEnquestaModerada(Usuari usuari, int idEnquesta) {
         //no fa res
     }
 

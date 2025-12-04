@@ -37,16 +37,6 @@ public class ModeradorState extends UsuariState {
     }
 
     @Override
-    public void eliminarEnquestaModerada(Usuari contexto, int idEnquesta) {
-        contexto.eliminarEnquestaModerada(idEnquesta);
-    }
-
-    @Override
-    public void afegirEnquestaModerada(Usuari contexto, Enquesta e) {
-        contexto.afegirEnquestaModerada(e);
-    }
-
-    @Override
     public void afegirEnquestaRealitzada(Usuari usuari, Enquesta e) {
         // No fa res
     }
@@ -59,11 +49,6 @@ public class ModeradorState extends UsuariState {
     @Override
     public void afegirEnquestaAdministrada(Usuari usuari, Enquesta e) {
         // No fa res
-    }
-
-    @Override
-    public boolean enquestaModerada(Usuari contexto, int idEnquesta){
-        return contexto.enquestaModerada(idEnquesta);
     }
 
     @Override

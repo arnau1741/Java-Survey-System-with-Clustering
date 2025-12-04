@@ -17,15 +17,11 @@ public abstract class UsuariState {
 
     public abstract void eliminarEnquestaAdministrada(Usuari usuari, int idEnquesta);
 
-    public abstract void eliminarEnquestaModerada(Usuari usuari, int idEnquesta);
-
     public abstract void afegirEnquestaRealitzada(Usuari usuari, Enquesta e);
 
     public abstract void afegirEnquestaAssignada(Usuari usuari, Enquesta e);
 
     public abstract void afegirEnquestaAdministrada(Usuari usuari, Enquesta e);
-
-    public abstract void afegirEnquestaModerada(Usuari usuari, Enquesta e);
 
     public boolean esAdmin() {
         return false;
@@ -52,10 +48,6 @@ public abstract class UsuariState {
     }
 
     public boolean enquestaRealitzada(Usuari usuari, int idEnquesta) {
-        return false;
-    }
-
-    public boolean enquestaModerada(Usuari usuari, int idEnquesta) {
         return false;
     }
 }

@@ -61,7 +61,7 @@ public class CtrlDomini {
      * @param idUsuari Identificador de l'usuari que respon l'enquesta
      * @param respostesUsuari Llista de respostes
      */
-    public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+    protected void respondreEnquestaPrivate(Integer idEnquesta, int idUsuari, List<String> respostesUsuari) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
             throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
@@ -71,6 +71,24 @@ public class CtrlDomini {
 
     }
 
+    public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(!u.esAdmin() && !u.esEnquestat()){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per respondre enquestes.");
+        }
+
+        Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if(u.teEnquestaRealitzada(idEnquesta)){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " ja ha respost l'enquesta amb id " + idEnquesta + ".");
+        }
+
+        respondreEnquestaPrivate(idEnquesta, idUsuari, respostesUsuari);
+
+        u.demanarAfegirEnquestaRealitzada(enq);
+    }
+
+
+
     /**
      * Funcio per a crear una enquesta
      * @param titol Titol de l'enquesta
@@ -79,10 +97,29 @@ public class CtrlDomini {
      * @param preguntes Llista de preguntes
      */
     /////////////////////// Cas d'us - Crear enquesta //////////////////////
-    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta { //Final
+    protected void crearEnquestaPrivate(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta { //Final
         this.ctrlDominiMantEnquesta.novaEnquesta(titol, descripcio, idCreador, preguntes);
         ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
+    }
 
+    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idCreador);
+
+        if(!u.esAdmin() && !u.esEnquestat()){
+            throw new IllegalArgumentException("L'usuari amb id " + idCreador + " no té permís per crear enquestes.");
+        }
+
+        if(u.getId() < 0){
+            throw new IllegalArgumentException("L'usuari amb id " + idCreador + " no pot crear enquestes perquè és anònim.");
+        }
+
+        crearEnquesta(titol, descripcio, idCreador, preguntes);
+
+        Enquesta enq = ctrlDominiMantEnquesta.getUltimaEnquestaCreada();
+
+        u.demanarAfegirEnquestaAdministrada(enq);
+
+        u.cambiarARolAdmin();
     }
 
     /**
@@ -99,15 +136,15 @@ public class CtrlDomini {
 
     /**
      * Funcio per a exportar una enquesta
-     * @param id de l'enquesta a exportar
+     * @param idEnquesta de l'enquesta a exportar
      * @return Llista de strings amb la informacio de l'enquesta
      * @throws EnquestaNoExisteixException si l'enquesta no existeix
      */
     /////////////////////// Cas d'us - Exportar enquesta //////////////////
-    public List<String> exportarEnquesta(Integer id) throws EnquestaNoExisteixException {
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(id);
+    protected List<String> exportarEnquestaPrivate(Integer idEnquesta) throws EnquestaNoExisteixException {
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
-            throw new EnquestaNoExisteixException("L'enquesta amb id " + id + " no existeix.");
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         }
         List <String> exportat = new ArrayList<>();
         exportat.add("==== Informacio enquesta ====");
@@ -147,6 +184,16 @@ public class CtrlDomini {
         return exportat;
     }
 
+    public List<String> exportarEnquesta(Integer idEnquesta, int idUsuari) throws EnquestaNoExisteixException {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+
+        if(u.getId() < 0){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no pot exportar enquestes perquè és anònim.");
+        }
+
+        return exportarEnquestaPrivate(idEnquesta);
+    }
+
     /**
      * Funcio per a importar respostes d'un fitxer
      * @param idUsuari identificador de l'usuari que importa les respostes
@@ -157,7 +204,7 @@ public class CtrlDomini {
     ////////////////////// Cas d'us - Importar respostes ////////////////////
     /// leer: (numPreguntas, PREGUNTA1, PREGUNTA2, ...PREGUNTAn, RESPUESTA1, RESPUESTA2, ... RESPUESTAm)
     /// RESPUESTAj = (resp1, resp2,... respn)
-    public int importarRespostes(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+    protected int importarRespostesPrivate(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         // llegir fitxer
         List<String> respostesTxt = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -186,13 +233,43 @@ public class CtrlDomini {
             respostesUsuari.add(respostesTxt.get(i));
             if (i%numPreguntes == 0) {
                 // afegim la resposta a l'enquesta
-                enq.afegeixResposta(-1, respostesUsuari);
+                enq.afegeixResposta(idUsuari, respostesUsuari);
                 respostesUsuari.clear();
             }
         }
         return numRespostes; // Èxit
     }
 
+    public int importarRespostes(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+
+        if(!u.esAdmin() && !u.esEnquestador()){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per importar respostes.");
+        }
+        if(u.getId() < 0){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no pot importar respostes perquè és anònim.");
+        }
+
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+
+        if(u.esAdmin()){
+            if(!u.teEnquestaAdministrada(idEnquesta)){
+                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra l'enquesta amb id " + idEnquesta + " i per tant no pot importar respostes.");
+            }
+            u.demanarAfegirEnquestaRealitzada(enq);
+        }
+        else if(u.esEnquestador()){
+            if(!u.teEnquestaAssignada(idEnquesta)){
+                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té assignada l'enquesta amb id " + idEnquesta + " i per tant no pot importar respostes.");
+            }
+            //considerar que participa ya que se añade al map el idUsuari
+            u.demanarAfegirEnquestaRealitzada(enq);
+
+        }
+        return importarRespostesPrivate(idUsuari, path, idEnquesta);
+    }
+
+    //ES LA ULTIMA QUE HARÉ PARA ADAPTAR EL PATRON ESTADO
     /**
      * Funcio per a eliminar una enquesta
      * @param idUsuari identificador de l'usuari que elimina l'enquesta
@@ -216,10 +293,30 @@ public class CtrlDomini {
      * @return 1 si s'ha modificat correctament
      */
     //deberiamos hacer mas versiones en un futuro.
-    public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
+    protected int modificarPreguntaEnquestaPrivate(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         int r = ctrlDominiMantEnquesta.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
         /////ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
         return r;
+    }
+
+    public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int idxPregunta, List<String> novaPregunta) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+
+        if(!u.esAdmin() && !u.esModerador()){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per modificar preguntes d'enquestes.");
+        }
+        if(u.getId() < 0){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no pot modificar preguntes d'enquestes perquè és anònim.");
+        }
+
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+
+        if(u.esAdmin()){
+            if(!u.teEnquestaAdministrada(idEnquesta)){
+                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra l'enquesta amb id " + idEnquesta + " i per tant no pot modificar preguntes.");
+            }
+        }
+        return modificarPreguntaEnquestaPrivate(idEnquesta, idxPregunta, novaPregunta);
     }
 
     /**
@@ -231,13 +328,10 @@ public class CtrlDomini {
      * @throws UsuariNoHaResposEnquesta si l'usuari no ha respost l'enquesta amb id donat
      */
     ////////////////////// Cas d'us - Esborrar resposta ////////////////////
-    public void esborrarRespostaEnquesta(Integer idEnquesta, int idEnquestat) throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta {
+    protected void esborrarRespostaEnquestaPrivate(Integer idEnquesta, int idEnquestat) throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
             throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
-        }
-        if (!enq.participa(idEnquestat)) {
-            throw new UsuariNoHaResposEnquesta("L'usuari amb id " + idEnquestat + " no ha respost l'enquesta amb id " + idEnquesta + ".");
         }
         for (Pregunta pregunta : enq.getPreguntesObj()) {
             Map<Integer, Resposta> respostes = pregunta.getRespostes();
@@ -247,6 +341,32 @@ public class CtrlDomini {
             }
         }
     }
+
+    public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat) throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta{
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        Usuari afectat = ctrlDominiMantUsuari.getUsuari(idEnquestat);
+
+        if(!afectat.teEnquestaRealitzada(idEnquesta)){
+            throw new IllegalArgumentException("L'usuari amb id " + idEnquestat + " no ha respost l'enquesta amb id " + idEnquesta + ".");
+        }
+        if(!u.esAdmin() && !u.esModerador()){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per esborrar respostes d'enquestes.");
+        }
+        if(u.getId() < 0){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no pot esborrar respostes d'enquestes perquè és anònim.");
+        }
+
+        if(u.esAdmin()){
+            if(!u.teEnquestaAdministrada(idEnquesta)){
+                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra l'enquesta amb id " + idEnquesta + " i per tant no pot esborrar respostes.");
+            }
+        }
+
+        esborrarRespostaEnquestaPrivate(idEnquesta, idEnquestat);
+        afectat.demanarEliminarRealitzada(idEnquesta);
+    }
+
+
 
     /**
      * Funcio per a realitzar clustering K-means sobre les respostes d'una enquesta
@@ -258,7 +378,7 @@ public class CtrlDomini {
      * @throws KmeansExcepcio si hi ha un error en l'algoritme K-means
      */
     ////////////////////// Cas d'us - clustering //////////////////////
-    public Map<Integer, Integer> clustering(Integer idEnquesta, int k, int maxIterations) throws EnquestaNoExisteixException, KmeansExcepcio {
+    protected Map<Integer, Integer> clusteringPrivate(Integer idEnquesta, int k, int maxIterations) throws EnquestaNoExisteixException, KmeansExcepcio {
         Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
             throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
@@ -273,7 +393,6 @@ public class CtrlDomini {
         int n = enq.getNumRespostes();
 
         Object[] idArray = respostesPregunta0.keySet().toArray();
-        //idUsuari a label
         for (int i = 0; i < n; i++) {
             int idUsuari = (int) idArray[i];
             resultat.put(idUsuari, labels[i]);
@@ -281,8 +400,32 @@ public class CtrlDomini {
         return resultat;
     }
 
-    
+    public Map<Integer, Integer> clustering(int idUsuari, Integer idEnquesta, int k, int maxIterations) throws EnquestaNoExisteixException, KmeansExcepcio {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
 
+        if(u.getId() < 0){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no pot realitzar clustering perquè és anònim.");
+        }
+
+        if(u.esEnquestat()){
+            if(!u.teEnquestaRealitzada(idEnquesta)){
+                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no ha realitzat l'enquesta amb id " + idEnquesta + " i per tant no pot realitzar clustering.");
+            }
+        }
+        else if(u.esEnquestador()){
+            if(!u.teEnquestaAssignada(idEnquesta)){
+                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té assignada l'enquesta amb id " + idEnquesta + " i per tant no pot realitzar clustering.");
+            }
+        }
+
+        else if(u.esAdmin()){
+            if(!u.teEnquestaAdministrada(idEnquesta) && !u.teEnquestaRealitzada(idEnquesta)){
+                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra ni ha realitzat l'enquesta amb id " + idEnquesta + " i per tant no pot realitzar clustering.");
+            }
+        }
+
+        return clusteringPrivate(idEnquesta, k, maxIterations);
+    }
 
     //////////////////// Funciones para debug ///////////////////////////////
     /**

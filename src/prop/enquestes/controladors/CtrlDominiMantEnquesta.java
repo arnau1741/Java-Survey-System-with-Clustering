@@ -87,6 +87,9 @@ public class CtrlDominiMantEnquesta {
      */
     public Enquesta getEnquesta(int idEnquesta) {
         Enquesta enq = enquestes.get(idEnquesta);
+        if(enq == null) {
+            throw new NoSuchElementException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
         return enq;
     }
 
@@ -283,5 +286,12 @@ public class CtrlDominiMantEnquesta {
             titols.add(e.getTitol());
         }
         return titols;
+    }
+
+    public Enquesta getUltimaEnquestaCreada() {
+        if(!enquestes.isEmpty()) {
+            return enquestes.get(ultimIdEnquesta - 1);
+        }
+        return null;
     }
 }
