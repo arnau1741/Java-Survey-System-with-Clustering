@@ -9,12 +9,16 @@ public class Usuari {
     private String email;
     private boolean blocked;
 
+    //enquestador
     private List<Enquesta> enquestesAssignades;
 
+    //admin i enquestat
     private List<Enquesta> enquestesRealitzades;
 
+    //admin
     private List<Enquesta> enquestesAdministrades;
 
+    //moderador
     private List<Enquesta> enquestesModerades;
 
     private UsuariState rol;
@@ -160,64 +164,80 @@ public class Usuari {
      * Afegeix una enquesta a les enquestes assignades de l'usuari enquestador
      * @param enquesta
      */
-    void afegirEnquestaAssignada(Enquesta enquesta) {enquestesAssignades.add(enquesta);}
+    protected void afegirEnquestaAssignada(Enquesta enquesta) {enquestesAssignades.add(enquesta);}
 
     /**
      * Afegeix una enquesta a les enquestes realitzades de l'usuari enquestat
      * @param enquesta
      */
-    void afegirEnquestaRealitzada(Enquesta enquesta) {enquestesRealitzades.add(enquesta);}
+    protected void afegirEnquestaRealitzada(Enquesta enquesta) {enquestesRealitzades.add(enquesta);}
 
     /**
      * Afegeix una enquesta a les enquestes administrades de l'usuari administrador
      * @param enquesta
      */
-    void afegirEnquestaAdministrada(Enquesta enquesta) {enquestesAdministrades.add(enquesta);}
+    protected void afegirEnquestaAdministrada(Enquesta enquesta) {enquestesAdministrades.add(enquesta);}
 
     /**
      * Afegeix una enquesta a les enquestes moderades de l'usuari moderador
      * @param enquesta
      */
-    void afegirEnquestaModerada(Enquesta enquesta) {enquestesModerades.add(enquesta);}
+    protected void afegirEnquestaModerada(Enquesta enquesta) {enquestesModerades.add(enquesta);}
+
+    public void checkAfegirEnquestaRealitzada(Enquesta e){
+        rol.afegirEnquestaRealitzada(this, e);
+    }
+
+    public void checkAfegirEnquestaAssignada(Enquesta e){
+        rol.afegirEnquestaAssignada(this, e);
+    }
+
+    public void checkAfegirEnquestaAdministrada(Enquesta e){
+        rol.afegirEnquestaAdministrada(this, e);
+    }
+
+    public void checkAfegirEnquestaModerada(Enquesta e){
+        rol.afegirEnquestaModerada(this, e);
+    }
 
     /**
      * Elimina una enquesta de les enquestes assignades de l'usuari enquestador
      * @param idEnquesta
      */
-    void eliminarEnquestaAssignada(int idEnquesta) {enquestesAssignades.removeIf(e -> e.getId() == idEnquesta);}
+    protected void eliminarEnquestaAssignada(int idEnquesta) {enquestesAssignades.removeIf(e -> e.getId() == idEnquesta);}
 
     /**
      * Elimina una enquesta de les enquestes realitzades de l'usuari enquestat
      * @param idEnquesta
      */
-    void eliminarEnquestaRealitzada(int idEnquesta) {enquestesRealitzades.removeIf(e -> e.getId() == idEnquesta);}
+    protected void eliminarEnquestaRealitzada(int idEnquesta) {enquestesRealitzades.removeIf(e -> e.getId() == idEnquesta);}
 
     /**
      * Elimina una enquesta de les enquestes administrades de l'usuari administrador
      * @param idEnquesta
      */
-    void eliminarEnquestaAdministrada(int idEnquesta) {enquestesAdministrades.removeIf(e -> e.getId() == idEnquesta);}
+    protected void eliminarEnquestaAdministrada(int idEnquesta) {enquestesAdministrades.removeIf(e -> e.getId() == idEnquesta);}
 
     /**
      * Elimina una enquesta de les enquestes moderades de l'usuari moderador
      * @param idEnquesta
      */
-    void eliminarEnquestaModerada(int idEnquesta) {enquestesModerades.removeIf(e -> e.getId() == idEnquesta);}
+    protected void eliminarEnquestaModerada(int idEnquesta) {enquestesModerades.removeIf(e -> e.getId() == idEnquesta);}
 
-    /**
-     * Elimina una enquesta de les enquestes de l'usuari segons el seu rol
-     * @param idEnquesta
-     */
-    public void eliminarEnquesta(int idEnquesta){
-        rol.eliminarEnquesta(this, idEnquesta);
+    public void demanarEliminarAssignada(int idEnquesta){
+        rol.eliminarEnquestaAssignada(this, idEnquesta);
     }
 
-    /**
-     * Afegeix una enquesta a les enquestes de l'usuari segons el seu rol
-     * @param e enquesta
-     */
-    public void afegirEnquesta(Enquesta e) {
-        rol.afegirEnquesta(this, e);
+    public void demanarEliminarRealitzada(int idEnquesta){
+        rol.eliminarEnquestaRealitzada(this, idEnquesta);
+    }
+
+    public void demanarEliminarAdministrada(int idEnquesta){
+        rol.eliminarEnquestaAdministrada(this, idEnquesta);
+    }
+
+    public void demanarEliminarModerada(int idEnquesta){
+        rol.eliminarEnquestaModerada(this, idEnquesta);
     }
 
     /**
@@ -225,7 +245,7 @@ public class Usuari {
      * @param idEnquesta
      * @return true si l'enquesta esta assignada, false en cas contrari
      */
-    boolean enquestaAssignada(int idEnquesta) {
+    protected boolean enquestaAssignada(int idEnquesta) {
         for (Enquesta enquesta : enquestesAssignades) {
             if (enquesta.getId() == idEnquesta) {
                 return true;
@@ -239,7 +259,7 @@ public class Usuari {
      * @param idEnquesta
      * @return true si l'enquesta ha estat realitzada, false en cas contrari
      */
-    boolean haRealitzatEnquesta(int idEnquesta) {
+    protected boolean haRealitzatEnquesta(int idEnquesta) {
         for (Enquesta enquesta : enquestesRealitzades) {
             if (enquesta.getId() == idEnquesta) {
                 return true;
@@ -253,7 +273,7 @@ public class Usuari {
      * @param idEnquesta
      * @return true si l'enquesta esta administrada, false en cas contrari
      */
-    boolean enquestaAdministrada(int idEnquesta) {
+    protected boolean enquestaAdministrada(int idEnquesta) {
         for (Enquesta enquesta : enquestesAdministrades) {
             if (enquesta.getId() == idEnquesta) {
                 return true;
@@ -267,7 +287,7 @@ public class Usuari {
      * @param idEnquesta
      * @return true si l'enquesta esta moderada, false en cas contrari
      */
-    boolean enquestaModerada(int idEnquesta) {
+    protected boolean enquestaModerada(int idEnquesta) {
         for (Enquesta enquesta : enquestesModerades) {
             if (enquesta.getId() == idEnquesta) {
                 return true;
@@ -276,13 +296,20 @@ public class Usuari {
         return false;
     }
 
-    /**
-     * Comprova si una enquesta esta associada a l'usuari segons el seu rol
-     * @param idEnquesta
-     * @return true si l'enquesta esta associada, false en cas contrari
-     */
-    public boolean teEnquesta(int idEnquesta){
-        return rol.teEnquesta(this, idEnquesta);
+    public boolean demanarEnquestaAssignada(int idEnquesta){
+        return rol.enquestaAssignada(this, idEnquesta);
+    }
+
+    public boolean demanarEnquestaAdministrada(int idEnquesta){
+        return rol.enquestaAdministrada(this, idEnquesta);
+    }
+
+    public boolean demanarEnquestaRealitzada(int idEnquesta){
+        return rol.enquestaRealitzada(this, idEnquesta);
+    }
+
+    public boolean demanarEnquestaModerada(int idEnquesta){
+        return rol.enquestaModerada(this, idEnquesta);
     }
 
     public boolean esAdmin(){

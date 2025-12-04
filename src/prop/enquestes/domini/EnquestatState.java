@@ -23,18 +23,48 @@ public class EnquestatState extends UsuariState {
     }
 
     @Override
-    public void eliminarEnquesta(Usuari contexto, int idEnquesta) {
-        contexto.eliminarEnquestaRealitzada(idEnquesta);
-    }
-
-    @Override
-    public void afegirEnquesta(Usuari contexto, Enquesta e) {
+    public void afegirEnquestaRealitzada(Usuari contexto, Enquesta e) {
         contexto.afegirEnquestaRealitzada(e);
     }
 
     @Override
-    public boolean teEnquesta(Usuari usuari, int idEnquesta) {
-        return usuari.haRealitzatEnquesta(idEnquesta);
+    public void afegirEnquestaAssignada(Usuari usuari, Enquesta e) {
+        //no fa res
+    }
+
+    @Override
+    public void afegirEnquestaAdministrada(Usuari usuari, Enquesta e) {
+        //no fa res
+    }
+
+    @Override
+    public void afegirEnquestaModerada(Usuari usuari, Enquesta e) {
+        //no fa res
+    }
+
+    @Override
+    public void eliminarEnquestaRealitzada(Usuari contexto, int idEnquesta) {
+        contexto.eliminarEnquestaRealitzada(idEnquesta);
+    }
+
+    @Override
+    public void eliminarEnquestaAdministrada(Usuari usuari, int idEnquesta) {
+        //no fa res
+    }
+
+    @Override
+    public void eliminarEnquestaModerada(Usuari usuari, int idEnquesta) {
+        //no fa res
+    }
+
+    @Override
+    public void eliminarEnquestaAssignada(Usuari usuari, int idEnquesta) {
+        //no fa res
+    }
+
+    @Override
+    public boolean enquestaRealitzada(Usuari contexto, int idEnquesta){
+        return contexto.haRealitzatEnquesta(idEnquesta);
     }
 
     @Override

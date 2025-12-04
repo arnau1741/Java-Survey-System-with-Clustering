@@ -11,32 +11,51 @@ public abstract class UsuariState {
 
     public abstract void cambiarARolEnquestat(Usuari u);
 
-    public abstract void eliminarEnquesta(Usuari contexto, int idEnquesta);
+    public abstract void eliminarEnquestaAssignada(Usuari usuari, int idEnquesta);
 
-    public abstract void afegirEnquesta(Usuari contexto, Enquesta e);
+    public abstract void eliminarEnquestaRealitzada(Usuari usuari, int idEnquesta);
 
-    public boolean teEnquesta(Usuari usuari, int idEnquesta) {
-        // False per defecte els estats sobreescriuen aixo
-        return false;
-    }
+    public abstract void eliminarEnquestaAdministrada(Usuari usuari, int idEnquesta);
+
+    public abstract void eliminarEnquestaModerada(Usuari usuari, int idEnquesta);
+
+    public abstract void afegirEnquestaRealitzada(Usuari usuari, Enquesta e);
+
+    public abstract void afegirEnquestaAssignada(Usuari usuari, Enquesta e);
+
+    public abstract void afegirEnquestaAdministrada(Usuari usuari, Enquesta e);
+
+    public abstract void afegirEnquestaModerada(Usuari usuari, Enquesta e);
 
     public boolean esAdmin() {
-        // False per defecte els estats sobreescriuen aixo
         return false;
     }
 
     public boolean esEnquestador() {
-        // False per defecte els estats sobreescriuen aixo
         return false;
     }
 
     public boolean esEnquestat() {
-        // False per defecte els estats sobreescriuen aixo
         return false;
     }
 
     public boolean esModerador() {
-        // False per defecte els estats sobreescriuen aixo
+        return false;
+    }
+
+    public boolean enquestaAssignada(Usuari usuari, int idEnquesta) {
+        return false;
+    }
+
+    public boolean enquestaAdministrada(Usuari usuari, int idEnquesta) {
+        return false;
+    }
+
+    public boolean enquestaRealitzada(Usuari usuari, int idEnquesta) {
+        return false;
+    }
+
+    public boolean enquestaModerada(Usuari usuari, int idEnquesta) {
         return false;
     }
 }
