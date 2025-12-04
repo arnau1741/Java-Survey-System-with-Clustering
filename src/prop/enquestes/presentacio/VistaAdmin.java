@@ -15,7 +15,7 @@ public class VistaAdmin extends JFrame {
     private JButton importarEnquestaButton = new JButton("Importar Enquesta");
     private JButton exportarEnquestaButton = new JButton("Exportar Enquesta");
     private JButton consultarUsuariButton  = new JButton("Consultar Usuari");
-    private JButton enquestesRealitzadesButton = new JButton("Enquestes realitzades");
+    private JButton enquestesRealitzadesButton = new JButton("Enquestes Realitzades");
     private JButton enquestesAdministradesButton = new JButton("Enquestes Administrades");
     private JButton consultarRecomanacionsButton = new JButton("Consultar Recomanacions");
     private JButton sortirButton = new JButton("Sortir");
