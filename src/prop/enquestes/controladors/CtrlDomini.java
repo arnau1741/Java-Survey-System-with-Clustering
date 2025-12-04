@@ -196,7 +196,6 @@ public class CtrlDomini {
 
     /**
      * Funcio per a importar respostes d'un fitxer
-     * @param idUsuari identificador de l'usuari que importa les respostes
      * @param path origen del fitxer
      * @param idEnquesta identificador de l'enquesta
      * @return nombre de respostes importades, -1 si hi ha un error llegint el fitxer, -2 si l'enquesta no existeix
@@ -206,7 +205,7 @@ public class CtrlDomini {
     /// RESPUESTAj = (resp1, resp2,... respn)
     //corregir la logica de importar respuestas, tener en cuenta la funcion en pregunta que tenia el -1 y ahora idUsuari
     //añadir tambien en la publica los añadirRealitzada si lo que me dicen por whatsapp es correcto
-    protected int importarRespostesPrivate(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+    protected int importarRespostesPrivate(String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         // llegir fitxer
         List<String> respostesTxt = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -235,7 +234,7 @@ public class CtrlDomini {
             respostesUsuari.add(respostesTxt.get(i));
             if (i%numPreguntes == 0) {
                 // afegim la resposta a l'enquesta
-                enq.afegeixResposta(idUsuari, respostesUsuari);
+                enq.afegeixResposta(-1, respostesUsuari);
                 respostesUsuari.clear();
             }
         }
@@ -262,7 +261,7 @@ public class CtrlDomini {
                 throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té assignada l'enquesta amb id " + idEnquesta + " i per tant no pot importar respostes.");
             }
         }
-        return importarRespostesPrivate(idUsuari, path, idEnquesta);
+        return importarRespostesPrivate(path, idEnquesta);
     }
 
     //ES LA ULTIMA QUE HARÉ PARA ADAPTAR EL PATRON ESTADO
