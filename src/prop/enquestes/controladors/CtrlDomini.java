@@ -117,9 +117,9 @@ public class CtrlDomini {
 
         Enquesta enq = ctrlDominiMantEnquesta.getUltimaEnquestaCreada();
 
+        u.cambiarARolAdmin();
         u.demanarAfegirEnquestaAdministrada(enq);
 
-        u.cambiarARolAdmin();
     }
 
     /**
@@ -204,6 +204,8 @@ public class CtrlDomini {
     ////////////////////// Cas d'us - Importar respostes ////////////////////
     /// leer: (numPreguntas, PREGUNTA1, PREGUNTA2, ...PREGUNTAn, RESPUESTA1, RESPUESTA2, ... RESPUESTAm)
     /// RESPUESTAj = (resp1, resp2,... respn)
+    //corregir la logica de importar respuestas, tener en cuenta la funcion en pregunta que tenia el -1 y ahora idUsuari
+    //añadir tambien en la publica los añadirRealitzada si lo que me dicen por whatsapp es correcto
     protected int importarRespostesPrivate(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         // llegir fitxer
         List<String> respostesTxt = new ArrayList<>();
@@ -250,21 +252,15 @@ public class CtrlDomini {
             throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no pot importar respostes perquè és anònim.");
         }
 
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-
         if(u.esAdmin()){
             if(!u.teEnquestaAdministrada(idEnquesta)){
                 throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra l'enquesta amb id " + idEnquesta + " i per tant no pot importar respostes.");
             }
-            u.demanarAfegirEnquestaRealitzada(enq);
         }
         else if(u.esEnquestador()){
             if(!u.teEnquestaAssignada(idEnquesta)){
                 throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té assignada l'enquesta amb id " + idEnquesta + " i per tant no pot importar respostes.");
             }
-            //considerar que participa ya que se añade al map el idUsuari
-            u.demanarAfegirEnquestaRealitzada(enq);
-
         }
         return importarRespostesPrivate(idUsuari, path, idEnquesta);
     }
