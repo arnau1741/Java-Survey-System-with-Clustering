@@ -36,6 +36,7 @@ public class Usuari {
         this.enquestesAdministrades = new ArrayList<>();
         this.enquestesAssignades = new ArrayList<>();
         this.enquestesRealitzades = new ArrayList<>();
+        this.enquestesModerades = new ArrayList<>();
         this.rol = rol;
     }
 
@@ -159,49 +160,49 @@ public class Usuari {
      * Afegeix una enquesta a les enquestes assignades de l'usuari enquestador
      * @param enquesta
      */
-    public void afegirEnquestaAssignada(Enquesta enquesta) {enquestesAssignades.add(enquesta);}
+    void afegirEnquestaAssignada(Enquesta enquesta) {enquestesAssignades.add(enquesta);}
 
     /**
      * Afegeix una enquesta a les enquestes realitzades de l'usuari enquestat
      * @param enquesta
      */
-    public void afegirEnquestaRealitzada(Enquesta enquesta) {enquestesRealitzades.add(enquesta);}
+    void afegirEnquestaRealitzada(Enquesta enquesta) {enquestesRealitzades.add(enquesta);}
 
     /**
      * Afegeix una enquesta a les enquestes administrades de l'usuari administrador
      * @param enquesta
      */
-    public void afegirEnquestaAdministrada(Enquesta enquesta) {enquestesAdministrades.add(enquesta);}
+    void afegirEnquestaAdministrada(Enquesta enquesta) {enquestesAdministrades.add(enquesta);}
 
     /**
      * Afegeix una enquesta a les enquestes moderades de l'usuari moderador
      * @param enquesta
      */
-    public void afegirEnquestaModerada(Enquesta enquesta) {enquestesModerades.add(enquesta);}
+    void afegirEnquestaModerada(Enquesta enquesta) {enquestesModerades.add(enquesta);}
 
     /**
      * Elimina una enquesta de les enquestes assignades de l'usuari enquestador
      * @param idEnquesta
      */
-    public void eliminarEnquestaAssignada(int idEnquesta) {enquestesAssignades.removeIf(e -> e.getId() == idEnquesta);}
+    void eliminarEnquestaAssignada(int idEnquesta) {enquestesAssignades.removeIf(e -> e.getId() == idEnquesta);}
 
     /**
      * Elimina una enquesta de les enquestes realitzades de l'usuari enquestat
      * @param idEnquesta
      */
-    public void eliminarEnquestaRealitzada(int idEnquesta) {enquestesRealitzades.removeIf(e -> e.getId() == idEnquesta);}
+    void eliminarEnquestaRealitzada(int idEnquesta) {enquestesRealitzades.removeIf(e -> e.getId() == idEnquesta);}
 
     /**
      * Elimina una enquesta de les enquestes administrades de l'usuari administrador
      * @param idEnquesta
      */
-    public void eliminarEnquestaAdministrada(int idEnquesta) {enquestesAdministrades.removeIf(e -> e.getId() == idEnquesta);}
+    void eliminarEnquestaAdministrada(int idEnquesta) {enquestesAdministrades.removeIf(e -> e.getId() == idEnquesta);}
 
     /**
      * Elimina una enquesta de les enquestes moderades de l'usuari moderador
      * @param idEnquesta
      */
-    public void eliminarEnquestaModerada(int idEnquesta) {enquestesModerades.removeIf(e -> e.getId() == idEnquesta);}
+    void eliminarEnquestaModerada(int idEnquesta) {enquestesModerades.removeIf(e -> e.getId() == idEnquesta);}
 
     /**
      * Elimina una enquesta de les enquestes de l'usuari segons el seu rol
@@ -224,7 +225,7 @@ public class Usuari {
      * @param idEnquesta
      * @return true si l'enquesta esta assignada, false en cas contrari
      */
-    public boolean enquestaAssignada(int idEnquesta) {
+    boolean enquestaAssignada(int idEnquesta) {
         for (Enquesta enquesta : enquestesAssignades) {
             if (enquesta.getId() == idEnquesta) {
                 return true;
@@ -238,7 +239,7 @@ public class Usuari {
      * @param idEnquesta
      * @return true si l'enquesta ha estat realitzada, false en cas contrari
      */
-    public boolean haRealitzatEnquesta(int idEnquesta) {
+    boolean haRealitzatEnquesta(int idEnquesta) {
         for (Enquesta enquesta : enquestesRealitzades) {
             if (enquesta.getId() == idEnquesta) {
                 return true;
@@ -252,7 +253,7 @@ public class Usuari {
      * @param idEnquesta
      * @return true si l'enquesta esta administrada, false en cas contrari
      */
-    public boolean enquestaAdministrada(int idEnquesta) {
+    boolean enquestaAdministrada(int idEnquesta) {
         for (Enquesta enquesta : enquestesAdministrades) {
             if (enquesta.getId() == idEnquesta) {
                 return true;
@@ -266,7 +267,7 @@ public class Usuari {
      * @param idEnquesta
      * @return true si l'enquesta esta moderada, false en cas contrari
      */
-    public boolean enquestaModerada(int idEnquesta) {
+    boolean enquestaModerada(int idEnquesta) {
         for (Enquesta enquesta : enquestesModerades) {
             if (enquesta.getId() == idEnquesta) {
                 return true;
