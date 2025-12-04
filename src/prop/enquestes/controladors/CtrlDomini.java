@@ -11,6 +11,7 @@ import prop.enquestes.excepcions.InvalidFormatEnquesta;
 import prop.enquestes.excepcions.InvalidFormatResposta;
 import prop.enquestes.excepcions.KmeansExcepcio;
 import prop.enquestes.excepcions.UsuariNoHaResposEnquesta;
+import prop.enquestes.persistencia.CtrlPersistencia;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,6 +21,7 @@ public class CtrlDomini {
     // crear els controladors de domini
     private CtrlDominiMantEnquesta ctrlDominiMantEnquesta;
     private CtrlDominiMantUsuari ctrlDominiMantUsuari;
+    private CtrlPersistencia ctrlPersistencia;
 
     /**
      * Funcio constructora de CtrlDomini
@@ -28,6 +30,10 @@ public class CtrlDomini {
     public CtrlDomini() {
         ctrlDominiMantEnquesta = new CtrlDominiMantEnquesta();
         ctrlDominiMantUsuari = new CtrlDominiMantUsuari();
+        ctrlPersistencia = new CtrlPersistencia();
+
+        ctrlDominiMantUsuari.setUsuaris(ctrlPersistencia.carregarUsuaris());
+        ctrlDominiMantEnquesta.setEnquestes(ctrlPersistencia.carregarEnquestes());
     }
 
     public CtrlDominiMantUsuari getCtrlDominiMantUsuari() {
@@ -61,6 +67,8 @@ public class CtrlDomini {
             throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         }
         enq.afegeixResposta(idUsuari,respostesUsuari);
+        ///ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
+
     }
 
     /**
@@ -73,6 +81,8 @@ public class CtrlDomini {
     /////////////////////// Cas d'us - Crear enquesta //////////////////////
     public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta { //Final
         this.ctrlDominiMantEnquesta.novaEnquesta(titol, descripcio, idCreador, preguntes);
+        ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
+
     }
 
     /**
@@ -191,6 +201,8 @@ public class CtrlDomini {
     public void eliminarEnquesta(int idUsuari, Integer idEnquesta) throws EnquestaNoExisteixException {
         // esborrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
+        ////ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
+
         // esborrar d'usuaris
         //Usuari usuari = ctrlDominiMantUsuari.getUsuari(idUsuari);
         //usuari.eliminarEnquesta(idEnquesta);
@@ -205,7 +217,9 @@ public class CtrlDomini {
      */
     //deberiamos hacer mas versiones en un futuro.
     public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
-        return ctrlDominiMantEnquesta.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
+        int r = ctrlDominiMantEnquesta.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
+        /////ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
+        return r;
     }
 
     /**
@@ -229,6 +243,7 @@ public class CtrlDomini {
             Map<Integer, Resposta> respostes = pregunta.getRespostes();
             if (respostes.containsKey(idEnquestat)) {
                 respostes.remove(idEnquestat);
+                ////ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
             }
         }
     }
@@ -398,6 +413,8 @@ public class CtrlDomini {
         /////////////////////////
         Usuari nouEnquestador = new Usuari(id, nomUsuari, contrasenya, email, rol);
         ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
+        ////Funcio per la Persistencia
+        ///ctrlPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
         return id;
         //PerfilEnquestador nouEnquestador = new PerfilEnquestador(id, nomUsuari, contrasenya, email);
         //ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
@@ -649,7 +666,7 @@ public class CtrlDomini {
             RespostaLliure r = new RespostaLliure(novaResposta);
             enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
         }
-
+        ////ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
         return 1; // Èxit
     }
 

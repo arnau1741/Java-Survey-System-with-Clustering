@@ -24,6 +24,15 @@ public class CtrlDominiMantEnquesta {
         enquestes = new HashMap<>();
     }
 
+    public void setEnquestes(Map<Integer, Enquesta> enquestes) {
+        this.enquestes = enquestes;
+        int max = -1;
+        for(Integer key : enquestes.keySet()) {
+            max = Math.max(max, key);
+        }
+        this.ultimIdEnquesta = max + 1;
+    }
+
 
     /**
      * Afegeix una enquesta a la col·lecció d'enquestes

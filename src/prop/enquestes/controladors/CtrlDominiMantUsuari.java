@@ -13,6 +13,16 @@ public class CtrlDominiMantUsuari {
         usuaris = new HashMap<>();
     }
 
+    //////////////////////////// Persistencia
+    public void setUsuaris(Map<Integer, Usuari> usuaris) {
+        this.usuaris = usuaris;
+    }
+
+    public Map<Integer, Usuari> getUsuaris() {
+        return usuaris;
+    }
+    ////////////////////////////
+
     /**
      * Afegeix un usuari al sistema
      * @param usuari a afegir
