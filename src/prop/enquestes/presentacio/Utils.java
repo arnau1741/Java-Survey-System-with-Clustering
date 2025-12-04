@@ -397,11 +397,15 @@ public class Utils {
             int id = io.readint();
             io.readline();
 
+            io.writeln("Introdueix l'ID de l'usuari que fa l'exportació: ");
+            int idUsuari = io.readint();
+            io.readline();
+
             io.write("Introdueix el fitxer on es guardar (sense extencio): ");
             String fitxer = io.readword();
             String path = Base_path + File.separator + fitxer + ".txt";
             List<String> export;
-            export = ctrl.exportarEnquesta(id);
+            export = ctrl.exportarEnquesta(idUsuari, id);
             writeAllLines(path, export);
             io.writeln("Enquesta exportada correctament a: " + path);
         }

@@ -113,7 +113,7 @@ public class CtrlDomini {
             throw new IllegalArgumentException("L'usuari amb id " + idCreador + " no pot crear enquestes perquè és anònim.");
         }
 
-        crearEnquesta(titol, descripcio, idCreador, preguntes);
+        crearEnquestaPrivate(titol, descripcio, idCreador, preguntes);
 
         Enquesta enq = ctrlDominiMantEnquesta.getUltimaEnquestaCreada();
 
