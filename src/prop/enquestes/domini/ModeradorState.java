@@ -1,15 +1,14 @@
 package prop.enquestes.domini;
 
-public class EnquestadorState extends UsuariState{
-
+public class ModeradorState extends UsuariState {
     @Override
     public String nombreRol() {
-        return "Enquestador";
+        return "Moderador";
     }
 
     @Override
     public void cambiarARolEnquestador(Usuari u) {
-        //no fa res
+        u.setRol(new EnquestadorState());
     }
 
     @Override
@@ -24,21 +23,21 @@ public class EnquestadorState extends UsuariState{
 
     @Override
     public void eliminarEnquesta(Usuari contexto, int idEnquesta) {
-        contexto.eliminarEnquestaAssignada(idEnquesta);
+        contexto.eliminarEnquestaModerada(idEnquesta);
     }
 
     @Override
     public void afegirEnquesta(Usuari contexto, Enquesta e) {
-        contexto.afegirEnquestaAssignada(e);
+        contexto.afegirEnquestaModerada(e);
     }
 
     @Override
     public boolean teEnquesta(Usuari usuari, int idEnquesta) {
-        return usuari.enquestaAssignada(idEnquesta);
+        return usuari.enquestaModerada(idEnquesta);
     }
 
     @Override
-    public boolean esEnquestador() {
+    public boolean esModerador() {
         return true;
     }
 }

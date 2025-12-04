@@ -9,13 +9,16 @@ public class Usuari {
     private String email;
     private boolean blocked;
 
-    // Atributs patro estat
     private List<Enquesta> enquestesAssignades;
+
     private List<Enquesta> enquestesRealitzades;
+
     private List<Enquesta> enquestesAdministrades;
+
+    private List<Enquesta> enquestesModerades;
+
     private UsuariState rol;
 
-    // Constructor
     /**
      * Funcio constructora de la classe Usuari
      * @param idUsuari de l'usuari
@@ -80,6 +83,12 @@ public class Usuari {
     public List<Enquesta> getEnquestesAdministrades() { return enquestesAdministrades; }
 
     /**
+     * Retorna les enquestes moderades per l'usuari moderador
+     * @return enquestesModerades
+     */
+    public List<Enquesta> getEnquestesModerades() { return enquestesModerades; }
+
+    /**
      * Retorna el rol de l'usuari
      * @return rol
      */
@@ -135,6 +144,12 @@ public class Usuari {
     public void setEnquestesAdministrades(List<Enquesta> enquestesAdministrades) {this.enquestesAdministrades = enquestesAdministrades;}
 
     /**
+     * Modifica les enquestes moderades per l'usuari moderador
+     * @param enquestesModerades
+     */
+    public void setEnquestesModerades(List<Enquesta> enquestesModerades) {this.enquestesModerades = enquestesModerades;}
+
+    /**
      * Modifica el rol de l'usuari
      * @param rol nou rol de l'usuari
      */
@@ -159,6 +174,12 @@ public class Usuari {
     public void afegirEnquestaAdministrada(Enquesta enquesta) {enquestesAdministrades.add(enquesta);}
 
     /**
+     * Afegeix una enquesta a les enquestes moderades de l'usuari moderador
+     * @param enquesta
+     */
+    public void afegirEnquestaModerada(Enquesta enquesta) {enquestesModerades.add(enquesta);}
+
+    /**
      * Elimina una enquesta de les enquestes assignades de l'usuari enquestador
      * @param idEnquesta
      */
@@ -177,22 +198,25 @@ public class Usuari {
     public void eliminarEnquestaAdministrada(int idEnquesta) {enquestesAdministrades.removeIf(e -> e.getId() == idEnquesta);}
 
     /**
+     * Elimina una enquesta de les enquestes moderades de l'usuari moderador
+     * @param idEnquesta
+     */
+    public void eliminarEnquestaModerada(int idEnquesta) {enquestesModerades.removeIf(e -> e.getId() == idEnquesta);}
+
+    /**
      * Elimina una enquesta de les enquestes de l'usuari segons el seu rol
      * @param idEnquesta
      */
     public void eliminarEnquesta(int idEnquesta){
-        if(rol instanceof AdminState) {
-            eliminarEnquestaAssignada(idEnquesta);
-            eliminarEnquestaRealitzada(idEnquesta);
-            eliminarEnquestaAdministrada(idEnquesta);
-        }
-        else if(rol instanceof EnquestadorState) {
-            eliminarEnquestaAssignada(idEnquesta);
-            eliminarEnquestaRealitzada(idEnquesta);
-        }
-        else if(rol instanceof EnquestatState) {
-            eliminarEnquestaRealitzada(idEnquesta);
-        }
+        rol.eliminarEnquesta(this, idEnquesta);
+    }
+
+    /**
+     * Afegeix una enquesta a les enquestes de l'usuari segons el seu rol
+     * @param e enquesta
+     */
+    public void afegirEnquesta(Enquesta e) {
+        rol.afegirEnquesta(this, e);
     }
 
     /**
@@ -235,5 +259,44 @@ public class Usuari {
             }
         }
         return false;
+    }
+
+    /**
+     * Comprova si una enquesta esta moderada per l'usuari moderador
+     * @param idEnquesta
+     * @return true si l'enquesta esta moderada, false en cas contrari
+     */
+    public boolean enquestaModerada(int idEnquesta) {
+        for (Enquesta enquesta : enquestesModerades) {
+            if (enquesta.getId() == idEnquesta) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Comprova si una enquesta esta associada a l'usuari segons el seu rol
+     * @param idEnquesta
+     * @return true si l'enquesta esta associada, false en cas contrari
+     */
+    public boolean teEnquesta(int idEnquesta){
+        return rol.teEnquesta(this, idEnquesta);
+    }
+
+    public boolean esAdmin(){
+        return rol.esAdmin();
+    }
+
+    public boolean esModerador(){
+        return rol.esModerador();
+    }
+
+    public boolean esEnquestador(){
+        return rol.esEnquestador();
+    }
+
+    public boolean esEnquestat(){
+        return rol.esEnquestat();
     }
 }
