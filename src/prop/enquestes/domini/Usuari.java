@@ -296,19 +296,19 @@ public class Usuari {
         return false;
     }
 
-    public boolean demanarEnquestaAssignada(int idEnquesta){
+    public boolean teEnquestaAssignada(int idEnquesta){
         return rol.enquestaAssignada(this, idEnquesta);
     }
 
-    public boolean demanarEnquestaAdministrada(int idEnquesta){
+    public boolean teEnquestaAdministrada(int idEnquesta){
         return rol.enquestaAdministrada(this, idEnquesta);
     }
 
-    public boolean demanarEnquestaRealitzada(int idEnquesta){
+    public boolean teEnquestaRealitzada(int idEnquesta){
         return rol.enquestaRealitzada(this, idEnquesta);
     }
 
-    public boolean demanarEnquestaModerada(int idEnquesta){
+    public boolean teEnquestaModerada(int idEnquesta){
         return rol.enquestaModerada(this, idEnquesta);
     }
 
