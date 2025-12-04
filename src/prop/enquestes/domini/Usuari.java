@@ -158,7 +158,19 @@ public class Usuari {
      * Modifica el rol de l'usuari
      * @param rol nou rol de l'usuari
      */
-    public void setRol(UsuariState rol) { this.rol = rol; }
+    protected void setRol(UsuariState rol) { this.rol = rol; }
+
+    public void cambiarARolEnquestador(){
+        rol.cambiarARolEnquestador(this);
+    }
+
+    public void cambiarARolAdmin(){
+        rol.cambiarARolAdmin(this);
+    }
+
+    public void cambiarARolEnquestat(){
+        rol.cambiarARolEnquestat(this);
+    }
 
     /**
      * Afegeix una enquesta a les enquestes assignades de l'usuari enquestador
