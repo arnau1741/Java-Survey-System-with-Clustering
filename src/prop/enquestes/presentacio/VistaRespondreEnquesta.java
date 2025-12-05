@@ -1,21 +1,39 @@
 package prop.enquestes.presentacio;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class VistaRespondreEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
-    private int idCreador;
+    private int idUsuari;
+    private int idEnquestaActual = -1;
 
     private JPanel contentPane;
-    private JButton buttonOK = new JButton();
-    private JButton buttonCancel = new JButton();
-    private JComboBox comboEnquestes = new JComboBox();
+    private JComboBox<String> comboEnquestes;
+    private JLabel labelIdActual;
+    private JButton buttonMostrarInfo;
+    private JTextArea areaInfo;
+    private JButton buttonOK = new JButton("OK");
+    private JButton buttonCancel = new JButton("Cancel");
 
-    public VistaRespondreEnquesta() {
+    private JTextArea areaPreguntas;
+    private JTextField respuesta;
+    private JButton buttonAfegirResposta;
+    private JButton buttonCerrar;
+
+    public VistaRespondreEnquesta(CtrlPresentacio ctrl, int idUsuari) {
+        this.ctrl = ctrl;
+        this.idUsuari = idUsuari;
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+
+        inicializarComponentes();
+        cargarEnquestes();
+        configurarListeners();
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -45,8 +63,189 @@ public class VistaRespondreEnquesta extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    private void inicializarComponentes() {
+        contentPane = new JPanel(new BorderLayout(5, 5));
+        contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Panel principal con scroll
+        JPanel panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane(panelPrincipal);
+        scrollPane.setBorder(null);
+
+        // ========== SECCIÓN 1: Selección de Enquesta ==========
+        JPanel panelSeleccion = new JPanel(new BorderLayout(5, 5));
+        panelSeleccion.setBorder(BorderFactory.createTitledBorder("Selecció d'Enquesta"));
+
+        // Panel superior
+        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        panelSuperior.add(new JLabel("Enquesta:"));
+
+        comboEnquestes = new JComboBox<>();
+        comboEnquestes.setPreferredSize(new Dimension(250, 25));
+        panelSuperior.add(comboEnquestes);
+
+        labelIdActual = new JLabel("ID: --");
+        labelIdActual.setFont(labelIdActual.getFont().deriveFont(Font.BOLD));
+        labelIdActual.setForeground(Color.BLUE);
+        panelSuperior.add(labelIdActual);
+
+        panelSuperior.add(Box.createHorizontalStrut(10));
+
+        buttonMostrarInfo = new JButton("Mostrar");
+        buttonMostrarInfo.setPreferredSize(new Dimension(100, 25));
+        panelSuperior.add(buttonMostrarInfo);
+
+        panelSeleccion.add(panelSuperior, BorderLayout.NORTH);
+
+        // Área de información
+        areaInfo = new JTextArea(6, 50);
+        areaInfo.setEditable(false);
+        areaInfo.setFont(new Font("Monospaced", Font.PLAIN, 11));
+        JScrollPane scrollInfo = new JScrollPane(areaInfo);
+        scrollInfo.setPreferredSize(new Dimension(650, 120));
+        panelSeleccion.add(scrollInfo, BorderLayout.CENTER);
+
+        panelPrincipal.add(panelSeleccion);
+        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
+
+
+        // ========== SECCIÓN 2: Responder Encuesta ==========
+        JPanel panelPreguntas = new JPanel();
+        panelPreguntas.setLayout(new BoxLayout(panelPreguntas, BoxLayout.Y_AXIS));
+        panelPreguntas.setBorder(BorderFactory.createTitledBorder("Respon la pregunta"));
+
+        // Texto pregunta
+        JPanel panelTexto = new JPanel(new BorderLayout(2, 2));
+        panelTexto.add(new JLabel("Pregunta de l'enquesta:"), BorderLayout.NORTH);
+        areaPreguntas = new JTextArea(2, 40);
+        areaPreguntas.setEditable(false);
+        JScrollPane scrollTexto = new JScrollPane(areaPreguntas);
+        scrollTexto.setPreferredSize(new Dimension(600, 60));
+        panelTexto.add(scrollTexto, BorderLayout.CENTER);
+        panelPreguntas.add(panelTexto);
+        panelPreguntas.add(Box.createRigidArea(new Dimension(0, 5)));
+
+        // Respuesta
+        JPanel panelResposta = new JPanel(new BorderLayout(2, 2));
+        panelResposta.add(new JLabel("Respon:"), BorderLayout.NORTH);
+        respuesta = new JTextField();
+        JScrollPane scrollOpciones = new JScrollPane(respuesta);
+        scrollOpciones.setPreferredSize(new Dimension(600, 60));
+        panelResposta.add(scrollOpciones, BorderLayout.CENTER);
+        panelPreguntas.add(panelResposta);
+        panelPreguntas.add(Box.createRigidArea(new Dimension(0, 5)));
+
+        // Botón
+        buttonAfegirResposta = new JButton("Afegir Resposta");
+        buttonAfegirResposta.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelPreguntas.add(buttonAfegirResposta);
+
+        panelPrincipal.add(panelPreguntas);
+        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
+
+
+        // ========== BOTÓN CERRAR ==========
+        JPanel panelCerrar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonCerrar = new JButton("Tancar");
+        buttonCerrar.addActionListener(e -> dispose());
+        panelCerrar.add(buttonCerrar);
+
+        panelPrincipal.add(panelCerrar);
+
+        contentPane.add(scrollPane, BorderLayout.CENTER);
+    }
+
+    private void cargarEnquestes() {
+        comboEnquestes.removeAllItems();
+        comboEnquestes.addItem("-- Selecciona --");
+
+        try {
+            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
+            for (String info : enquestasInfo) {
+                // Buscamos la línea exacta que empieza por "ID:"
+                String[] lineas = info.split("\n");
+                for (String linea : lineas) {
+                    if (linea.trim().startsWith("ID:")) {
+                        comboEnquestes.addItem(linea); // SOLO esta línea
+                        break; // Muy importante
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Puedes ignorarlo
+        }
+    }
+
+    private void configurarListeners() {
+        buttonMostrarInfo.addActionListener(e -> mostrarInfoEnquesta());
+
+        comboEnquestes.addActionListener(e -> {
+            String seleccionado = (String) comboEnquestes.getSelectedItem();
+            if (seleccionado != null && !seleccionado.equals("-- Selecciona --")) {
+                try {
+                    idEnquestaActual = extraerIdEnquesta(seleccionado);
+                    labelIdActual.setText("ID: " + idEnquestaActual);
+                    mostrarInfoEnquesta();
+                } catch (Exception ex) {
+                    idEnquestaActual = -1;
+                    labelIdActual.setText("ID: --");
+                    areaInfo.setText("");
+                }
+            } else {
+                idEnquestaActual = -1;
+                labelIdActual.setText("ID: --");
+                areaInfo.setText("");
+            }
+        });
+    }
+
+    private void mostrarInfoEnquesta() {
+        if (idEnquestaActual == -1) {
+            areaInfo.setText("");
+            JOptionPane.showMessageDialog(this,
+                    "Selecciona una enquesta",
+                    "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            List<String> infoCompleta = ctrl.obtenirPreguntesEnquesta(idEnquestaActual);
+
+            StringBuilder sb = new StringBuilder();
+            for (String linea : infoCompleta) {
+                sb.append(linea).append("\n");
+            }
+
+            areaInfo.setText(sb.toString());
+
+        } catch (Exception e) {
+            areaInfo.setText("Error: " + e.getMessage());
+        }
+    }
+
+    private int extraerIdEnquesta(String texto) {
+        try {
+            // Formato esperado: "ID: X - ..."
+            int idxID = texto.indexOf("ID:");
+            if (idxID == -1) throw new RuntimeException("Format invalid");
+
+            int idxDosPunts = texto.indexOf(':', idxID);
+            int idxGuio = texto.indexOf('-', idxDosPunts);
+
+            String idStr = texto.substring(idxDosPunts + 1, idxGuio).trim();
+            return Integer.parseInt(idStr);
+
+        } catch (Exception e) {
+            throw new RuntimeException("No s'ha pogut extreure l'ID de: " + texto);
+        }
+    }
+
+    // get preguntas
+
     private void onOK() {
         // add your code here
+        // llamar control presentacion para obtener las preguntas
         dispose();
     }
 

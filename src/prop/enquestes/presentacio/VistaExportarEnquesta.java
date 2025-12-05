@@ -109,7 +109,7 @@ public class VistaExportarEnquesta extends JDialog {
         int res = chooser.showSaveDialog(this);
         if (res != JFileChooser.APPROVE_OPTION) return;
 
-        String path = chooser.getSelectedFile().getAbsolutePath();
+        String path = chooser.getSelectedFile().getAbsolutePath(); // mirar importar (hacer lo mismo)
 
         try {
             List<String> contingut = ctrl.exportarEnquesta(idUsuari, idEnquesta);

@@ -30,6 +30,7 @@ public class CtrlPresentacio {
     private VistaImportarEnquesta vistaImportarEnquesta;
     private VistaExportarEnquesta vistaExportarEnquesta;
     private VistaEnquestesExtresAdmin vistaEnquestesExtresAdmin;
+    private VistaRespondreEnquesta vistaRespondreEnquesta;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -120,6 +121,11 @@ public class CtrlPresentacio {
     public void mostrarEnquestesExtra(String nomEnquesta, int idUsuari) {
         vistaEnquestesExtresAdmin = new VistaEnquestesExtresAdmin(this, nomEnquesta, idUsuari);
         vistaEnquestesExtresAdmin.setVisible(true);
+    }
+
+    public void mostrarRespondreEnquesta(int idUsuari) {
+        vistaRespondreEnquesta = new VistaRespondreEnquesta(this, idUsuari);
+        vistaRespondreEnquesta.setVisible(true);
     }
 
     // ======================

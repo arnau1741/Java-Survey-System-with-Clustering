@@ -80,6 +80,9 @@ public class VistaEnquestesExtresAdmin extends JFrame {
         consultarRecomanacionsButton.addActionListener(e -> {
             ctrl.mostrarConsultarRecomanacions();
         });
+        respondreEnquestaButton.addActionListener(e -> {;
+            ctrl.mostrarRespondreEnquesta(idUsuari);
+        });
 
     }
 }
