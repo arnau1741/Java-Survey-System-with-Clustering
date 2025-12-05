@@ -1,20 +1,25 @@
 package prop.enquestes.domini;
 
-public class EnquestadorState extends UsuariState{
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-    @Override
-    public String nombreRol() {
-        return "Enquestador";
+public class EnquestadorState extends UsuariState {
+    private Map<Integer, Enquesta> enquestesAssignades;
+
+    public EnquestadorState() {
+        this.enquestesAssignades = new HashMap<>();
     }
 
     @Override
-    public void cambiarARolEnquestador(Usuari u) {
-        //no fa res
-    }
+    public String nombreRol() { return "Enquestador"; }
+
+    @Override
+    public void cambiarARolEnquestador(Usuari u) {}
 
     @Override
     public void cambiarARolAdmin(Usuari u) {
-        u.setRol(new AdminState());
+        u.setRol(new AdminState(null));
     }
 
     @Override
@@ -23,42 +28,36 @@ public class EnquestadorState extends UsuariState{
     }
 
     @Override
-    public void afegirEnquestaAssignada(Usuari contexto, Enquesta e) {
-        contexto.afegirEnquestaAssignada(e);
+    public void cambiarARolModerador(Usuari u) {
+        u.setRol(new ModeradorState());
     }
 
     @Override
-    public void afegirEnquestaAdministrada(Usuari contexto, Enquesta e) {
-        //no fa res
-    }
+    public Map<Integer, Enquesta> getEnquestesAssignades() { return enquestesAssignades; }
+    @Override
+    public void afegirEnquestaAssignada(Enquesta e) { enquestesAssignades.put(e.getId(), e); }
+    @Override
+    public void eliminarEnquestaAssignada(int idEnquesta) { enquestesAssignades.remove(idEnquesta); }
+    @Override
+    public boolean enquestaAssignada(int idEnquesta) { return enquestesAssignades.containsKey(idEnquesta); }
 
     @Override
-    public void afegirEnquestaRealitzada(Usuari contexto, Enquesta e) {
-        //no fa res
-    }
+    public Map<Integer, Enquesta> getEnquestesRealitzades() { return Collections.emptyMap(); }
+    @Override
+    public void afegirEnquestaRealitzada(Enquesta e) { throw new UnsupportedOperationException("Enquestador no respon"); }
+    @Override
+    public void eliminarEnquestaRealitzada(int idEnquesta) {}
+    @Override
+    public boolean enquestaRealitzada(int idEnquesta) { return false; }
 
     @Override
-    public void eliminarEnquestaAdministrada(Usuari contexto, int idEnquesta) {
-        //no fa res
-    }
-
+    public Map<Integer, Enquesta> getEnquestesAdministrades() { return Collections.emptyMap(); }
     @Override
-    public void eliminarEnquestaRealitzada(Usuari contexto, int idEnquesta) {
-        //no fa res
-    }
-
+    public void afegirEnquestaAdministrada(Enquesta e) { throw new UnsupportedOperationException("Enquestador no administra"); }
     @Override
-    public void eliminarEnquestaAssignada(Usuari contexto, int idEnquesta) {
-        contexto.eliminarEnquestaAssignada(idEnquesta);
-    }
-
+    public void eliminarEnquestaAdministrada(int idEnquesta) {}
     @Override
-    public boolean enquestaAssignada(Usuari contexto, int idEnquesta){
-        return contexto.enquestaAssignada(idEnquesta);
-    }
+    public boolean enquestaAdministrada(int idEnquesta) { return false; }
 
-    @Override
-    public boolean esEnquestador() {
-        return true;
-    }
+    @Override public boolean esEnquestador() { return true; }
 }

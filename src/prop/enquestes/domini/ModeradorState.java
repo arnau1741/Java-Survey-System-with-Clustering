@@ -1,58 +1,48 @@
 package prop.enquestes.domini;
 
+import java.util.Collections;
+import java.util.Map;
+
 public class ModeradorState extends UsuariState {
-    @Override
-    public String nombreRol() {
-        return "Moderador";
-    }
+
+    @Override public String nombreRol() { return "Moderador"; }
 
     @Override
-    public void cambiarARolEnquestador(Usuari u) {
-        u.setRol(new EnquestadorState());
-    }
+    public void cambiarARolEnquestador(Usuari u) { u.setRol(new EnquestadorState()); }
+    @Override
+    public void cambiarARolAdmin(Usuari u) { u.setRol(new AdminState()); }
+    @Override
+    public void cambiarARolEnquestat(Usuari u) { u.setRol(new EnquestatState()); }
+    @Override
+    public void cambiarARolModerador(Usuari u) { }
 
     @Override
-    public void cambiarARolAdmin(Usuari u) {
-        u.setRol(new AdminState());
-    }
+    public Map<Integer, Enquesta> getEnquestesAssignades() { return Collections.emptyMap(); }
+    @Override
+    public void afegirEnquestaAssignada(Enquesta e) {}
+    @Override
+    public void eliminarEnquestaAssignada(int idEnquesta) {}
+    @Override
+    public boolean enquestaAssignada(int idEnquesta) { return false; }
 
     @Override
-    public void cambiarARolEnquestat(Usuari u) {
-        u.setRol(new EnquestatState());
-    }
+    public Map<Integer, Enquesta> getEnquestesRealitzades() { return Collections.emptyMap(); }
+    @Override
+    public void afegirEnquestaRealitzada(Enquesta e) {}
+    @Override
+    public void eliminarEnquestaRealitzada(int idEnquesta) {}
+    @Override
+    public boolean enquestaRealitzada(int idEnquesta) { return false; }
 
     @Override
-    public void eliminarEnquestaAssignada(Usuari usuari, int idEnquesta) {
-        // No fa res
-    }
+    public Map<Integer, Enquesta> getEnquestesAdministrades() { return Collections.emptyMap(); }
+    @Override
+    public void afegirEnquestaAdministrada(Enquesta e) {}
+    @Override
+    public void eliminarEnquestaAdministrada(int idEnquesta) {}
+    @Override
+    public boolean enquestaAdministrada(int idEnquesta) { return false; }
 
     @Override
-    public void eliminarEnquestaRealitzada(Usuari usuari, int idEnquesta) {
-        // No fa res
-    }
-
-    @Override
-    public void eliminarEnquestaAdministrada(Usuari usuari, int idEnquesta) {
-        // No fa res
-    }
-
-    @Override
-    public void afegirEnquestaRealitzada(Usuari usuari, Enquesta e) {
-        // No fa res
-    }
-
-    @Override
-    public void afegirEnquestaAssignada(Usuari usuari, Enquesta e) {
-        // No fa res
-    }
-
-    @Override
-    public void afegirEnquestaAdministrada(Usuari usuari, Enquesta e) {
-        // No fa res
-    }
-
-    @Override
-    public boolean esModerador() {
-        return true;
-    }
+    public boolean esModerador() { return true; }
 }

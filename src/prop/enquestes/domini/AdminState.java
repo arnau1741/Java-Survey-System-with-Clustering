@@ -1,11 +1,25 @@
 package prop.enquestes.domini;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 public class AdminState extends UsuariState {
+    private Map<Integer, Enquesta> enquestesAdministrades;
+    private Map<Integer, Enquesta> enquestesRealitzades;
+
+    public AdminState() {
+        this.enquestesAdministrades = new HashMap<>();
+        this.enquestesRealitzades = new HashMap<>();
+    }
+
+    public AdminState(Map<Integer, Enquesta> realitzadesHeretades) {
+        this.enquestesAdministrades = new HashMap<>();
+        this.enquestesRealitzades = (realitzadesHeretades != null) ? realitzadesHeretades : new HashMap<>();
+    }
 
     @Override
-    public String nombreRol() {
-        return "Admin";
-    }
+    public String nombreRol() { return "Admin"; }
 
     @Override
     public void cambiarARolEnquestador(Usuari u) {
@@ -13,57 +27,44 @@ public class AdminState extends UsuariState {
     }
 
     @Override
-    public void cambiarARolAdmin(Usuari u) {
-        //no fa res
-    }
+    public void cambiarARolAdmin(Usuari u) {}
 
     @Override
     public void cambiarARolEnquestat(Usuari u) {
-        u.setRol(new EnquestatState());
+        u.setRol(new EnquestatState(this.enquestesRealitzades));
     }
 
     @Override
-    public void afegirEnquestaAdministrada(Usuari contexto, Enquesta e) {
-        contexto.afegirEnquestaAdministrada(e);
+    public void cambiarARolModerador(Usuari u) {
+        u.setRol(new ModeradorState());
     }
 
     @Override
-    public void afegirEnquestaRealitzada(Usuari contexto, Enquesta e) {
-        contexto.afegirEnquestaRealitzada(e);
-    }
+    public Map<Integer, Enquesta> getEnquestesAdministrades() { return enquestesAdministrades; }
+    @Override
+    public void afegirEnquestaAdministrada(Enquesta e) { enquestesAdministrades.put(e.getId(), e); }
+    @Override
+    public void eliminarEnquestaAdministrada(int idEnquesta) { enquestesAdministrades.remove(idEnquesta); }
+    @Override
+    public boolean enquestaAdministrada(int idEnquesta) { return enquestesAdministrades.containsKey(idEnquesta); }
 
     @Override
-    public void afegirEnquestaAssignada(Usuari usuari, Enquesta e) {
-        // No fa res
-    }
+    public Map<Integer, Enquesta> getEnquestesRealitzades() { return enquestesRealitzades; }
+    @Override
+    public void afegirEnquestaRealitzada(Enquesta e) { enquestesRealitzades.put(e.getId(), e); }
+    @Override
+    public void eliminarEnquestaRealitzada(int idEnquesta) { enquestesRealitzades.remove(idEnquesta); }
+    @Override
+    public boolean enquestaRealitzada(int idEnquesta) { return enquestesRealitzades.containsKey(idEnquesta); }
 
     @Override
-    public void eliminarEnquestaAdministrada(Usuari contexto, int idEnquesta) {
-        contexto.eliminarEnquestaAdministrada(idEnquesta);
-    }
-
+    public Map<Integer, Enquesta> getEnquestesAssignades() { return Collections.emptyMap(); }
     @Override
-    public void eliminarEnquestaAssignada(Usuari usuari, int idEnquesta) {
-        // No fa res
-    }
-
+    public void afegirEnquestaAssignada(Enquesta e) { throw new UnsupportedOperationException("Admin no té assignades"); }
     @Override
-    public void eliminarEnquestaRealitzada(Usuari contexto, int idEnquesta) {
-        contexto.eliminarEnquestaRealitzada(idEnquesta);
-    }
-
+    public void eliminarEnquestaAssignada(int idEnquesta) {}
     @Override
-    public boolean enquestaAdministrada(Usuari contexto, int idEnquesta){
-        return contexto.enquestaAdministrada(idEnquesta);
-    }
+    public boolean enquestaAssignada(int idEnquesta) { return false; }
 
-    @Override
-    public boolean enquestaRealitzada(Usuari contexto, int idEnquesta){
-        return contexto.haRealitzatEnquesta(idEnquesta);
-    }
-
-    @Override
-    public boolean esAdmin() {
-        return true;
-    }
+    @Override public boolean esAdmin() { return true; }
 }
