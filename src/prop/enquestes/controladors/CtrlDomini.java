@@ -105,7 +105,7 @@ public class CtrlDomini {
     public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idCreador);
 
-        if(!u.esAdmin() && !u.esEnquestat()){
+        if(u.esEnquestador()){
             throw new IllegalArgumentException("L'usuari amb id " + idCreador + " no té permís per crear enquestes.");
         }
 
@@ -119,7 +119,6 @@ public class CtrlDomini {
 
         u.cambiarARolAdmin();
         u.demanarAfegirEnquestaAdministrada(enq);
-
     }
 
     /**
@@ -194,7 +193,13 @@ public class CtrlDomini {
         return exportarEnquestaPrivate(idEnquesta);
     }
     ////////////////Persistencia
-    public void exportarRespostesAFitxer(int idEnquesta, String path) throws Exception {
+    public void exportarRespostesAFitxer(int idUsuari, int idEnquesta, String path) throws Exception {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+
+        if(u.getId() < 0 ){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no pot exportar respostes perquè és anònim.");
+        }
+
         List<String> data = exportarRespostesEnquesta(idEnquesta);
         ctrlPersistencia.guardarFitxerText(path, data);
     }
@@ -291,7 +296,7 @@ public class CtrlDomini {
     public int importarRespostes(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
 
-        if(!u.esAdmin() && !u.esEnquestador()){
+        if(u.esEnquestat()){
             throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per importar respostes.");
         }
         if(u.getId() < 0){
