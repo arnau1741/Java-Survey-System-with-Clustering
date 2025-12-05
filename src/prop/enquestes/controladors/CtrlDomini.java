@@ -311,20 +311,42 @@ public class CtrlDomini {
         return importarRespostesPrivate(path, idEnquesta);
     }
 
-    //ES LA ULTIMA QUE HARÉ PARA ADAPTAR EL PATRON ESTADO
     /**
      * Funcio per a eliminar una enquesta
-     * @param idUsuari identificador de l'usuari que elimina l'enquesta
      * @param idEnquesta identificador de l'enquesta a eliminar
      */
-    public void eliminarEnquesta(int idUsuari, Integer idEnquesta) throws EnquestaNoExisteixException {
+    protected void eliminarEnquestaPrivate(Integer idEnquesta) throws EnquestaNoExisteixException {
         // esborrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
         ////ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
+    }
 
-        // esborrar d'usuaris
-        //Usuari usuari = ctrlDominiMantUsuari.getUsuari(idUsuari);
-        //usuari.eliminarEnquesta(idEnquesta);
+    public void eliminarEnquesta(int idUsuari, Integer idEnquesta) throws EnquestaNoExisteixException {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+
+        if(!u.esAdmin() && !u.esModerador()){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per eliminar enquestes.");
+        }
+        if(u.getId() < 0){
+            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no pot eliminar enquestes perquè és anònim.");
+        }
+
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+
+        if(u.esAdmin()){
+            if(!u.teEnquestaAdministrada(idEnquesta)){
+                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra l'enquesta amb id " + idEnquesta + " i per tant no pot eliminar-la.");
+            }
+        }
+
+        eliminarEnquestaPrivate(idEnquesta);
+
+        Map<Integer, Usuari> totsElsUsuaris = ctrlDominiMantUsuari.getUsuaris();
+        for(Usuari afectarEsborrat : totsElsUsuaris.values()){
+            afectarEsborrat.demanarEliminarAdministrada(idEnquesta);
+            afectarEsborrat.demanarEliminarAssignada(idEnquesta);
+            afectarEsborrat.demanarEliminarRealitzada(idEnquesta);
+        }
     }
 
     /**
@@ -677,90 +699,6 @@ public class CtrlDomini {
         //PerfilEnquestador nouEnquestador = new PerfilEnquestador(id, nomUsuari, contrasenya, email);
         //ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
         //return id;
-    }
-
-    /**
-     * Funcio per a afegir un enquestador
-     * Pendent a ser canviat segons el patro estat en entregues futures
-     * @param idUsuariAdmin identificador de l'usuari administrador que afegeix l'enquestador
-     * @param idEnquesta identificador de l'enquesta
-     * @param nomUsuariEnquestador nom de l'usuari enquestador
-     * @return 1 si s'ha afegit correctament, -1 si l'usuari no existeix, -2 si l'enquesta ja està assignada, -3 si l'usuari ja administra aquesta enquesta, -4 tipus d'usuari desconegut
-     */
-    public int afegirEnquestador(int idUsuariAdmin, Integer idEnquesta, String nomUsuariEnquestador){
-        if (!ctrlDominiMantUsuari.existeixUsuari(nomUsuariEnquestador)) {
-            return -1; // Codi error: Usuari no existeix
-        }
-        Usuari usuari = ctrlDominiMantUsuari.getUsuariPerNom(nomUsuariEnquestador);
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        /*
-        if (usuari instanceof PerfilEnquestat){
-            PerfilEnquestador nouEnquestador = new PerfilEnquestador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
-            nouEnquestador.afegirEnquestaAssignada(enq);
-            ctrlDominiMantUsuari.substituirUsuari(usuari, nouEnquestador);
-            return 1; // Èxit
-        } else if(usuari instanceof PerfilEnquestador){
-            PerfilEnquestador enquestador = (PerfilEnquestador) usuari;
-            if (enquestador.enquestaAssignada(idEnquesta)) {
-                return -2; // Codi error: Enquesta ja assignada
-            }
-            enquestador.afegirEnquestaAssignada(enq);
-            return 1; // Èxit
-        } else if (usuari instanceof PerfilAdministrador){
-            // mirem si l'administra a enquestesAdministrades
-            PerfilAdministrador admin = (PerfilAdministrador) usuari;
-            if (admin.enquestaAdministrada(idEnquesta)) {
-                return -3; // Codi error: Usuari ja administra aquesta enquesta
-            }
-            // mirem si la te a enquestesAssignades
-            if (admin.enquestaAssignada(idEnquesta)) {
-                return -2; // Codi error: Enquesta ja assignada
-            }
-            admin.afegirEnquestaAssignada(enq);
-            return 1; // Èxit
-        }
-        return -4; // Codi error: Tipus d'usuari desconegut
-
-         */
-        return 1;
-    }
-
-    /**
-     * Funcio per a afegir un administrador
-     * @param idUsuariAdmin identificador de l'usuari administrador que afegeix l'administrador
-     * @param idEnquesta identificador de l'enquesta
-     * @param nomUsuariAdministrador nom de l'usuari administrador
-     * @return 1 si s'ha afegit correctament, -1 si l'usuari no existeix, -2 si l'enquesta ja és administrada, -3 tipus d'usuari desconegut
-     */
-    public int afegirAdministrador(int idUsuariAdmin, Integer idEnquesta,String nomUsuariAdministrador){
-        if (!ctrlDominiMantUsuari.existeixUsuari(nomUsuariAdministrador)) {
-            return -1; // Codi error: Usuari no existeix
-        }
-        Usuari usuari = ctrlDominiMantUsuari.getUsuariPerNom(nomUsuariAdministrador);
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        /*
-        if (usuari instanceof PerfilEnquestat){
-            PerfilAdministrador nouAdministrador = new PerfilAdministrador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
-            nouAdministrador.afegirEnquestaAdministrada(enq);
-            ctrlDominiMantUsuari.substituirUsuari(usuari, nouAdministrador);
-            return 1; // Èxit
-        } else if(usuari instanceof PerfilEnquestador){
-            PerfilAdministrador nouAdministrador = new PerfilAdministrador(usuari.getId(), usuari.getUsuari(), usuari.getContrasenya(), usuari.getEmail());
-            nouAdministrador.afegirEnquestaAdministrada(enq);
-            ctrlDominiMantUsuari.substituirUsuari(usuari, nouAdministrador);
-            return 1; // Èxit
-        } else if (usuari instanceof PerfilAdministrador){
-            PerfilAdministrador admin = (PerfilAdministrador) usuari;
-            if (admin.enquestaAdministrada(idEnquesta)) {
-                return -2; // Codi error: Enquesta ja administrada
-            }
-            admin.afegirEnquestaAdministrada(enq);
-            return 1; // Èxit
-        }
-        return -3; // Codi error: Tipus d'usuari desconegut
-
-         */
-        return 1;
     }
 
     /**

@@ -120,7 +120,7 @@ public class CtrlDominiMantUsuari {
 
     public int iniciarSessio(String nomUsuari, String password){
         //comprovem si existeix un usuari amb nomUsuari
-        if (! nomUsuariToID.containsKey(nomUsuari)) return -1;
+        if (!nomUsuariToID.containsKey(nomUsuari)) return -1;
         Integer id = nomUsuariToID.get(nomUsuari);
         String correctPassword = usuaris.get(id).getContrasenya();
 
