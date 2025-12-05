@@ -32,6 +32,7 @@ public class CtrlPresentacio {
     private VistaExportarEnquesta vistaExportarEnquesta;
     private VistaEnquestesExtresAdmin vistaEnquestesExtresAdmin;
     private VistaRespondreEnquesta vistaRespondreEnquesta;
+    private VistaExportarRespostes vistaExportarRespostes;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -133,6 +134,11 @@ public class CtrlPresentacio {
     public void mostrarRespondreEnquesta(int idUsuari) {
         vistaRespondreEnquesta = new VistaRespondreEnquesta(this, idUsuari);
         vistaRespondreEnquesta.setVisible(true);
+    }
+
+    public void mostrarExportarRespostes(int idUsuari) {
+        vistaExportarRespostes = new VistaExportarRespostes(this, idUsuari);
+        vistaExportarRespostes.setVisible(true);
     }
 
     // ======================
@@ -308,4 +314,18 @@ public class CtrlPresentacio {
     public List<String> getTitolsEnquestes() {
         return ctrlDomini.getTitolsEnquestes();
     }
+
+    public List<String> exportarRespostesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
+        return ctrlDomini.exportarRespostesEnquesta(idEnquesta);
+    }
+
+    ///////Persistencia
+    public void exportarRespostesAFitxer(int idEnquesta, String path) throws Exception {
+        ctrlDomini.exportarRespostesAFitxer(idEnquesta, path);
+    }
+
+    public List<String> obtenirRespostesEnquesta(int idEnquesta) {
+        return ctrlDomini.obtenirRespostesEnquesta(idEnquesta);
+    }
+
 }

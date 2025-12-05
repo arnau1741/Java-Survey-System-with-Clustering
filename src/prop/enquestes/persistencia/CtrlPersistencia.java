@@ -169,4 +169,11 @@ public class CtrlPersistencia {
 
         return val;
     }
+
+
+    public void guardarFitxerText(String path, List<String> contingut) throws Exception {
+        try (FileWriter fw = new FileWriter(path)) {
+            for (String line : contingut) fw.write(line + "\n");
+        }
+    }
 }

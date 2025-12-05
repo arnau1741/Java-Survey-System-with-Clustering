@@ -84,5 +84,9 @@ public class VistaEnquestesExtresAdmin extends JFrame {
             ctrl.mostrarRespondreEnquesta(idUsuari);
         });
 
+        exportarRespostesButton.addActionListener(e -> {
+            ctrl.mostrarExportarRespostes(idUsuari);
+        });
+
     }
 }

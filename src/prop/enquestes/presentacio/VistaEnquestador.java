@@ -79,7 +79,7 @@ public class VistaEnquestador extends JFrame {
         });
 
         exportarRespostesButton.addActionListener(e -> {
-            //ctrl.mostrarExportarRespostes();
+            ctrl.mostrarExportarRespostes(idUsuari);
         });
 
         exportarEnquestatButton.addActionListener(e -> {

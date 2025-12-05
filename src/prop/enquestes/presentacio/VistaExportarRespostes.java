@@ -1,54 +1,188 @@
 package prop.enquestes.presentacio;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.io.FileWriter;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VistaExportarRespostes extends JDialog {
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
 
-    public VistaExportarRespostes() {
-        setContentPane(contentPane);
+    private final CtrlPresentacio ctrl;
+    private int idUsuari;
+    private int idEnquestaActual = -1;
+
+    private JPanel contentPane = new JPanel();
+    private JComboBox<String> comboEnquestes = new JComboBox<>();
+    private JTextArea areaPreview = new JTextArea();
+    private JLabel labelIdActual;
+
+    private JButton btnExportar = new JButton("Exportar");
+    private JButton btnSortir = new JButton("Tancar");
+
+
+    private JButton buttonOK = new  JButton("OK");
+    private JButton buttonCancel = new  JButton("Cancel");
+
+    public VistaExportarRespostes(CtrlPresentacio ctrl, int idUsuari) {
+        this.ctrl = ctrl;
+        this.idUsuari = idUsuari;
+
+        setTitle("Exportar Respostes");
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        setContentPane(contentPane);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        initLayout();
+        cargarEnquestes();
+        initActions();
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        setSize(600, 500);
+        setLocationRelativeTo(null);
     }
 
-    private void onOK() {
-        // add your code here
-        dispose();
+    private void initLayout() {
+        contentPane.setLayout(new BorderLayout(10,10));
+        contentPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+        // PANEL SUPERIOR
+        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        panelSuperior.setBorder(BorderFactory.createTitledBorder("Selecció d'Enquesta"));
+
+        panelSuperior.add(new JLabel("Enquesta:"));
+
+        comboEnquestes = new JComboBox<>();
+        comboEnquestes.setPreferredSize(new Dimension(250, 25));
+        panelSuperior.add(comboEnquestes);
+
+        labelIdActual = new JLabel("ID: --");
+        labelIdActual.setFont(labelIdActual.getFont().deriveFont(Font.BOLD));
+        labelIdActual.setForeground(Color.BLUE);
+        panelSuperior.add(labelIdActual);
+
+        contentPane.add(panelSuperior, BorderLayout.NORTH);
+
+        // PANEL CENTRAL (PREVIEW)
+        areaPreview = new JTextArea(12, 60);
+        areaPreview.setEditable(false);
+        areaPreview.setFont(new Font("Monospaced", Font.PLAIN, 11));
+
+        JScrollPane scrollInfo = new JScrollPane(areaPreview);
+        scrollInfo.setBorder(BorderFactory.createTitledBorder("Preview de Respostes"));
+
+        contentPane.add(scrollInfo, BorderLayout.CENTER);
+
+        // PANEL BOTONES
+        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottom.add(btnExportar);
+        bottom.add(btnSortir);
+
+        contentPane.add(bottom, BorderLayout.SOUTH);
     }
 
-    private void onCancel() {
-        // add your code here if necessary
-        dispose();
+    private void cargarEnquestes() {
+        comboEnquestes.removeAllItems();
+        comboEnquestes.addItem("-- Selecciona --");
+
+        try {
+            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
+            for (String info : enquestasInfo) {
+                // Buscamos la línea exacta que empieza por "ID:"
+                String[] lineas = info.split("\n");
+                for (String linea : lineas) {
+                    if (linea.trim().startsWith("ID:")) {
+                        comboEnquestes.addItem(linea); // SOLO esta línea
+                        break; // Muy importante
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Puedes ignorarlo
+        }
     }
 
+    private void initActions() {
+
+        comboEnquestes.addActionListener(e -> mostrarPreview());
+
+        btnExportar.addActionListener(e -> onExportar());
+
+        btnSortir.addActionListener(e -> dispose());
+    }
+
+    private void mostrarPreview() {
+        String seleccionado = (String) comboEnquestes.getSelectedItem();
+        if (seleccionado != null && !seleccionado.equals("-- Selecciona --")) {
+            try {
+                idEnquestaActual = extraerIdEnquesta(seleccionado);
+                labelIdActual.setText("ID: " + idEnquestaActual);
+                mostrarInfoRespostes();
+            } catch (Exception ex) {
+                idEnquestaActual = -1;
+                labelIdActual.setText("ID: --");
+                areaPreview.setText("");
+            }
+        } else {
+            idEnquestaActual = -1;
+            labelIdActual.setText("ID: --");
+            areaPreview.setText("");
+        }
+
+    }
+
+    private void mostrarInfoRespostes() {
+
+        try {
+            List<String> res = ctrl.obtenirRespostesEnquesta(idEnquestaActual);
+
+            StringBuilder sb = new StringBuilder();
+            for (String s : res) sb.append(s).append("\n");
+
+            areaPreview.setText(sb.toString());
+
+        } catch (Exception ex) {
+            areaPreview.setText("Error obtenint respostes.");
+        }
+    }
+
+    private int extraerIdEnquesta(String texto) {
+        try {
+            // Formato esperado: "ID: X - ..."
+            int idxID = texto.indexOf("ID:");
+            if (idxID == -1) throw new RuntimeException("Format invalid");
+
+            int idxDosPunts = texto.indexOf(':', idxID);
+            int idxGuio = texto.indexOf('-', idxDosPunts);
+
+            String idStr = texto.substring(idxDosPunts + 1, idxGuio).trim();
+            return Integer.parseInt(idStr);
+
+        } catch (Exception e) {
+            throw new RuntimeException("No s'ha pogut extreure l'ID de: " + texto);
+        }
+    }
+
+    private void onExportar() {
+        String outputPath = "Pruebas" + File.separator + "respostes_enquesta_" + idEnquestaActual + ".txt";
+
+        try {
+            List<String> contingut = ctrl.exportarRespostesEnquesta(idEnquestaActual);
+
+            try (FileWriter fw = new FileWriter(outputPath)) {
+                for (String s : contingut)
+                    fw.write(s + "\n");
+            }
+
+            JOptionPane.showMessageDialog(this,
+                    "Respostes exportades a:\n" + outputPath,
+                    "Èxit",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error exportant: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

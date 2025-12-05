@@ -193,6 +193,53 @@ public class CtrlDomini {
 
         return exportarEnquestaPrivate(idEnquesta);
     }
+    ////////////////Persistencia
+    public void exportarRespostesAFitxer(int idEnquesta, String path) throws Exception {
+        List<String> data = exportarRespostesEnquesta(idEnquesta);
+        ctrlPersistencia.guardarFitxerText(path, data);
+    }
+    ////////
+
+    public List<String> exportarRespostesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
+
+        List<String> result = new ArrayList<>();
+        result.add("=== RESPOSTES DE L'ENQUESTA " + idEnquesta + " ===");
+        result.add("Títol: " + enq.getTitol());
+        result.add("");
+
+        List<Pregunta> preguntes = enq.getPreguntesObj();
+
+        int idxPregunta = 1;
+        for (Pregunta p : preguntes) {
+            result.add("Pregunta " + idxPregunta + ": " + p.getText());
+
+            List<String> opcions = p.getOpcions();
+            if (opcions != null) {
+                result.add("Opcions:");
+                for (String op : opcions) {
+                    result.add(" * " + op);
+                }
+            }
+
+            Map<Integer, Resposta> respostes = p.getRespostes();
+            if (respostes.isEmpty()) {
+                result.add("   (No hi ha respostes)");
+            } else {
+                for (Integer idUsuari : respostes.keySet()) {
+                    result.add(" - Usuari " + idUsuari + ": " +
+                            respostes.get(idUsuari).getText(opcions));
+                }
+            }
+            result.add("");
+            idxPregunta++;
+        }
+
+        return result;
+    }
 
     /**
      * Funcio per a importar respostes d'un fitxer
@@ -531,6 +578,30 @@ public class CtrlDomini {
             }
         }
         return result;
+    }
+
+    public List<String> obtenirRespostesEnquesta(int idEnquesta) {
+        Enquesta e = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+
+        List<String> out = new ArrayList<>();
+        out.add("=== RESPOSTES ENQUESTA " + idEnquesta + " ===");
+
+        for (Pregunta p : e.getPreguntesObj()) {
+            out.add("");
+            out.add("Pregunta: " + p.getText());
+
+            if (p.getRespostes().isEmpty()) {
+                out.add("  (sense respostes)");
+            } else {
+                for (var entry : p.getRespostes().entrySet()) {
+                    int idUsuari = entry.getKey();
+                    Resposta r = entry.getValue();
+                    out.add("  • Usuari " + idUsuari + ": " + r.getText(p.getOpcions()));
+                }
+            }
+        }
+
+        return out;
     }
 
     ///   ///////////////////
