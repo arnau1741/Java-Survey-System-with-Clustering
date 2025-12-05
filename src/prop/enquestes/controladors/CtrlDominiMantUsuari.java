@@ -5,6 +5,8 @@ import prop.enquestes.domini.*;
 
 public class CtrlDominiMantUsuari {
     private Map<Integer, Usuari> usuaris;
+    private Map<String, Integer> nomUsuariToID;
+    private integer ultimID=0;
 
     /**
      * Constructor de la classe CtrlDominiMantUsuari
@@ -30,6 +32,7 @@ public class CtrlDominiMantUsuari {
     public void afegirUsuari(Usuari usuari) {
         usuaris.put(usuari.getId(), usuari);
     }
+
 
     /**
      * Retorna el nombre d'usuaris del sistema
@@ -71,6 +74,15 @@ public class CtrlDominiMantUsuari {
         return usuaris.containsKey(IdUsuari);
     }
 
+    public boolean emailUsat(String email){
+        for (Usuari u : usuaris.values()) {
+            if (u.getContrasenya().equals(nomUsuari)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Retorna l'usuari amb el nom especificat
      * @param nomUsuari del usuari a retornar
@@ -103,5 +115,21 @@ public class CtrlDominiMantUsuari {
     public void substituirUsuari(Usuari usuariAntic, Usuari usuariNou) {
         usuaris.put(usuariAntic.getId(), usuariNou);
     }
+
+    public int iniciarSessio(String nomUsuari, String password){
+        //comprovem si existeix un usuari amb nomUsuari
+        if (! nomUsuariToID.containsKey(nomUsuari)) return -1;
+        Integer id = nomUsuariToID.get(nomUsuari);
+        String correctPassword = usuaris.get(id).getContrasenya();
+
+        //comprovem password
+        return correctPassword==password;
+    }
     
+    public int getNouID(){
+        int tmp = ultimID;
+        ultimID++;
+        return tmp;
+    }
+
 }

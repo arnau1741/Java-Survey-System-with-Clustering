@@ -541,15 +541,50 @@ public class CtrlDomini {
      * @return Identificador de l'usuari creat, 0 si l'usuari ja existeix
      */
     ////////////////////// Cas d'us - Crear usuari ////////////////////
-    public int crearUsuariEnquestat(String nomUsuari, String contrasenya, String email) {
+    public int crearUsuariEnquestat(String nomUsuari, String password, String email) {
+        //comproven si existeix
         if (ctrlDominiMantUsuari.existeixUsuari(nomUsuari)) {
-            return 0;
+            return -1;
         }
-        int id = ctrlDominiMantUsuari.getNumUsuaris();
+
+        //comprovem els requeriments del password
+        if (!checkRequerimentsPassword(password)) return -2;
+
+        //comprovem email no usat
+        if (ctrlDominiMantUsuari.emailUsat(email)) return -3;
+
+
+        int id = ctrlDominiMantUsuari.getNouID();
         //D'alguna forma s'ha de decidir el rol per enviar-lo, es a dir rol es Admin, esnquestat o enquestador, es fa amb un if
-        UsuariState rol = new AdminState();
+        UsuariState rol = new EnquestatState();
         /////////////////////////
-        Usuari nouEnquestador = new Usuari(id, nomUsuari, contrasenya, email, rol);
+        Usuari nouEnquestador = new Usuari(id, nomUsuari, password, email, rol);
+        ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
+        ////Funcio per la Persistencia
+        ///ctrlPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
+        return id;
+        //PerfilEnquestador nouEnquestador = new PerfilEnquestador(id, nomUsuari, contrasenya, email);
+        //ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
+        //return id;
+    }
+
+    public int crearUsuariEnquestador(String nomUsuari, String password, String email) {
+        //comproven si existeix
+        if (ctrlDominiMantUsuari.existeixUsuari(nomUsuari)) {
+            return -1;
+        }
+
+        //comprovem els requeriments del password
+        if (!checkRequerimentsPassword(password)) return -2;
+
+        //comprovem email no usat
+        if (ctrlDominiMantUsuari.emailUsat(email)) return -3;
+
+        int id = ctrlDominiMantUsuari.getNouID();
+        //D'alguna forma s'ha de decidir el rol per enviar-lo, es a dir rol es Admin, esnquestat o enquestador, es fa amb un if
+        UsuariState rol = new EnquestadorState();
+        /////////////////////////
+        Usuari nouEnquestador = new Usuari(id, nomUsuari, password, email, rol);
         ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
         ////Funcio per la Persistencia
         ///ctrlPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
@@ -828,6 +863,17 @@ public class CtrlDomini {
 
     public List<String> getTitolsEnquestes() {
         return ctrlDominiMantEnquesta.getTitolsEnquestes();
+    }
+
+
+
+    public int iniciarSessio(string nomUsuari, string password){
+        return ctrlDominiMantUsuari.iniciarSessio(nomUsuari, password);
+    }
+
+
+    private boolean checkRequerimentsPassword(String password){
+        return password.length() > 5;
     }
 
 }

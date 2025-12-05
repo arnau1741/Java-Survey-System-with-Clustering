@@ -11,6 +11,7 @@ public class Usuari {
     private String email;
     private boolean blocked;
 
+
     //enquestador
     //private List<Enquesta> enquestesAssignades;
     private Map<Integer, Enquesta> enquestesAssignades;
