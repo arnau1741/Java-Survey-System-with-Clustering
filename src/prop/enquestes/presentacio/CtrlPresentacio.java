@@ -174,12 +174,12 @@ public class CtrlPresentacio {
         ctrlDomini.eliminarEnquesta(idUsuari, idEnquesta);
     }
 
-    public void esborrarRespostaEnquesta(Integer idEnquesta, int idEnquestat) throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException {
-        ctrlDomini.esborrarRespostaEnquesta(idEnquesta, idEnquestat);
+    public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat) throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException {
+        ctrlDomini.esborrarRespostaEnquesta(idUsuari, idEnquesta, idEnquestat);
     }
 
-    public void modificarPreguntaEnquesta(int idEnquesta, int indexPregunta, List<String> novaPreguntaText) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
-        ctrlDomini.modificarPreguntaEnquesta(idEnquesta, indexPregunta, novaPreguntaText);
+    public void modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int indexPregunta, List<String> novaPreguntaText) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
+        ctrlDomini.modificarPreguntaEnquesta(idUsuari, idEnquesta, indexPregunta, novaPreguntaText);
     }
 
     public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
@@ -281,8 +281,8 @@ public class CtrlPresentacio {
         }
     }
 
-    public List<String> exportarEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
-        return ctrlDomini.exportarEnquesta(idEnquesta);
+    public List<String> exportarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException {
+        return ctrlDomini.exportarEnquesta(idUsuari, idEnquesta);
     }
 
     // funcions pel desplegable de la vistaExportarEnquesta

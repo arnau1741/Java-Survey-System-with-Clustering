@@ -519,8 +519,10 @@ public class Utils {
             io.write("Introdueix nombre maxim d'iteracions: ");
             int maxIter = io.readint();
             io.readline();
+            /// //idUsuari cambiar
+            int idUsuari = 1;
 
-            Map<Integer, Integer> result = ctrl.clustering(idEnquesta, k, maxIter);
+            Map<Integer, Integer> result = ctrl.clustering(idUsuari, idEnquesta, k, maxIter);
             for (int clusterId = 0; clusterId < k; clusterId++) {
                 io.writeln("Cluster " + clusterId + ":");
                 boolean first = true;
@@ -601,7 +603,9 @@ public class Utils {
             io.writeln("Introduiex l'Id de l'enquestat");
             int idEnquestat = io.readint();
             io.readline();
-            ctrl.esborrarRespostaEnquesta(idEnquesta, idEnquestat);
+            ///Cambiar
+            int idUsuari = 1;
+            ctrl.esborrarRespostaEnquesta(idUsuari,idEnquesta, idEnquestat);
         }
         catch (Exception e){
             try {
@@ -659,8 +663,9 @@ public class Utils {
                     novaPregunta.add(opcio);
                 }
             }
-
-            int resultat = ctrl.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
+            /// /Cambiar idUsuari
+            int idUsuari = 1;
+            int resultat = ctrl.modificarPreguntaEnquesta(idUsuari, idEnquesta, idxPregunta, novaPregunta);
             if (resultat == 1) {
                 io.writeln("S'ha esborrat correctament");
             }

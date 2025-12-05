@@ -112,7 +112,7 @@ public class VistaExportarEnquesta extends JDialog {
         String path = chooser.getSelectedFile().getAbsolutePath();
 
         try {
-            List<String> contingut = ctrl.exportarEnquesta(idEnquesta);
+            List<String> contingut = ctrl.exportarEnquesta(idUsuari, idEnquesta);
 
             try (FileWriter fw = new FileWriter(path)) {
                 for (String line : contingut) fw.write(line + "\n");

@@ -399,7 +399,7 @@ public class VistaModificarEnquesta extends JDialog {
             }
 
             // Llamar al controlador
-            ctrl.modificarPreguntaEnquesta(idEnquestaActual, idxPregunta, novaPregunta);
+            ctrl.modificarPreguntaEnquesta(idUsuariActual, idEnquestaActual, idxPregunta, novaPregunta);
 
             JOptionPane.showMessageDialog(this,
                     "Pregunta modificada correctament",
@@ -486,7 +486,7 @@ public class VistaModificarEnquesta extends JDialog {
                     JOptionPane.YES_NO_OPTION);
 
             if (confirmacion == JOptionPane.YES_OPTION) {
-                ctrl.esborrarRespostaEnquesta(idEnquestaActual, idEnquestat);
+                ctrl.esborrarRespostaEnquesta(idUsuariActual, idEnquestaActual, idEnquestat);
 
                 JOptionPane.showMessageDialog(this,
                         "Respostes eliminades",
