@@ -132,17 +132,16 @@ public class CtrlPresentacio {
     // OPERACIONS
     // ======================
 
-    public boolean iniciarSessio(int id) {
-        //String nom = ctrlDomini.getNomUsuari(idUsuari);
-        //String rol = ctrlDomini.getRolUsuari(idUsuari);
-
-        //VistaMenuUsuari menu = new VistaMenuUsuari(this, nom, rol);
-        //menu.setVisible(true);
-        return true;
+    public int iniciarSessio(String nomUsuari, String password) {
+        int id = ctrlDomini.iniciarSessio(nomUsuari, password);
+        return id;
     }
 
-    public int crearUsuari(String nom, String cont, String email) {
-        return ctrlDomini.crearUsuariEnquestat(nom, cont, email);
+    public int crearUsuari(String nom, String cont, String email, String rol) {
+        if(rol.equals("ENQUESTADOR")){
+            return ctrlDomini.crearUsuariEnquestador(nom,cont,email);
+        }
+        else return ctrlDomini.crearUsuariEnquestat(nom,cont,email);
     }
 
     public String obtenirRol(int id) {

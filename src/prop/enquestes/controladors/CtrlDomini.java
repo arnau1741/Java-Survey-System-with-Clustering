@@ -867,7 +867,7 @@ public class CtrlDomini {
 
 
 
-    public int iniciarSessio(string nomUsuari, string password){
+    public int iniciarSessio(String nomUsuari, String password){
         return ctrlDominiMantUsuari.iniciarSessio(nomUsuari, password);
     }
 

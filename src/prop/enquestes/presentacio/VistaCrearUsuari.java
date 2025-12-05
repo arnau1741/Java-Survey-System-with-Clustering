@@ -12,6 +12,11 @@ public class VistaCrearUsuari extends JDialog {
     private JPasswordField campcont = new JPasswordField();
     private JTextField campEmail = new JTextField();
 
+    private JComboBox<String> comboRol = new JComboBox<>(new String[] {
+            "ENQUESTAT",
+            "ENQUESTADOR"
+    });
+
     private JButton buttonOK;
     private JButton buttonCancel;
 
@@ -26,24 +31,23 @@ public class VistaCrearUsuari extends JDialog {
         contentPane.setLayout(new BorderLayout(10, 10));
 
         // Panel para los campos de formulario
-        JPanel panelForm = new JPanel(new GridLayout(3, 2, 10, 10));
+        JPanel panelForm = new JPanel(new GridLayout(4, 2, 10, 10));
         panelForm.add(new JLabel("Nom:"));
         panelForm.add(campNom);
         panelForm.add(new JLabel("Contrasenya:"));
         panelForm.add(campcont);
         panelForm.add(new JLabel("Email:"));
         panelForm.add(campEmail);
+        panelForm.add(new JLabel("Rol"));
+        panelForm.add(comboRol);
 
-        // Panel para los botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelBotones.add(buttonOK);
         panelBotones.add(buttonCancel);
 
-        // Añadir bordes para mejor espaciado
         panelForm.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
         panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Añadir componentes al contentPane
         contentPane.add(panelForm, BorderLayout.CENTER);
         contentPane.add(panelBotones, BorderLayout.SOUTH);
 
@@ -86,9 +90,22 @@ public class VistaCrearUsuari extends JDialog {
         String nom = campNom.getText();
         String cont = campcont.getText();
         String email = campEmail.getText();
-        int id = ctrl.crearUsuari(nom,cont,email);
-        ctrl.mostrarVistaPrincipalComuna(id);
-        dispose();
+        String rol = (String) comboRol.getSelectedItem();
+        int id = ctrl.crearUsuari(nom,cont,email,rol);
+        if(id == -1) {
+            JOptionPane.showMessageDialog(this, "Nom usuari repetit.");
+        }
+        else if(id == -2) {
+            JOptionPane.showMessageDialog(this, "El password no compleix els requisits");
+        }
+        else if(id == -3) {
+            JOptionPane.showMessageDialog(this, "Email ja esta en us");
+        }
+        else {
+            ctrl.mostrarVistaPrincipalComuna(id);
+            dispose();
+        }
+
     }
 
     private void onCancel() {

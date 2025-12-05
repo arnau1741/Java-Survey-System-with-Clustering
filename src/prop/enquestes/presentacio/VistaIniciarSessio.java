@@ -8,7 +8,7 @@ public class VistaIniciarSessio extends JDialog {
     private JPanel contentPane;
     private CtrlPresentacio ctrl;
 
-    private JTextField campID = new JTextField();
+    private JTextField campNomUsuari = new JTextField();
     private JPasswordField campPassword = new JPasswordField();
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -22,8 +22,8 @@ public class VistaIniciarSessio extends JDialog {
         contentPane.setLayout(new GridLayout(4, 1, 10, 10));
         contentPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        contentPane.add(new JLabel("ID:"));
-        contentPane.add(campID);
+        contentPane.add(new JLabel("Nom Usuari:"));
+        contentPane.add(campNomUsuari);
         contentPane.add(new JLabel("Contrasenya:"));
         contentPane.add(campPassword);
         contentPane.add(buttonOK);
@@ -69,27 +69,26 @@ public class VistaIniciarSessio extends JDialog {
 
     private void onOK() {
         // add your code here
-        String txt = campID.getText().trim();
+        String nomUsuari = campNomUsuari.getText().trim();
+        String pass = new String(campPassword.getPassword());
 
-        if (txt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Has d'introduir un ID.");
+        if (nomUsuari.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Has d'introduir un nom d'usuari.");
             return;
         }
-
-        int id;
-        try {
-            id = Integer.parseInt(txt);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "L'ID ha de ser un número.");
-            return;
+        int id = ctrl.iniciarSessio(nomUsuari, pass);
+        if(id == -1) {
+            JOptionPane.showMessageDialog(this, "Nom usuari repetit.");
         }
-
-        if (ctrl.iniciarSessio(id)) {
-            ctrl.mostrarVistaPrincipalComuna(id);  // Obrir la següent vista
-            dispose(); // Tancar el diàleg
+        else if(id == -2) {
+            JOptionPane.showMessageDialog(this, "El password no compleix els requisits");
+        }
+        else if(id == -3) {
+            JOptionPane.showMessageDialog(this, "Email ja esta en us");
         }
         else {
-            JOptionPane.showMessageDialog(this, "Usuari no trobat.");
+            ctrl.mostrarVistaPrincipalComuna(id);
+            dispose();
         }
     }
 

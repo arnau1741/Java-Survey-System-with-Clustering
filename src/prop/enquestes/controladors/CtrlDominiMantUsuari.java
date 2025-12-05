@@ -6,7 +6,7 @@ import prop.enquestes.domini.*;
 public class CtrlDominiMantUsuari {
     private Map<Integer, Usuari> usuaris;
     private Map<String, Integer> nomUsuariToID;
-    private integer ultimID=0;
+    private Integer ultimID=0;
 
     /**
      * Constructor de la classe CtrlDominiMantUsuari
@@ -75,11 +75,13 @@ public class CtrlDominiMantUsuari {
     }
 
     public boolean emailUsat(String email){
+        /*
         for (Usuari u : usuaris.values()) {
             if (u.getContrasenya().equals(nomUsuari)) {
                 return true;
             }
         }
+         */
         return false;
     }
 
@@ -123,7 +125,11 @@ public class CtrlDominiMantUsuari {
         String correctPassword = usuaris.get(id).getContrasenya();
 
         //comprovem password
-        return correctPassword==password;
+        if(correctPassword.equals(password)) {
+            Usuari us = usuaris.get(id);
+            return us.getId();
+        }
+        else return -2;
     }
     
     public int getNouID(){
