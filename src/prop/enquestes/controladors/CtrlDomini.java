@@ -626,7 +626,7 @@ public class CtrlDomini {
         return out;
     }
 
-    ///   ///////////////////
+    //programar el borrado de esta funcion en un futuro
     public int crearUsuariAdmin(String nomUsuari, String password, String email) {
         int id = ctrlDominiMantUsuari.getNouID();
         //D'alguna forma s'ha de decidir el rol per enviar-lo, es a dir rol es Admin, esnquestat o enquestador, es fa amb un if
@@ -638,7 +638,6 @@ public class CtrlDomini {
         ///ctrlPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
         return id;
     }
-    /// ///////////////
 
     /**
      * Funcio per a crear un usuari enquestat
@@ -670,9 +669,6 @@ public class CtrlDomini {
         ////Funcio per la Persistencia
         ///ctrlPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
         return id;
-        //PerfilEnquestador nouEnquestador = new PerfilEnquestador(id, nomUsuari, contrasenya, email);
-        //ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
-        //return id;
     }
 
     public int crearUsuariEnquestador(String nomUsuari, String password, String email) {
@@ -696,9 +692,6 @@ public class CtrlDomini {
         ////Funcio per la Persistencia
         ///ctrlPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
         return id;
-        //PerfilEnquestador nouEnquestador = new PerfilEnquestador(id, nomUsuari, contrasenya, email);
-        //ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
-        //return id;
     }
 
     /**
@@ -888,15 +881,88 @@ public class CtrlDomini {
         return ctrlDominiMantEnquesta.getTitolsEnquestes();
     }
 
-
-
     public int iniciarSessio(String nomUsuari, String password){
         return ctrlDominiMantUsuari.iniciarSessio(nomUsuari, password);
     }
 
-
     private boolean checkRequerimentsPassword(String password){
         return password.length() > 5;
+    }
+
+    public int donarPodersEnquestador(int idExecutor, Integer idEnquesta, String nomTarget){
+        Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
+        if (executor == null || executor.getId() < 0) {
+            throw new IllegalArgumentException("L'executor no és vàlid.");
+        }
+
+        if (!executor.esAdmin() && !executor.esModerador()) {
+            throw new IllegalArgumentException("L'usuari amb id " + idExecutor + " no té permisos per assignar enquestadors.");
+        }
+
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+
+        if (executor.esAdmin()) {
+            if (!executor.teEnquestaAdministrada(idEnquesta)) {
+                throw new IllegalArgumentException("L'admin no administra aquesta enquesta i no pot assignar-hi enquestadors.");
+            }
+        }
+
+        if (!ctrlDominiMantUsuari.existeixUsuari(nomTarget)) {
+            throw new IllegalArgumentException("L'usuari destinatari '" + nomTarget + "' no existeix.");
+        }
+        Usuari target = ctrlDominiMantUsuari.getUsuariPerNom(nomTarget);
+
+        if (target.esAdmin() || target.esModerador()) {
+            throw new IllegalArgumentException("No es pot fer Enquestador a un usuari que ja és Admin o Moderador.");
+        }
+
+        if (target.esEnquestat()) {
+            target.cambiarARolEnquestador();
+        }
+
+        target.demanarAfegirEnquestaAssignada(enq);
+
+        return 1;
+    }
+
+    public int donarPodersAdmin(int idExecutor, Integer idEnquesta, String nomTarget){
+        Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
+        if (executor == null || executor.getId() < 0) {
+            throw new IllegalArgumentException("L'executor no és vàlid.");
+        }
+
+        if (!executor.esAdmin() && !executor.esModerador()) {
+            throw new IllegalArgumentException("L'usuari amb id " + idExecutor + " no té permisos per nomenar administradors.");
+        }
+
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+
+        if (executor.esAdmin()) {
+            if (!executor.teEnquestaAdministrada(idEnquesta)) {
+                throw new IllegalArgumentException("L'admin no administra aquesta enquesta i no pot nomenar altres administradors.");
+            }
+        }
+
+        if (!ctrlDominiMantUsuari.existeixUsuari(nomTarget)) {
+            throw new IllegalArgumentException("L'usuari destinatari '" + nomTarget + "' no existeix.");
+        }
+        Usuari target = ctrlDominiMantUsuari.getUsuariPerNom(nomTarget);
+
+        if (target.esModerador()) {
+            throw new IllegalArgumentException("No es pot canviar el rol d'un Moderador.");
+        }
+
+        if (!target.esAdmin()) {
+            target.cambiarARolAdmin();
+        }
+
+        if (target.teEnquestaAdministrada(idEnquesta)) {
+            throw new IllegalArgumentException("L'usuari ja administra aquesta enquesta.");
+        }
+
+        target.demanarAfegirEnquestaAdministrada(enq);
+
+        return 1;
     }
 
 }
