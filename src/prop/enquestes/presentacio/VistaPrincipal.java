@@ -44,6 +44,10 @@ public class VistaPrincipal {
             iCtrlPresentacio.mostrarVistaCrearUsuari();
         });
 
+        btnConvidat.addActionListener(e -> {
+            iCtrlPresentacio.mostrarVistaConvidat();
+        });
+
         btnSortir.addActionListener(e -> {
             System.exit(0);
         });

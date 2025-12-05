@@ -14,7 +14,8 @@ public class VistaCrearUsuari extends JDialog {
 
     private JComboBox<String> comboRol = new JComboBox<>(new String[] {
             "ENQUESTAT",
-            "ENQUESTADOR"
+            "ENQUESTADOR",
+            "ADMIN"
     });
 
     private JButton buttonOK;

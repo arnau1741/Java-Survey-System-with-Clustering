@@ -16,7 +16,8 @@ public class CtrlPresentacio {
     private VistaPrincipal vistaPrincipal;
     private VistaIniciarSessio vistaIniciarSessio;
     private VistaCrearUsuari vistaCrearUsuari;
-    // afegir vista Convidat?
+
+    private VistaConvidat vistaConvidat;
     private VistaAdmin vistaAdmin;
     private VistaEnquestador vistaEnquestador;
     private VistaEnquestat vistaEnquestat;
@@ -57,6 +58,12 @@ public class CtrlPresentacio {
         vistaCrearUsuari.setVisible(true);
         //vistaPrincipal.hacerVisible(false);
         //vistaCrearUsuari.tancar(); significa fer un dispose() al frame
+    }
+
+    public void mostrarVistaConvidat() {
+        int idUsuari = -1;
+        vistaConvidat = new VistaConvidat(this, idUsuari);
+        vistaConvidat.setVisible(true);
     }
 
     public void mostrarVistaPrincipalComuna(int idUsuari) {
@@ -140,6 +147,9 @@ public class CtrlPresentacio {
     public int crearUsuari(String nom, String cont, String email, String rol) {
         if(rol.equals("ENQUESTADOR")){
             return ctrlDomini.crearUsuariEnquestador(nom,cont,email);
+        }
+        else if(rol.equals("ADMIN")){
+            return ctrlDomini.crearUsuariAdmin(nom,cont,email);
         }
         else return ctrlDomini.crearUsuariEnquestat(nom,cont,email);
     }

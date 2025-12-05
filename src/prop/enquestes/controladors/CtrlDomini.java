@@ -533,10 +533,24 @@ public class CtrlDomini {
         return result;
     }
 
+    ///   ///////////////////
+    public int crearUsuariAdmin(String nomUsuari, String password, String email) {
+        int id = ctrlDominiMantUsuari.getNouID();
+        //D'alguna forma s'ha de decidir el rol per enviar-lo, es a dir rol es Admin, esnquestat o enquestador, es fa amb un if
+        UsuariState rol = new AdminState();
+        /////////////////////////
+        Usuari nouEnquestador = new Usuari(id, nomUsuari, password, email, rol);
+        ctrlDominiMantUsuari.afegirUsuari(nouEnquestador);
+        ////Funcio per la Persistencia
+        ///ctrlPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
+        return id;
+    }
+    /// ///////////////
+
     /**
      * Funcio per a crear un usuari enquestat
      * @param nomUsuari Nom de l'usuari
-     * @param contrasenya Contrasenya de l'usuari
+     * @param password Contrasenya de l'usuari
      * @param email Email de l'usuari
      * @return Identificador de l'usuari creat, 0 si l'usuari ja existeix
      */
