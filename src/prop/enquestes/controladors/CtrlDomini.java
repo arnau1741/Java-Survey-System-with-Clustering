@@ -128,6 +128,7 @@ public class CtrlDomini {
      * @return 1 si s'ha importat correctament, -1 si hi ha un error llegint el fitxer
      */
     /////////////////////// Cas d'us - Importar enquesta //////////////////
+    //programar para borrar en el futuro
     public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
         int numPreguntes = this.ctrlDominiMantEnquesta.importarEnquesta(idUsuari, path);
         return numPreguntes;
