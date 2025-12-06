@@ -608,7 +608,7 @@ public class CtrlDomini {
         return result;
     }
 
-    public List<String> obtenirInfoEnquesta(int idEnquesta) {
+    /*public List<String> obtenirInfoEnquesta(int idEnquesta) {
         Enquesta e = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
         List<String> out = new ArrayList<>();
@@ -621,7 +621,7 @@ public class CtrlDomini {
         }
 
         return out;
-    }
+    }*/
 
     public List<String> obtenirRespostesEnquesta(int idEnquesta) {
         Enquesta e = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
@@ -892,14 +892,6 @@ public class CtrlDomini {
         perfil.add("Nom de l'usuari: " + us.getUsuari());
         perfil.add("Email: " + us.getEmail());
         return perfil;
-    }
-
-    public List<Integer> getIdsEnquestes() {
-        return ctrlDominiMantEnquesta.getIdsEnquestes();
-    }
-
-    public List<String> getTitolsEnquestes() {
-        return ctrlDominiMantEnquesta.getTitolsEnquestes();
     }
 
     public int iniciarSessio(String nomUsuari, String password){

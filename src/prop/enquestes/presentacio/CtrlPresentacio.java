@@ -306,15 +306,6 @@ public class CtrlPresentacio {
         return ctrlDomini.exportarEnquesta(idUsuari, idEnquesta);
     }
 
-    // funcions pel desplegable de la vistaExportarEnquesta
-    public List<Integer> getIdsEnquestes() {
-        return ctrlDomini.getIdsEnquestes();
-    }
-
-    public List<String> getTitolsEnquestes() {
-        return ctrlDomini.getTitolsEnquestes();
-    }
-
     public List<String> exportarRespostesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         return ctrlDomini.exportarRespostesEnquesta(idEnquesta);
     }
@@ -328,7 +319,7 @@ public class CtrlPresentacio {
         return ctrlDomini.obtenirRespostesEnquesta(idEnquesta);
     }
 
-    public List<String> obtenirInfoEnquesta(int idEnquesta) {
-        return ctrlDomini.obtenirInfoEnquesta(idEnquesta);
+    public List<String> obtenirInfoEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
+        return ctrlDomini.consultarEnquestaAmbPreguntes(idEnquesta);
     }
 }
