@@ -328,4 +328,7 @@ public class CtrlPresentacio {
         return ctrlDomini.obtenirRespostesEnquesta(idEnquesta);
     }
 
+    public List<String> obtenirInfoEnquesta(int idEnquesta) {
+        return ctrlDomini.obtenirInfoEnquesta(idEnquesta);
+    }
 }
