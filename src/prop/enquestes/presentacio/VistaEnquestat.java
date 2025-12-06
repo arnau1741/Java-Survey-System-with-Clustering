@@ -15,8 +15,8 @@ public class VistaEnquestat extends JFrame {
     private JButton crearEnquestaButton = new JButton("Crear Enquesta");
     private JButton consultarPerfilButton = new JButton("Consultar Perfil");
     private JButton respondreEnquestaButton = new JButton("Responder Enquesta");
-    private JButton exportarRespostesButton = new JButton("Export Respostes");
-    private JButton exportarEnquestatButton = new JButton("Export Enquesta");
+    private JButton exportarRespostesButton = new JButton("Exportar Respostes");
+    private JButton exportarEnquestatButton = new JButton("Exportar Enquesta");
     private JButton consultarRespostesButton = new JButton("Consultar Respostes");
     private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
     private JButton sortirButton = new JButton("Sortir");

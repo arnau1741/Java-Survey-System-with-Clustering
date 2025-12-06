@@ -207,7 +207,7 @@ public class CtrlPresentacio {
         ctrlDomini.crearEnquesta(titol, descripcio, idCreador, preguntes);
     }
 
-    public int importarEnquesta(int idUsuari, String nombreArchivo)
+    public int importarEnquesta(String nombreArchivo)
             throws FileNotFound, InvalidFormatEnquesta {
         String Base_path = "Pruebas";
 

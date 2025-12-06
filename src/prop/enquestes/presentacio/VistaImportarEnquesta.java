@@ -112,7 +112,7 @@ public class VistaImportarEnquesta extends JDialog {
         }
 
         try {
-            int numPreguntes = ctrl.importarEnquesta(idUsuari, relativePath);
+            int numPreguntes = ctrl.importarEnquesta(relativePath);
 
             JOptionPane.showMessageDialog(this,
                     "Enquesta importada correctament!\nPreguntes importades: " + numPreguntes,
