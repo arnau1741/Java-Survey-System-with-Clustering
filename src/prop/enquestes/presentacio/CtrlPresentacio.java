@@ -33,6 +33,7 @@ public class CtrlPresentacio {
     private VistaEnquestesExtresAdmin vistaEnquestesExtresAdmin;
     private VistaRespondreEnquesta vistaRespondreEnquesta;
     private VistaExportarRespostes vistaExportarRespostes;
+    private VistaImportarRespostes vistaImportarRespostes;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -139,6 +140,11 @@ public class CtrlPresentacio {
     public void mostrarExportarRespostes(int idUsuari) {
         vistaExportarRespostes = new VistaExportarRespostes(this, idUsuari);
         vistaExportarRespostes.setVisible(true);
+    }
+
+    public void mostrarImportarRespostes(int idUsuari) {
+        vistaImportarRespostes = new VistaImportarRespostes(this, idUsuari);
+        vistaImportarRespostes.setVisible(true);
     }
 
     // ======================
@@ -303,6 +309,28 @@ public class CtrlPresentacio {
             throw new FileNotFound("Error llegint el fitxer: " + e.getMessage());
         } catch (NumberFormatException e) {
             throw new InvalidFormatEnquesta("Format numèric incorrecte: " + e.getMessage());
+        }
+    }
+
+    public int importarRespostes(String nombreArchivo, int idUsuari, int idEnquesta)
+            throws FileNotFound, InvalidFormatEnquesta, EnquestaNoExisteixException {
+        String Base_path = "Pruebas";
+
+        // Construir ruta completa
+        String rutaCompleta = Base_path + File.separator + nombreArchivo + ".txt";
+        File archivo = new File(rutaCompleta);
+
+        if (!archivo.exists()) {
+            throw new FileNotFound("No s'ha trobat el fitxer: " + rutaCompleta);
+        }
+
+        try {
+            int numRespostes = ctrlDomini.importarRespostes(idUsuari, rutaCompleta, idEnquesta);
+            return numRespostes;
+        } catch (NumberFormatException e) {
+            throw new InvalidFormatEnquesta("Format numèric incorrecte: " + e.getMessage());
+        } catch (EnquestaNoExisteixException e) {
+            throw new EnquestaNoExisteixException("L'enquesta no existeix: " + e.getMessage());
         }
     }
 
