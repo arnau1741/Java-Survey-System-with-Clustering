@@ -83,7 +83,7 @@ public class VistaEnquestat extends JFrame {
         });
 
         respondreEnquestaButton.addActionListener(e -> {
-            // ctrl.mostrarRespondreEnquesta();
+            ctrl.mostrarRespondreEnquesta(idUsuari);
         });
 
         exportarRespostesButton.addActionListener(e -> {
@@ -91,7 +91,7 @@ public class VistaEnquestat extends JFrame {
         });
 
         exportarEnquestatButton.addActionListener(e -> {
-            //ctrl.mostrarExportarEnquestes;
+            ctrl.mostrarExportarEnquesta(idUsuari);
         });
 
         consultarRespostesButton.addActionListener(e -> {

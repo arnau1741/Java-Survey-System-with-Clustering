@@ -83,11 +83,11 @@ public class VistaEnquestador extends JFrame {
         });
 
         exportarEnquestatButton.addActionListener(e -> {
-            //ctrl.mostrarExportarEnquestes;
+            ctrl.mostrarExportarEnquesta(idUsuari);
         });
 
         importarRespostesButton.addActionListener(e -> {
-            //ctrl.mostrarImportarRespostes();
+            // ctrl.mostrarImportarRespostes();
         });
 
         consultarRespostesButton.addActionListener(e -> {
