@@ -320,8 +320,8 @@ public class CtrlPresentacio {
     }
 
     ///////Persistencia
-    public void exportarRespostesAFitxer(int idEnquesta, String path) throws Exception {
-        ctrlDomini.exportarRespostesAFitxer(idEnquesta, path);
+    public void exportarRespostesAFitxer(int idUsuari, int idEnquesta, String path) throws Exception {
+        ctrlDomini.exportarRespostesAFitxer(idUsuari, idEnquesta, path);
     }
 
     public List<String> obtenirRespostesEnquesta(int idEnquesta) {
