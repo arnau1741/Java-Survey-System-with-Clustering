@@ -540,6 +540,16 @@ public class CtrlDomini {
         return result;
     }
 
+    public List<String> consultarPreguntes(Integer idEnquesta) throws EnquestaNoExisteixException {
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
+
+        return enq.getTextPreguntes();
+    }
+
     /**
      * Funcio per a consultar les enquestes amb preguntes i respostes
      * @param idEnquesta identificador de l'enquesta

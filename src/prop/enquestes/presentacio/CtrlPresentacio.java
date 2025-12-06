@@ -191,6 +191,10 @@ public class CtrlPresentacio {
         return ctrlDomini.consultarEnquestaAmbPreguntes(idEnquesta);
     }
 
+    public List<String> obtenirPreguntes(int idEnquesta) throws EnquestaNoExisteixException {
+        return ctrlDomini.consultarPreguntes(idEnquesta);
+    }
+
     public void eliminarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException {
         ctrlDomini.eliminarEnquesta(idUsuari, idEnquesta);
     }
@@ -308,6 +312,10 @@ public class CtrlPresentacio {
 
     public List<String> exportarRespostesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         return ctrlDomini.exportarRespostesEnquesta(idEnquesta);
+    }
+
+    public void respondreEnquesta(int idEnquestat, int idEnquesta, List<String> respostes) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+        ctrlDomini.respondreEnquesta(idEnquestat, idEnquesta, respostes);
     }
 
     ///////Persistencia

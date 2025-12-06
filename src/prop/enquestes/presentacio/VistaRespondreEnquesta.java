@@ -9,6 +9,9 @@ public class VistaRespondreEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
     private int idUsuari;
     private int idEnquestaActual = -1;
+    private List<String> preguntes;
+    private List<String> respostes;
+    private int preguntaActual = 0;
 
     private JPanel contentPane;
     private JComboBox<String> comboEnquestes;
@@ -17,6 +20,7 @@ public class VistaRespondreEnquesta extends JDialog {
     private JTextArea areaInfo;
     private JButton buttonOK = new JButton("OK");
     private JButton buttonCancel = new JButton("Cancel");
+    private JButton buttonFinalitzar = new JButton("Finalitzar");
 
     private JTextArea areaPreguntas;
     private JTextField respuesta;
@@ -27,25 +31,14 @@ public class VistaRespondreEnquesta extends JDialog {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
 
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-
         inicializarComponentes();
         cargarEnquestes();
+        setTitle("Respondre Enquesta");
+        setModal(true);
+        setContentPane(contentPane);
+        getRootPane().setDefaultButton(buttonOK);
+
         configurarListeners();
-
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -61,6 +54,9 @@ public class VistaRespondreEnquesta extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        pack();
+        setLocationRelativeTo(null);
     }
 
     private void inicializarComponentes() {
@@ -144,6 +140,10 @@ public class VistaRespondreEnquesta extends JDialog {
         panelPrincipal.add(panelPreguntas);
         panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
 
+        buttonFinalitzar = new JButton("Finalitzar");
+        buttonFinalitzar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonFinalitzar.setVisible(false); // Amagat inicialment
+        panelPreguntas.add(buttonFinalitzar);
 
         // ========== BOTÓN CERRAR ==========
         JPanel panelCerrar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -178,7 +178,28 @@ public class VistaRespondreEnquesta extends JDialog {
     }
 
     private void configurarListeners() {
-        buttonMostrarInfo.addActionListener(e -> mostrarInfoEnquesta());
+        buttonMostrarInfo.addActionListener(e -> {
+            mostrarInfoEnquesta();
+
+            try {
+                // 1) Carregar les preguntes reals de l’enquesta
+                preguntes = ctrl.obtenirPreguntes(idEnquestaActual);
+
+                // 2) Inicialitzar respostes i índex
+                respostes = new java.util.ArrayList<>();
+                preguntaActual = 0;
+
+                // 3) Mostrar la primera pregunta
+                mostrarPregunta();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                        "No s'han pogut carregar les preguntes:\n" + ex.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
 
         comboEnquestes.addActionListener(e -> {
             String seleccionado = (String) comboEnquestes.getSelectedItem();
@@ -198,6 +219,28 @@ public class VistaRespondreEnquesta extends JDialog {
                 areaInfo.setText("");
             }
         });
+
+        buttonAfegirResposta.addActionListener(e -> {
+            String resp = respuesta.getText().trim();
+            if (resp.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Escriu una resposta",
+                        "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Guardar resposta
+            respostes.add(resp);
+            // Passar a la següent
+            preguntaActual++;
+            // Mostrar-la
+            mostrarPregunta();
+        });
+
+        buttonFinalitzar.addActionListener(e -> {
+            enviarRespostes();
+        });
+
     }
 
     private void mostrarInfoEnquesta() {
@@ -241,11 +284,45 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
-    // get preguntas
+    private void mostrarPregunta() {
+        if (preguntes == null || preguntes.isEmpty()) {
+            areaPreguntas.setText("No hi ha preguntes en aquesta enquesta.");
+            return;
+        }
+
+        if (preguntaActual < preguntes.size()) {
+            areaPreguntas.setText(preguntes.get(preguntaActual));
+            respuesta.setText("");
+        }
+        else {
+            // Hem acabat totes les preguntes
+            areaPreguntas.setText("Has completat l’enquesta!");
+            respuesta.setEnabled(false);
+            buttonAfegirResposta.setVisible(false);
+            buttonFinalitzar.setVisible(true);
+        }
+    }
+
+    private void enviarRespostes() {
+        try {
+            ctrl.respondreEnquesta(idUsuari, idEnquestaActual, respostes);
+
+            JOptionPane.showMessageDialog(this,
+                    "Respostes enviades correctament!",
+                    "Èxit",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error enviant respostes:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void onOK() {
         // add your code here
-        // llamar control presentacion para obtener las preguntas
         dispose();
     }
 

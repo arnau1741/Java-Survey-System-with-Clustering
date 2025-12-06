@@ -174,6 +174,16 @@ public class Enquesta {
         return textsPreguntes;
     }
 
+    public List<String> getTextPreguntes(){
+        List<String> textsPreguntes = new ArrayList<>();
+
+        for (Pregunta p : preguntes) {
+            textsPreguntes.add(p.getText());
+        }
+
+        return textsPreguntes;
+    }
+
     /**
      * Afegeix les respostes d'un usuari a les preguntes de l'enquesta
      * @param idUsuari de l'usuari
