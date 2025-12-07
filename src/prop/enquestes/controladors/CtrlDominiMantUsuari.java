@@ -8,11 +8,15 @@ public class CtrlDominiMantUsuari {
     private Map<String, Integer> nomUsuariToID;
     private Integer ultimID=0;
 
+    private Set<String> emailsVetats;
+
     /**
      * Constructor de la classe CtrlDominiMantUsuari
      */
     public CtrlDominiMantUsuari() {
         usuaris = new HashMap<>();
+        nomUsuariToID = new HashMap<>();
+        emailsVetats = new HashSet<>();
     }
 
     //////////////////////////// Persistencia
@@ -24,6 +28,39 @@ public class CtrlDominiMantUsuari {
         return usuaris;
     }
     ////////////////////////////
+
+    /**
+     * Vetar un usuari pel seu id
+     * @param idUsuari
+     */
+    public void vetarUsuari(int idUsuari){
+        Usuari u = usuaris.get(idUsuari);
+        if(u != null){
+            u.setBlocked(true);
+            emailsVetats.add(u.getEmail());
+        }
+    }
+
+    /**
+     * Desvetar un usuari pel seu id
+     * @param idUsuari
+     */
+    public void desvetarUsuari(int idUsuari){
+        Usuari u = usuaris.get(idUsuari);
+        if(u != null){
+            u.setBlocked(false);
+            emailsVetats.remove(u.getEmail());
+        }
+    }
+
+    /**
+     * Comprova si un email està vetat
+     * @param email a comprovar
+     * @return true si està vetat, false en cas contrari
+     */
+    public boolean esEmailVetat(String email){
+        return emailsVetats.contains(email);
+    }
 
     /**
      * Afegeix un usuari al sistema
@@ -108,25 +145,16 @@ public class CtrlDominiMantUsuari {
         else return "ENQUESTAT";
     }
 
-    /**
-     * Substitueix un usuari antic per un usuari nou
-     * Aquesta funcio canviarà quan s'apliqui el patro estat en futures entregues
-     * @param usuariAntic a ser substituït
-     * @param usuariNou a substituir
-     */
-    public void substituirUsuari(Usuari usuariAntic, Usuari usuariNou) {
-        usuaris.put(usuariAntic.getId(), usuariNou);
-    }
-
     public int iniciarSessio(String nomUsuari, String password){
         //comprovem si existeix un usuari amb nomUsuari
         if (!nomUsuariToID.containsKey(nomUsuari)) return -1;
         Integer id = nomUsuariToID.get(nomUsuari);
         String correctPassword = usuaris.get(id).getContrasenya();
+        Usuari us = usuaris.get(id);
+        if(us.isBlocked()) return -3;
 
         //comprovem password
         if(correctPassword.equals(password)) {
-            Usuari us = usuaris.get(id);
             return us.getId();
         }
         else return -2;

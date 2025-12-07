@@ -53,6 +53,56 @@ public class CtrlDomini {
     }
 
     /**
+     * Funcio per a vetar un usuari
+     * @param idExecutor
+     * @param nomObjectiu
+     * @return 1 si s'ha vetat correctament, -1 si l'usuari executor o objectiu no existeix, -2 si l'usuari executor no és moderador
+     */
+    public int vetarUsuari(int idExecutor, String nomObjectiu) {
+        Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
+        if(executor == null || executor.getId() < 0){
+            return -1;
+        }
+
+        if(executor.isBlocked()){
+            return -2;
+        }
+
+        if(!executor.esModerador()){
+            return -2;
+        }
+        Usuari objectiu = ctrlDominiMantUsuari.getUsuariPerNom(nomObjectiu);
+        if(objectiu == null) return -1;
+        ctrlDominiMantUsuari.vetarUsuari(objectiu.getId());
+        return 1;
+    }
+
+    /**
+     * Funcio per a desvetar un usuari
+     * @param idExecutor
+     * @param nomObjectiu
+     * @return 1 si s'ha desvetat correctament, -1 si l'usuari executor o objectiu no existeix, -2 si l'usuari executor no és moderador
+     */
+    public int desvetarUsuari(int idExecutor, String nomObjectiu) {
+        Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
+        if(executor == null || executor.getId() < 0){
+            return -1;
+        }
+
+        if(executor.isBlocked()){
+            return -2;
+        }
+
+        if(!executor.esModerador()){
+            return -2;
+        }
+        Usuari objectiu = ctrlDominiMantUsuari.getUsuariPerNom(nomObjectiu);
+        if(objectiu == null) return -1;
+        ctrlDominiMantUsuari.desvetarUsuari(objectiu.getId());
+        return 1;
+    }
+
+    /**
      * Retorna les preguntes de l'enquesta amb id donat
      * 
      * @param idEnquesta Identificador de l'enquesta
@@ -85,6 +135,11 @@ public class CtrlDomini {
     public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari)
             throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u.isBlocked()) {
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " està vetat i no pot respondre enquestes.");
+        }
+
         if (!u.esAdmin() && !u.esEnquestat()) {
             throw new IllegalArgumentException(
                     "L'usuari amb id " + idUsuari + " no té permís per respondre enquestes.");
@@ -118,6 +173,10 @@ public class CtrlDomini {
 
     public int crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idCreador);
+        if(u.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idCreador + " està vetat i no pot crear enquestes.");
+        }
 
         if (u.esEnquestador()) {
             throw new IllegalArgumentException("L'usuari amb id " + idCreador + " no té permís per crear enquestes.");
@@ -209,6 +268,10 @@ public class CtrlDomini {
 
     public List<String> exportarEnquesta(Integer idEnquesta, int idUsuari) throws EnquestaNoExisteixException {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " està vetat i no pot exportar enquestes.");
+        }
 
         if (u.getId() < 0) {
             throw new IllegalArgumentException(
@@ -221,7 +284,10 @@ public class CtrlDomini {
     //////////////// Persistencia
     public void exportarRespostesAFitxer(int idUsuari, int idEnquesta, String path) throws Exception {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
-
+        if(u.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " està vetat i no pot exportar respostes.");
+        }
         if (u.getId() < 0) {
             throw new IllegalArgumentException(
                     "L'usuari amb id " + idUsuari + " no pot exportar respostes perquè és anònim.");
@@ -326,13 +392,17 @@ public class CtrlDomini {
         return numRespostes; // Èxit
     }
 
-    public int importarRespostes(int idUsuari, String path, Integer idEnquesta)
-            throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+    public int importarRespostes(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " està vetat i no pot importar respostes.");
+        }
 
         if (u.esEnquestat()) {
             throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per importar respostes.");
         }
+
         if (u.getId() < 0) {
             throw new IllegalArgumentException(
                     "L'usuari amb id " + idUsuari + " no pot importar respostes perquè és anònim.");
@@ -365,6 +435,10 @@ public class CtrlDomini {
 
     public void eliminarEnquesta(int idUsuari, Integer idEnquesta) throws EnquestaNoExisteixException {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " està vetat i no pot eliminar enquestes.");
+        }
 
         if (!u.esAdmin() && !u.esModerador()) {
             throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per eliminar enquestes.");
@@ -373,8 +447,6 @@ public class CtrlDomini {
             throw new IllegalArgumentException(
                     "L'usuari amb id " + idUsuari + " no pot eliminar enquestes perquè és anònim.");
         }
-
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
         if (u.esAdmin()) {
             if (!u.teEnquestaAdministrada(idEnquesta)) {
@@ -413,6 +485,10 @@ public class CtrlDomini {
     public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int idxPregunta, List<String> novaPregunta)
             throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " està vetat i no pot modificar preguntes d'enquestes.");
+        }
 
         if (!u.esAdmin() && !u.esModerador()) {
             throw new IllegalArgumentException(
@@ -464,6 +540,15 @@ public class CtrlDomini {
             throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         Usuari afectat = ctrlDominiMantUsuari.getUsuari(idEnquestat);
+        if(u.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " està vetat i no pot esborrar respostes d'enquestes.");
+        }
+
+        if(afectat.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idEnquestat + " està vetat i no se li pot aplicar cap canvi.");
+        }
 
         if (!afectat.teEnquestaRealitzada(idEnquesta)) {
             throw new IllegalArgumentException(
@@ -527,6 +612,11 @@ public class CtrlDomini {
     public Map<Integer, Integer> clustering(int idUsuari, Integer idEnquesta, int k, int maxIterations)
             throws EnquestaNoExisteixException, KmeansExcepcio {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+
+        if(u.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " està vetat i no pot realitzar clustering.");
+        }
 
         if (u.getId() < 0) {
             throw new IllegalArgumentException(
@@ -1009,6 +1099,11 @@ public class CtrlDomini {
             throw new IllegalArgumentException("L'executor no és vàlid.");
         }
 
+        if(executor.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idExecutor + " està vetat i no pot assignar enquestadors.");
+        }
+
         if (!executor.esAdmin() && !executor.esModerador()) {
             throw new IllegalArgumentException(
                     "L'usuari amb id " + idExecutor + " no té permisos per assignar enquestadors.");
@@ -1027,6 +1122,15 @@ public class CtrlDomini {
             throw new IllegalArgumentException("L'usuari destinatari '" + nomTarget + "' no existeix.");
         }
         Usuari target = ctrlDominiMantUsuari.getUsuariPerNom(nomTarget);
+
+        if (target == null || target.getId() < 0) {
+            throw new IllegalArgumentException("L'executor no és vàlid.");
+        }
+
+        if (target.isBlocked()) {
+            throw new IllegalArgumentException(
+                "L'usuari destinatari '" + nomTarget + "' està vetat i no se li pot donar poders.");
+        }
 
         if (target.esAdmin() || target.esModerador()) {
             throw new IllegalArgumentException("No es pot fer Enquestador a un usuari que ja és Admin o Moderador.");
@@ -1047,6 +1151,11 @@ public class CtrlDomini {
             throw new IllegalArgumentException("L'executor no és vàlid.");
         }
 
+        if(executor.isBlocked()){
+            throw new IllegalArgumentException(
+                "L'usuari amb id " + idExecutor + " està vetat i no pot nomenar administradors.");
+        }
+
         if (!executor.esAdmin() && !executor.esModerador()) {
             throw new IllegalArgumentException(
                     "L'usuari amb id " + idExecutor + " no té permisos per nomenar administradors.");
@@ -1065,6 +1174,15 @@ public class CtrlDomini {
             throw new IllegalArgumentException("L'usuari destinatari '" + nomTarget + "' no existeix.");
         }
         Usuari target = ctrlDominiMantUsuari.getUsuariPerNom(nomTarget);
+
+        if (target == null || target.getId() < 0) {
+            throw new IllegalArgumentException("L'executor no és vàlid.");
+        }
+
+        if(target.isBlocked()){
+            throw new IllegalArgumentException(
+                "L'usuari destinatari '" + nomTarget + "' està vetat i no se li pot donar poders.");
+        }
 
         if (target.esModerador()) {
             throw new IllegalArgumentException("No es pot canviar el rol d'un Moderador.");
