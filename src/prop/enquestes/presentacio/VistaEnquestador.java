@@ -87,7 +87,7 @@ public class VistaEnquestador extends JFrame {
         });
 
         importarRespostesButton.addActionListener(e -> {
-            // ctrl.mostrarImportarRespostes();
+            ctrl.mostrarImportarRespostes(idUsuari);
         });
 
         consultarRespostesButton.addActionListener(e -> {
