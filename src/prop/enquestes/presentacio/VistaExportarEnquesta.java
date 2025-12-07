@@ -1,10 +1,13 @@
 package prop.enquestes.presentacio;
 
+import prop.enquestes.excepcions.EnquestaNoExisteixException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,11 @@ public class VistaExportarEnquesta extends JDialog {
         setContentPane(contentPane);
 
         initLayout();
-        cargarEnquestes();
+        try {
+            cargarEnquestes();
+        } catch (EnquestaNoExisteixException e) {
+            throw new RuntimeException(e);
+        }
         initActions();
 
         setSize(600, 500);
@@ -76,25 +83,22 @@ public class VistaExportarEnquesta extends JDialog {
         contentPane.add(bottom, BorderLayout.SOUTH);
     }
 
-    private void cargarEnquestes() {
+    private void cargarEnquestes() throws EnquestaNoExisteixException {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
 
-        try {
-            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
-            for (String info : enquestasInfo) {
-                // Buscamos la línea exacta que empieza por "ID:"
-                String[] lineas = info.split("\n");
-                for (String linea : lineas) {
-                    if (linea.trim().startsWith("ID:")) {
-                        comboEnquestes.addItem(linea); // SOLO esta línea
-                        break; // Muy importante
-                    }
+
+        List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
+        for (String info : enquestasInfo) {
+            String[] lineas = info.split("\n");
+            for (String linea : lineas) {
+                if (linea.trim().startsWith("ID:")) {
+                    comboEnquestes.addItem(linea);
+                    break;
                 }
             }
-        } catch (Exception e) {
-            // Puedes ignorarlo
         }
+
     }
 
     private void initActions () {
@@ -130,8 +134,8 @@ public class VistaExportarEnquesta extends JDialog {
                 sb.append(line).append("\n");
             }
             areaPreview.setText(sb.toString());
-        } catch (Exception ex) {
-            areaPreview.setText("Error al carregar la informació de l'enquesta.");
+        } catch (EnquestaNoExisteixException ex) {
+            areaPreview.setText("Error al carregar la informació de l'enquesta. Info: " + ex.getMessage());
         }
     }
 
@@ -161,14 +165,14 @@ public class VistaExportarEnquesta extends JDialog {
             try (FileWriter fw = new FileWriter(outputPath)) {
                 for (String s : contingut)
                     fw.write(s + "\n");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
             JOptionPane.showMessageDialog(this,
                     "Enquesta exportada a:\n" + outputPath,
                     "Èxit",
                     JOptionPane.INFORMATION_MESSAGE);
-
-        } catch (Exception ex) {
+        } catch (EnquestaNoExisteixException ex) {
             JOptionPane.showMessageDialog(this,
                     "Error exportant: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);

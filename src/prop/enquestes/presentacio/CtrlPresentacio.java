@@ -213,8 +213,9 @@ public class CtrlPresentacio {
         ctrlDomini.modificarPreguntaEnquesta(idUsuari, idEnquesta, indexPregunta, novaPreguntaText);
     }
 
-    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
-        ctrlDomini.crearEnquesta(titol, descripcio, idCreador, preguntes);
+    public int crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
+        int id = ctrlDomini.crearEnquesta(titol, descripcio, idCreador, preguntes);
+        return id;
     }
 
     public int importarEnquesta(String nombreArchivo)

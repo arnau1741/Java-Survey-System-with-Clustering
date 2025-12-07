@@ -7,7 +7,6 @@ public class RespostaMultiple extends Resposta{
 
     /**
      * Constructor de la classe RespostaMultiple
-     * @param numOpcions nombre d'opcions disponibles
      */
     public RespostaMultiple() {
         super();

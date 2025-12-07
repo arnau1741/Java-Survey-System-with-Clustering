@@ -5,7 +5,6 @@ public class RespostaOrdenada extends Resposta {
 
     /**
      * Constructor de la classe RespostaOrdenada
-     * @param numOpcions nombre d'opcions disponibles
      */
     public RespostaOrdenada() {
         super();

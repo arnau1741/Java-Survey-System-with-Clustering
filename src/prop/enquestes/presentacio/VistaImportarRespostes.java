@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.util.List;
 
+import prop.enquestes.excepcions.EnquestaNoExisteixException;
 import prop.enquestes.excepcions.FileNotFound;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
 
@@ -116,7 +117,7 @@ public class VistaImportarRespostes extends JDialog {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (EnquestaNoExisteixException e) {
             JOptionPane.showMessageDialog(this,
                     "Error carregant enquestes: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -161,7 +162,7 @@ public class VistaImportarRespostes extends JDialog {
                     "El fitxer té un format de resposta incorrecte:\n" + e.getMessage(),
                     "Format invàlid",
                     JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
+        } catch (EnquestaNoExisteixException e) {
             JOptionPane.showMessageDialog(this,
                     "Error: " + e.getMessage(),
                     "Error",

@@ -1,10 +1,13 @@
 package prop.enquestes.presentacio;
 
+import prop.enquestes.excepcions.EnquestaNoExisteixException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileWriter;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +87,6 @@ public class VistaExportarRespostes extends JDialog {
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
-
         try {
             List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
             for (String info : enquestasInfo) {
@@ -97,8 +99,10 @@ public class VistaExportarRespostes extends JDialog {
                     }
                 }
             }
-        } catch (Exception e) {
-            // Puedes ignorarlo
+        } catch (EnquestaNoExisteixException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error exportant: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -132,18 +136,11 @@ public class VistaExportarRespostes extends JDialog {
     }
 
     private void mostrarInfoRespostes() {
+        List<String> res = ctrl.obtenirRespostesEnquesta(idEnquestaActual);
+        StringBuilder sb = new StringBuilder();
 
-        try {
-            List<String> res = ctrl.obtenirRespostesEnquesta(idEnquestaActual);
-
-            StringBuilder sb = new StringBuilder();
-            for (String s : res) sb.append(s).append("\n");
-
-            areaPreview.setText(sb.toString());
-
-        } catch (Exception ex) {
-            areaPreview.setText("Error obtenint respostes.");
-        }
+        for (String s : res) sb.append(s).append("\n");
+        areaPreview.setText(sb.toString());
     }
 
     private int extraerIdEnquesta(String texto) {
@@ -172,6 +169,8 @@ public class VistaExportarRespostes extends JDialog {
             try (FileWriter fw = new FileWriter(outputPath)) {
                 for (String s : contingut)
                     fw.write(s + "\n");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             JOptionPane.showMessageDialog(this,
@@ -179,7 +178,7 @@ public class VistaExportarRespostes extends JDialog {
                     "Èxit",
                     JOptionPane.INFORMATION_MESSAGE);
 
-        } catch (Exception ex) {
+        } catch (EnquestaNoExisteixException ex) {
             JOptionPane.showMessageDialog(this,
                     "Error exportant: " + ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);

@@ -42,7 +42,13 @@ public class VistaCrearEnquesta extends JDialog {
         pack();
         setLocationRelativeTo(null);
 
-        buttonOK.addActionListener(e -> onOK());
+        buttonOK.addActionListener(e -> {
+            try {
+                onOK();
+            } catch (InvalidFormatEnquesta ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         buttonCancel.addActionListener(e -> onCancel());
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -181,7 +187,7 @@ public class VistaCrearEnquesta extends JDialog {
         });
     }
 
-    private void onOK() {
+    private void onOK() throws InvalidFormatEnquesta {
         String titol = titolEnq.getText().trim();
         if (titol.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Has d'introduir un títol.");
@@ -196,16 +202,12 @@ public class VistaCrearEnquesta extends JDialog {
 
         List<String> preguntesTxt = getPreguntes();
 
-        try {
-            ctrl.crearEnquesta(titol, descripcio, idCreador, preguntesTxt);
+        int result = ctrl.crearEnquesta(titol, descripcio, idCreador, preguntesTxt);
+        if(result == 1) {
             JOptionPane.showMessageDialog(this, "Enquesta creada correctament!");
             dispose();
-        } catch (InvalidFormatEnquesta e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error al crear l'enquesta: " + e.getMessage(),
-                    "Format invàlid",
-                    JOptionPane.ERROR_MESSAGE);
         }
+        else throw new InvalidFormatEnquesta();
     }
 
     private void onCancel() {

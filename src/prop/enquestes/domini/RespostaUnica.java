@@ -6,7 +6,6 @@ public class RespostaUnica extends Resposta {
 
     /**
      * Constructor de la classe RespostaUnica
-     * @param numOpcions nombre d'opcions disponibles
      */
     public RespostaUnica() {
         super();
