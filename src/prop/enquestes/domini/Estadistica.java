@@ -14,6 +14,7 @@ public class Estadistica {
             System.out.println("L'enquesta és nul·la.");
             return;
         }
+        //push test
 
         System.out.println("==================================================");
         System.out.println("ESTADÍSTIQUES DE L'ENQUESTA: " + enquesta.getTitol());
