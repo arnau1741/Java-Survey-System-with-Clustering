@@ -209,8 +209,8 @@ public class CtrlPresentacio {
         ctrlDomini.esborrarRespostaEnquesta(idUsuari, idEnquesta, idEnquestat);
     }
 
-    public void modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int indexPregunta, List<String> novaPreguntaText) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
-        ctrlDomini.modificarPreguntaEnquesta(idUsuari, idEnquesta, indexPregunta, novaPreguntaText);
+    public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int indexPregunta, List<String> novaPreguntaText) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
+        return ctrlDomini.modificarPreguntaEnquesta(idUsuari, idEnquesta, indexPregunta, novaPreguntaText);
     }
 
     public int crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {

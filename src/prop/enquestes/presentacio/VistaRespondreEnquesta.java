@@ -1,5 +1,8 @@
 package prop.enquestes.presentacio;
 
+import prop.enquestes.excepcions.EnquestaNoExisteixException;
+import prop.enquestes.excepcions.InvalidFormatEnquesta;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -172,8 +175,10 @@ public class VistaRespondreEnquesta extends JDialog {
                     }
                 }
             }
-        } catch (Exception e) {
-            // Puedes ignorarlo
+        } catch (EnquestaNoExisteixException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -192,7 +197,7 @@ public class VistaRespondreEnquesta extends JDialog {
                 // 3) Mostrar la primera pregunta
                 mostrarPregunta();
 
-            } catch (Exception ex) {
+            } catch (EnquestaNoExisteixException ex) {
                 JOptionPane.showMessageDialog(this,
                         "No s'han pogut carregar les preguntes:\n" + ex.getMessage(),
                         "Error",
@@ -262,7 +267,7 @@ public class VistaRespondreEnquesta extends JDialog {
 
             areaInfo.setText(sb.toString());
 
-        } catch (Exception e) {
+        } catch (EnquestaNoExisteixException e) {
             areaInfo.setText("Error: " + e.getMessage());
         }
     }
@@ -313,9 +318,14 @@ public class VistaRespondreEnquesta extends JDialog {
                     JOptionPane.INFORMATION_MESSAGE);
 
             dispose();
-        } catch (Exception ex) {
+        } catch (InvalidFormatEnquesta ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error enviant respostes:\n" + ex.getMessage(),
+                    "Error enviant respostes: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (EnquestaNoExisteixException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }

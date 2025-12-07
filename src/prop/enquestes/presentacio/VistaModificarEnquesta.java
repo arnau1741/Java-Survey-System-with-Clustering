@@ -1,5 +1,9 @@
 package prop.enquestes.presentacio;
 
+import prop.enquestes.excepcions.EnquestaNoExisteixException;
+import prop.enquestes.excepcions.InvalidFormatEnquesta;
+import prop.enquestes.excepcions.UsuariNoHaResposEnquesta;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -250,7 +254,6 @@ public class VistaModificarEnquesta extends JDialog {
             }
         });
 
-        // Botones de acción
         buttonModificarPregunta.addActionListener(e -> modificarPregunta());
         buttonEliminarEnquesta.addActionListener(e -> eliminarEnquesta());
         buttonEliminarResposta.addActionListener(e -> eliminarResposta());
@@ -272,8 +275,11 @@ public class VistaModificarEnquesta extends JDialog {
                     }
                 }
             }
-        } catch (Exception e) {
-            // Puedes ignorarlo
+        } catch (EnquestaNoExisteixException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -296,7 +302,7 @@ public class VistaModificarEnquesta extends JDialog {
 
             areaInfo.setText(sb.toString());
 
-        } catch (Exception e) {
+        } catch (EnquestaNoExisteixException e) {
             areaInfo.setText("Error: " + e.getMessage());
         }
     }
@@ -327,7 +333,6 @@ public class VistaModificarEnquesta extends JDialog {
         }
 
         try {
-            // Validar índice
             String indexText = campIndexPregunta.getText().trim();
             if (indexText.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
@@ -337,7 +342,6 @@ public class VistaModificarEnquesta extends JDialog {
             }
             int idxPregunta = Integer.parseInt(indexText);
 
-            // Construir nueva pregunta
             List<String> novaPregunta = new ArrayList<>();
 
             // Tipo
@@ -399,24 +403,25 @@ public class VistaModificarEnquesta extends JDialog {
             }
 
             // Llamar al controlador
-            ctrl.modificarPreguntaEnquesta(idUsuariActual, idEnquestaActual, idxPregunta, novaPregunta);
+            int result = ctrl.modificarPreguntaEnquesta(idUsuariActual, idEnquestaActual, idxPregunta, novaPregunta);
+            if (result == 1) {
+                JOptionPane.showMessageDialog(this,
+                        "Pregunta modificada correctament",
+                        "Èxit", JOptionPane.INFORMATION_MESSAGE);
 
+                // Refrescar
+                mostrarInfoEnquesta();
+                campIndexPregunta.setText("");
+                campTextPregunta.setText("");
+                campNumOpcions.setText("");
+                campOpcionsPregunta.setText("");
+            }
+
+        } catch (InvalidFormatEnquesta e) {
             JOptionPane.showMessageDialog(this,
-                    "Pregunta modificada correctament",
-                    "Èxit", JOptionPane.INFORMATION_MESSAGE);
-
-            // Refrescar
-            mostrarInfoEnquesta();
-            campIndexPregunta.setText("");
-            campTextPregunta.setText("");
-            campNumOpcions.setText("");
-            campOpcionsPregunta.setText("");
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Valors numèrics incorrectes",
+                    "Error del format: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
+        } catch (EnquestaNoExisteixException e) {
             JOptionPane.showMessageDialog(this,
                     "Error: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -452,7 +457,7 @@ public class VistaModificarEnquesta extends JDialog {
                 labelIdActual.setText("ID: --");
                 areaInfo.setText("");
 
-            } catch (Exception e) {
+            } catch (EnquestaNoExisteixException e) {
                 JOptionPane.showMessageDialog(this,
                         "Error: " + e.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
@@ -494,11 +499,11 @@ public class VistaModificarEnquesta extends JDialog {
 
                 campIdEnquestat.setText("");
             }
-        } catch (NumberFormatException e) {
+        } catch (UsuariNoHaResposEnquesta e) {
             JOptionPane.showMessageDialog(this,
-                    "ID invàlid",
+                    "Error en l'usuari: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
+        } catch (EnquestaNoExisteixException e) {
             JOptionPane.showMessageDialog(this,
                     "Error: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
