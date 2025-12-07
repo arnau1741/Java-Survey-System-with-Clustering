@@ -78,41 +78,53 @@ public class Enquesta {
                 }
             } else if (tipusPregunta == 1) { // UNICA
                 if (r == null || r.isEmpty()) {
-                    RespostaUnica respostaUnica = new RespostaUnica(preguntes.get(index).getNumOpcions());
+                    RespostaUnica respostaUnica = new RespostaUnica();
                     respostesObj.add(respostaUnica);
                     continue;
                 }
                 int numOpcions = preguntes.get(index).getNumOpcions();
-                RespostaUnica respostaUnica = new RespostaUnica(numOpcions);
-                respostaUnica.setResposta(Integer.parseInt(r));
+                int resposta = Integer.parseInt(r);
+
+                if (resposta < 0 || resposta >= numOpcions) {
+                    throw new IllegalArgumentException("Resposta única invàlida: " + r);
+                }
+
+                RespostaUnica respostaUnica = new RespostaUnica();
+                respostaUnica.setResposta(resposta);
                 respostesObj.add(respostaUnica);
             } else if (tipusPregunta == 2) { // ORDENADA
                 if (r == null || r.isEmpty()) {
-                    int numOpcions = preguntes.get(index).getNumOpcions();
-                    RespostaOrdenada respostaOrdenada = new RespostaOrdenada(numOpcions);
+                    RespostaOrdenada respostaOrdenada = new RespostaOrdenada();
                     respostesObj.add(respostaOrdenada);
                     continue;
                 }
                 int numOpcions = preguntes.get(index).getNumOpcions();
-                RespostaOrdenada respostaOrdenada = new RespostaOrdenada(numOpcions);
-                respostaOrdenada.setResposta(Integer.parseInt(r));
+                int resposta = Integer.parseInt(r); 
+                if (resposta < 0 || resposta >= numOpcions) {
+                    throw new IllegalArgumentException("Resposta ordenada invàlida: " + r);
+                }
+                RespostaOrdenada respostaOrdenada = new RespostaOrdenada();
+                respostaOrdenada.setResposta(resposta);
                 respostesObj.add(respostaOrdenada);
             } else if (tipusPregunta == 3) {// MULTIPLE
                 if (r == null || r.isEmpty()) {
-                    int numOpcions = preguntes.get(index).getNumOpcions();
-                    RespostaMultiple respostaMultiple = new RespostaMultiple(numOpcions);
+                    RespostaMultiple respostaMultiple = new RespostaMultiple();
                     respostesObj.add(respostaMultiple);
                     continue;
                 }
                 System.out.println("entra");
                 int numOpcions = preguntes.get(index).getNumOpcions();
-                RespostaMultiple respostaMultiple = new RespostaMultiple(numOpcions);
+                RespostaMultiple respostaMultiple = new RespostaMultiple();
                 // Convertir String a
                 List<Integer> seleccionades = new ArrayList<>();
                 String[] parts = r.split(","); // Suponemos que las opciones están separadas por comas
                 System.out.println("entra2");
                 for (String part : parts) {
-                    seleccionades.add(Integer.parseInt(part.trim()));
+                    int opcio = Integer.parseInt(part.trim());
+                    if (opcio < 0 || opcio >= numOpcions) {
+                        throw new IllegalArgumentException("Resposta múltiple invàlida: " + r);
+                    }
+                    seleccionades.add(opcio);
                 }
                 respostaMultiple.selecciona(seleccionades);
                 respostesObj.add(respostaMultiple);

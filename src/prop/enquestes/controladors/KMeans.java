@@ -308,9 +308,6 @@ public class KMeans{
         }
         Double ordenA = 1.0*a.getOrdre();
         Double ordenB = 1.0*b.getOrdre();
-        if (ordenA == null && ordenB == null) {
-            return 0.0; // Distancia cero si ambas respuestas son nulas
-        }
         if (ordenA == null || ordenB == null) {
             return 1.0; // Distancia máxima si alguna respuesta es nula
         }

@@ -4,3 +4,23 @@ retorna -1 si nomUsuari repetit
 retorna -2 si passaword no compleix els requeriments
 retorna -3 si email ja usat
 retorna enter positiu que representa id si exit.
+
+
+iniciar sessio:
+retorna -1 si nomUsuari incorrecte
+retorna -2 si password incorrecte
+retorna id positiu si tot okay
+
+
+crearEnquesta:
+retorna 0 si format no valid
+retorn 1 si okay
+
+
+
+###############
+ COMENTARIS
+###############
+
+
+

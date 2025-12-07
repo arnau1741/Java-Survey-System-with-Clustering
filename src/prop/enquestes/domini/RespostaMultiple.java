@@ -3,16 +3,14 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class RespostaMultiple extends Resposta{
-    private Integer numOpcions;
     private List<Integer> respostes; //valors entre 0 i numOpcions -1
 
     /**
      * Constructor de la classe RespostaMultiple
      * @param numOpcions nombre d'opcions disponibles
      */
-    public RespostaMultiple(Integer numOpcions) {
+    public RespostaMultiple() {
         super();
-        this.numOpcions = numOpcions;
     }
 
     /**
@@ -23,24 +21,13 @@ public class RespostaMultiple extends Resposta{
     public int selecciona(List<Integer> seleccionat) {
         this.respostes = new ArrayList<>();
         for (Integer opcio : seleccionat) {
-            if (opcio < 0 || opcio >= numOpcions) {
-                return 0; // Opció invàlida
-            }
             this.respostes.add(opcio);
         }
         if(!this.respostes.isEmpty()) setContestat(true);
         return 1;
     }
 
-    /**
-     * Getter del nombre d'opcions
-     * @return nombre d'opcions disponibles
-     */
-    public Integer getNumOpcions() {
-        return numOpcions;
-    }
-
-    /**
+     /**
      * Getter de les respostes seleccionades
      * @return llista d'opcions seleccionades
      */

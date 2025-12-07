@@ -102,7 +102,7 @@ public class CtrlDomini {
         ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
     }
 
-    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
+    public int crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idCreador);
 
         if(u.esEnquestador()){
@@ -113,12 +113,18 @@ public class CtrlDomini {
             throw new IllegalArgumentException("L'usuari amb id " + idCreador + " no pot crear enquestes perquè és anònim.");
         }
 
-        crearEnquestaPrivate(titol, descripcio, idCreador, preguntes);
+        try{
+            crearEnquestaPrivate(titol, descripcio, idCreador, preguntes);
+        }
+        catch (InvalidFormatEnquesta e){
+            return 0;
+        }
 
         Enquesta enq = ctrlDominiMantEnquesta.getUltimaEnquestaCreada();
 
         u.cambiarARolAdmin();
         u.demanarAfegirEnquestaAdministrada(enq);
+        return 1;
     }
 
     /**
@@ -860,13 +866,15 @@ public class CtrlDomini {
         else if (tipus == 1) {
             // unica: convertir a int
             int idxOpcio = p.getOpcions().indexOf(novaResposta);
-            RespostaUnica r = new RespostaUnica(idxOpcio);
+            RespostaUnica r = new RespostaUnica();
+            r.setResposta(idxOpcio);
             enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
         }
         else if (tipus == 2) {
             // ordenada: convertir a int
             int idxOpcio = p.getOpcions().indexOf(novaResposta);
-            RespostaOrdenada r = new RespostaOrdenada(idxOpcio);
+            RespostaOrdenada r = new RespostaOrdenada();
+            r.setResposta(idxOpcio);
             enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
         }
         else if (tipus == 3) {
@@ -877,7 +885,7 @@ public class CtrlDomini {
                 int idx = p.getOpcions().indexOf(part.trim());
                 idxOpcions.add(idx);
             }
-            RespostaMultiple r = new RespostaMultiple(p.getNumOpcions());
+            RespostaMultiple r = new RespostaMultiple();
             r.selecciona(idxOpcions);
             enq.modificarRespostaUsuari(idUsuari, idxPregunta, r);
         }

@@ -1,16 +1,14 @@
 package prop.enquestes.domini;
 import java.util.List;
 public class RespostaOrdenada extends Resposta {
-    private Integer numOpcions;
     private Integer resposta;
 
     /**
      * Constructor de la classe RespostaOrdenada
      * @param numOpcions nombre d'opcions disponibles
      */
-    public RespostaOrdenada(int numOpcions) {
+    public RespostaOrdenada() {
         super();
-        this.numOpcions = numOpcions;
     }
 
     /**
@@ -19,9 +17,6 @@ public class RespostaOrdenada extends Resposta {
      * @return 1 si l'operació és correcta, 0 si l'opció és invàlida
      */
     public int setResposta(Integer resposta) {
-        if (resposta < 0 || resposta >= numOpcions) {
-            return 0; // Opció invàlida
-        }
         this.resposta = resposta;
         setContestat(true);
         return 1;

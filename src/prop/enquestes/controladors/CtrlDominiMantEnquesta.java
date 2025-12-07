@@ -39,7 +39,7 @@ public class CtrlDominiMantEnquesta {
      * @param enquesta a afegir
      * @throws IllegalArgumentException si l'enquesta és nul·la
      */
-    public void addEnquesta(Enquesta enquesta) {
+    private void addEnquesta(Enquesta enquesta) {
         if (enquesta != null) {
             enquestes.put(enquesta.getId(), enquesta);
         } else {
@@ -138,17 +138,16 @@ public class CtrlDominiMantEnquesta {
      * @throws InvalidFormatEnquesta Si el format de l'enquesta és invàlid
      */
     public int novaEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
-        List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntes);
-        int id = getIdEnquestaNova();
-        Enquesta novaEnquesta;
         try{
+            List<Pregunta> preguntesObj = transformaPreguntesAObj(preguntes);
+            int id = getIdEnquestaNova();
+            Enquesta novaEnquesta;
             novaEnquesta = new Enquesta(id, titol, descripcio, idCreador, preguntesObj);
             addEnquesta(novaEnquesta);
             return preguntesObj.size();
         } catch (IllegalArgumentException e) {
             throw new InvalidFormatEnquesta("No s'ha pogut crear l'enquesta: " + e.getMessage());
         }
-
     }
 
     /**

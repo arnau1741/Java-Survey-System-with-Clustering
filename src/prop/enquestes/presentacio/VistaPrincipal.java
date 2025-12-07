@@ -37,6 +37,7 @@ public class VistaPrincipal {
         // === LISTENERS ===
 
         btnIniciarSessio.addActionListener(e -> {
+            System.out.println("Iniciant sessio...");
             iCtrlPresentacio.mostrarVistaIniciarSessio();
         });
 
