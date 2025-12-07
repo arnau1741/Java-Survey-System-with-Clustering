@@ -12,12 +12,12 @@ import prop.enquestes.domini.*;
 import prop.enquestes.excepcions.*;
 import prop.enquestes.persistencia.CtrlPersistencia;
 
-public class CtrlDomini {
+public class DominiCodiErrors {
     private CtrlDominiMantEnquesta ctrlDominiMantEnquesta;
     private CtrlDominiMantUsuari ctrlDominiMantUsuari;
     private CtrlPersistencia ctrlPersistencia;
 
-    public CtrlDomini() {
+    public DominiCodiErrors() {
         ctrlDominiMantEnquesta = new CtrlDominiMantEnquesta();
         ctrlDominiMantUsuari = new CtrlDominiMantUsuari();
         ctrlPersistencia = new CtrlPersistencia();
