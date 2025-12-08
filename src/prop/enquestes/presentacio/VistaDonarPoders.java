@@ -5,6 +5,7 @@ import prop.enquestes.excepcions.EnquestaNoExisteixException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VistaDonarPoders extends JDialog {
@@ -64,7 +65,9 @@ public class VistaDonarPoders extends JDialog {
 
     private void carregarEnquestes() {
         comboEnquestes.removeAllItems();
+        idsEnquestes = new ArrayList<>();
         comboEnquestes.addItem("-- Selecciona --");
+        idsEnquestes.add(-1);
 
         try {
             List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
@@ -72,8 +75,13 @@ public class VistaDonarPoders extends JDialog {
                 // Buscamos la línea exacta que empieza por "ID:"
                 String[] lineas = info.split("\n");
                 for (String linea : lineas) {
-                    if (linea.trim().startsWith("ID:")) {
+                    linea = linea.trim();
+                    if (linea.startsWith("ID:")) {
+                        String part = linea.substring(3).trim();
+                        String idStr = part.split("-")[0].trim();
+                        int id = Integer.parseInt(idStr);
                         comboEnquestes.addItem(linea); // SOLO esta línea
+                        idsEnquestes.add(id);
                         break; // Muy importante
                     }
                 }
