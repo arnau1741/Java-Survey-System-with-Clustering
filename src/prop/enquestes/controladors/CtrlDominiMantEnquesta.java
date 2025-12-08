@@ -15,8 +15,6 @@ public class CtrlDominiMantEnquesta {
     private Map<Integer, Enquesta> enquestes;
     private Integer ultimIdEnquesta = 0;
 
-    // Constructor que inicializa la colección de encuestas
-
     /**
      * Constructor de la classe CtrlDominiMantEnquesta
      */
@@ -24,6 +22,10 @@ public class CtrlDominiMantEnquesta {
         enquestes = new HashMap<>();
     }
 
+    /**
+     * Persistencia
+     * @param enquestes
+     */
     public void setEnquestes(Map<Integer, Enquesta> enquestes) {
         this.enquestes = enquestes;
         int max = -1;
