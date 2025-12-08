@@ -123,6 +123,11 @@ public class CtrlDominiMantUsuari {
         return usuaris.containsKey(IdUsuari);
     }
 
+    /**
+     * Comprova si un email ja està en ús per algun usuari
+     * @param email
+     * @return true si l'email ja està en ús, false en cas contrari
+     */
     public boolean emailUsat(String email){
         for (Usuari u : usuaris.values()) {
             if (u.getEmail().equals(email)) {
@@ -146,6 +151,11 @@ public class CtrlDominiMantUsuari {
         return null;
     }
 
+    /**
+     * Retorna el rol de l'usuari amb l'identificador especificat
+     * @param idUsuari
+     * @return rol de l'usuari
+     */
     public String getRolUsuari(int idUsuari) {
         Usuari u = getUsuari(idUsuari);
         UsuariState rol = u.getRol();
@@ -155,6 +165,12 @@ public class CtrlDominiMantUsuari {
         else return "ENQUESTAT";
     }
 
+    /**
+     * Inicia sessió d'un usuari
+     * @param nomUsuari
+     * @param password
+     * @return codi d'error
+     */
     public int iniciarSessio(String nomUsuari, String password){
         //comprovem si existeix un usuari amb nomUsuari
         if (!nomUsuariToID.containsKey(nomUsuari)) return -1;
@@ -169,7 +185,11 @@ public class CtrlDominiMantUsuari {
         }
         else return -2;
     }
-    
+
+    /**
+     * Genera un nou ID per a un usuari
+     * @return nou ID
+     */
     public int getNouID(){
         int tmp = ultimID;
         ultimID++;
