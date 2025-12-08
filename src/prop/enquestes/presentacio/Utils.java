@@ -712,7 +712,7 @@ public class Utils {
             io.readline();
             io.writeln("Introdueix la nova resposta: (per múltiples respostes, separa-les per comes)");
             String novaResposta = io.readline();
-            int codierr = ctrl.modificarRespostaEnquesta(idEnquesta, idUsuari, idxPregunta, novaResposta);
+            int codierr = ctrl.modificarRespostaEnquesta(idUsuari, idEnquesta, idUsuari, idxPregunta, novaResposta);
             if (codierr == 1) {
                 io.writeln("Resposta modificada correctament.");
             } else {

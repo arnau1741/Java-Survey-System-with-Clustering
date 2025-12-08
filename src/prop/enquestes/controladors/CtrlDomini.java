@@ -128,7 +128,7 @@ public class CtrlDomini {
             throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         }
         enq.afegeixResposta(idUsuari, respostesUsuari);
-        /// ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
+        gestorPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
 
     }
 
@@ -168,7 +168,7 @@ public class CtrlDomini {
     protected void crearEnquestaPrivate(String titol, String descripcio, int idCreador, List<String> preguntes)
             throws InvalidFormatEnquesta { // Final
         this.ctrlDominiMantEnquesta.novaEnquesta(titol, descripcio, idCreador, preguntes);
-        // ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
+        gestorPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
     }
 
     public int crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) {
