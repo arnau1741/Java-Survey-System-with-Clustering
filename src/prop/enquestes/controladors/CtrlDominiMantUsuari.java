@@ -20,6 +20,10 @@ public class CtrlDominiMantUsuari {
     }
 
     //////////////////////////// Persistencia
+    /**
+     * Estableix els usuaris del sistema, funcio de persistencia
+     * @param usuaris
+     */
     public void setUsuaris(Map<Integer, Usuari> usuaris) {
         this.usuaris = usuaris;
         for (Integer id : usuaris.keySet()){
@@ -28,6 +32,10 @@ public class CtrlDominiMantUsuari {
         }
     }
 
+    /**
+     * Retorna els usuaris del sistema, funcio de persistencia
+     * @return usuaris
+     */
     public Map<Integer, Usuari> getUsuaris() {
         return usuaris;
     }
@@ -116,13 +124,11 @@ public class CtrlDominiMantUsuari {
     }
 
     public boolean emailUsat(String email){
-        /*
         for (Usuari u : usuaris.values()) {
-            if (u.getContrasenya().equals(nomUsuari)) {
+            if (u.getEmail().equals(email)) {
                 return true;
             }
         }
-         */
         return false;
     }
 
