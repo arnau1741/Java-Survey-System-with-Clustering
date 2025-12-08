@@ -34,6 +34,7 @@ public class CtrlPresentacio {
     private VistaRespondreEnquesta vistaRespondreEnquesta;
     private VistaExportarRespostes vistaExportarRespostes;
     private VistaImportarRespostes vistaImportarRespostes;
+    private VistaDonarPoders vistaDonarPoders;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -145,6 +146,11 @@ public class CtrlPresentacio {
     public void mostrarImportarRespostes(int idUsuari) {
         vistaImportarRespostes = new VistaImportarRespostes(this, idUsuari);
         vistaImportarRespostes.setVisible(true);
+    }
+
+    public void mostrarDonarPoders(int idUsuari) {
+        vistaDonarPoders = new VistaDonarPoders(this, idUsuari);
+        vistaDonarPoders.setVisible(true);
     }
 
     // ======================
@@ -357,5 +363,15 @@ public class CtrlPresentacio {
 
     public List<String> obtenirInfoEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         return ctrlDomini.consultarEnquestaAmbPreguntes(idEnquesta);
+    }
+
+    public int donarPoders(int idExecutor, int idEnquesta, String nomTarget, String rol) {
+        if(rol.equals("Enquestador")) {
+            return ctrlDomini.donarPodersEnquestador(idExecutor,idEnquesta, nomTarget);
+        }
+        else {
+            return ctrlDomini.donarPodersAdmin(idExecutor,idEnquesta, nomTarget);
+        }
+
     }
 }

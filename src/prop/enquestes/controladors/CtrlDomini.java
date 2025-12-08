@@ -778,21 +778,22 @@ public class CtrlDomini {
     }
 
     /*
-     * public List<String> obtenirInfoEnquesta(int idEnquesta) {
-     * Enquesta e = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-     * 
-     * List<String> out = new ArrayList<>();
-     * out.add("=== ENQUESTA " + idEnquesta + " ===");
-     * 
-     * for (Pregunta p : e.getPreguntesObj()) {
-     * out.add("");
-     * out.add("Pregunta: " + p.getText());
-     * out.add("Opcions: " + p.getOpcions().toString());
-     * }
-     * 
-     * return out;
-     * }
+     public List<String> obtenirInfoEnquesta(int idEnquesta) {
+     Enquesta e = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+
+     List<String> out = new ArrayList<>();
+     out.add("=== ENQUESTA " + idEnquesta + " ===");
+
+     for (Pregunta p : e.getPreguntesObj()) {
+     out.add("");
+     out.add("Pregunta: " + p.getText());
+     out.add("Opcions: " + p.getOpcions().toString());
+     }
+
+     return out;
+     }
      */
+
 
     public List<String> obtenirRespostesEnquesta(int idEnquesta) {
         Enquesta e = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);

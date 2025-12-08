@@ -92,6 +92,9 @@ public class VistaEnquestesExtresAdmin extends JFrame {
         exportarEnquestaButton.addActionListener(e -> {
             ctrl.mostrarExportarEnquesta(idUsuari);
         });
+        donarPodersButton.addActionListener(e -> {
+            ctrl.mostrarDonarPoders(idUsuari);
+        });
 
     }
 }
