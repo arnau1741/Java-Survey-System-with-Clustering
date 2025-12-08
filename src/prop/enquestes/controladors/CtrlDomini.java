@@ -1072,20 +1072,36 @@ public class CtrlDomini {
         return 1; // Èxit
     }
 
-    public int modificarRespostaEnquesta(Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta)
+    public int modificarRespostaEnquesta(int idExecutor, Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta)
             throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatResposta {
-        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if(u.isBlocked()){
             throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " està vetat i no pot modificar respostes d'enquestes.");
+                    "L'usuari amb id " + idExecutor + " està vetat i no pot modificar respostes d'enquestes.");
         }
         if(u.getId() < 0) {
             throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no pot modificar respostes d'enquestes perquè és anònim.");
+                    "L'usuari amb id " + idExecutor + " no pot modificar respostes d'enquestes perquè és anònim.");
         }
         if(u.esEnquestador()){
             throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " és enquestador i no pot modificar respostes d'enquestes.");
+                    "L'usuari amb id " + idExecutor + " és enquestador i no pot modificar respostes d'enquestes.");
+        }
+        if(u.esEnquestat()){
+            if(idExecutor != idUsuari){
+                throw new IllegalArgumentException(
+                        "L'usuari amb id " + idExecutor + " és enquestat i només pot modificar les seves pròpies respostes.");
+            }
+            if(!u.teEnquestaRealitzada(idEnquesta)){
+                throw new IllegalArgumentException(
+                        "L'usuari amb id " + idExecutor + " no ha realitzat l'enquesta amb id " + idEnquesta + " i per tant no pot modificar respostes.");
+            }
+        }
+        if(u.esAdmin()){
+            if(!u.teEnquestaAdministrada(idEnquesta) && !u.teEnquestaRealitzada(idEnquesta)){
+                throw new IllegalArgumentException(
+                        "L'usuari amb id " + idExecutor + " no administra ni ha realitzat l'enquesta amb id " + idEnquesta + " i per tant no pot modificar respostes.");
+            }
         }
         return modificarRespostaEnquestaPrivate(idEnquesta, idUsuari, idxPregunta, novaResposta);
     }
