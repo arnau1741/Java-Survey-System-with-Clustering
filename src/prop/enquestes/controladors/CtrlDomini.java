@@ -38,15 +38,25 @@ public class CtrlDomini {
         ctrlDominiMantEnquesta.setEnquestes(gestorPersistencia.carregarEnquestes());
     }
 
+    /**
+     * Retorna el controlador de domini de manteniment d'usuaris
+     * @return CtrlDominiMantUsuari
+     */
     public CtrlDominiMantUsuari getCtrlDominiMantUsuari() {
         return ctrlDominiMantUsuari;
     }
 
+    /**
+     * Retorna el controlador de domini de manteniment d'enquestes
+     * @return CtrlDominiMantEnquesta
+     */
     public CtrlDominiMantEnquesta getCtrlDominiMantEnquesta() {
         return ctrlDominiMantEnquesta;
     }
 
-    // Save Method
+    /**
+     * Funcio per a guardar les dades
+     */
     public void guardarDades() {
         gestorPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
         gestorPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
@@ -132,6 +142,14 @@ public class CtrlDomini {
 
     }
 
+    /**
+     * Funcio per a respondre una enquesta
+     * @param idEnquesta
+     * @param idUsuari
+     * @param respostesUsuari
+     * @throws EnquestaNoExisteixException
+     * @throws InvalidFormatEnquesta
+     */
     public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari)
             throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
@@ -171,6 +189,14 @@ public class CtrlDomini {
         gestorPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
     }
 
+    /**
+     * Funcio per a crear una enquesta
+     * @param titol
+     * @param descripcio
+     * @param idCreador
+     * @param preguntes
+     * @return 1 si s'ha creat correctament, 0 si hi ha un error en el format de l'enquesta
+     */
     public int crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idCreador);
         if(u.isBlocked()){
@@ -198,21 +224,6 @@ public class CtrlDomini {
         u.cambiarARolAdmin();
         u.demanarAfegirEnquestaAdministrada(enq);
         return 1;
-    }
-
-    /**
-     * Funcio per a importar una enquesta d'un fitxer
-     * 
-     * @param idUsuari identificador de l'usuari que importa les respostes
-     * @param path     origen del fitxer
-     * @return 1 si s'ha importat correctament, -1 si hi ha un error llegint el
-     *         fitxer
-     */
-    /////////////////////// Cas d'us - Importar enquesta //////////////////
-    // programar para borrar en el futuro
-    public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
-        int numPreguntes = this.ctrlDominiMantEnquesta.importarEnquesta(idUsuari, path);
-        return numPreguntes;
     }
 
     /**
@@ -266,6 +277,13 @@ public class CtrlDomini {
         return exportat;
     }
 
+    /**
+     * Funcio per a exportar una enquesta
+     * @param idEnquesta
+     * @param idUsuari
+     * @return Llista de strings amb la informacio de l'enquesta
+     * @throws EnquestaNoExisteixException
+     */
     public List<String> exportarEnquesta(Integer idEnquesta, int idUsuari) throws EnquestaNoExisteixException {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u.isBlocked()){
@@ -282,6 +300,13 @@ public class CtrlDomini {
     }
 
     //////////////// Persistencia
+    /**
+     * Funcio per a exportar les respostes d'una enquesta a un fitxer
+     * @param idUsuari
+     * @param idEnquesta
+     * @param path
+     * @throws Exception
+     */
     public void exportarRespostesAFitxer(int idUsuari, int idEnquesta, String path) throws Exception {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u.isBlocked()){
@@ -297,7 +322,59 @@ public class CtrlDomini {
         // ctrlPersistencia.guardarFitxerText(path, data);
     }
     ////////
+    /**
+     * Funcio per a importar respostes d'un fitxer
+     *
+     * @param path       origen del fitxer
+     * @param idEnquesta identificador de l'enquesta
+     * @return nombre de respostes importades, -1 si hi ha un error llegint el
+     *         fitxer, -2 si l'enquesta no existeix
+     */
+    ////////////////////// Cas d'us - Importar respostes ////////////////////
+    protected int importarRespostesPrivate(String path, Integer idEnquesta)
+            throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+        // llegir fitxer
+        List<String> respostesTxt = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                respostesTxt.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1; // Error al llegir l'arxiu
+        }
 
+        // afegir respostes a l'enquesta
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (enq == null) {
+            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+        }
+
+        // llegim el nombre de respostes (primer linia)
+        int numRespostes = Integer.parseInt(respostesTxt.get(0));
+        int numPreguntes = enq.getNumPreguntes();
+
+        // llegim les respostes (a partir de la linia 1, una resposta per linia)
+        List<String> respostesUsuari = new ArrayList<>();
+        for (int i = 1; i <= numRespostes * numPreguntes; i++) {
+            respostesUsuari.add(respostesTxt.get(i));
+            if (i % numPreguntes == 0) {
+                // afegim la resposta a l'enquesta
+                enq.afegeixResposta(-1, respostesUsuari);
+                respostesUsuari.clear();
+            }
+        }
+        return numRespostes; // Èxit
+    }
+
+
+    /**
+     * Funcio per a exportar les respostes d'una enquesta
+     * @param idEnquesta
+     * @return Llista de strings amb la informacio de les respostes de l'enquesta
+     * @throws EnquestaNoExisteixException
+     */
     public List<String> exportarRespostesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
@@ -341,57 +418,12 @@ public class CtrlDomini {
 
     /**
      * Funcio per a importar respostes d'un fitxer
-     * 
+     *
+     * @param idUsuari   identificador de l'usuari que importa les respostes
      * @param path       origen del fitxer
      * @param idEnquesta identificador de l'enquesta
-     * @return nombre de respostes importades, -1 si hi ha un error llegint el
-     *         fitxer, -2 si l'enquesta no existeix
+     * @return llista amb el resultat
      */
-    ////////////////////// Cas d'us - Importar respostes ////////////////////
-    /// leer: (numPreguntas, PREGUNTA1, PREGUNTA2, ...PREGUNTAn, RESPUESTA1,
-    ////////////////////// RESPUESTA2, ... RESPUESTAm)
-    /// RESPUESTAj = (resp1, resp2,... respn)
-    // corregir la logica de importar respuestas, tener en cuenta la funcion en
-    ////////////////////// pregunta que tenia el -1 y ahora idUsuari
-    // añadir tambien en la publica los añadirRealitzada si lo que me dicen por
-    ////////////////////// whatsapp es correcto
-    protected int importarRespostesPrivate(String path, Integer idEnquesta)
-            throws EnquestaNoExisteixException, InvalidFormatEnquesta {
-        // llegir fitxer
-        List<String> respostesTxt = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                respostesTxt.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return -1; // Error al llegir l'arxiu
-        }
-
-        // afegir respostes a l'enquesta
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        if (enq == null) {
-            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
-        }
-
-        // llegim el nombre de respostes (primer linia)
-        int numRespostes = Integer.parseInt(respostesTxt.get(0));
-        int numPreguntes = enq.getNumPreguntes();
-
-        // llegim les respostes (a partir de la linia 1, una resposta per linia)
-        List<String> respostesUsuari = new ArrayList<>();
-        for (int i = 1; i <= numRespostes * numPreguntes; i++) {
-            respostesUsuari.add(respostesTxt.get(i));
-            if (i % numPreguntes == 0) {
-                // afegim la resposta a l'enquesta
-                enq.afegeixResposta(-1, respostesUsuari);
-                respostesUsuari.clear();
-            }
-        }
-        return numRespostes; // Èxit
-    }
-
     public int importarRespostes(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u.isBlocked()){
@@ -433,6 +465,12 @@ public class CtrlDomini {
         //// ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
     }
 
+    /**
+     * Funcio per a eliminar una enquesta
+     * @param idUsuari
+     * @param idEnquesta
+     * @throws EnquestaNoExisteixException
+     */
     public void eliminarEnquesta(int idUsuari, Integer idEnquesta) throws EnquestaNoExisteixException {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u.isBlocked()){
@@ -482,6 +520,16 @@ public class CtrlDomini {
         return r;
     }
 
+    /**
+     * Funcio per a modificar una pregunta d'una enquesta
+     * @param idUsuari
+     * @param idEnquesta
+     * @param idxPregunta
+     * @param novaPregunta
+     * @return
+     * @throws InvalidFormatEnquesta
+     * @throws EnquestaNoExisteixException
+     */
     public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int idxPregunta, List<String> novaPregunta)
             throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
@@ -536,6 +584,14 @@ public class CtrlDomini {
         }
     }
 
+    /**
+     * Funcio per a esborrar les respostes d'una enquesta d'un enquestat
+     * @param idUsuari
+     * @param idEnquesta
+     * @param idEnquestat
+     * @throws EnquestaNoExisteixException
+     * @throws UsuariNoHaResposEnquesta
+     */
     public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat)
             throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
@@ -611,6 +667,16 @@ public class CtrlDomini {
         return resultat;
     }
 
+    /**
+     * Funcio per a realitzar clustering K-means sobre les respostes d'una enquesta
+     * @param idUsuari
+     * @param idEnquesta
+     * @param k
+     * @param maxIterations
+     * @return resultat, map amb l'identificador de la resposta i el clúster assignat
+     * @throws EnquestaNoExisteixException
+     * @throws KmeansExcepcio
+     */
     public Map<Integer, Integer> clustering(int idUsuari, Integer idEnquesta, int k, int maxIterations)
             throws EnquestaNoExisteixException, KmeansExcepcio {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
@@ -694,6 +760,12 @@ public class CtrlDomini {
         return result;
     }
 
+    /**
+     * Funcio per a consultar les preguntes d'una enquesta
+     * @param idEnquesta
+     * @return llista de strings amb les preguntes de l'enquesta
+     * @throws EnquestaNoExisteixException
+     */
     public List<String> consultarPreguntes(Integer idEnquesta) throws EnquestaNoExisteixException {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
@@ -794,7 +866,11 @@ public class CtrlDomini {
      }
      */
 
-
+    /**
+     * Funcio per a obtenir les respostes d'una enquesta
+     * @param idEnquesta
+     * @return llista de strings amb les respostes de l'enquesta
+     */
     public List<String> obtenirRespostesEnquesta(int idEnquesta) {
         Enquesta e = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
@@ -839,7 +915,7 @@ public class CtrlDomini {
      * @param nomUsuari Nom de l'usuari
      * @param password  Contrasenya de l'usuari
      * @param email     Email de l'usuari
-     * @return Identificador de l'usuari creat, 0 si l'usuari ja existeix
+     * @return codi d'error
      */
     ////////////////////// Cas d'us - Crear usuari ////////////////////
     public int crearUsuariEnquestat(String nomUsuari, String password, String email) {
@@ -868,6 +944,13 @@ public class CtrlDomini {
         return id;
     }
 
+    /**
+     * Funcio per a crear un usuari enquestador
+     * @param nomUsuari
+     * @param password
+     * @param email
+     * @return codi d'error
+     */
     public int crearUsuariEnquestador(String nomUsuari, String password, String email) {
         // comproven si existeix
         if (ctrlDominiMantUsuari.existeixUsuari(nomUsuari)) {
@@ -1073,6 +1156,18 @@ public class CtrlDomini {
         return 1; // Èxit
     }
 
+    /**
+     * Funcio per a modificar la resposta d'una pregunta d'una enquesta per un
+     * @param idExecutor
+     * @param idEnquesta
+     * @param idUsuari
+     * @param idxPregunta
+     * @param novaResposta
+     * @return codi d'error
+     * @throws UsuariNoHaResposEnquesta
+     * @throws EnquestaNoExisteixException
+     * @throws InvalidFormatResposta
+     */
     public int modificarRespostaEnquesta(int idExecutor, Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta)
             throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatResposta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idExecutor);
@@ -1107,11 +1202,10 @@ public class CtrlDomini {
         return modificarRespostaEnquestaPrivate(idEnquesta, idUsuari, idxPregunta, novaResposta);
     }
 
-
     /**
      * Funcio per a consultar el perfil d'un usuari
-     * 
-     * @param id identificador de l'usuari
+     * @param id
+     * @return llista de strings amb la informacio del perfil de l'usuari
      */
     ////////////////////// Cas d'us - Consultar usuari ////////////////////
     public List<String> consultarPerfil(int id) {
@@ -1123,14 +1217,32 @@ public class CtrlDomini {
         return perfil;
     }
 
+    /**
+     * Funcio per a iniciar sessio
+     * @param nomUsuari
+     * @param password
+     * @return codi d'error
+     */
     public int iniciarSessio(String nomUsuari, String password) {
         return ctrlDominiMantUsuari.iniciarSessio(nomUsuari, password);
     }
 
+    /**
+     * Funcio per a comprovar els requeriments d'una contrasenya
+     * @param password
+     * @return true si compleix els requeriments, false en cas contrari
+     */
     private boolean checkRequerimentsPassword(String password) {
         return password.length() > 5;
     }
 
+    /**
+     * Funcio per a donar poders d'enquestador a un usuari
+     * @param idExecutor
+     * @param idEnquesta
+     * @param nomTarget
+     * @return codi d'error
+     */
     public int donarPodersEnquestador(int idExecutor, Integer idEnquesta, String nomTarget) {
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if (executor == null || executor.getId() < 0) {
@@ -1183,6 +1295,13 @@ public class CtrlDomini {
         return 1;
     }
 
+    /**
+     * Funcio per a donar poders d'administrador a un usuari
+     * @param idExecutor
+     * @param idEnquesta
+     * @param nomTarget
+     * @return codi d'error
+     */
     public int donarPodersAdmin(int idExecutor, Integer idEnquesta, String nomTarget) {
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if (executor == null || executor.getId() < 0) {
