@@ -1,6 +1,5 @@
 Encuesta sobre satisfacción del cliente
 Por favor, califique su satisfacción con nuestro servicio.
-12345
 1
 0
 ¿En qué medida recomendarías nuestro servicio? (1-10)

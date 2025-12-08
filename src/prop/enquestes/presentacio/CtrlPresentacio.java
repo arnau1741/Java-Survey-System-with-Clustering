@@ -218,7 +218,7 @@ public class CtrlPresentacio {
         return id;
     }
 
-    public int importarEnquesta(String nombreArchivo)
+    public int importarEnquesta(String nombreArchivo, int idCreador)
             throws FileNotFound, InvalidFormatEnquesta {
         String Base_path = "Pruebas";
 
@@ -246,13 +246,13 @@ public class CtrlPresentacio {
                 throw new InvalidFormatEnquesta("Falta descripció");
             }
 
-            String idCreadorStr = br.readLine();
+            /*String idCreadorStr = br.readLine();
             if (idCreadorStr == null) {
                 br.close();
                 throw new InvalidFormatEnquesta("Falta ID creador");
             }
 
-            int idCreador = Integer.parseInt(idCreadorStr.trim());
+            int idCreador = Integer.parseInt(idCreadorStr.trim());*/
 
             String numPreguntesStr = br.readLine();
             if (numPreguntesStr == null) {
@@ -326,8 +326,7 @@ public class CtrlPresentacio {
         }
 
         try {
-            int numRespostes = ctrlDomini.importarRespostes(idUsuari, rutaCompleta, idEnquesta);
-            return numRespostes;
+            return ctrlDomini.importarRespostes(idUsuari, rutaCompleta, idEnquesta);
         } catch (NumberFormatException e) {
             throw new InvalidFormatEnquesta("Format numèric incorrecte: " + e.getMessage());
         } catch (EnquestaNoExisteixException e) {

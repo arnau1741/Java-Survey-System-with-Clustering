@@ -56,14 +56,16 @@ public class VistaImportarRespostes extends JDialog {
         fieldPath.setEditable(false);
         center.add(fieldPath, BorderLayout.CENTER);
         center.add(btnSeleccionar, BorderLayout.EAST);
+
         contentPane.add(center, BorderLayout.CENTER);
-        fieldPath.setPreferredSize(new Dimension(250, 28));
 
         // Panel inferior: botons
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottom.add(buttonOK);
         bottom.add(buttonCancel);
         contentPane.add(bottom, BorderLayout.SOUTH);
+
+        fieldPath.setPreferredSize(new Dimension(250, 28));
     }
 
     private void initActions() {
@@ -95,11 +97,28 @@ public class VistaImportarRespostes extends JDialog {
     private void seleccionarFitxer() {
         JFileChooser fc = new JFileChooser(BASE_DIR);
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setAcceptAllFileFilterUsed(true);
+
         int res = fc.showOpenDialog(this);
 
         if (res == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
-            fieldPath.setText(file.getAbsolutePath());
+            String pathSeleccionat = fc.getSelectedFile().getPath();
+
+            String relativePath;
+            if (pathSeleccionat.startsWith(BASE_DIR)) {
+                relativePath = pathSeleccionat.substring(BASE_DIR.length());
+                if (relativePath.startsWith("/") || relativePath.startsWith("\\")) {
+                    relativePath = relativePath.substring(1);
+                }
+            } else {
+                String nombreArchivo = file.getName();
+                if (nombreArchivo.toLowerCase().endsWith(".txt")) {
+                    nombreArchivo = nombreArchivo.substring(0, nombreArchivo.length() - 4);
+                }
+                relativePath = nombreArchivo;
+            }
+            fieldPath.setText(relativePath);
         }
     }
 
@@ -132,8 +151,8 @@ public class VistaImportarRespostes extends JDialog {
             return;
         }
 
-        String path = fieldPath.getText().trim();
-        if (path.isEmpty()) {
+        String relativePath = fieldPath.getText().trim();
+        if (relativePath.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Has de seleccionar un fitxer.",
                     "Error", JOptionPane.WARNING_MESSAGE);
@@ -141,7 +160,7 @@ public class VistaImportarRespostes extends JDialog {
         }
 
         try {
-            int numRespostes = ctrl.importarRespostes(path, idUsuari, idEnquestaActual);
+            int numRespostes = ctrl.importarRespostes(relativePath, idUsuari, idEnquestaActual);
 
             JOptionPane.showMessageDialog(this,
                     "Respostes importades correctament!\nRespostes importades: " + numRespostes,
@@ -162,6 +181,7 @@ public class VistaImportarRespostes extends JDialog {
                     "El fitxer té un format de resposta incorrecte:\n" + e.getMessage(),
                     "Format invàlid",
                     JOptionPane.ERROR_MESSAGE);
+
         } catch (EnquestaNoExisteixException e) {
             JOptionPane.showMessageDialog(this,
                     "Error: " + e.getMessage(),
