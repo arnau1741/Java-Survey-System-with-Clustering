@@ -78,7 +78,7 @@ public class VistaIniciarSessio extends JDialog {
         }
         int id = ctrl.iniciarSessio(nomUsuari, pass);
         if(id == -1) {
-            JOptionPane.showMessageDialog(this, "Nom usuari repetit.");
+            JOptionPane.showMessageDialog(this, "Nom usari incorrecte");
         }
         else if(id == -2) {
             JOptionPane.showMessageDialog(this, "El password no compleix els requisits");
