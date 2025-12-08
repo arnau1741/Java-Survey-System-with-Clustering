@@ -95,7 +95,7 @@ public class VistaEnquestat extends JFrame {
         });
 
         consultarRespostesButton.addActionListener(e -> {
-            //ctrl.mostrarConsultarRespostes();
+            ctrl.mostrarConsultarRespostes(idUsuari);
         });
 
     }

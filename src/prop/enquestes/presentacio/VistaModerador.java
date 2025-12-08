@@ -77,7 +77,7 @@ public class VistaModerador extends JFrame {
         });
 
         consultarRespostesButton.addActionListener(e -> {
-            //ctrl.mostrarConsultarRespostes();
+            ctrl.mostrarConsultarRespostes(idUsuari);
         });
 
     }

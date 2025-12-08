@@ -33,6 +33,8 @@ public class CtrlPresentacio {
     private VistaExportarRespostes vistaExportarRespostes;
     private VistaImportarRespostes vistaImportarRespostes;
     private VistaDonarPoders vistaDonarPoders;
+    private VistaConsultarRespostes vistaConsultarRespostes;
+    private VistaVetarDesvetar vistaVetarDesvetar;
 
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -149,6 +151,16 @@ public class CtrlPresentacio {
     public void mostrarDonarPoders(int idUsuari) {
         vistaDonarPoders = new VistaDonarPoders(this, idUsuari);
         vistaDonarPoders.setVisible(true);
+    }
+
+    public void mostrarConsultarRespostes(int idUsuari) {
+        vistaConsultarRespostes = new VistaConsultarRespostes(this, idUsuari);
+        vistaConsultarRespostes.setVisible(true);
+    }
+
+    public void mostrarVetarDesvetar(int idUsuari) {
+        vistaVetarDesvetar = new VistaVetarDesvetar(this, idUsuari);
+        vistaVetarDesvetar.setVisible(true);
     }
 
     // ======================
@@ -375,5 +387,13 @@ public class CtrlPresentacio {
 
     public Map<Integer, Integer> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter) throws EnquestaNoExisteixException, KmeansExcepcio {
         return ctrlDomini.clustering(idUsuari, idEnquesta, k, iter);
+    }
+
+    public int vetarUsuari(int idUsuari, String nomObjectiu) {
+        return ctrlDomini.vetarUsuari(idUsuari, nomObjectiu);
+    }
+
+    public int desvetarUsuari(int idUsuari, String nomObjectiu) {
+        return ctrlDomini.desvetarUsuari(idUsuari, nomObjectiu);
     }
 }
