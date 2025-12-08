@@ -2,14 +2,12 @@ package prop.enquestes.presentacio;
 import prop.enquestes.controladors.CtrlDomini;
 import prop.enquestes.controladors.CtrlDominiMantUsuari;
 import prop.enquestes.domini.Usuari;
-import prop.enquestes.excepcions.EnquestaNoExisteixException;
-import prop.enquestes.excepcions.InvalidFormatEnquesta;
-import prop.enquestes.excepcions.FileNotFound;
-import prop.enquestes.excepcions.UsuariNoHaResposEnquesta;
+import prop.enquestes.excepcions.*;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CtrlPresentacio {
     private CtrlDomini ctrlDomini;
@@ -373,5 +371,9 @@ public class CtrlPresentacio {
             return ctrlDomini.donarPodersAdmin(idExecutor,idEnquesta, nomTarget);
         }
 
+    }
+
+    public Map<Integer, Integer> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter) throws EnquestaNoExisteixException, KmeansExcepcio {
+        return ctrlDomini.clustering(idUsuari, idEnquesta, k, iter);
     }
 }
