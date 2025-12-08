@@ -186,6 +186,10 @@ public class Enquesta {
         return textsPreguntes;
     }
 
+    /**
+     * Retorna una llista amb els textos de les preguntes de l'enquesta
+     * @return llista de textos de les preguntes
+     */
     public List<String> getTextPreguntes(){
         List<String> textsPreguntes = new ArrayList<>();
 
