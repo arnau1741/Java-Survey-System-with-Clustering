@@ -550,14 +550,16 @@ public class CtrlDomini {
                     "L'usuari amb id " + idEnquestat + " està vetat i no se li pot aplicar cap canvi.");
         }
 
-        if (!afectat.teEnquestaRealitzada(idEnquesta)) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idEnquestat + " no ha respost l'enquesta amb id " + idEnquesta + ".");
-        }
         if (!u.esAdmin() && !u.esModerador()) {
             throw new IllegalArgumentException(
                     "L'usuari amb id " + idUsuari + " no té permís per esborrar respostes d'enquestes.");
         }
+
+        if (!afectat.teEnquestaRealitzada(idEnquesta)) {
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idEnquestat + " no ha respost l'enquesta amb id " + idEnquesta + ".");
+        }
+
         if (u.getId() < 0) {
             throw new IllegalArgumentException(
                     "L'usuari amb id " + idUsuari + " no pot esborrar respostes d'enquestes perquè és anònim.");
@@ -1010,7 +1012,7 @@ public class CtrlDomini {
      *                                     pregunta
      * @throws InvalidFormatResposta       si l'índex de la pregunta és invàlid
      */
-    public int modificarRespostaEnquesta(Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta)
+    protected int modificarRespostaEnquestaPrivate(Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta)
             throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta, InvalidFormatResposta {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null)
@@ -1069,6 +1071,25 @@ public class CtrlDomini {
         //// ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
         return 1; // Èxit
     }
+
+    public int modificarRespostaEnquesta(Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta)
+            throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatResposta {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u.isBlocked()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " està vetat i no pot modificar respostes d'enquestes.");
+        }
+        if(u.getId() < 0) {
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " no pot modificar respostes d'enquestes perquè és anònim.");
+        }
+        if(u.esEnquestador()){
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " és enquestador i no pot modificar respostes d'enquestes.");
+        }
+        return modificarRespostaEnquestaPrivate(idEnquesta, idUsuari, idxPregunta, novaResposta);
+    }
+
 
     /**
      * Funcio per a consultar el perfil d'un usuari
