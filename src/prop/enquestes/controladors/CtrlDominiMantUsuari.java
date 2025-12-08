@@ -22,6 +22,10 @@ public class CtrlDominiMantUsuari {
     //////////////////////////// Persistencia
     public void setUsuaris(Map<Integer, Usuari> usuaris) {
         this.usuaris = usuaris;
+        for (Integer id : usuaris.keySet()){
+            nomUsuariToID.put(usuaris.get(id).getUsuari(), id);
+
+        }
     }
 
     public Map<Integer, Usuari> getUsuaris() {
