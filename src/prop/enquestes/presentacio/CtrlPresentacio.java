@@ -209,6 +209,10 @@ public class CtrlPresentacio {
         return ctrlDomini.consultarEnquestesAmbPreguntesIRespostes();
     }
 
+    public List<String> obtenirEnquestesAdministrades(int idUsuari) throws EnquestaNoExisteixException {
+        return ctrlDomini.obtenirEnquestesAdministrades(idUsuari);
+    }
+
     public List<String> obtenirPreguntesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         return ctrlDomini.consultarEnquestaAmbPreguntes(idEnquesta);
     }
