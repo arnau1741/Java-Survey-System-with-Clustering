@@ -351,7 +351,7 @@ public class CtrlPresentacio {
     }
 
     public List<String> exportarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException {
-        return ctrlDomini.exportarEnquesta(idUsuari, idEnquesta);
+        return ctrlDomini.exportarEnquesta(idEnquesta, idUsuari);
     }
 
     public List<String> exportarRespostesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
