@@ -396,4 +396,12 @@ public class CtrlPresentacio {
     public int desvetarUsuari(int idUsuari, String nomObjectiu) {
         return ctrlDomini.desvetarUsuari(idUsuari, nomObjectiu);
     }
+
+    public List<String> obtenirUsuaris() {
+        return ctrlDomini.obtenirNomUsuaris();
+    }
+
+    public int getIdUsuariPerNom(String nomUsuari) {
+        return ctrlDomini.getIdUsuariPerNom(nomUsuari);
+    }
 }
