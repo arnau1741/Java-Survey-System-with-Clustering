@@ -1,4 +1,5 @@
 package prop.enquestes.controladors;
+import java.io.StringReader;
 import java.util.*;
 
 import prop.enquestes.domini.*;
@@ -98,6 +99,10 @@ public class CtrlDominiMantUsuari {
      */
     public Usuari getUsuari(int idUsuari) {
         return usuaris.get(idUsuari);
+    }
+
+    public List<String> obtenirNomsUsuaris() {
+        return new ArrayList<>(nomUsuariToID.keySet());
     }
 
     /**
