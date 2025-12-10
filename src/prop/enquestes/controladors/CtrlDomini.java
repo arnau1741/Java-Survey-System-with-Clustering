@@ -387,7 +387,10 @@ public class CtrlDomini {
             }
         }
         //no hay codigo de exito como tal, el codigo de exito es numRespostes > 0
-        return importarRespostesPrivate(path, idEnquesta);
+        try {
+            return importarRespostesPrivate(path, idEnquesta);
+        } catch (EnquestaNoExisteixException e) { return -4; }
+        catch (InvalidFormatEnquesta e) { return -7; }
     }
 
     //////////////// Persistencia
@@ -413,10 +416,11 @@ public class CtrlDomini {
             return -1; // L'usuari és anònim
         }
 
-        List<String> data = exportarRespostesEnquesta(idEnquesta);
-        // ctrlPersistencia.guardarFitxerText(path, data);
-
-        return 1; // Èxit
+        try {
+            List<String> data = exportarRespostesEnquesta(idEnquesta);
+            // ctrlPersistencia.guardarFitxerText(path, data);
+            return 1; // Èxit
+        } catch (Exception e) { return -4; } // Error general o enquesta no existeix
     }
 
     /**
@@ -474,7 +478,6 @@ public class CtrlDomini {
      * @param idEnquesta identificador de l'enquesta a eliminar
      */
     protected void eliminarEnquestaPrivate(Integer idEnquesta) throws EnquestaNoExisteixException {
-        // esborrar de ctrlDominiMantEnquesta
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
         //// ctrlPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
     }
@@ -509,7 +512,9 @@ public class CtrlDomini {
             }
         }
 
-        eliminarEnquestaPrivate(idEnquesta);
+        try {
+            eliminarEnquestaPrivate(idEnquesta);
+        } catch (EnquestaNoExisteixException e) { return -4; }
 
         Map<Integer, Usuari> totsElsUsuaris = ctrlDominiMantUsuari.getUsuaris();
         for (Usuari afectarEsborrat : totsElsUsuaris.values()) {
@@ -551,8 +556,10 @@ public class CtrlDomini {
             throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         if(novaPregunta == null) return -11;
 
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        if (enq == null) return -4; // Si no existeix, error -4
+        Enquesta enq;
+        try {
+            enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        } catch (Exception e) { return -4; } // Si falla getEnquesta, retorna -4
 
         if(idxPregunta < 0 || idxPregunta >= enq.getNumPreguntes()) return -11;
 
@@ -579,7 +586,10 @@ public class CtrlDomini {
             }
         }
         //ya devuelve 1 si es exit
-        return modificarPreguntaEnquestaPrivate(idEnquesta, idxPregunta, novaPregunta);
+        try {
+            return modificarPreguntaEnquestaPrivate(idEnquesta, idxPregunta, novaPregunta);
+        } catch (InvalidFormatEnquesta e) { return -7; }
+        catch (EnquestaNoExisteixException e) { return -4; }
     }
 
     /**
@@ -654,7 +664,10 @@ public class CtrlDomini {
             }
         }
 
-        esborrarRespostaEnquestaPrivate(idEnquesta, idEnquestat);
+        try {
+            esborrarRespostaEnquestaPrivate(idEnquesta, idEnquestat);
+        } catch (Exception e) { return -4; }
+
         afectat.demanarEliminarRealitzada(idEnquesta);
         return 1;
     }
@@ -734,8 +747,10 @@ public class CtrlDomini {
                 return null;
             }
         }
-        //ja ha passat totes les comprovacions
-        return clusteringPrivate(idEnquesta, k, maxIterations);
+
+        try {
+            return clusteringPrivate(idEnquesta, k, maxIterations);
+        } catch (Exception e) { return null; }
     }
 
     //////////////////// Funciones para debug ///////////////////////////////
@@ -1249,6 +1264,7 @@ public class CtrlDomini {
      * @return codi d'error
      */
     public int iniciarSessio(String nomUsuari, String password) {
+        if (nomUsuari == null || password == null || nomUsuari.isEmpty() || password.isEmpty()) return -11;
         return ctrlDominiMantUsuari.iniciarSessio(nomUsuari, password);
     }
 
@@ -1284,7 +1300,12 @@ public class CtrlDomini {
             return -3; // L'usuari amb id " + idExecutor + " no té permisos per assignar enquestadors.
         }
 
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        Enquesta enq;
+        try {
+            enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        } catch (Exception e) {
+            return -4; // Enquesta no existeix
+        }
 
         if (executor.esAdmin()) {
             if (!executor.teEnquestaAdministrada(idEnquesta)) {
@@ -1338,7 +1359,12 @@ public class CtrlDomini {
             return -3; // L'usuari amb id " + idExecutor + " no té permisos per nomenar administradors.
         }
 
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        Enquesta enq;
+        try {
+            enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        } catch (Exception e) {
+            return -4; // Enquesta no existeix
+        }
 
         if (executor.esAdmin()) {
             if (!executor.teEnquestaAdministrada(idEnquesta)) {
