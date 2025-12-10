@@ -152,6 +152,11 @@ public class CtrlDomini {
      */
     public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari)
             throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+        // per si es tracta d'un usuari anònim
+        if (idUsuari == -1) {
+            respondreEnquestaPrivate(idEnquesta, -1, respostesUsuari);
+            return;
+        }
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u.isBlocked()) {
             throw new IllegalArgumentException(
