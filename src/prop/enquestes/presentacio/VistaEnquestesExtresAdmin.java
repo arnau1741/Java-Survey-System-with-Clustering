@@ -40,7 +40,6 @@ public class VistaEnquestesExtresAdmin extends JFrame {
         if(nomEnquesta.equals("Realitzada")) {
             panelBotones.add(exportarEnquestaButton);
             panelBotones.add(exportarRespostesButton);
-            panelBotones.add(respondreEnquestaButton);
             panelBotones.add(consultarRespostesButton);
         }
         else {
@@ -79,9 +78,6 @@ public class VistaEnquestesExtresAdmin extends JFrame {
         });
         consultarRecomanacionsButton.addActionListener(e -> {
             ctrl.mostrarConsultarRecomanacions();
-        });
-        respondreEnquestaButton.addActionListener(e -> {;
-            ctrl.mostrarRespondreEnquesta(idUsuari);
         });
         importarRespostesButton.addActionListener(e -> {
             ctrl.mostrarImportarRespostes(idUsuari);
