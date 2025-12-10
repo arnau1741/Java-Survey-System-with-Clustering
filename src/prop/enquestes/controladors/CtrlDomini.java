@@ -1367,4 +1367,18 @@ public class CtrlDomini {
         if (u == null) return -1; // mirar si volem retornar -1 o que retorna exactament
         return u.getId();
     }
+
+    public List<String> obtenirEnquestesAdministrades(int idUsuari) {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        Map<Integer, Enquesta> map = u.getRol().getEnquestesAdministrades();
+
+        List<String> resultat = new ArrayList<>();
+
+        for (Enquesta e : map.values()) {
+            resultat.add("ID: " + e.getId() + " - " + e.getTitol());
+        }
+        return resultat;
+    }
+
+
 }
