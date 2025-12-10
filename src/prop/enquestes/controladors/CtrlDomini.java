@@ -68,6 +68,7 @@ public class CtrlDomini {
      * @return 1 si s'ha vetat correctament, -1 si l'usuari executor o objectiu no existeix, -2 si l'usuari executor no és moderador
      */
     public int vetarUsuari(int idExecutor, String nomObjectiu) {
+        if (nomObjectiu == null || nomObjectiu.isEmpty()) return -11;
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if(executor == null || executor.getId() < 0){
             return -1; // l'usuari executor no existeix o es anònim
@@ -94,6 +95,7 @@ public class CtrlDomini {
      * @return 1 si s'ha desvetat correctament, -1 si l'usuari executor o objectiu no existeix, -2 si l'usuari executor no és moderador
      */
     public int desvetarUsuari(int idExecutor, String nomObjectiu) {
+        if (nomObjectiu == null || nomObjectiu.isEmpty()) return -11;
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if(executor == null || executor.getId() < 0){
             return -1; // l'usuari executor no existeix o es anònim
@@ -151,6 +153,7 @@ public class CtrlDomini {
      * @throws InvalidFormatEnquesta
      */
     public int respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari) {
+        if (respostesUsuari == null) return -11;
         if (idUsuari == -1) {
             try {
                 respondreEnquestaPrivate(idEnquesta, -1, respostesUsuari);
@@ -204,8 +207,7 @@ public class CtrlDomini {
      * @return 1 si s'ha creat correctament, 0 si hi ha un error en el format de l'enquesta
      */
     public int crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) {
-        // Validació paràmetres buits
-        if (titol == null || titol.isEmpty()) return -11; //dades buides
+        if (titol == null || titol.isEmpty() || descripcio == null || preguntes == null) return -11;
 
         Usuari u = ctrlDominiMantUsuari.getUsuari(idCreador);
         if (u == null) return -1; // Usuari no existeix
@@ -355,6 +357,7 @@ public class CtrlDomini {
      * @return llista amb el resultat
      */
     public int importarRespostes(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+        if (path == null || path.isEmpty()) return -11;
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u == null){
             return -1; // L'usuari no existeix
@@ -394,6 +397,7 @@ public class CtrlDomini {
      * @throws Exception
      */
     public int exportarRespostesAFitxer(int idUsuari, int idEnquesta, String path) throws Exception {
+        if (path == null || path.isEmpty()) return -11;
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u == null){
             return -1; // L'usuari no existeix
@@ -402,6 +406,7 @@ public class CtrlDomini {
         if(u.isBlocked()){
             return -10; // Usuari vetat
         }
+
         if (u.getId() < 0) {
             return -1; // L'usuari és anònim
         }
@@ -542,13 +547,15 @@ public class CtrlDomini {
      */
     public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int idxPregunta, List<String> novaPregunta)
             throws InvalidFormatEnquesta, EnquestaNoExisteixException {
+        if (novaPregunta == null) return -11;
+        if(idxPregunta < 0 || idxPregunta > ctrlDominiMantEnquesta.getEnquesta(idEnquesta).getNumPreguntes()) return -11;
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u == null){
             return -1; // L'usuari no existeix
         }
 
         if(u.isBlocked()){
-            return -10;
+            return -10; // Usuari vetat
         }
 
         if (!u.esAdmin() && !u.esModerador()) {
@@ -928,16 +935,15 @@ public class CtrlDomini {
      */
     ////////////////////// Cas d'us - Crear usuari ////////////////////
     public int crearUsuariEnquestat(String nomUsuari, String password, String email) {
-        // comproven si existeix
+        if (nomUsuari == null || nomUsuari.isEmpty() || password == null || email == null) return -11;
+
         if (ctrlDominiMantUsuari.existeixUsuari(nomUsuari)) {
             return -2;
         }
 
-        // comprovem els requeriments del password
         if (!checkRequerimentsPassword(password))
             return -2;
 
-        // comprovem email no usat
         if (ctrlDominiMantUsuari.emailUsat(email))
             return -2;
 
@@ -961,16 +967,15 @@ public class CtrlDomini {
      * @return codi d'error
      */
     public int crearUsuariEnquestador(String nomUsuari, String password, String email) {
-        // comproven si existeix
+        if (nomUsuari == null || nomUsuari.isEmpty() || password == null || email == null) return -11;
+
         if (ctrlDominiMantUsuari.existeixUsuari(nomUsuari)) {
             return -2;
         }
 
-        // comprovem els requeriments del password
         if (!checkRequerimentsPassword(password))
             return -2;
 
-        // comprovem email no usat
         if (ctrlDominiMantUsuari.emailUsat(email))
             return -2;
 
@@ -1179,6 +1184,8 @@ public class CtrlDomini {
      */
     public int modificarRespostaEnquesta(int idExecutor, Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta)
             throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatResposta {
+        if (novaResposta == null) return -11;
+
         Usuari u = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if(u == null){
             return -1; // L'usuari no existeix
@@ -1254,6 +1261,8 @@ public class CtrlDomini {
      * @return codi d'error
      */
     public int donarPodersEnquestador(int idExecutor, Integer idEnquesta, String nomTarget) {
+        if (nomTarget == null || nomTarget.isEmpty()) return -11;
+
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if (executor == null || executor.getId() < 0) {
             return -1; // L'executor no és vàlid.
@@ -1306,6 +1315,8 @@ public class CtrlDomini {
      * @return codi d'error
      */
     public int donarPodersAdmin(int idExecutor, Integer idEnquesta, String nomTarget) {
+        if (nomTarget == null || nomTarget.isEmpty()) return -11;
+
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if (executor == null || executor.getId() < 0) {
             return -1; // L'executor no és vàlid.
@@ -1375,6 +1386,4 @@ public class CtrlDomini {
         }
         return resultat;
     }
-
-
 }
