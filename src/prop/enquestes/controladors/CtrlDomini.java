@@ -211,10 +211,12 @@ public class CtrlDomini {
 
         Usuari u = ctrlDominiMantUsuari.getUsuari(idCreador);
         if (u == null) return -1; // Usuari no existeix
+
+        if (u.getId() < 0) return -1; // Usuari anònim no pot crear enquestes
+
         if (u.isBlocked()) return -10; // Usuari vetat
 
         if (u.esEnquestador()) return -3; // Credencials insuficients
-        if (u.getId() < 0) return -1; // Usuari anònim no pot crear enquestes
 
         try {
             crearEnquestaPrivate(titol, descripcio, idCreador, preguntes);
@@ -547,9 +549,15 @@ public class CtrlDomini {
      */
     public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int idxPregunta, List<String> novaPregunta)
             throws InvalidFormatEnquesta, EnquestaNoExisteixException {
-        if (novaPregunta == null) return -11;
-        if(idxPregunta < 0 || idxPregunta > ctrlDominiMantEnquesta.getEnquesta(idEnquesta).getNumPreguntes()) return -11;
+        if(novaPregunta == null) return -11;
+
+        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+        if (enq == null) return -4; // Si no existeix, error -4
+
+        if(idxPregunta < 0 || idxPregunta >= enq.getNumPreguntes()) return -11;
+
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+
         if(u == null){
             return -1; // L'usuari no existeix
         }
