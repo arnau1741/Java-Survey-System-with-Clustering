@@ -19,7 +19,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CtrlDomini {
-    // crear els controladors de domini
     private CtrlDominiMantEnquesta ctrlDominiMantEnquesta;
     private CtrlDominiMantUsuari ctrlDominiMantUsuari;
     private prop.enquestes.persistencia.GestorPersistencia gestorPersistencia;
@@ -71,20 +70,21 @@ public class CtrlDomini {
     public int vetarUsuari(int idExecutor, String nomObjectiu) {
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if(executor == null || executor.getId() < 0){
-            return -1;
+            return -1; // l'usuari executor no existeix o es anònim
         }
 
         if(executor.isBlocked()){
-            return -2;
+            return -10; //usuari vetat
         }
 
         if(!executor.esModerador()){
-            return -2;
+            return -2; //credencials insuficients
         }
         Usuari objectiu = ctrlDominiMantUsuari.getUsuariPerNom(nomObjectiu);
-        if(objectiu == null) return -1;
+        if(objectiu == null) return -1; // l'usuari objectiu no existeix
+        if(objectiu.esModerador()) return -9; // no es pot vetar un moderador
         ctrlDominiMantUsuari.vetarUsuari(objectiu.getId());
-        return 1;
+        return 1; // èxit
     }
 
     /**
@@ -96,20 +96,20 @@ public class CtrlDomini {
     public int desvetarUsuari(int idExecutor, String nomObjectiu) {
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if(executor == null || executor.getId() < 0){
-            return -1;
+            return -1; // l'usuari executor no existeix o es anònim
         }
 
         if(executor.isBlocked()){
-            return -2;
+            return -10; //usuari vetat
         }
 
         if(!executor.esModerador()){
-            return -2;
+            return -3; //credencials insuficients
         }
         Usuari objectiu = ctrlDominiMantUsuari.getUsuariPerNom(nomObjectiu);
-        if(objectiu == null) return -1;
+        if(objectiu == null) return -1; // l'usuari objectiu no existeix
         ctrlDominiMantUsuari.desvetarUsuari(objectiu.getId());
-        return 1;
+        return 1; // èxit
     }
 
     /**
@@ -150,39 +150,34 @@ public class CtrlDomini {
      * @throws EnquestaNoExisteixException
      * @throws InvalidFormatEnquesta
      */
-    public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari)
-            throws EnquestaNoExisteixException, InvalidFormatEnquesta {
-        // per si es tracta d'un usuari anònim
+    public int respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari) {
         if (idUsuari == -1) {
-            respondreEnquestaPrivate(idEnquesta, -1, respostesUsuari);
-            return;
+            try {
+                respondreEnquestaPrivate(idEnquesta, -1, respostesUsuari);
+                return 1; // Èxit
+            } catch (InvalidFormatEnquesta e) { return -7; } // Format invàlid
+            catch (EnquestaNoExisteixException e) { return -4; } // Enquesta no existeix
         }
+
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
-        if(u.isBlocked()) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " està vetat i no pot respondre enquestes.");
-        }
+        if (u == null) return -1; // Usuari no existeix
+        if (u.isBlocked()) return -10; // Usuari vetat
 
-        if (!u.esAdmin() && !u.esEnquestat()) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no té permís per respondre enquestes.");
-        }
+        if (!u.esAdmin() && !u.esEnquestat()) return -3; // Credencials insuficients
 
-        Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        if (u.teEnquestaRealitzada(idEnquesta)) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " ja ha respost l'enquesta amb id " + idEnquesta + ".");
-        }
+        Enquesta enq;
+        try { enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta); }
+        catch (Exception e) { return -4; /*Enquesta no existeix*/}
 
-        // comprovar que l'usuari no és el creador de l'enquesta
-        if (idUsuari == enq.getCreador()) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no pot respondre la seva pròpia enquesta amb id " + idEnquesta + ".");
-        }
+        if (u.teEnquestaRealitzada(idEnquesta)) return -5; // Enquesta ja realitzada
 
-        respondreEnquestaPrivate(idEnquesta, idUsuari, respostesUsuari);
+        try {
+            respondreEnquestaPrivate(idEnquesta, idUsuari, respostesUsuari);
+        } catch (InvalidFormatEnquesta e) { return -7; } // Format invàlid
+        catch (EnquestaNoExisteixException e) { return -4; } // Enquesta no existeix
 
         u.demanarAfegirEnquestaRealitzada(enq);
+        return 1; // Èxit
     }
 
     /**
@@ -209,32 +204,28 @@ public class CtrlDomini {
      * @return 1 si s'ha creat correctament, 0 si hi ha un error en el format de l'enquesta
      */
     public int crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) {
+        // Validació paràmetres buits
+        if (titol == null || titol.isEmpty()) return -11; //dades buides
+
         Usuari u = ctrlDominiMantUsuari.getUsuari(idCreador);
-        if(u.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idCreador + " està vetat i no pot crear enquestes.");
-        }
+        if (u == null) return -1; // Usuari no existeix
+        if (u.isBlocked()) return -10; // Usuari vetat
 
-        if (u.esEnquestador()) {
-            throw new IllegalArgumentException("L'usuari amb id " + idCreador + " no té permís per crear enquestes.");
-        }
-
-        if (u.getId() < 0) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idCreador + " no pot crear enquestes perquè és anònim.");
-        }
+        if (u.esEnquestador()) return -3; // Credencials insuficients
+        if (u.getId() < 0) return -1; // Usuari anònim no pot crear enquestes
 
         try {
             crearEnquestaPrivate(titol, descripcio, idCreador, preguntes);
         } catch (InvalidFormatEnquesta e) {
-            return 0;
+            return -7; // Format invàlid
         }
 
         Enquesta enq = ctrlDominiMantEnquesta.getUltimaEnquestaCreada();
-
-        u.cambiarARolAdmin();
+        if(u.esEnquestat()){
+            u.cambiarARolAdmin();
+        }
         u.demanarAfegirEnquestaAdministrada(enq);
-        return 1;
+        return 1; // Èxit
     }
 
     /**
@@ -295,43 +286,19 @@ public class CtrlDomini {
      * @return Llista de strings amb la informacio de l'enquesta
      * @throws EnquestaNoExisteixException
      */
-    public List<String> exportarEnquesta(Integer idEnquesta, int idUsuari) throws EnquestaNoExisteixException {
+    public List<String> exportarEnquesta(Integer idEnquesta, int idUsuari) {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
-        if(u.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " està vetat i no pot exportar enquestes.");
-        }
+        if (u == null || u.getId() < 0) return null; // Error
+        if (u.isBlocked()) return null; // Error
 
-        if (u.getId() < 0) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no pot exportar enquestes perquè és anònim.");
+        try {
+            return exportarEnquestaPrivate(idEnquesta);
+        } catch (EnquestaNoExisteixException e) {
+            return null; // Error
         }
-
-        return exportarEnquestaPrivate(idEnquesta);
     }
 
-    //////////////// Persistencia
-    /**
-     * Funcio per a exportar les respostes d'una enquesta a un fitxer
-     * @param idUsuari
-     * @param idEnquesta
-     * @param path
-     * @throws Exception
-     */
-    public void exportarRespostesAFitxer(int idUsuari, int idEnquesta, String path) throws Exception {
-        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
-        if(u.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " està vetat i no pot exportar respostes.");
-        }
-        if (u.getId() < 0) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no pot exportar respostes perquè és anònim.");
-        }
 
-        List<String> data = exportarRespostesEnquesta(idEnquesta);
-        // ctrlPersistencia.guardarFitxerText(path, data);
-    }
     ////////
     /**
      * Funcio per a importar respostes d'un fitxer
@@ -353,7 +320,7 @@ public class CtrlDomini {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return -1; // Error al llegir l'arxiu
+            return -8; // Error llegint el fitxer
         }
 
         // afegir respostes a l'enquesta
@@ -379,6 +346,71 @@ public class CtrlDomini {
         return numRespostes; // Èxit
     }
 
+    /**
+     * Funcio per a importar respostes d'un fitxer
+     *
+     * @param idUsuari   identificador de l'usuari que importa les respostes
+     * @param path       origen del fitxer
+     * @param idEnquesta identificador de l'enquesta
+     * @return llista amb el resultat
+     */
+    public int importarRespostes(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u == null){
+            return -1; // L'usuari no existeix
+        }
+
+        if(u.isBlocked()){
+            return -10; // Usuari vetat
+        }
+
+        if (u.esEnquestat()) {
+            return -3; // Credencials insuficients
+        }
+
+        if (u.getId() < 0) {
+            return -1; // L'usuari és anònim
+        }
+
+        if (u.esAdmin()) {
+            if (!u.teEnquestaAdministrada(idEnquesta)) {
+                return -6; // L'usuari no administra l'enquesta
+            }
+        } else if (u.esEnquestador()) {
+            if (!u.teEnquestaAssignada(idEnquesta)) {
+                return -6; // L'usuari no té assignada l'enquesta
+            }
+        }
+        //no hay codigo de exito como tal, el codigo de exito es numRespostes > 0
+        return importarRespostesPrivate(path, idEnquesta);
+    }
+
+    //////////////// Persistencia
+    /**
+     * Funcio per a exportar les respostes d'una enquesta a un fitxer
+     * @param idUsuari
+     * @param idEnquesta
+     * @param path
+     * @throws Exception
+     */
+    public int exportarRespostesAFitxer(int idUsuari, int idEnquesta, String path) throws Exception {
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u == null){
+            return -1; // L'usuari no existeix
+        }
+
+        if(u.isBlocked()){
+            return -10; // Usuari vetat
+        }
+        if (u.getId() < 0) {
+            return -1; // L'usuari és anònim
+        }
+
+        List<String> data = exportarRespostesEnquesta(idEnquesta);
+        // ctrlPersistencia.guardarFitxerText(path, data);
+
+        return 1; // Èxit
+    }
 
     /**
      * Funcio per a exportar les respostes d'una enquesta
@@ -427,43 +459,7 @@ public class CtrlDomini {
         return result;
     }
 
-    /**
-     * Funcio per a importar respostes d'un fitxer
-     *
-     * @param idUsuari   identificador de l'usuari que importa les respostes
-     * @param path       origen del fitxer
-     * @param idEnquesta identificador de l'enquesta
-     * @return llista amb el resultat
-     */
-    public int importarRespostes(int idUsuari, String path, Integer idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
-        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
-        if(u.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " està vetat i no pot importar respostes.");
-        }
 
-        if (u.esEnquestat()) {
-            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per importar respostes.");
-        }
-
-        if (u.getId() < 0) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no pot importar respostes perquè és anònim.");
-        }
-
-        if (u.esAdmin()) {
-            if (!u.teEnquestaAdministrada(idEnquesta)) {
-                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra l'enquesta amb id "
-                        + idEnquesta + " i per tant no pot importar respostes.");
-            }
-        } else if (u.esEnquestador()) {
-            if (!u.teEnquestaAssignada(idEnquesta)) {
-                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té assignada l'enquesta amb id "
-                        + idEnquesta + " i per tant no pot importar respostes.");
-            }
-        }
-        return importarRespostesPrivate(path, idEnquesta);
-    }
 
     /**
      * Funcio per a eliminar una enquesta
@@ -482,25 +478,27 @@ public class CtrlDomini {
      * @param idEnquesta
      * @throws EnquestaNoExisteixException
      */
-    public void eliminarEnquesta(int idUsuari, Integer idEnquesta) throws EnquestaNoExisteixException {
+    public int eliminarEnquesta(int idUsuari, Integer idEnquesta) throws EnquestaNoExisteixException {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if (u == null) {
+            return -1; // L'usuari no existeix
+        }
+
         if(u.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " està vetat i no pot eliminar enquestes.");
+            return -10; // Usuari vetat
         }
 
         if (!u.esAdmin() && !u.esModerador()) {
-            throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té permís per eliminar enquestes.");
+            return -3; // Credencials insuficients
         }
+
         if (u.getId() < 0) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no pot eliminar enquestes perquè és anònim.");
+            return -1; // L'usuari és anònim
         }
 
         if (u.esAdmin()) {
             if (!u.teEnquestaAdministrada(idEnquesta)) {
-                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra l'enquesta amb id "
-                        + idEnquesta + " i per tant no pot eliminar-la.");
+                return -6; // L'usuari no administra l'enquesta
             }
         }
 
@@ -512,6 +510,8 @@ public class CtrlDomini {
             afectarEsborrat.demanarEliminarAssignada(idEnquesta);
             afectarEsborrat.demanarEliminarRealitzada(idEnquesta);
         }
+
+        return 1; // Èxit
     }
 
     /**
@@ -523,7 +523,6 @@ public class CtrlDomini {
      * @param novaPregunta llista de strings amb la nova pregunta
      * @return 1 si s'ha modificat correctament
      */
-    // deberiamos hacer mas versiones en un futuro.
     protected int modificarPreguntaEnquestaPrivate(int idEnquesta, int idxPregunta, List<String> novaPregunta)
             throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         int r = ctrlDominiMantEnquesta.modificarPreguntaEnquesta(idEnquesta, idxPregunta, novaPregunta);
@@ -544,28 +543,27 @@ public class CtrlDomini {
     public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int idxPregunta, List<String> novaPregunta)
             throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u == null){
+            return -1; // L'usuari no existeix
+        }
+
         if(u.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " està vetat i no pot modificar preguntes d'enquestes.");
+            return -10;
         }
 
         if (!u.esAdmin() && !u.esModerador()) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no té permís per modificar preguntes d'enquestes.");
+            return -3; // Credencials insuficients
         }
         if (u.getId() < 0) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no pot modificar preguntes d'enquestes perquè és anònim.");
+            return -1; // L'usuari és anònim
         }
-
-        Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
         if (u.esAdmin()) {
             if (!u.teEnquestaAdministrada(idEnquesta)) {
-                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra l'enquesta amb id "
-                        + idEnquesta + " i per tant no pot modificar preguntes.");
+                return -6; // L'usuari no administra l'enquesta
             }
         }
+        //ya devuelve 1 si es exit
         return modificarPreguntaEnquestaPrivate(idEnquesta, idxPregunta, novaPregunta);
     }
 
@@ -603,44 +601,47 @@ public class CtrlDomini {
      * @throws EnquestaNoExisteixException
      * @throws UsuariNoHaResposEnquesta
      */
-    public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat)
+    public int esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat)
             throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         Usuari afectat = ctrlDominiMantUsuari.getUsuari(idEnquestat);
+        if(u == null){
+            return -1; // L'usuari que vol esborrar la resposta no existeix
+        }
+
+        if(afectat == null){
+            return -1; // L'usuari enquestat no existeix
+        }
+
         if(u.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " està vetat i no pot esborrar respostes d'enquestes.");
+            return -10; // Usuari vetat
         }
 
         if(afectat.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idEnquestat + " està vetat i no se li pot aplicar cap canvi.");
+            return -10; // Usuari vetat
         }
 
         if (!u.esAdmin() && !u.esModerador()) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no té permís per esborrar respostes d'enquestes.");
+            return -6; // Credencials insuficients
         }
 
         if (!afectat.teEnquestaRealitzada(idEnquesta)) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idEnquestat + " no ha respost l'enquesta amb id " + idEnquesta + ".");
+            return -5; // L'usuari enquestat no ha realitzat l'enquesta
         }
 
         if (u.getId() < 0) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no pot esborrar respostes d'enquestes perquè és anònim.");
+            return -1; // L'usuari és anònim
         }
 
         if (u.esAdmin()) {
             if (!u.teEnquestaAdministrada(idEnquesta)) {
-                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no administra l'enquesta amb id "
-                        + idEnquesta + " i per tant no pot esborrar respostes.");
+                return -6; // L'usuari no administra l'enquesta
             }
         }
 
         esborrarRespostaEnquestaPrivate(idEnquesta, idEnquestat);
         afectat.demanarEliminarRealitzada(idEnquesta);
+        return 1;
     }
 
     /**
@@ -691,37 +692,34 @@ public class CtrlDomini {
     public Map<Integer, Integer> clustering(int idUsuari, Integer idEnquesta, int k, int maxIterations)
             throws EnquestaNoExisteixException, KmeansExcepcio {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u == null){
+            return null;
+        }
 
         if(u.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " està vetat i no pot realitzar clustering.");
+            return null;
         }
 
         if (u.getId() < 0) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idUsuari + " no pot realitzar clustering perquè és anònim.");
+            return null;
         }
 
         if (u.esEnquestat()) {
             if (!u.teEnquestaRealitzada(idEnquesta)) {
-                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no ha realitzat l'enquesta amb id "
-                        + idEnquesta + " i per tant no pot realitzar clustering.");
+                return null;
             }
         } else if (u.esEnquestador()) {
             if (!u.teEnquestaAssignada(idEnquesta)) {
-                throw new IllegalArgumentException("L'usuari amb id " + idUsuari + " no té assignada l'enquesta amb id "
-                        + idEnquesta + " i per tant no pot realitzar clustering.");
+                return null;
             }
         }
 
         else if (u.esAdmin()) {
             if (!u.teEnquestaAdministrada(idEnquesta) && !u.teEnquestaRealitzada(idEnquesta)) {
-                throw new IllegalArgumentException(
-                        "L'usuari amb id " + idUsuari + " no administra ni ha realitzat l'enquesta amb id " + idEnquesta
-                                + " i per tant no pot realitzar clustering.");
+                return null;
             }
         }
-
+        //ja ha passat totes les comprovacions
         return clusteringPrivate(idEnquesta, k, maxIterations);
     }
 
@@ -932,7 +930,7 @@ public class CtrlDomini {
     public int crearUsuariEnquestat(String nomUsuari, String password, String email) {
         // comproven si existeix
         if (ctrlDominiMantUsuari.existeixUsuari(nomUsuari)) {
-            return -1;
+            return -2;
         }
 
         // comprovem els requeriments del password
@@ -941,7 +939,7 @@ public class CtrlDomini {
 
         // comprovem email no usat
         if (ctrlDominiMantUsuari.emailUsat(email))
-            return -3;
+            return -2;
 
         int id = ctrlDominiMantUsuari.getNouID();
         // D'alguna forma s'ha de decidir el rol per enviar-lo, es a dir rol es Admin,
@@ -965,7 +963,7 @@ public class CtrlDomini {
     public int crearUsuariEnquestador(String nomUsuari, String password, String email) {
         // comproven si existeix
         if (ctrlDominiMantUsuari.existeixUsuari(nomUsuari)) {
-            return -1;
+            return -2;
         }
 
         // comprovem els requeriments del password
@@ -974,7 +972,7 @@ public class CtrlDomini {
 
         // comprovem email no usat
         if (ctrlDominiMantUsuari.emailUsat(email))
-            return -3;
+            return -2;
 
         int id = ctrlDominiMantUsuari.getNouID();
         // D'alguna forma s'ha de decidir el rol per enviar-lo, es a dir rol es Admin,
@@ -1182,34 +1180,35 @@ public class CtrlDomini {
     public int modificarRespostaEnquesta(int idExecutor, Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta)
             throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatResposta {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idExecutor);
+        if(u == null){
+            return -1; // L'usuari no existeix
+        }
+
         if(u.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idExecutor + " està vetat i no pot modificar respostes d'enquestes.");
+            return -10; // Usuari vetat
         }
+
         if(u.getId() < 0) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idExecutor + " no pot modificar respostes d'enquestes perquè és anònim.");
+            return -1; // L'usuari és anònim
         }
+
         if(u.esEnquestador()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idExecutor + " és enquestador i no pot modificar respostes d'enquestes.");
+            return -3; // Un enquestador no pot modificar respostes
         }
         if(u.esEnquestat()){
             if(idExecutor != idUsuari){
-                throw new IllegalArgumentException(
-                        "L'usuari amb id " + idExecutor + " és enquestat i només pot modificar les seves pròpies respostes.");
+                return -5; // Un enquestat només pot modificar les seves pròpies respostes
             }
             if(!u.teEnquestaRealitzada(idEnquesta)){
-                throw new IllegalArgumentException(
-                        "L'usuari amb id " + idExecutor + " no ha realitzat l'enquesta amb id " + idEnquesta + " i per tant no pot modificar respostes.");
+                return -6; // L'usuari no ha realitzat l'enquesta
             }
         }
         if(u.esAdmin()){
             if(!u.teEnquestaAdministrada(idEnquesta) && !u.teEnquestaRealitzada(idEnquesta)){
-                throw new IllegalArgumentException(
-                        "L'usuari amb id " + idExecutor + " no administra ni ha realitzat l'enquesta amb id " + idEnquesta + " i per tant no pot modificar respostes.");
+                return -6; // L'usuari no administra ni ha realitzat l'enquesta
             }
         }
+        //ja ha passat totes les comprovacions
         return modificarRespostaEnquestaPrivate(idEnquesta, idUsuari, idxPregunta, novaResposta);
     }
 
@@ -1257,44 +1256,37 @@ public class CtrlDomini {
     public int donarPodersEnquestador(int idExecutor, Integer idEnquesta, String nomTarget) {
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if (executor == null || executor.getId() < 0) {
-            throw new IllegalArgumentException("L'executor no és vàlid.");
+            return -1; // L'executor no és vàlid.
         }
 
         if(executor.isBlocked()){
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idExecutor + " està vetat i no pot assignar enquestadors.");
+            return -10; // L'usuari amb id " + idExecutor + " està vetat i no pot assignar enquestadors.
         }
 
         if (!executor.esAdmin() && !executor.esModerador()) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idExecutor + " no té permisos per assignar enquestadors.");
+            return -3; // L'usuari amb id " + idExecutor + " no té permisos per assignar enquestadors.
         }
 
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
         if (executor.esAdmin()) {
             if (!executor.teEnquestaAdministrada(idEnquesta)) {
-                throw new IllegalArgumentException(
-                        "L'admin no administra aquesta enquesta i no pot assignar-hi enquestadors.");
+                return -6; // L'admin no administra aquesta enquesta i no pot assignar enquestadors.
             }
         }
 
-        if (!ctrlDominiMantUsuari.existeixUsuari(nomTarget)) {
-            throw new IllegalArgumentException("L'usuari destinatari '" + nomTarget + "' no existeix.");
-        }
         Usuari target = ctrlDominiMantUsuari.getUsuariPerNom(nomTarget);
 
         if (target == null || target.getId() < 0) {
-            throw new IllegalArgumentException("L'executor no és vàlid.");
+            return -1; // El target no és vàlid.
         }
 
         if (target.isBlocked()) {
-            throw new IllegalArgumentException(
-                "L'usuari destinatari '" + nomTarget + "' està vetat i no se li pot donar poders.");
+            return -10; // L'usuari destinatari '" + nomTarget + "' està vetat i no se li pot donar poders.
         }
 
         if (target.esAdmin() || target.esModerador()) {
-            throw new IllegalArgumentException("No es pot fer Enquestador a un usuari que ja és Admin o Moderador.");
+            return -9; // No es pot canviar el rol d'un Admin o Moderador.
         }
 
         if (target.esEnquestat()) {
@@ -1303,7 +1295,7 @@ public class CtrlDomini {
 
         target.demanarAfegirEnquestaAssignada(enq);
 
-        return 1;
+        return 1; // Èxit
     }
 
     /**
@@ -1316,57 +1308,50 @@ public class CtrlDomini {
     public int donarPodersAdmin(int idExecutor, Integer idEnquesta, String nomTarget) {
         Usuari executor = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if (executor == null || executor.getId() < 0) {
-            throw new IllegalArgumentException("L'executor no és vàlid.");
+            return -1; // L'executor no és vàlid.
         }
 
         if(executor.isBlocked()){
-            throw new IllegalArgumentException(
-                "L'usuari amb id " + idExecutor + " està vetat i no pot nomenar administradors.");
+            return -10; // L'usuari amb id " + idExecutor + " està vetat i no pot nomenar administradors.
         }
 
         if (!executor.esAdmin() && !executor.esModerador()) {
-            throw new IllegalArgumentException(
-                    "L'usuari amb id " + idExecutor + " no té permisos per nomenar administradors.");
+            return -3; // L'usuari amb id " + idExecutor + " no té permisos per nomenar administradors.
         }
 
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
         if (executor.esAdmin()) {
             if (!executor.teEnquestaAdministrada(idEnquesta)) {
-                throw new IllegalArgumentException(
-                        "L'admin no administra aquesta enquesta i no pot nomenar altres administradors.");
+                return -6; // L'admin no administra aquesta enquesta i no pot nomenar administradors.
             }
         }
 
-        if (!ctrlDominiMantUsuari.existeixUsuari(nomTarget)) {
-            throw new IllegalArgumentException("L'usuari destinatari '" + nomTarget + "' no existeix.");
-        }
         Usuari target = ctrlDominiMantUsuari.getUsuariPerNom(nomTarget);
 
         if (target == null || target.getId() < 0) {
-            throw new IllegalArgumentException("L'executor no és vàlid.");
+            return -1; // El target no és vàlid.
         }
 
         if(target.isBlocked()){
-            throw new IllegalArgumentException(
-                "L'usuari destinatari '" + nomTarget + "' està vetat i no se li pot donar poders.");
+            return -10; // L'usuari destinatari '" + nomTarget + "' està vetat i no se li pot donar poders.
         }
 
         if (target.esModerador()) {
-            throw new IllegalArgumentException("No es pot canviar el rol d'un Moderador.");
+            return -9; // No es pot canviar el rol d'un Moderador.
+        }
+
+        if (target.teEnquestaAdministrada(idEnquesta)) {
+            return -5; // L'usuari ja administra aquesta enquesta.
         }
 
         if (!target.esAdmin()) {
             target.cambiarARolAdmin();
         }
 
-        if (target.teEnquestaAdministrada(idEnquesta)) {
-            throw new IllegalArgumentException("L'usuari ja administra aquesta enquesta.");
-        }
-
         target.demanarAfegirEnquestaAdministrada(enq);
 
-        return 1;
+        return 1; // Èxit
     }
 
     public List<String> obtenirNomUsuaris() {
