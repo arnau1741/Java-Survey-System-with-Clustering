@@ -22,7 +22,6 @@ public class VistaRespondreEnquesta extends JDialog {
     private JButton buttonMostrarInfo;
     private JTextArea areaInfo;
     private JButton buttonOK = new JButton("OK");
-    private JButton buttonCancel = new JButton("Cancel");
     private JButton buttonFinalitzar = new JButton("Finalitzar");
 
     private JTextArea areaPreguntas;
@@ -184,17 +183,20 @@ public class VistaRespondreEnquesta extends JDialog {
 
     private void configurarListeners() {
         buttonMostrarInfo.addActionListener(e -> {
+            if (idEnquestaActual == -1) {
+                JOptionPane.showMessageDialog(this,
+                        "Selecciona una enquesta",
+                        "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             mostrarInfoEnquesta();
 
             try {
-                // 1) Carregar les preguntes reals de l’enquesta
                 preguntes = ctrl.obtenirPreguntes(idEnquestaActual);
-
-                // 2) Inicialitzar respostes i índex
                 respostes = new java.util.ArrayList<>();
                 preguntaActual = 0;
 
-                // 3) Mostrar la primera pregunta
                 mostrarPregunta();
 
             } catch (EnquestaNoExisteixException ex) {
@@ -204,7 +206,6 @@ public class VistaRespondreEnquesta extends JDialog {
                         JOptionPane.ERROR_MESSAGE);
             }
         });
-
 
         comboEnquestes.addActionListener(e -> {
             String seleccionado = (String) comboEnquestes.getSelectedItem();
@@ -329,11 +330,6 @@ public class VistaRespondreEnquesta extends JDialog {
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    private void onOK() {
-        // add your code here
-        dispose();
     }
 
     private void onCancel() {
