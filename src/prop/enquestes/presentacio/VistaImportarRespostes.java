@@ -126,7 +126,7 @@ public class VistaImportarRespostes extends JDialog {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
         try {
-            List<String> enquestes = ctrl.obtenirLlistaEnquestes();
+            List<String> enquestes = ctrl.obtenirEnquestesAdministrades(idUsuari);
             for (String info : enquestes) {
                 String[] linies = info.split("\n");
                 for (String linia : linies) {
