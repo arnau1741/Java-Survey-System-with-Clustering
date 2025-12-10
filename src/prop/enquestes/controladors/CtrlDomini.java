@@ -174,6 +174,12 @@ public class CtrlDomini {
                     "L'usuari amb id " + idUsuari + " ja ha respost l'enquesta amb id " + idEnquesta + ".");
         }
 
+        // comprovar que l'usuari no és el creador de l'enquesta
+        if (idUsuari == enq.getCreador()) {
+            throw new IllegalArgumentException(
+                    "L'usuari amb id " + idUsuari + " no pot respondre la seva pròpia enquesta amb id " + idEnquesta + ".");
+        }
+
         respondreEnquestaPrivate(idEnquesta, idUsuari, respostesUsuari);
 
         u.demanarAfegirEnquestaRealitzada(enq);
