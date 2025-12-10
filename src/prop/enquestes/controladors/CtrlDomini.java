@@ -1358,4 +1358,13 @@ public class CtrlDomini {
         return 1;
     }
 
+    public List<String> obtenirNomUsuaris() {
+        return ctrlDominiMantUsuari.obtenirNomsUsuaris();
+    }
+
+    public int getIdUsuariPerNom(String nomUsuari) {
+        Usuari u = ctrlDominiMantUsuari.getUsuariPerNom(nomUsuari);
+        if (u == null) return -1; // mirar si volem retornar -1 o que retorna exactament
+        return u.getId();
+    }
 }
