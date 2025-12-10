@@ -363,7 +363,7 @@ public class CtrlPresentacio {
     }
 
     public void respondreEnquesta(int idEnquestat, int idEnquesta, List<String> respostes) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
-        ctrlDomini.respondreEnquesta(idEnquestat, idEnquesta, respostes);
+        ctrlDomini.respondreEnquesta(idEnquesta, idEnquestat, respostes);
     }
 
     ///////Persistencia
