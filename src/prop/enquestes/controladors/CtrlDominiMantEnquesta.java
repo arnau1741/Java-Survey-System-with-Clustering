@@ -272,7 +272,8 @@ public class CtrlDominiMantEnquesta {
     }
 
     /**
-     * Retorna una llista amb tots els IDs de les enquestes existents
+     * Retorna una llista amb tots els ids de les enquestes existents
+     * @return llista d'ids d'enquestes
      */
     public List<Integer> getIdsEnquestes() {
         return new ArrayList<>(enquestes.keySet());
@@ -280,6 +281,7 @@ public class CtrlDominiMantEnquesta {
 
     /**
      * Retorna una llista amb tots els títols de les enquestes existents
+     * @return llista de títols d'enquestes
      */
     public List<String> getTitolsEnquestes() {
         List<String> titols = new ArrayList<>();
@@ -289,6 +291,10 @@ public class CtrlDominiMantEnquesta {
         return titols;
     }
 
+    /**
+     * Retorna l'última enquesta creada
+     * @return l'última enquesta creada, o null si no hi ha enquestes
+     */
     public Enquesta getUltimaEnquestaCreada() {
         if(!enquestes.isEmpty()) {
             return enquestes.get(ultimIdEnquesta - 1);
