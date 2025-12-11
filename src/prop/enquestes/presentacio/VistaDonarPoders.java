@@ -1,6 +1,8 @@
 package prop.enquestes.presentacio;
 
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
+import prop.enquestes.excepcions.InvalidFormatEnquesta;
+import prop.enquestes.excepcions.UsuariNoValid;
 
 import javax.swing.*;
 import java.awt.*;
@@ -113,22 +115,29 @@ public class VistaDonarPoders extends JDialog {
         try {
             int result;
             if (rol.equals("Enquestador")) {
-                result = ctrl.donarPoders(idExecutor, idEnquesta, nomTarget, rol);
+                ctrl.donarPoders(idExecutor, idEnquesta, nomTarget, rol);
             } else {
-                result = ctrl.donarPoders(idExecutor, idEnquesta, nomTarget, rol);
+                ctrl.donarPoders(idExecutor, idEnquesta, nomTarget, rol);
             }
-            if(result == 1) {
-                JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(this,
                         "Poder assignat correctament!",
                         "Èxit",
                         JOptionPane.INFORMATION_MESSAGE);
 
-                dispose();
-            }
-
+            dispose();
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this,
                     "Error: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (InvalidFormatEnquesta ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error del format de l'enquesta: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (UsuariNoValid ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'usuari: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }

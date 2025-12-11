@@ -2,6 +2,8 @@ package prop.enquestes.presentacio;
 
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
+import prop.enquestes.excepcions.InvalidFormatResposta;
+import prop.enquestes.excepcions.UsuariNoValid;
 
 import javax.swing.*;
 import java.awt.*;
@@ -326,7 +328,17 @@ public class VistaRespondreEnquesta extends JDialog {
                     JOptionPane.ERROR_MESSAGE);
         } catch (EnquestaNoExisteixException ex) {
             JOptionPane.showMessageDialog(this,
-                    "Error: " + ex.getMessage(),
+                    "Error de l'enquesta: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (InvalidFormatResposta ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error del format de la resposta: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (UsuariNoValid ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'usuari: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }

@@ -1,7 +1,9 @@
 package prop.enquestes.presentacio;
 
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
+import prop.enquestes.excepcions.InvalidFormatEnquesta;
 import prop.enquestes.excepcions.KmeansExcepcio;
+import prop.enquestes.excepcions.UsuariNoValid;
 
 import javax.swing.*;
 import java.awt.*;
@@ -175,7 +177,11 @@ public class VistaConsultarRespostes extends JDialog {
         } catch (KmeansExcepcio ex) {
             JOptionPane.showMessageDialog(this, "Error en clustering: " + ex.getMessage());
         } catch (EnquestaNoExisteixException ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error de l'enquesta: " + ex.getMessage());
+        } catch (InvalidFormatEnquesta ex) {
+            JOptionPane.showMessageDialog(this, "Error del format: " + ex.getMessage());
+        } catch (UsuariNoValid ex) {
+            JOptionPane.showMessageDialog(this, "Error de l'usuari: " + ex.getMessage());
         }
     }
 }

@@ -1,5 +1,7 @@
 package prop.enquestes.presentacio;
 
+import prop.enquestes.excepcions.UsuariNoValid;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -59,8 +61,16 @@ public class VistaVetarDesvetar extends JDialog {
                 return;
             }
 
-            int result = ctrl.vetarUsuari(idExecutor, nom);
-            processResult(result, true);
+            try {
+                ctrl.vetarUsuari(idExecutor, nom);
+                JOptionPane.showMessageDialog(this, "Usuari vetat correctament!",
+                        "Èxit",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (UsuariNoValid ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Error de l'usuari:" + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         btnDesvetar.addActionListener(e -> {
@@ -70,34 +80,19 @@ public class VistaVetarDesvetar extends JDialog {
                 return;
             }
 
-            int result = ctrl.desvetarUsuari(idExecutor, nom);
-            processResult(result, false);
+            try {
+                ctrl.desvetarUsuari(idExecutor, nom);
+                JOptionPane.showMessageDialog(this,
+                        "Usuari desvetat correctament!",
+                        "Èxit",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (UsuariNoValid ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Error de l'usuari:" + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         btnSortir.addActionListener(e -> dispose());
-    }
-
-    private void processResult(int result, boolean vetar) {
-        if (result == 1) {
-            JOptionPane.showMessageDialog(this,
-                    vetar ? "Usuari vetat correctament!" : "Usuari desvetat correctament!",
-                    "Èxit",
-                    JOptionPane.INFORMATION_MESSAGE);
-        }
-        else if (result == -1) {
-            JOptionPane.showMessageDialog(this,
-                    "L'usuari objectiu no existeix.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else if (result == -2) {
-            JOptionPane.showMessageDialog(this,
-                    "No tens permisos per fer aquesta acció.",
-                    "Permís denegat", JOptionPane.ERROR_MESSAGE);
-        }
-        else {
-            JOptionPane.showMessageDialog(this,
-                    "Error desconegut.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 }

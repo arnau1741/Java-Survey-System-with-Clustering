@@ -7,6 +7,7 @@ import java.io.File;
 
 import prop.enquestes.excepcions.FileNotFound;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
+import prop.enquestes.excepcions.UsuariNoValid;
 
 public class VistaImportarEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
@@ -131,6 +132,11 @@ public class VistaImportarEnquesta extends JDialog {
         } catch (InvalidFormatEnquesta e) {
             JOptionPane.showMessageDialog(this,
                     "El fitxer té un format d'enquesta incorrecte:\n" + e.getMessage(),
+                    "Format invàlid",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (UsuariNoValid e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'usuari:\n" + e.getMessage(),
                     "Format invàlid",
                     JOptionPane.ERROR_MESSAGE);
         }

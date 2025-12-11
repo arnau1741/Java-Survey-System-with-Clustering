@@ -167,17 +167,14 @@ public class CtrlPresentacio {
     // OPERACIONS
     // ======================
 
-    public int iniciarSessio(String nomUsuari, String password) {
+    public int iniciarSessio(String nomUsuari, String password) throws IllegalArgumentException {
         int id = ctrlDomini.iniciarSessio(nomUsuari, password);
         return id;
     }
 
-    public int crearUsuari(String nom, String cont, String email, String rol) {
+    public int crearUsuari(String nom, String cont, String email, String rol) throws UsuariNoValid {
         if(rol.equals("ENQUESTADOR")){
             return ctrlDomini.crearUsuariEnquestador(nom,cont,email);
-        }
-        else if(rol.equals("ADMIN")){
-            return ctrlDomini.crearUsuariAdmin(nom,cont,email);
         }
         else return ctrlDomini.crearUsuariEnquestat(nom,cont,email);
     }
@@ -221,25 +218,24 @@ public class CtrlPresentacio {
         return ctrlDomini.consultarPreguntes(idEnquesta);
     }
 
-    public void eliminarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException {
+    public void eliminarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta, UsuariNoValid {
         ctrlDomini.eliminarEnquesta(idUsuari, idEnquesta);
     }
 
-    public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat) throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException {
+    public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat) throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatEnquesta, UsuariNoValid {
         ctrlDomini.esborrarRespostaEnquesta(idUsuari, idEnquesta, idEnquestat);
     }
 
-    public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int indexPregunta, List<String> novaPreguntaText) throws InvalidFormatEnquesta, EnquestaNoExisteixException {
+    public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int indexPregunta, List<String> novaPreguntaText) throws InvalidFormatEnquesta, EnquestaNoExisteixException, UsuariNoValid {
         return ctrlDomini.modificarPreguntaEnquesta(idUsuari, idEnquesta, indexPregunta, novaPreguntaText);
     }
 
-    public int crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta {
-        int id = ctrlDomini.crearEnquesta(titol, descripcio, idCreador, preguntes);
-        return id;
+    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta, UsuariNoValid {
+        ctrlDomini.crearEnquesta(titol, descripcio, idCreador, preguntes);
     }
 
     public int importarEnquesta(String nombreArchivo, int idCreador)
-            throws FileNotFound, InvalidFormatEnquesta {
+            throws FileNotFound, InvalidFormatEnquesta, UsuariNoValid {
         String Base_path = "Pruebas";
 
         try {
@@ -330,11 +326,13 @@ public class CtrlPresentacio {
             throw new FileNotFound("Error llegint el fitxer: " + e.getMessage());
         } catch (NumberFormatException e) {
             throw new InvalidFormatEnquesta("Format numèric incorrecte: " + e.getMessage());
+        } catch (UsuariNoValid e) {
+            throw new UsuariNoValid("Error de l'usuari: " + e.getMessage());
         }
     }
 
     public int importarRespostes(String nombreArchivo, int idUsuari, int idEnquesta)
-            throws FileNotFound, InvalidFormatEnquesta {
+            throws FileNotFound, InvalidFormatEnquesta, EnquestaNoExisteixException, UsuariNoValid {
         String Base_path = "Pruebas";
 
         // Construir ruta completa
@@ -344,15 +342,11 @@ public class CtrlPresentacio {
         if (!archivo.exists()) {
             throw new FileNotFound("No s'ha trobat el fitxer: " + rutaCompleta);
         }
+        return ctrlDomini.importarRespostes(idUsuari, rutaCompleta, idEnquesta);
 
-        try {
-            return ctrlDomini.importarRespostes(idUsuari, rutaCompleta, idEnquesta);
-        } catch (NumberFormatException e) {
-            throw new InvalidFormatEnquesta("Format numèric incorrecte: " + e.getMessage());
-        }
     }
 
-    public List<String> exportarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException {
+    public List<String> exportarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException, UsuariNoValid {
         return ctrlDomini.exportarEnquesta(idEnquesta, idUsuari);
     }
 
@@ -360,7 +354,7 @@ public class CtrlPresentacio {
         return ctrlDomini.exportarRespostesEnquesta(idEnquesta);
     }
 
-    public void respondreEnquesta(int idEnquestat, int idEnquesta, List<String> respostes) throws EnquestaNoExisteixException, InvalidFormatEnquesta {
+    public void respondreEnquesta(int idEnquestat, int idEnquesta, List<String> respostes) throws EnquestaNoExisteixException, InvalidFormatEnquesta, InvalidFormatResposta, UsuariNoValid {
         ctrlDomini.respondreEnquesta(idEnquesta, idEnquestat, respostes);
     }
 
@@ -377,26 +371,26 @@ public class CtrlPresentacio {
         return ctrlDomini.consultarEnquestaAmbPreguntes(idEnquesta);
     }
 
-    public int donarPoders(int idExecutor, int idEnquesta, String nomTarget, String rol) {
+    public void donarPoders(int idExecutor, int idEnquesta, String nomTarget, String rol) throws InvalidFormatEnquesta, UsuariNoValid {
         if(rol.equals("Enquestador")) {
-            return ctrlDomini.donarPodersEnquestador(idExecutor,idEnquesta, nomTarget);
+            ctrlDomini.donarPodersEnquestador(idExecutor,idEnquesta, nomTarget);
         }
         else {
-            return ctrlDomini.donarPodersAdmin(idExecutor,idEnquesta, nomTarget);
+            ctrlDomini.donarPodersAdmin(idExecutor,idEnquesta, nomTarget);
         }
 
     }
 
-    public Map<Integer, Integer> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter) throws EnquestaNoExisteixException, KmeansExcepcio {
+    public Map<Integer, Integer> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter) throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
         return ctrlDomini.clustering(idUsuari, idEnquesta, k, iter);
     }
 
-    public int vetarUsuari(int idUsuari, String nomObjectiu) {
-        return ctrlDomini.vetarUsuari(idUsuari, nomObjectiu);
+    public void vetarUsuari(int idUsuari, String nomObjectiu) throws UsuariNoValid {
+        ctrlDomini.vetarUsuari(idUsuari, nomObjectiu);
     }
 
-    public int desvetarUsuari(int idUsuari, String nomObjectiu) {
-        return ctrlDomini.desvetarUsuari(idUsuari, nomObjectiu);
+    public void desvetarUsuari(int idUsuari, String nomObjectiu) throws UsuariNoValid {
+        ctrlDomini.desvetarUsuari(idUsuari, nomObjectiu);
     }
 
     public List<String> obtenirUsuaris() {

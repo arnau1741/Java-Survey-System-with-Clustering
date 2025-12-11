@@ -76,19 +76,16 @@ public class VistaIniciarSessio extends JDialog {
             JOptionPane.showMessageDialog(this, "Has d'introduir un nom d'usuari.");
             return;
         }
-        int id = ctrl.iniciarSessio(nomUsuari, pass);
-        if(id == -1) {
-            JOptionPane.showMessageDialog(this, "Nom usari incorrecte");
-        }
-        else if(id == -2) {
-            JOptionPane.showMessageDialog(this, "El password no compleix els requisits");
-        }
-        else if(id == -3) {
-            JOptionPane.showMessageDialog(this, "Email ja esta en us");
-        }
-        else {
+        int id = 0;
+        try {
+            id = ctrl.iniciarSessio(nomUsuari, pass);
             ctrl.mostrarVistaPrincipalComuna(id);
             dispose();
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'argument:\n" + e.getMessage(),
+                    "Format invàlid",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 

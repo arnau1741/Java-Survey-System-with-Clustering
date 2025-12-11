@@ -1,5 +1,7 @@
 package prop.enquestes.presentacio;
 
+import prop.enquestes.excepcions.UsuariNoValid;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -92,19 +94,13 @@ public class VistaCrearUsuari extends JDialog {
         String cont = campcont.getText();
         String email = campEmail.getText();
         String rol = (String) comboRol.getSelectedItem();
-        int id = ctrl.crearUsuari(nom,cont,email,rol);
-        if(id == -1) {
-            JOptionPane.showMessageDialog(this, "Nom usuari repetit.");
-        }
-        else if(id == -2) {
-            JOptionPane.showMessageDialog(this, "El password no compleix els requisits");
-        }
-        else if(id == -3) {
-            JOptionPane.showMessageDialog(this, "Email ja esta en us");
-        }
-        else {
+        int id = 0;
+        try {
+            id = ctrl.crearUsuari(nom,cont,email,rol);
             ctrl.mostrarVistaPrincipalComuna(id);
             dispose();
+        } catch (UsuariNoValid e) {
+            JOptionPane.showMessageDialog(this, "Error d'usuari: " + e.getMessage());
         }
 
     }

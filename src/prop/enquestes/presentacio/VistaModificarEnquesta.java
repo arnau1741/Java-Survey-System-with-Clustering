@@ -3,6 +3,7 @@ package prop.enquestes.presentacio;
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
 import prop.enquestes.excepcions.UsuariNoHaResposEnquesta;
+import prop.enquestes.excepcions.UsuariNoValid;
 
 import javax.swing.*;
 import java.awt.*;
@@ -423,7 +424,11 @@ public class VistaModificarEnquesta extends JDialog {
                     "Error", JOptionPane.ERROR_MESSAGE);
         } catch (EnquestaNoExisteixException e) {
             JOptionPane.showMessageDialog(this,
-                    "Error: " + e.getMessage(),
+                    "Error de l'enquesta: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (UsuariNoValid e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'usuari: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -461,6 +466,16 @@ public class VistaModificarEnquesta extends JDialog {
                 JOptionPane.showMessageDialog(this,
                         "Error: " + e.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (InvalidFormatEnquesta e) {
+                JOptionPane.showMessageDialog(this,
+                        "Error de format: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+
+            } catch (UsuariNoValid e) {
+                JOptionPane.showMessageDialog(this,
+                        "Error d'usuari: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+
             }
         }
     }
@@ -505,7 +520,15 @@ public class VistaModificarEnquesta extends JDialog {
                     "Error", JOptionPane.ERROR_MESSAGE);
         } catch (EnquestaNoExisteixException e) {
             JOptionPane.showMessageDialog(this,
-                    "Error: " + e.getMessage(),
+                    "Error en l'enquesta: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (InvalidFormatEnquesta e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error en el format: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (UsuariNoValid e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error en l'usuari: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

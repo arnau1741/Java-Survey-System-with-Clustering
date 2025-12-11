@@ -2,6 +2,8 @@ package prop.enquestes.persistencia;
 
 import prop.enquestes.controladors.CtrlDomini;
 import prop.enquestes.domini.*;
+import prop.enquestes.excepcions.InvalidFormatEnquesta;
+import prop.enquestes.excepcions.UsuariNoValid;
 
 import java.util.*;
 import java.io.File;
@@ -22,7 +24,7 @@ public class TestPersistenciaMain {
         file.delete();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UsuariNoValid, InvalidFormatEnquesta {
         System.out.println("== TEST DE PERSISTENCIA ==");
 
         cleanDatos();
@@ -31,7 +33,8 @@ public class TestPersistenciaMain {
         CtrlDomini ctrl1 = new CtrlDomini();
 
         System.out.println("Creando usuarios...");
-        int idAdmin = ctrl1.crearUsuariAdmin("admin1111", "Pass1234", "admin@test.com");
+        int idAdmin = ctrl1.iniciarSessio("admin1111", "Pass1234");
+        //int idAdmin = ctrl1.crearUsuariAdmin("admin1111", "Pass1234", "admin@test.com");
         int idUser = ctrl1.crearUsuariEnquestat("user1", "Pass1234", "user@test.com");
 
         System.out.println("Creando encuesta...");
@@ -39,8 +42,8 @@ public class TestPersistenciaMain {
         preguntesInput.add("4");
         preguntesInput.add("Pregunta de prueba?");
 
-        int resCrear = ctrl1.crearEnquesta("Encuesta Test", "Desc Test", idAdmin, preguntesInput);
-        System.out.println("Resultado creación: " + resCrear);
+        ctrl1.crearEnquesta("Encuesta Test", "Desc Test", idAdmin, preguntesInput);
+        System.out.println("Creación correcta");
 
         int idEnquesta = 0; // asumimos que será 0
 

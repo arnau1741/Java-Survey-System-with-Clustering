@@ -9,6 +9,7 @@ import java.util.List;
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
 import prop.enquestes.excepcions.FileNotFound;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
+import prop.enquestes.excepcions.UsuariNoValid;
 
 public class VistaImportarRespostes extends JDialog {
     private CtrlPresentacio ctrl;
@@ -182,6 +183,16 @@ public class VistaImportarRespostes extends JDialog {
                     "Format invàlid",
                     JOptionPane.ERROR_MESSAGE);
 
+        } catch (EnquestaNoExisteixException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'enquesta:\n" + e.getMessage(),
+                    "Format invàlid",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (UsuariNoValid e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'usuari:\n" + e.getMessage(),
+                    "Format invàlid",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
+import prop.enquestes.excepcions.UsuariNoValid;
 
 public class VistaCrearEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
@@ -202,12 +203,20 @@ public class VistaCrearEnquesta extends JDialog {
 
         List<String> preguntesTxt = getPreguntes();
 
-        int result = ctrl.crearEnquesta(titol, descripcio, idCreador, preguntesTxt);
-        if(result == 1) {
+        try {
+            ctrl.crearEnquesta(titol, descripcio, idCreador, preguntesTxt);
             JOptionPane.showMessageDialog(this, "Enquesta creada correctament!");
             dispose();
+        } catch (UsuariNoValid e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'usuari: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+
+        } catch (InvalidFormatEnquesta e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error del format: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else throw new InvalidFormatEnquesta();
     }
 
     private void onCancel() {
