@@ -400,4 +400,8 @@ public class CtrlPresentacio {
     public int getIdUsuariPerNom(String nomUsuari) {
         return ctrlDomini.getIdUsuariPerNom(nomUsuari);
     }
+
+    public String obtenirRolUsuari(int idUsuari) {
+        return ctrlDomini.getCtrlDominiMantUsuari().getRolUsuari(idUsuari);
+    }
 }

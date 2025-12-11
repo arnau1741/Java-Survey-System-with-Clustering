@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import prop.enquestes.excepcions.EnquestaNoExisteixException;
@@ -127,7 +128,17 @@ public class VistaImportarRespostes extends JDialog {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
         try {
-            List<String> enquestes = ctrl.obtenirEnquestesAdministrades(idUsuari);
+            List<String> enquestes = new ArrayList<>();
+            String rol = ctrl.obtenirRolUsuari(idUsuari);
+            if (rol.equals("ADMIN")) {
+                // si l'usuari es admin, mostra les enquestes que administra
+                enquestes = ctrl.obtenirEnquestesAdministrades(idUsuari);
+            }
+            else if (rol.equals("MODERADOR")) {
+                // si l'usuari es moderador, mostra totes les enquestes
+                enquestes = ctrl.obtenirLlistaEnquestes();
+            }
+
             for (String info : enquestes) {
                 String[] linies = info.split("\n");
                 for (String linia : linies) {
