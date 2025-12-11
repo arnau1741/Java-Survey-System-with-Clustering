@@ -1237,7 +1237,7 @@ public class CtrlDomini {
      */
     public int iniciarSessio(String nomUsuari, String password) throws IllegalArgumentException {
         if (nomUsuari == null || nomUsuari.isEmpty()) throw new IllegalArgumentException("Has d'introduir un nom d'usuari");
-        
+
         if (password == null || password.isEmpty()) throw new IllegalArgumentException("Has d'introduir una password");
 
         return ctrlDominiMantUsuari.iniciarSessio(nomUsuari, password);
