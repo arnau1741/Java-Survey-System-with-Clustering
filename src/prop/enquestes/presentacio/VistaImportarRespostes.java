@@ -182,11 +182,6 @@ public class VistaImportarRespostes extends JDialog {
                     "Format invàlid",
                     JOptionPane.ERROR_MESSAGE);
 
-        } catch (EnquestaNoExisteixException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
         }
     }
 

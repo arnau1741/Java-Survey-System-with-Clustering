@@ -334,7 +334,7 @@ public class CtrlPresentacio {
     }
 
     public int importarRespostes(String nombreArchivo, int idUsuari, int idEnquesta)
-            throws FileNotFound, InvalidFormatEnquesta, EnquestaNoExisteixException {
+            throws FileNotFound, InvalidFormatEnquesta {
         String Base_path = "Pruebas";
 
         // Construir ruta completa
@@ -349,8 +349,6 @@ public class CtrlPresentacio {
             return ctrlDomini.importarRespostes(idUsuari, rutaCompleta, idEnquesta);
         } catch (NumberFormatException e) {
             throw new InvalidFormatEnquesta("Format numèric incorrecte: " + e.getMessage());
-        } catch (EnquestaNoExisteixException e) {
-            throw new EnquestaNoExisteixException("L'enquesta no existeix: " + e.getMessage());
         }
     }
 
