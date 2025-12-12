@@ -138,6 +138,10 @@ public class VistaImportarRespostes extends JDialog {
                 // si l'usuari es moderador, mostra totes les enquestes
                 enquestes = ctrl.obtenirLlistaEnquestes();
             }
+            else {
+                // per l'enquestador
+                enquestes = ctrl.obtenirLlistaEnquestes();
+            }
 
             for (String info : enquestes) {
                 String[] linies = info.split("\n");
