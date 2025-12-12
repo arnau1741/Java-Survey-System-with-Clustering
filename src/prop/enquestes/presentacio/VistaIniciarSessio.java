@@ -10,8 +10,8 @@ public class VistaIniciarSessio extends JDialog {
 
     private JTextField campNomUsuari = new JTextField();
     private JPasswordField campPassword = new JPasswordField();
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    private JButton buttonOK = new JButton("OK");
+    private JButton buttonCancel = new JButton("Cancel");
 
 
     public VistaIniciarSessio(CtrlPresentacio ctrlPre) {
