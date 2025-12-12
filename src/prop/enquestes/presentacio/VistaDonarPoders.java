@@ -16,9 +16,9 @@ public class VistaDonarPoders extends JDialog {
     private int idExecutor;
 
     private JPanel contentPane = new JPanel();
-    private JComboBox<String> comboEnquestes;
-    private JTextField fieldNomTarget;
-    private JComboBox<String> comboRol;
+    private JComboBox<String> comboEnquestes = new JComboBox<>();
+    private JTextField fieldNomTarget = new JTextField();
+    private JComboBox<String> comboRol = new JComboBox<>();
     private JButton buttonOK = new JButton("Assignar");
     private JButton buttonCancel = new JButton("Cancel·lar");
 

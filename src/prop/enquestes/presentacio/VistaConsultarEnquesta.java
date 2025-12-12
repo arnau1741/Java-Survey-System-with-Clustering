@@ -10,11 +10,11 @@ import java.util.List;
 public class VistaConsultarEnquesta extends JDialog {
 
     private CtrlPresentacio ctrlPresentacio;
-    private JPanel contentPane;
-    private JTextArea resultat;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JComboBox<String> comboEnquestes;
+    private JPanel contentPane = new JPanel();
+    private JTextArea resultat =  new JTextArea();
+    private JButton buttonOK =  new JButton("OK");
+    private JButton buttonCancel =  new JButton("Cancel");
+    private JComboBox<String> comboEnquestes =  new JComboBox<>();
 
     public VistaConsultarEnquesta(CtrlPresentacio ctrlPresentacio) {
         super((Frame) null, "Consultar Enquesta", true);
@@ -29,8 +29,7 @@ public class VistaConsultarEnquesta extends JDialog {
     }
 
     private void inicialitzarComponents() {
-
-        contentPane = new JPanel(new BorderLayout(10, 10));
+        contentPane.setLayout(new BorderLayout(10,10));
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // ========== SELECCIÓ ENQUESTA (TOP) ==========

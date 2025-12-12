@@ -18,18 +18,18 @@ public class VistaRespondreEnquesta extends JDialog {
     private List<String> respostes;
     private int preguntaActual = 0;
 
-    private JPanel contentPane;
-    private JComboBox<String> comboEnquestes;
-    private JLabel labelIdActual;
-    private JButton buttonMostrarInfo;
-    private JTextArea areaInfo;
+    private JPanel contentPane = new JPanel();
+    private JComboBox<String> comboEnquestes = new JComboBox<>();
+    private JLabel labelIdActual = new JLabel();
+    private JButton buttonMostrarInfo = new JButton("Mostrar info");
+    private JTextArea areaInfo = new JTextArea();
     private JButton buttonOK = new JButton("OK");
     private JButton buttonFinalitzar = new JButton("Finalitzar");
 
-    private JTextArea areaPreguntas;
-    private JTextField respuesta;
-    private JButton buttonAfegirResposta;
-    private JButton buttonCerrar;
+    private JTextArea areaPreguntas = new JTextArea();
+    private JTextField respuesta = new JTextField();
+    private JButton buttonAfegirResposta = new JButton("Afegir Resposta");
+    private JButton buttonCerrar = new JButton("Cerrar");
 
     public VistaRespondreEnquesta(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;

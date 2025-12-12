@@ -18,12 +18,12 @@ public class VistaConsultarRespostes extends JDialog {
 
     private JPanel contentPane = new JPanel();
 
-    private JComboBox<String> comboEnquestes;
-    private JTextArea areaRespostes;
-    private JTextArea areaClustering;
+    private JComboBox<String> comboEnquestes = new JComboBox<>();
+    private JTextArea areaRespostes = new  JTextArea();
+    private JTextArea areaClustering = new  JTextArea();
 
-    private JTextField fieldK;
-    private JTextField fieldIter;
+    private JTextField fieldK = new  JTextField();
+    private JTextField fieldIter = new  JTextField();
 
     private JButton btnAplicarCluster = new JButton("Aplicar Clustering");
     private JButton btnTancar = new JButton("Tancar");

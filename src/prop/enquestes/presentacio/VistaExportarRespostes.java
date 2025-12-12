@@ -20,7 +20,7 @@ public class VistaExportarRespostes extends JDialog {
     private JPanel contentPane = new JPanel();
     private JComboBox<String> comboEnquestes = new JComboBox<>();
     private JTextArea areaPreview = new JTextArea();
-    private JLabel labelIdActual;
+    private JLabel labelIdActual = new JLabel();
 
     private JButton btnExportar = new JButton("Exportar");
     private JButton btnSortir = new JButton("Tancar");

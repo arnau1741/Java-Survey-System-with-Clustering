@@ -19,22 +19,22 @@ public class VistaModificarEnquesta extends JDialog {
     private JButton buttonOK = new JButton("OK");
     private JButton buttonCancel = new JButton("Cancelar");
 
-    private JPanel contentPane;
-    private JComboBox<String> comboEnquestes;
-    private JTextArea areaInfo;
-    private JButton buttonMostrarInfo;
-    private JLabel labelIdActual;
+    private JPanel contentPane = new JPanel();
+    private JComboBox<String> comboEnquestes = new JComboBox<>();
+    private JTextArea areaInfo = new JTextArea();
+    private JButton buttonMostrarInfo = new JButton("Mostrar Info");
+    private JLabel labelIdActual = new JLabel("Id:");
 
-    private JTextField campIndexPregunta;
-    private JComboBox<String> comboTipusPregunta;
-    private JTextArea campTextPregunta;
-    private JTextField campNumOpcions;
-    private JTextArea campOpcionsPregunta;
-    private JButton buttonModificarPregunta;
+    private JTextField campIndexPregunta = new JTextField();
+    private JComboBox<String> comboTipusPregunta = new JComboBox<>();
+    private JTextArea campTextPregunta = new JTextArea();
+    private JTextField campNumOpcions = new JTextField();
+    private JTextArea campOpcionsPregunta = new JTextArea();
+    private JButton buttonModificarPregunta = new JButton("Modificar");
 
-    private JButton buttonEliminarEnquesta;
-    private JTextField campIdEnquestat;
-    private JButton buttonEliminarResposta;
+    private JButton buttonEliminarEnquesta = new JButton("Eliminar");
+    private JTextField campIdEnquestat = new JTextField();
+    private JButton buttonEliminarResposta = new JButton("Eliminar");
 
     public VistaModificarEnquesta(CtrlPresentacio ctrl, int idUsuariActual) {
         super((Frame) null, "Gestió d'Enquestes", true);

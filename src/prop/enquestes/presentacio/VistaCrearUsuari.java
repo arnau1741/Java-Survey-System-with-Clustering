@@ -20,8 +20,8 @@ public class VistaCrearUsuari extends JDialog {
             "ADMIN"
     });
 
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    private JButton buttonOK = new JButton("OK");
+    private JButton buttonCancel = new JButton("Cancelar");
 
     public VistaCrearUsuari(CtrlPresentacio c) {
         super((Frame) null, "Crear Usuari", true);
