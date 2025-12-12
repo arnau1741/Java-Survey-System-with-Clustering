@@ -8,6 +8,10 @@ import java.util.*;
 public class GestorUsuari {
     private static final String DIRECTORY = "datos/usuari/";
 
+    /**
+     * Guarda els usuaris en fitxers JSON.
+     * @param usuaris
+     */
     public void guardarUsuaris(Map<Integer, Usuari> usuaris) {
         File dir = new File(DIRECTORY);
         if (!dir.exists())
@@ -34,6 +38,10 @@ public class GestorUsuari {
         }
     }
 
+    /**
+     * Carrega els usuaris des de fitxers JSON.
+     * @return Map d'usuaris carregats.
+     */
     public Map<Integer, Usuari> carregarUsuaris() {
         Map<Integer, Usuari> usuaris = new HashMap<>();
         File dir = new File(DIRECTORY);
@@ -77,6 +85,11 @@ public class GestorUsuari {
         return usuaris;
     }
 
+    /**
+     * Escriu el contingut en un fitxer.
+     * @param path
+     * @param content
+     */
     private void writeFile(String path, String content) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             bw.write(content);
@@ -85,6 +98,11 @@ public class GestorUsuari {
         }
     }
 
+    /**
+     * Llegeix el contingut d'un fitxer.
+     * @param file
+     * @return Contingut del fitxer.
+     */
     private String readFile(File file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             StringBuilder sb = new StringBuilder();
