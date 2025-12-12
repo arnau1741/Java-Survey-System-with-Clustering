@@ -11,6 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Diàleg per a la consulta de respostes i l'anàlisi de dades mitjançant Clustering.
+ * <p>
+ * Aquesta vista permet seleccionar una enquesta per visualitzar totes les respostes rebudes.
+ * A més, ofereix la funcionalitat d'executar l'algorisme K-Means (Clustering) sobre aquestes
+ * respostes, permetent a l'usuari configurar els paràmetres 'k' (nombre de clústers) i
+ * 'maxIter' (iteracions màximes).
+ * </p>
+ */
 public class VistaConsultarRespostes extends JDialog {
 
     private CtrlPresentacio ctrl;
@@ -28,8 +37,16 @@ public class VistaConsultarRespostes extends JDialog {
     private JButton btnAplicarCluster = new JButton("Aplicar Clustering");
     private JButton btnTancar = new JButton("Tancar");
 
+    /** Llista auxiliar per mapejar l'índex del ComboBox amb l'ID real de l'enquesta. */
     private List<Integer> idsEnquestes;
 
+    /**
+     * Constructor de la vista de consulta de respostes.
+     * Inicialitza la finestra, carrega les enquestes disponibles i configura els escoltadors.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari Identificador de l'usuari actual (necessari per a permisos d'execució).
+     */
     public VistaConsultarRespostes(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -44,6 +61,11 @@ public class VistaConsultarRespostes extends JDialog {
         initActions();
     }
 
+    /**
+     * Inicialitza els components gràfics de la interfície.
+     * Divideix la pantalla en dues àrees (respostes i clustering) mitjançant un JSplitPane
+     * i afegeix els controls de paràmetres a la part inferior.
+     */
     private void initComponents() {
         contentPane.setLayout(new BorderLayout(10, 10));
         JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
@@ -93,6 +115,11 @@ public class VistaConsultarRespostes extends JDialog {
         setContentPane(contentPane);
     }
 
+    /**
+     * Carrega les enquestes disponibles al desplegable.
+     * Analitza les cadenes de text rebudes del controlador per extreure l'ID numèric
+     * i l'emmagatzema a la llista auxiliar {@code idsEnquestes} per a la seva posterior referència.
+     */
     private void carregarEnquestes() {
         comboEnquestes.removeAllItems();
         idsEnquestes = new ArrayList<>();
@@ -124,6 +151,9 @@ public class VistaConsultarRespostes extends JDialog {
         }
     }
 
+    /**
+     * Assigna les accions als components (botons i desplegable).
+     */
     private void initActions() {
         comboEnquestes.addActionListener(e -> mostrarRespostes());
 
@@ -132,6 +162,11 @@ public class VistaConsultarRespostes extends JDialog {
         btnTancar.addActionListener(e -> dispose());
     }
 
+    /**
+     * Mostra les respostes de l'enquesta seleccionada.
+     * S'executa automàticament en canviar la selecció del ComboBox.
+     * Recupera l'ID de la llista auxiliar i demana les dades al controlador.
+     */
     private void mostrarRespostes() {
         int idx = comboEnquestes.getSelectedIndex();
         if (idx < 0) return;
@@ -150,6 +185,12 @@ public class VistaConsultarRespostes extends JDialog {
         }
     }
 
+    /**
+     * Executa l'algorisme de Clustering amb els paràmetres introduïts per l'usuari.
+     * Llegeix els valors dels camps de text (K i iteracions), crida al controlador
+     * i mostra el resultat (associació Usuari -> Grup) a l'àrea inferior.
+     * Gestiona possibles errors de format o lògica de negoci.
+     */
     private void aplicarClustering() {
         int idx = comboEnquestes.getSelectedIndex();
         if (idx < 0) {

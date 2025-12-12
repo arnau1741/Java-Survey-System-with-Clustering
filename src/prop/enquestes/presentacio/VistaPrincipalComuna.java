@@ -4,6 +4,15 @@ import prop.enquestes.domini.Usuari;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Vista comuna que serveix com a base per als menús d'usuaris registrats.
+ * <p>
+ * Aquesta classe proporciona una estructura unificada per als menús principals dels diferents rols.
+ * Configura dinàmicament la visibilitat de certs botons (com {@code btnrolExtra})
+ * en funció del rol de l'usuari (ADMIN, ENQUESTADOR, ENQUESTAT), oferint accés a funcionalitats
+ * comunes com crear enquestes, respondre, consultar perfil i recomanacions.
+ * </p>
+ */
 public class VistaPrincipalComuna extends JFrame {
 
     private CtrlPresentacio ctrl;
@@ -18,6 +27,15 @@ public class VistaPrincipalComuna extends JFrame {
     private JButton btnrolExtra = new JButton();
     private JButton sortirButton = new JButton("Sortir");
 
+    /**
+     * Constructor de la Vista Principal Comuna.
+     * Inicialitza la finestra, guarda les dades de l'usuari, configura els components
+     * i adapta la interfície segons el rol.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuario Identificador de l'usuari que ha iniciat sessió.
+     * @param nomUsuari Nom de l'usuari (utilitzat per al títol de la finestra).
+     */
     public VistaPrincipalComuna(CtrlPresentacio ctrl, int idUsuario, String nomUsuari) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuario;
@@ -27,6 +45,10 @@ public class VistaPrincipalComuna extends JFrame {
         setupListeners();     // Configura els listeners dels botons
     }
 
+    /**
+     * Inicialitza i distribueix els components visuals de la interfície.
+     * Crea un menú vertical amb les opcions comunes i un botó de sortida.
+     */
     private void initComponents() {
         setTitle("Menu Usuari - " + nomUsuari);
         setSize(400, 400);
@@ -61,6 +83,14 @@ public class VistaPrincipalComuna extends JFrame {
 
     }
 
+    /**
+     * Configura la visibilitat i el text del botó extra segons el rol de l'usuari.
+     * <ul>
+     * <li><b>ADMIN:</b> Mostra "Funcions avançades".</li>
+     * <li><b>ENQUESTADOR:</b> Mostra "Importar respostes".</li>
+     * <li><b>Altres (ENQUESTAT):</b> Oculta el botó extra.</li>
+     * </ul>
+     */
     private void configureUsuari() {
         String rol = ctrl.obtenirRol(idUsuari);
         switch(rol){
@@ -78,10 +108,23 @@ public class VistaPrincipalComuna extends JFrame {
         }
     }
 
+    /**
+     * Modifica la visibilitat de la finestra.
+     *
+     * @param b True per mostrar la finestra, False per amagar-la.
+     */
     public void hacerVisible(boolean b) {
         setVisible(b);
     }
 
+    /**
+     * Assigna els escoltadors (listeners) als botons.
+     * Defineix les accions a realitzar quan es premen els botons (consultar perfil, recomanacions, etc.).
+     * <p>
+     * Nota: Algunes funcionalitats com 'Crear Enquesta', 'Respondre Enquesta' i el botó extra
+     * tenen la lògica comentada o pendent d'implementació completa en aquesta classe base.
+     * </p>
+     */
     private void setupListeners() {
         consultarPerfilButton.addActionListener(e -> {
             ctrl.mostrarConsultarPerfil();
@@ -100,9 +143,9 @@ public class VistaPrincipalComuna extends JFrame {
         btnrolExtra.addActionListener(e -> {
             //String rol = ctrl.obtenirRol(idUsuari);
             //if (rol.equals("ADMIN")) {
-                //ctrl.mostrarFuncionsAvançades();
+            //ctrl.mostrarFuncionsAvançades();
             //} else if (rol.equals("ENQUESTADOR")) {
-                // ctrl.mostrarImportarRespostes();
+            // ctrl.mostrarImportarRespostes();
             //}
         });
         /*

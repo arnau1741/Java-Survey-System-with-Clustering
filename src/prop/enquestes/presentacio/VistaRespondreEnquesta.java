@@ -10,6 +10,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
+/**
+ * Diàleg que permet a un usuari respondre una enquesta.
+ * <p>
+ * Aquesta vista gestiona tot el flux de resposta: des de la selecció de l'enquesta,
+ * la visualització de la informació prèvia, la presentació seqüencial de les preguntes
+ * i l'enviament final de les respostes al controlador.
+ * </p>
+ */
 public class VistaRespondreEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
     private int idUsuari;
@@ -31,6 +39,13 @@ public class VistaRespondreEnquesta extends JDialog {
     private JButton buttonAfegirResposta = new JButton("Afegir Resposta");
     private JButton buttonCerrar = new JButton("Cerrar");
 
+    /**
+     * Constructor de la vista per respondre enquestes.
+     * Inicialitza la finestra, carrega les enquestes disponibles i configura la lògica de navegació.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari Identificador de l'usuari que respondrà l'enquesta.
+     */
     public VistaRespondreEnquesta(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -63,6 +78,11 @@ public class VistaRespondreEnquesta extends JDialog {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Inicialitza i distribueix els components gràfics (Layout).
+     * Crea dues seccions principals: una per seleccionar l'enquesta i veure'n la informació,
+     * i una altra per respondre les preguntes una per una.
+     */
     private void inicializarComponentes() {
         contentPane = new JPanel(new BorderLayout(5, 5));
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -160,6 +180,9 @@ public class VistaRespondreEnquesta extends JDialog {
         contentPane.add(scrollPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Carrega la llista d'enquestes disponibles al ComboBox.
+     */
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
@@ -183,6 +206,10 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Assigna els escoltadors (listeners) als components.
+     * Defineix la lògica per iniciar l'enquesta, avançar entre preguntes i finalitzar.
+     */
     private void configurarListeners() {
         buttonMostrarInfo.addActionListener(e -> {
             if (idEnquestaActual == -1) {
@@ -251,6 +278,9 @@ public class VistaRespondreEnquesta extends JDialog {
 
     }
 
+    /**
+     * Mostra la informació general de l'enquesta seleccionada.
+     */
     private void mostrarInfoEnquesta() {
         if (idEnquestaActual == -1) {
             areaInfo.setText("");
@@ -275,6 +305,9 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Extreu l'ID numèric de l'enquesta del text del ComboBox.
+     */
     private int extraerIdEnquesta(String texto) {
         try {
             // Formato esperado: "ID: X - ..."
@@ -292,6 +325,11 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Controla el flux de preguntes.
+     * Si queden preguntes, mostra la següent i neteja el camp de resposta.
+     * Si s'han acabat, mostra un missatge de finalització i habilita el botó per enviar les dades.
+     */
     private void mostrarPregunta() {
         if (preguntes == null || preguntes.isEmpty()) {
             areaPreguntas.setText("No hi ha preguntes en aquesta enquesta.");
@@ -311,6 +349,10 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Envia la llista de respostes acumulades al controlador per ser persistides.
+     * Gestiona les possibles excepcions de format o validació.
+     */
     private void enviarRespostes() {
         try {
             ctrl.respondreEnquesta(idUsuari, idEnquestaActual, respostes);
@@ -344,6 +386,9 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Tanca el diàleg.
+     */
     private void onCancel() {
         // add your code here if necessary
         dispose();

@@ -3,6 +3,14 @@ package prop.enquestes.presentacio;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Vista principal per a l'usuari convidat.
+ * <p>
+ * Aquesta classe representa el menú limitat que veu un usuari que accedeix al sistema
+ * sense registrar-se (o com a convidat). La seva única funcionalitat principal és
+ * respondre enquestes públiques.
+ * </p>
+ */
 public class VistaConvidat extends JFrame {
     private CtrlPresentacio ctrl;
     private int idUsuari;
@@ -11,6 +19,13 @@ public class VistaConvidat extends JFrame {
     private JButton buttonRespondreEnquesta = new JButton("Respondre Enquesta");
     private JButton buttonSortir = new JButton("Sortir");
 
+    /**
+     * Constructor de la vista de convidat.
+     * Inicialitza la finestra i configura els elements gràfics per a la interacció.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari Identificador assignat a l'usuari convidat (habitualment un identificador temporal o específic).
+     */
     public VistaConvidat(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -19,6 +34,10 @@ public class VistaConvidat extends JFrame {
         setupListeners();     // Configura els listeners dels botons
     }
 
+    /**
+     * Inicialitza i configura els components visuals de la interfície.
+     * Defineix el títol, la mida i la distribució dels botons al panell.
+     */
     private void initComponents() {
         setTitle("Menu convidat");
         setSize(400, 400);
@@ -48,6 +67,10 @@ public class VistaConvidat extends JFrame {
 
     }
 
+    /**
+     * Configura els listeners (escoltadors) per als botons.
+     * Assigna l'acció de respondre enquestes al botó corresponent, delegant la tasca al controlador.
+     */
     private void setupListeners() {
         buttonRespondreEnquesta.addActionListener(e -> {
             ctrl.mostrarRespondreEnquesta(idUsuari);

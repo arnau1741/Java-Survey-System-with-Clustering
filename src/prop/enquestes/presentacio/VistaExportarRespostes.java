@@ -11,6 +11,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Diàleg per a l'exportació de les respostes d'una enquesta.
+ * <p>
+ * Aquesta vista permet a l'usuari seleccionar una enquesta existent, visualitzar
+ * una previsualització de les respostes rebudes i exportar-les a un fitxer de text
+ * localitzat a la carpeta "Pruebas".
+ * </p>
+ */
 public class VistaExportarRespostes extends JDialog {
 
     private final CtrlPresentacio ctrl;
@@ -29,6 +37,13 @@ public class VistaExportarRespostes extends JDialog {
     private JButton buttonOK = new  JButton("OK");
     private JButton buttonCancel = new  JButton("Cancel");
 
+    /**
+     * Constructor de la vista d'exportació de respostes.
+     * Inicialitza la finestra modal, carrega les enquestes disponibles i configura els components.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari Identificador de l'usuari que realitza l'acció.
+     */
     public VistaExportarRespostes(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -45,6 +60,10 @@ public class VistaExportarRespostes extends JDialog {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Inicialitza i organitza els components gràfics (Layout).
+     * Crea el panell de selecció superior, l'àrea de previsualització central i els botons inferiors.
+     */
     private void initLayout() {
         contentPane.setLayout(new BorderLayout(10,10));
         contentPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -84,6 +103,10 @@ public class VistaExportarRespostes extends JDialog {
         contentPane.add(bottom, BorderLayout.SOUTH);
     }
 
+    /**
+     * Carrega la llista d'enquestes disponibles al desplegable (ComboBox).
+     * Filtra la informació rebuda del controlador per mostrar la línia identificativa.
+     */
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
@@ -106,6 +129,9 @@ public class VistaExportarRespostes extends JDialog {
         }
     }
 
+    /**
+     * Assigna els escoltadors (listeners) als components interactius.
+     */
     private void initActions() {
 
         comboEnquestes.addActionListener(e -> mostrarPreview());
@@ -115,6 +141,10 @@ public class VistaExportarRespostes extends JDialog {
         btnSortir.addActionListener(e -> dispose());
     }
 
+    /**
+     * Actualitza l'àrea de previsualització quan es selecciona una enquesta.
+     * Extreu l'ID de l'enquesta seleccionada i crida al mètode de visualització de dades.
+     */
     private void mostrarPreview() {
         String seleccionado = (String) comboEnquestes.getSelectedItem();
         if (seleccionado != null && !seleccionado.equals("-- Selecciona --")) {
@@ -135,6 +165,9 @@ public class VistaExportarRespostes extends JDialog {
 
     }
 
+    /**
+     * Obté les respostes de l'enquesta actual des del controlador i les mostra a l'àrea de text.
+     */
     private void mostrarInfoRespostes() {
         List<String> res = ctrl.obtenirRespostesEnquesta(idEnquestaActual);
         StringBuilder sb = new StringBuilder();
@@ -143,6 +176,13 @@ public class VistaExportarRespostes extends JDialog {
         areaPreview.setText(sb.toString());
     }
 
+    /**
+     * Extreu l'ID numèric de l'enquesta a partir del text seleccionat al ComboBox.
+     *
+     * @param texto Cadena amb format "ID: X - Títol...".
+     * @return L'ID de l'enquesta.
+     * @throws RuntimeException Si el format no és vàlid.
+     */
     private int extraerIdEnquesta(String texto) {
         try {
             // Formato esperado: "ID: X - ..."
@@ -160,6 +200,10 @@ public class VistaExportarRespostes extends JDialog {
         }
     }
 
+    /**
+     * Executa l'exportació de les respostes a un fitxer de text.
+     * El fitxer es guarda a la carpeta "Pruebas" amb el nom "respostes_enquesta_ID.txt".
+     */
     private void onExportar() {
         String outputPath = "Pruebas" + File.separator + "respostes_enquesta_" + idEnquestaActual + ".txt";
 

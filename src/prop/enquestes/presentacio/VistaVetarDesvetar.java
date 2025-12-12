@@ -5,6 +5,13 @@ import prop.enquestes.excepcions.UsuariNoValid;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Diàleg per a la gestió de bloquejos (vetos) d'usuaris.
+ * <p>
+ * Aquesta vista permet a un moderador o administrador introduir el nom d'un usuari
+ * per bloquejar-li l'accés al sistema (vetar) o restaurar-li els permisos (desvetar).
+ * </p>
+ */
 public class VistaVetarDesvetar extends JDialog {
 
     private final CtrlPresentacio ctrl;
@@ -19,6 +26,13 @@ public class VistaVetarDesvetar extends JDialog {
 
     private JButton buttonOK = new JButton("OK");
 
+    /**
+     * Constructor de la vista de gestió de vetos.
+     * Configura la finestra modal, defineix la mida i inicialitza els components.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idExecutor Identificador de l'usuari (moderador/admin) que executa l'acció.
+     */
     public VistaVetarDesvetar(CtrlPresentacio ctrl, int idExecutor) {
         this.ctrl = ctrl;
         this.idExecutor = idExecutor;
@@ -32,6 +46,10 @@ public class VistaVetarDesvetar extends JDialog {
         initActions();
     }
 
+    /**
+     * Inicialitza la distribució gràfica de la finestra.
+     * Organitza el camp d'entrada del nom d'usuari i els botons d'acció en un panell central.
+     */
     private void initLayout() {
         contentPane.setLayout(new BorderLayout(10, 10));
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -52,6 +70,15 @@ public class VistaVetarDesvetar extends JDialog {
         setContentPane(contentPane);
     }
 
+    /**
+     * Configura els esdeveniments (listeners) dels botons.
+     * <ul>
+     * <li><b>Vetar:</b> Llegeix el nom i sol·licita al controlador bloquejar l'usuari.</li>
+     * <li><b>Desvetar:</b> Llegeix el nom i sol·licita al controlador desbloquejar l'usuari.</li>
+     * <li><b>Tancar:</b> Tanca la finestra.</li>
+     * </ul>
+     * També gestiona la captura d'excepcions en cas que l'usuari no sigui vàlid.
+     */
     private void initActions() {
 
         btnVetar.addActionListener(e -> {
