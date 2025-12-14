@@ -674,7 +674,7 @@ public class CtrlPresentacio {
      * @throws InvalidFormatEnquesta Si el format de dades és incorrecte.
      * @throws UsuariNoValid Si l'usuari no és vàlid.
      */
-    public Map<Integer, Integer> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter) throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
+    public Map<Integer, Integer> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter, String tipus) throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
         return ctrlDomini.clustering(idUsuari, idEnquesta, k, iter);
     }
 

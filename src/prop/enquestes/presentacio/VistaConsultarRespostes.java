@@ -33,6 +33,7 @@ public class VistaConsultarRespostes extends JDialog {
 
     private JTextField fieldK = new  JTextField();
     private JTextField fieldIter = new  JTextField();
+    private JComboBox<String> comboKmeans = new JComboBox<>();
 
     private JButton btnAplicarCluster = new JButton("Aplicar Clustering");
     private JButton btnTancar = new JButton("Tancar");
@@ -105,6 +106,13 @@ public class VistaConsultarRespostes extends JDialog {
         fieldIter = new JTextField("50", 5);
         south.add(fieldIter);
 
+        south.add(new JLabel("Algorime a usar:"));
+        comboKmeans = new JComboBox<>(new String[] {
+                "kmeans",
+                "kmeans++"
+        });
+
+        south.add(comboKmeans);
         south.add(btnAplicarCluster);
         south.add(btnTancar);
 
@@ -202,12 +210,14 @@ public class VistaConsultarRespostes extends JDialog {
 
         int k = Integer.parseInt(fieldK.getText().trim());
         int iter = Integer.parseInt(fieldIter.getText().trim());
+        String tipus = (String) comboKmeans.getSelectedItem();
 
         try {
-            Map<Integer, Integer> result = ctrl.aplicarClustering(idUsuari, idEnq, k, iter);
+            Map<Integer, Integer> result = ctrl.aplicarClustering(idUsuari, idEnq, k, iter, tipus);
 
             StringBuilder sb = new StringBuilder();
             sb.append("Resultat clustering (usuari -> clúster):\n\n");
+            sb.append("Algorisme: ").append(tipus).append("\n\n");
             for (var entry : result.entrySet()) {
                 sb.append("Usuari ").append(entry.getKey())
                         .append(" → Grup ").append(entry.getValue()).append("\n");
