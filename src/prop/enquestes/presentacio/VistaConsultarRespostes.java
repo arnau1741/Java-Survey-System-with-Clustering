@@ -108,8 +108,9 @@ public class VistaConsultarRespostes extends JDialog {
 
         south.add(new JLabel("Algorime a usar:"));
         comboKmeans = new JComboBox<>(new String[] {
-                "kmeans",
-                "kmeans++"
+                "KMeans",
+                "kmeans++",
+                "KMedoids"
         });
 
         south.add(comboKmeans);
