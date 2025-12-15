@@ -12,6 +12,11 @@ public class KMedoidsStrategy implements ClusteringStrategy {
     private final Long seed;
     private final boolean usarSeed;
 
+    /**
+     * Constructor per defecte sense semilla.
+     * @param k
+     * @param maxIterations
+     */
     public KMedoidsStrategy(int k, int maxIterations) {
         this.k = k;
         this.maxIterations = maxIterations;
@@ -19,6 +24,12 @@ public class KMedoidsStrategy implements ClusteringStrategy {
         this.usarSeed = false;
     }
 
+    /**
+     * Constructor amb semilla.
+     * @param k
+     * @param maxIterations
+     * @param seed
+     */
     public KMedoidsStrategy(int k, int maxIterations, long seed) {
         this.k = k;
         this.maxIterations = maxIterations;
@@ -26,6 +37,12 @@ public class KMedoidsStrategy implements ClusteringStrategy {
         this.usarSeed = true;
     }
 
+    /**
+     * Executa l'algorisme de K-Medoids sobre l'enquesta.
+     * @param data L'enquesta amb les dades a processar.
+     * @return Un Map on la clau és l'ID de l'Usuari i el valor és l'ID del Clúster assignat.
+     * @throws KmeansExcepcio Si hi ha algun error en l'execució matemàtica.
+     */
     @Override
     public Map<Integer, Integer> executar(Enquesta data) throws KmeansExcepcio {
         KMedoids algorisme;

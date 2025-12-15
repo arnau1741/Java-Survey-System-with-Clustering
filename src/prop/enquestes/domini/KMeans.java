@@ -52,8 +52,8 @@ public class KMeans {
      * @param k             nombre de clústers
      * @param maxIterations nombre màxim d'iteracions
      */
-    public KMeans(int k, int maxIterations) {
-        this(k, maxIterations, System.currentTimeMillis());
+    public KMeans(int k, int maxIterations, InitializationMethod initializationMethod) {
+        this(k, maxIterations, System.currentTimeMillis(), initializationMethod);
     }
 
     /**

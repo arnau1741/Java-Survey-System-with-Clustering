@@ -9,32 +9,46 @@ public class KMeansStrategy implements ClusteringStrategy {
 
     private final int k;
     private final int maxIterations;
-    private final Long seed;
-    private final boolean usarSeed;
+    private final KMeans.InitializationMethod initializationMethod;
 
-    // Constructors per admetre les opcions de la teva classe original
-    public KMeansStrategy(int k, int maxIterations) {
+    /**
+     * Constructor per defecte amb mètode d'inicialització.
+     * @param k
+     * @param maxIterations
+     * @param initializationMethod
+     */
+    public KMeansStrategy(int k, int maxIterations, KMeans.InitializationMethod initializationMethod) {
         this.k = k;
         this.maxIterations = maxIterations;
-        this.seed = null;
-        this.usarSeed = false;
+        this.initializationMethod = initializationMethod;
     }
 
-    public KMeansStrategy(int k, int maxIterations, long seed) {
+    /**
+     * Constructor per defecte amb opció de KMeans++.
+     * @param k
+     * @param maxIterations
+     * @param usePlusPlus
+     */
+    public KMeansStrategy(int k, int maxIterations, boolean usePlusPlus) {
         this.k = k;
         this.maxIterations = maxIterations;
-        this.seed = seed;
-        this.usarSeed = true;
+        if (usePlusPlus) {
+            this.initializationMethod = KMeans.InitializationMethod.KMEANS_PLUS_PLUS;
+        } else {
+            this.initializationMethod = KMeans.InitializationMethod.RANDOM;
+        }
     }
 
+    /**
+     * Executa l'algorisme de K-Means sobre l'enquesta.
+     * @param data
+     * @return
+     * @throws KmeansExcepcio
+     */
     @Override
     public Map<Integer, Integer> executar(Enquesta data) throws KmeansExcepcio {
         KMeans algorisme;
-        if (usarSeed) {
-            algorisme = new KMeans(k, maxIterations, seed);
-        } else {
-            algorisme = new KMeans(k, maxIterations);
-        }
+        algorisme = new KMeans(k, maxIterations, initializationMethod);
 
         algorisme.fit(data);
 

@@ -11,6 +11,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static prop.enquestes.domini.KMeans.InitializationMethod.KMEANS_PLUS_PLUS;
+import static prop.enquestes.domini.KMeans.InitializationMethod.RANDOM;
+
 public class CtrlDomini {
     private CtrlDominiMantEnquesta ctrlDominiMantEnquesta;
     private CtrlDominiMantUsuari ctrlDominiMantUsuari;
@@ -692,14 +695,13 @@ public class CtrlDomini {
 
         ClusteringStrategy strategy;
         if(algorisme == "KMeans"){
-            strategy = new KMeansStrategy(k, maxIterations);
+            strategy = new KMeansStrategy(k, maxIterations, RANDOM);
         }
         else if(algorisme == "KMedoids"){
             strategy = new KMedoidsStrategy(k, maxIterations);
         }
         else{
-            //añadir kmeans ++
-            strategy = null;
+            strategy = new KMeansStrategy(k, maxIterations, KMEANS_PLUS_PLUS);
         }
 
         try{
