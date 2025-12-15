@@ -53,13 +53,15 @@ public class KMeans{
         int dim = data.getNumPreguntes();
         if (k > n) throw new KmeansExcepcio("k can not be greater than the number of points");
 
+        List<Pregunta> preguntes = data.getPreguntesObj();
+
         centroids = initCentroidsRandom(data, k);
 
         labels = new int[n];
         Arrays.fill(labels, -1);
 
         for (int iter = 0; iter < maxIterations; iter++) {
-            boolean changed = assignClusters(data);
+            boolean changed = assignClusters(data, preguntes);
             updateCentroids(data, dim);
 
             if (!changed) {
@@ -129,14 +131,15 @@ public class KMeans{
     /**
      * Assigna cada punt al clúster més proper
      * @param data les dades d'entrada (Enquesta)
+     * @param preguntes les preguntes de l'enquesta
      * @return true si alguna etiqueta ha canviat, false en cas contrari
      */
-    private boolean assignClusters(Enquesta data) {
+    private boolean assignClusters(Enquesta data, List<Pregunta> preguntes) {
         boolean changed = false;
         int numRespostes = data.getNumRespostes();
         for (int i = 0; i < numRespostes; i++) {
             List<Resposta> point = data.getRespostesUsuariMatriu(i);
-            List<Pregunta> preguntes = data.getPreguntesObj();
+            //List<Pregunta> preguntes = data.getPreguntesObj();
             int newLabel = closestCentroid(point, centroids, preguntes);
             if (newLabel != labels[i]) {
                 labels[i] = newLabel;
@@ -523,7 +526,15 @@ public class KMeans{
             }
 
             // Calcular s(i)
-            double s = (b -  a)/Math.max(a,b);
+            double maxAB = Math.max(a, b);
+            double s = 0.0;
+
+            // Usamos un epsilon (ej. 1e-10) para evitar dividir por casi cero
+            if (maxAB > 1e-10) { 
+                s = (b - a) / maxAB;
+            }
+
+            // Si maxAB es 0, s se queda en 0.0 (correcto para puntos idénticos/solapados)
         
             totalSilhouete += s;
         }

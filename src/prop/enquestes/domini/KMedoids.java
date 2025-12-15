@@ -85,7 +85,7 @@ public class KMedoids {
         return coeficientSilhouete;
     }
 
-
+    /*
     private int[] initMedoidsRandom(int n, int k) {
         int[] meds = new int[k];
         Set<Integer> used = new HashSet<>();
@@ -95,6 +95,29 @@ public class KMedoids {
             if (used.add(idx)) meds[i++] = idx;
         }
         return meds;
+    }
+    */
+
+    private int[] initMedoidsRandom(int n, int k) {
+    // 1. Crear un array con todos los índices posibles [0, 1, ..., n-1]
+    int[] p = new int[n];
+    for (int i = 0; i < n; i++) {
+        p[i] = i;
+    }
+
+    // 2. Barajar solo los primeros k elementos (Fisher-Yates parcial)
+    for (int i = 0; i < k; i++) {
+        // Elegimos una posición aleatoria entre el índice actual 'i' y el final 'n'
+        int index = i + random.nextInt(n - i);
+        
+        // Intercambiamos (Swap) el elemento en 'i' con el elemento en 'index'
+        int temp = p[index];
+        p[index] = p[i];
+        p[i] = temp;
+    }
+
+    // 3. Los primeros k elementos del array 'p' son nuestra selección aleatoria única
+    return Arrays.copyOf(p, k);
     }
 
     private boolean assignClusters(Enquesta data, List<Pregunta> preguntes) {
@@ -176,11 +199,14 @@ public class KMedoids {
         Set<Integer> meds = new HashSet<>();
         for (int x : medoidIdx) meds.add(x);
 
-        int idx;
-        do {
-            idx = random.nextInt(n);
-        } while (meds.contains(idx));
-        return idx;
+        List<Integer> candidates = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (!meds.contains(i)) candidates.add(i);
+        }
+        if (candidates.isEmpty()) throw new IllegalStateException("No non-medoid candidates available. This should not happen.");
+
+        int randomIndex = random.nextInt(candidates.size());
+        return candidates.get(randomIndex);
     }
 
     private double distIdx(Enquesta data, int i, int j, List<Pregunta> preguntes) {
