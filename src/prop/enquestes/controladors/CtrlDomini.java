@@ -4,6 +4,7 @@ import java.util.*;
 
 import prop.enquestes.domini.*;
 import prop.enquestes.excepcions.*;
+import prop.enquestes.persistencia.GestorPersistencia;
 //import prop.enquestes.persistencia.CtrlPersddistencia;
 
 import java.io.BufferedReader;
@@ -13,7 +14,7 @@ import java.io.IOException;
 public class CtrlDomini {
     private CtrlDominiMantEnquesta ctrlDominiMantEnquesta;
     private CtrlDominiMantUsuari ctrlDominiMantUsuari;
-    private prop.enquestes.persistencia.GestorPersistencia gestorPersistencia;
+    private GestorPersistencia gestorPersistencia;
 
     /**
      * Funcio constructora de CtrlDomini
@@ -22,7 +23,7 @@ public class CtrlDomini {
     public CtrlDomini() {
         ctrlDominiMantEnquesta = new CtrlDominiMantEnquesta();
         ctrlDominiMantUsuari = new CtrlDominiMantUsuari();
-        gestorPersistencia = new prop.enquestes.persistencia.GestorPersistencia();
+        gestorPersistencia = new GestorPersistencia();
 
         // Load data on startup
         ctrlDominiMantUsuari.setUsuaris(gestorPersistencia.carregarUsuaris());
@@ -647,52 +648,18 @@ public class CtrlDomini {
 
     /**
      * Funcio per a realitzar clustering K-means sobre les respostes d'una enquesta
-     * 
-     * @param idEnquesta    identificador de l'enquesta
-     * @param k             nombre de clústers
-     * @param maxIterations nombre màxim d'iteracions
-     * @return resultat, map amb l'identificador de la resposta i el clúster
-     *         assignat
-     * @throws EnquestaNoExisteixException si l'enquesta no existeix
-     * @throws KmeansExcepcio              si hi ha un error en l'algoritme K-means
-     */
-    ////////////////////// Cas d'us - clustering //////////////////////
-    protected Map<Integer, Integer> clusteringPrivate(Integer idEnquesta, int k, int maxIterations)
-            throws EnquestaNoExisteixException, KmeansExcepcio {
-        Enquesta enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
-        if (enq == null) {
-            throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
-        }
-        KMeans kmeans = new KMeans(k, maxIterations);
-        kmeans.fit(enq);
-        int[] labels = kmeans.getLabels();
-
-        List<Pregunta> preguntes = enq.getPreguntesObj();
-        Map<Integer, Resposta> respostesPregunta0 = preguntes.get(0).getRespostes();
-        Map<Integer, Integer> resultat = new HashMap<>();
-        int n = enq.getNumRespostes();
-
-        Object[] idArray = respostesPregunta0.keySet().toArray();
-        for (int i = 0; i < n; i++) {
-            int idUsuari = (int) idArray[i];
-            resultat.put(idUsuari, labels[i]);
-        }
-        return resultat;
-    }
-
-    /**
-     * Funcio per a realitzar clustering K-means sobre les respostes d'una enquesta
      * @param idUsuari
      * @param idEnquesta
      * @param k
      * @param maxIterations
+     * @param algorisme
      * @return map amb l'identificador de la resposta i el clúster assignat
      * @throws EnquestaNoExisteixException
      * @throws KmeansExcepcio
      * @throws InvalidFormatEnquesta
      * @throws UsuariNoValid
      */
-    public Map<Integer, Integer> clustering(int idUsuari, Integer idEnquesta, int k, int maxIterations)
+    public Map<Integer, Integer> clustering(int idUsuari, Integer idEnquesta, int k, int maxIterations, String algorisme)
             throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u == null){
@@ -723,7 +690,27 @@ public class CtrlDomini {
             }
         }
 
-        return clusteringPrivate(idEnquesta, k, maxIterations);
+        ClusteringStrategy strategy;
+        if(algorisme == "KMeans"){
+            strategy = new KMeansStrategy(k, maxIterations);
+        }
+        else if(algorisme == "KMedoids"){
+            strategy = new KMedoidsStrategy(k, maxIterations);
+        }
+        else{
+            //añadir kmeans ++
+            strategy = null;
+        }
+
+        try{
+            Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
+            if (enq == null) {
+                throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
+            }
+            return strategy.executar(enq);
+        } catch (Exception e) {
+            throw new KmeansExcepcio("Error en l'execució de l'algorisme de clustering");
+        }
     }
 
     //////////////////// Funciones para debug ///////////////////////////////
