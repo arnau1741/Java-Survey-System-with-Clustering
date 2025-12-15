@@ -103,15 +103,7 @@ public class CtrlPresentacio {
         ///Des d'aqui obtenim el rol i mostrem qualsevol de les vistes decidides
         String nomUsuari = obtenirNomUsuari(idUsuari);
         String rol = obtenirRol(idUsuari);
-        if(rol.equals("ADMIN")){
-            vistaAdmin = new VistaAdmin(this, idUsuari, nomUsuari, rol);
-            vistaAdmin.setVisible(true);
-        }
-        else if(rol.equals("MODERADOR")){
-            vistaModerador = new VistaModerador(this, idUsuari, nomUsuari, rol);
-            vistaModerador.setVisible(true);
-        }
-        else if(rol.equals("ENQUESTADOR")) {
+        if(rol.equals("ENQUESTADOR")) {
             vistaEnquestador = new VistaEnquestador(this, idUsuari, nomUsuari, rol);
             vistaEnquestador.setVisible(true);
         }
@@ -674,8 +666,8 @@ public class CtrlPresentacio {
      * @throws InvalidFormatEnquesta Si el format de dades és incorrecte.
      * @throws UsuariNoValid Si l'usuari no és vàlid.
      */
-    public Map<Integer, Integer> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter) throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
-        return ctrlDomini.clustering(idUsuari, idEnquesta, k, iter);
+    public Map<Integer, Integer> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter, String tipus) throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
+        return ctrlDomini.clustering(idUsuari, idEnquesta, k, iter, tipus);
     }
 
     /**

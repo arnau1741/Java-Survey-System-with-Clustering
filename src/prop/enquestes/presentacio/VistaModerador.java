@@ -23,6 +23,7 @@ public class VistaModerador extends JFrame {
     private JButton modificarEnquestaButton = new JButton("Modificar Enquesta");
     private JButton consultarRespostesButton = new JButton("Consultar Respostes");
     private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
+    private JButton vetarDesvetarButton = new JButton("Vetar / Desvetar");
     private JButton sortirButton = new JButton("Sortir");
 
     /**
@@ -64,6 +65,7 @@ public class VistaModerador extends JFrame {
         buttonPanel.add(modificarEnquestaButton);
         buttonPanel.add(consultarRespostesButton);
         buttonPanel.add(consultarRecomanacionsButton);
+        buttonPanel.add(vetarDesvetarButton);
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSortir.add(sortirButton);
@@ -110,6 +112,9 @@ public class VistaModerador extends JFrame {
 
         consultarRespostesButton.addActionListener(e -> {
             ctrl.mostrarConsultarRespostes(idUsuari);
+        });
+        vetarDesvetarButton.addActionListener(e -> {
+            ctrl.mostrarVetarDesvetar(idUsuari);
         });
 
     }

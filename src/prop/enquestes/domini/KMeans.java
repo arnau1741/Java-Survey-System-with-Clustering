@@ -1,15 +1,7 @@
-package prop.enquestes.controladors;
+package prop.enquestes.domini;
 import java.util.Arrays;
 import java.util.Random;
 
-import prop.enquestes.domini.Enquesta;
-import prop.enquestes.domini.Pregunta;
-import prop.enquestes.domini.Resposta;
-import prop.enquestes.domini.RespostaLliure;
-import prop.enquestes.domini.RespostaMultiple;
-import prop.enquestes.domini.RespostaNumerica;
-import prop.enquestes.domini.RespostaOrdenada;
-import prop.enquestes.domini.RespostaUnica;
 import prop.enquestes.excepcions.KmeansExcepcio;
 
 import java.util.List;

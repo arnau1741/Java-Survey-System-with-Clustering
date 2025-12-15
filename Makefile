@@ -7,7 +7,7 @@ BIN_DIR = bin
 PRUEBAS_DIR = Pruebas
 
 MAIN = Main
-MAIN_PKG = prop.enquestes.presentacio.Main
+MAIN_PKG = prop.enquestes.presentacio.MainPresentacio
 
 JAVAC = javac
 JAVA = java

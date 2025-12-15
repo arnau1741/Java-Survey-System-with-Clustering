@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.*;
 
 public class GestorUsuari {
-    private static final String DIRECTORY = "datos/usuari/";
+    private static final String DIRECTORY = "datos" + File.separator + "usuari" + File.separator;
 
     /**
      * Guarda els usuaris en fitxers JSON.
