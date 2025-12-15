@@ -21,6 +21,12 @@ public class KMedoids {
     private boolean fet;
     private double coeficientSilhouete;
 
+    /**
+     * Constructor per l'algorisme K-Medoids.
+     * @param k
+     * @param maxIterations
+     * @param seed
+     */
     public KMedoids(int k, int maxIterations, long seed) {
         if (k <= 0)
             throw new IllegalArgumentException("k should be > 0");
@@ -30,10 +36,20 @@ public class KMedoids {
         this.fet = false;
     }
 
+    /**
+     * Constructor per l'algorisme K-Medoids amb seed aleatòria.
+     * @param k
+     * @param maxIterations
+     */
     public KMedoids(int k, int maxIterations) {
         this(k, maxIterations, System.currentTimeMillis());
     }
 
+    /**
+     * Executa l'algorisme K-Medoids sobre les dades de l'enquesta.
+     * @param data
+     * @throws KmeansExcepcio
+     */
     public void fit(Enquesta data) throws KmeansExcepcio {
         int n = data.getNumRespostes();
         if (n == 0)
@@ -61,6 +77,10 @@ public class KMedoids {
         coeficientSilhouete = coeficientSilhouete(data);
     }
 
+    /**
+     * Retorna les etiquetes de clúster assignades a cada punt.
+     * @return Array d'etiquetes de clúster
+     */
     public int[] getLabels() {
         if (labels == null)
             throw new IllegalStateException("Call fit() first.");
@@ -69,6 +89,7 @@ public class KMedoids {
 
     /**
      * Retorna els medoids com a llista de punts (cada punt = List<Resposta> real).
+     * @return Llista de medoids
      */
     public List<List<Resposta>> getMedoids(Enquesta data) {
         if (medoidIdx == null)
@@ -81,6 +102,7 @@ public class KMedoids {
 
     /**
      * Retorna els índexos dels medoids dins l'enquesta.
+     * @return Array d'índexos dels medoids
      */
     public int[] getMedoidIndices() {
         if (medoidIdx == null)
@@ -88,6 +110,10 @@ public class KMedoids {
         return medoidIdx;
     }
 
+    /**
+     * Retorna el coeficient de Silhouete del clustering realitzat.
+     * @return Coeficient de Silhouete
+     */
     public double getCoeficientSilhouete() {
         if (!fet)
             throw new IllegalStateException("Call fit() first.");
@@ -107,6 +133,13 @@ public class KMedoids {
      * }
      */
 
+    /**
+     * Inicialitza k medoids únics triats aleatòriament entre n punts
+     * utilitzant una versió parcial de l'algorisme de Fisher-Yates.
+     * @param n Nombre total de punts
+     * @param k Nombre de medoids a seleccionar
+     * @return Array d'índexos dels medoids seleccionats
+     */
     private int[] initMedoidsRandom(int n, int k) {
         // 1. Crear un array con todos los índices posibles [0, 1, ..., n-1]
         int[] p = new int[n];
@@ -130,6 +163,10 @@ public class KMedoids {
         return Arrays.copyOf(p, k);
     }
 
+    /**
+     * Assigna cada punt al clúster del medoid més proper.
+     * @return true si alguna etiqueta ha canviat, false en cas contrari
+     */
     private boolean assignClusters(Enquesta data, List<Pregunta> preguntes) {
         boolean changed = false;
         int n = data.getNumRespostes();
@@ -157,6 +194,7 @@ public class KMedoids {
     /**
      * Per cada clúster, tria com a nou medoid el punt del clúster
      * que minimitza sum(dist(p, q)) per tots q del clúster.
+     * @return true si algun medoid ha canviat, false en cas contrari
      */
     private boolean updateMedoids(Enquesta data, List<Pregunta> preguntes) {
         boolean changed = false;
@@ -208,6 +246,11 @@ public class KMedoids {
         return changed;
     }
 
+    /**
+     * Tria un índex aleatori que no sigui medoid.
+     * @param n
+     * @return Índex triat
+     */
     private int pickNonMedoidIndex(int n) {
         Set<Integer> meds = new HashSet<>();
         for (int x : medoidIdx)
@@ -225,12 +268,25 @@ public class KMedoids {
         return candidates.get(randomIndex);
     }
 
+    /**
+     * Calcula la distància entre dos punts donats els seus índexos.
+     * @param data
+     * @param i
+     * @param j
+     * @param preguntes
+     * @return Distància entre els punts i i j
+     */
     private double distIdx(Enquesta data, int i, int j, List<Pregunta> preguntes) {
         List<Resposta> a = data.getRespostesUsuariMatriu(i);
         List<Resposta> b = data.getRespostesUsuariMatriu(j);
         return Distance.distance(a, b, preguntes);
     }
 
+    /**
+     * Calcula el coeficient de Silhouete per a l'enquesta donada.
+     * @param data
+     * @return Coeficient de Silhouete
+     */
     private double coeficientSilhouete(Enquesta data) {
         if (!fet)
             throw new IllegalStateException("Call fit() first.");
