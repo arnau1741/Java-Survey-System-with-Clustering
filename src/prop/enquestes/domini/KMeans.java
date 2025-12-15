@@ -42,6 +42,12 @@ public class KMeans {
         this.fet = false;
     }
 
+    /**
+     * Constructor per a KMeans amb mètode d'inicialització per defecte (RANDOM)
+     * @param k
+     * @param maxIterations
+     * @param seed
+     */
     public KMeans(int k, int maxIterations, long seed) {
         this(k, maxIterations, seed, InitializationMethod.RANDOM);
     }
