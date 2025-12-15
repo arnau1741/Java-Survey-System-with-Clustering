@@ -22,7 +22,8 @@ public class KMedoids {
     private double coeficientSilhouete;
 
     public KMedoids(int k, int maxIterations, long seed) {
-        if (k <= 0) throw new IllegalArgumentException("k should be > 0");
+        if (k <= 0)
+            throw new IllegalArgumentException("k should be > 0");
         this.k = k;
         this.maxIterations = maxIterations;
         this.random = new Random(seed);
@@ -35,8 +36,10 @@ public class KMedoids {
 
     public void fit(Enquesta data) throws KmeansExcepcio {
         int n = data.getNumRespostes();
-        if (n == 0) throw new KmeansExcepcio("There is no data");
-        if (k > n) throw new KmeansExcepcio("k can not be greater than the number of points");
+        if (n == 0)
+            throw new KmeansExcepcio("There is no data");
+        if (k > n)
+            throw new KmeansExcepcio("k can not be greater than the number of points");
 
         List<Pregunta> preguntes = data.getPreguntesObj();
 
@@ -50,7 +53,8 @@ public class KMedoids {
             boolean changedAssign = assignClusters(data, preguntes);
             boolean changedMedoids = updateMedoids(data, preguntes);
 
-            if (!changedAssign && !changedMedoids) break;
+            if (!changedAssign && !changedMedoids)
+                break;
         }
 
         fet = true;
@@ -58,7 +62,8 @@ public class KMedoids {
     }
 
     public int[] getLabels() {
-        if (labels == null) throw new IllegalStateException("Call fit() first.");
+        if (labels == null)
+            throw new IllegalStateException("Call fit() first.");
         return labels;
     }
 
@@ -66,9 +71,11 @@ public class KMedoids {
      * Retorna els medoids com a llista de punts (cada punt = List<Resposta> real).
      */
     public List<List<Resposta>> getMedoids(Enquesta data) {
-        if (medoidIdx == null) throw new IllegalStateException("Call fit() first.");
+        if (medoidIdx == null)
+            throw new IllegalStateException("Call fit() first.");
         List<List<Resposta>> res = new ArrayList<>();
-        for (int idx : medoidIdx) res.add(data.getRespostesUsuariMatriu(idx));
+        for (int idx : medoidIdx)
+            res.add(data.getRespostesUsuariMatriu(idx));
         return res;
     }
 
@@ -76,48 +83,51 @@ public class KMedoids {
      * Retorna els índexos dels medoids dins l'enquesta.
      */
     public int[] getMedoidIndices() {
-        if (medoidIdx == null) throw new IllegalStateException("Call fit() first.");
+        if (medoidIdx == null)
+            throw new IllegalStateException("Call fit() first.");
         return medoidIdx;
     }
 
     public double getCoeficientSilhouete() {
-        if (!fet) throw new IllegalStateException("Call fit() first.");
+        if (!fet)
+            throw new IllegalStateException("Call fit() first.");
         return coeficientSilhouete;
     }
 
     /*
+     * private int[] initMedoidsRandom(int n, int k) {
+     * int[] meds = new int[k];
+     * Set<Integer> used = new HashSet<>();
+     * int i = 0;
+     * while (i < k) {
+     * int idx = random.nextInt(n);
+     * if (used.add(idx)) meds[i++] = idx;
+     * }
+     * return meds;
+     * }
+     */
+
     private int[] initMedoidsRandom(int n, int k) {
-        int[] meds = new int[k];
-        Set<Integer> used = new HashSet<>();
-        int i = 0;
-        while (i < k) {
-            int idx = random.nextInt(n);
-            if (used.add(idx)) meds[i++] = idx;
+        // 1. Crear un array con todos los índices posibles [0, 1, ..., n-1]
+        int[] p = new int[n];
+        for (int i = 0; i < n; i++) {
+            p[i] = i;
         }
-        return meds;
-    }
-    */
 
-    private int[] initMedoidsRandom(int n, int k) {
-    // 1. Crear un array con todos los índices posibles [0, 1, ..., n-1]
-    int[] p = new int[n];
-    for (int i = 0; i < n; i++) {
-        p[i] = i;
-    }
+        // 2. Barajar solo los primeros k elementos (Fisher-Yates parcial)
+        for (int i = 0; i < k; i++) {
+            // Elegimos una posición aleatoria entre el índice actual 'i' y el final 'n'
+            int index = i + random.nextInt(n - i);
 
-    // 2. Barajar solo los primeros k elementos (Fisher-Yates parcial)
-    for (int i = 0; i < k; i++) {
-        // Elegimos una posición aleatoria entre el índice actual 'i' y el final 'n'
-        int index = i + random.nextInt(n - i);
-        
-        // Intercambiamos (Swap) el elemento en 'i' con el elemento en 'index'
-        int temp = p[index];
-        p[index] = p[i];
-        p[i] = temp;
-    }
+            // Intercambiamos (Swap) el elemento en 'i' con el elemento en 'index'
+            int temp = p[index];
+            p[index] = p[i];
+            p[i] = temp;
+        }
 
-    // 3. Los primeros k elementos del array 'p' son nuestra selección aleatoria única
-    return Arrays.copyOf(p, k);
+        // 3. Los primeros k elementos del array 'p' son nuestra selección aleatoria
+        // única
+        return Arrays.copyOf(p, k);
     }
 
     private boolean assignClusters(Enquesta data, List<Pregunta> preguntes) {
@@ -154,8 +164,10 @@ public class KMedoids {
 
         // llistes d'índexos per clúster
         List<List<Integer>> clusters = new ArrayList<>();
-        for (int c = 0; c < k; c++) clusters.add(new ArrayList<>());
-        for (int i = 0; i < n; i++) clusters.get(labels[i]).add(i);
+        for (int c = 0; c < k; c++)
+            clusters.add(new ArrayList<>());
+        for (int i = 0; i < n; i++)
+            clusters.get(labels[i]).add(i);
 
         for (int c = 0; c < k; c++) {
             List<Integer> pts = clusters.get(c);
@@ -177,7 +189,8 @@ public class KMedoids {
             for (int cand : pts) {
                 double cost = 0.0;
                 for (int other : pts) {
-                    if (cand == other) continue;
+                    if (cand == other)
+                        continue;
                     cost += distIdx(data, cand, other, preguntes);
                 }
                 if (cost < bestCost) {
@@ -197,13 +210,16 @@ public class KMedoids {
 
     private int pickNonMedoidIndex(int n) {
         Set<Integer> meds = new HashSet<>();
-        for (int x : medoidIdx) meds.add(x);
+        for (int x : medoidIdx)
+            meds.add(x);
 
         List<Integer> candidates = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            if (!meds.contains(i)) candidates.add(i);
+            if (!meds.contains(i))
+                candidates.add(i);
         }
-        if (candidates.isEmpty()) throw new IllegalStateException("No non-medoid candidates available. This should not happen.");
+        if (candidates.isEmpty())
+            throw new IllegalStateException("No non-medoid candidates available. This should not happen.");
 
         int randomIndex = random.nextInt(candidates.size());
         return candidates.get(randomIndex);
@@ -212,128 +228,12 @@ public class KMedoids {
     private double distIdx(Enquesta data, int i, int j, List<Pregunta> preguntes) {
         List<Resposta> a = data.getRespostesUsuariMatriu(i);
         List<Resposta> b = data.getRespostesUsuariMatriu(j);
-        return distance(a, b, preguntes);
+        return Distance.distance(a, b, preguntes);
     }
-
-
-    public double distanciaNumerica(RespostaNumerica a, RespostaNumerica b, double min, double max) {
-        if (a == null && b == null) return 0.0;
-        if (a == null || b == null) return 1.0;
-        Double valA = a.getValor();
-        Double valB = b.getValor();
-        if (valA == null && valB == null) return 0.0;
-        if (valA == null || valB == null) return max - min;
-        return Math.abs(valA - valB) / (max - min);
-    }
-
-    public double distanciaOrdenada(RespostaOrdenada a, RespostaOrdenada b, int numOpcions) {
-        if (a == null && b == null) return 0.0;
-        if (a == null || b == null) return 1.0;
-        Double ordenA = 1.0 * a.getOrdre();
-        Double ordenB = 1.0 * b.getOrdre();
-        if (ordenA == null || ordenB == null) return 1.0;
-        Double num1 = 1.0 * numOpcions;
-        return Math.abs(ordenA - ordenB) / (num1 - 1.0);
-    }
-
-    public double distanciaNoOrdenadaUnica(RespostaUnica a, RespostaUnica b) {
-        if (a == null && b == null) return 0.0;
-        if (a == null || b == null) return 1.0;
-        Integer resA = a.getResposta();
-        Integer resB = b.getResposta();
-        if (resA == null && resB == null) return 0.0;
-        if (resA == null || resB == null) return 1.0;
-        return resA.equals(resB) ? 0.0 : 1.0;
-    }
-
-    public double distanciaNoOrdenadaMultiple(RespostaMultiple a, RespostaMultiple b) {
-        if (a == null && b == null) return 0.0;
-        if (a == null || b == null) return 1.0;
-        List<Integer> resA = a.getRespostes();
-        List<Integer> resB = b.getRespostes();
-        if (resA == null && resB == null) return 0.0;
-        if (resA == null || resB == null) return 1.0;
-
-        List<Integer> union = new ArrayList<>(resA);
-        for (Integer r : resB) if (!union.contains(r)) union.add(r);
-
-        int inter = 0;
-        for (Integer r : resA) if (resB.contains(r)) inter++;
-
-        return 1.0 - ((double) inter / union.size());
-    }
-
-    private double levenshteinDistance(String a, String b) {
-        int[][] dp = new int[a.length() + 1][b.length() + 1];
-        for (int i = 0; i <= a.length(); i++) {
-            for (int j = 0; j <= b.length(); j++) {
-                if (i == 0) dp[i][j] = j;
-                else if (j == 0) dp[i][j] = i;
-                else if (a.charAt(i - 1) == b.charAt(j - 1)) {
-                    dp[i][j] = Math.min(dp[i - 1][j],
-                            Math.min(dp[i][j - 1], dp[i - 1][j - 1]));
-                } else {
-                    dp[i][j] = 1 + Math.min(dp[i - 1][j],
-                            Math.min(dp[i][j - 1], dp[i - 1][j - 1]));
-                }
-            }
-        }
-        return dp[a.length()][b.length()];
-    }
-
-    public double distanciaLliure(RespostaLliure a, RespostaLliure b) {
-        if (a == null && b == null) return 0.0;
-        if (a == null || b == null) return 1.0;
-        int lenA = a.length();
-        int lenB = b.length();
-        if (lenA == 0 && lenB == 0) return 0.0;
-        if (lenA == 0 || lenB == 0) return 1.0;
-
-        double maxLen = Math.max(lenA, lenB);
-        double absLenDif = Math.abs(lenA - lenB);
-        return (levenshteinDistance(a.getResposta(), b.getResposta()) - absLenDif) / (maxLen - absLenDif);
-    }
-
-    public double distance(List<Resposta> a, List<Resposta> b, List<Pregunta> preguntes) {
-        double sum = 0.0;
-        int numPreguntes = preguntes.size();
-        for (int i = 0; i < numPreguntes; i++) {
-            Pregunta p = preguntes.get(i);
-            int tipus = p.getTipus();
-            Resposta ra = a.get(i);
-            Resposta rb = b.get(i);
-
-            switch (tipus) {
-                case 0: {
-                    double min = p.getMinValue();
-                    double max = p.getMaxValue();
-                    sum += distanciaNumerica((RespostaNumerica) ra, (RespostaNumerica) rb, min, max);
-                    break;
-                }
-                case 1:
-                    sum += distanciaNoOrdenadaUnica((RespostaUnica) ra, (RespostaUnica) rb);
-                    break;
-                case 2: {
-                    int numOpcions = p.getNumOpcions();
-                    sum += distanciaOrdenada((RespostaOrdenada) ra, (RespostaOrdenada) rb, numOpcions);
-                    break;
-                }
-                case 3:
-                    sum += distanciaNoOrdenadaMultiple((RespostaMultiple) ra, (RespostaMultiple) rb);
-                    break;
-                case 4:
-                    sum += distanciaLliure((RespostaLliure) ra, (RespostaLliure) rb);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Tipus de pregunta desconegut: " + tipus);
-            }
-        }
-        return sum;
-    }
-
 
     private double coeficientSilhouete(Enquesta data) {
-        if (!fet) throw new IllegalStateException("Call fit() first.");
+        if (!fet)
+            throw new IllegalStateException("Call fit() first.");
 
         int n = data.getNumRespostes();
         List<Pregunta> preguntes = data.getPreguntesObj();
@@ -348,25 +248,28 @@ public class KMedoids {
             int sameCount = 0;
             for (int j = 0; j < n; j++) {
                 if (i != j && labels[j] == cluster) {
-                    a += distance(point, data.getRespostesUsuariMatriu(j), preguntes);
+                    a += Distance.distance(point, data.getRespostesUsuariMatriu(j), preguntes);
                     sameCount++;
                 }
             }
-            if (sameCount > 0) a /= sameCount;
+            if (sameCount > 0)
+                a /= sameCount;
 
             // b(i): mínima distància mitjana a un altre clúster
             double b = Double.MAX_VALUE;
             for (int c = 0; c < k; c++) {
-                if (c == cluster) continue;
+                if (c == cluster)
+                    continue;
                 double sum = 0.0;
                 int cnt = 0;
                 for (int j = 0; j < n; j++) {
                     if (labels[j] == c) {
-                        sum += distance(point, data.getRespostesUsuariMatriu(j), preguntes);
+                        sum += Distance.distance(point, data.getRespostesUsuariMatriu(j), preguntes);
                         cnt++;
                     }
                 }
-                if (cnt > 0) b = Math.min(b, sum / cnt);
+                if (cnt > 0)
+                    b = Math.min(b, sum / cnt);
             }
 
             double s = (b - a) / Math.max(a, b);
