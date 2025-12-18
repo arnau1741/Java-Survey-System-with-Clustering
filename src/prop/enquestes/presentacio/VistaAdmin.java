@@ -26,7 +26,6 @@ public class VistaAdmin extends JFrame {
     private JButton consultarUsuariButton  = new JButton("Consultar Usuari");
     private JButton enquestesRealitzadesButton = new JButton("Enquestes Realitzades");
     private JButton enquestesAdministradesButton = new JButton("Enquestes Administrades");
-    private JButton consultarRecomanacionsButton = new JButton("Consultar Recomanacions");
     /// Faltaria decidir aquesta vista
 
     private JButton sortirButton = new JButton("Sortir");
@@ -56,7 +55,7 @@ public class VistaAdmin extends JFrame {
      */
     private void initComponents() {
         setTitle("Menu ADMIN");
-        setSize(400, 400);
+        setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -73,9 +72,6 @@ public class VistaAdmin extends JFrame {
         panelBotones.add(consultarUsuariButton);
         panelBotones.add(enquestesRealitzadesButton);
         panelBotones.add(enquestesAdministradesButton);
-        panelBotones.add(consultarRecomanacionsButton);
-
-
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSortir.add(sortirButton);
@@ -126,9 +122,6 @@ public class VistaAdmin extends JFrame {
         enquestesAdministradesButton.addActionListener(e -> {
             String nomEnquesta = "Administrada";
             ctrl.mostrarEnquestesExtra(nomEnquesta, idUsuari);
-        });
-        consultarRecomanacionsButton.addActionListener(e -> {
-            ctrl.mostrarConsultarRecomanacions();
         });
 
     }

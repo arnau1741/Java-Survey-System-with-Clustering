@@ -25,7 +25,6 @@ public class VistaEnquestesExtresAdmin extends JFrame {
     private JButton importarRespostesButton = new  JButton("Importar resposta");
     private JButton modificarEnquestaButton = new JButton("Modificar enquesta");
     private JButton donarPodersButton = new JButton("Donar poders");
-    private JButton consultarRecomanacionsButton = new JButton("Consultar Recomanacions");
     private JButton sortirButton = new JButton("Sortir");
 
     /**
@@ -78,7 +77,6 @@ public class VistaEnquestesExtresAdmin extends JFrame {
             panelBotones.add(consultarRespostesButton);
             panelBotones.add(donarPodersButton);
         }
-        panelBotones.add(consultarRecomanacionsButton);
 
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -107,9 +105,6 @@ public class VistaEnquestesExtresAdmin extends JFrame {
     public void setupListeners() {
         modificarEnquestaButton.addActionListener(e -> {
             ctrl.mostrarVistaModificarEnquesta(idUsuari);
-        });
-        consultarRecomanacionsButton.addActionListener(e -> {
-            ctrl.mostrarConsultarRecomanacions();
         });
         importarRespostesButton.addActionListener(e -> {
             ctrl.mostrarImportarRespostes(idUsuari);

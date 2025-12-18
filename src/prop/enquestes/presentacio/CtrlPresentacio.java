@@ -29,7 +29,6 @@ public class CtrlPresentacio {
     private VistaModerador vistaModerador;
 
     private VistaConsultarPerfil vistaConsultarPerfil;
-    private VistaConsultarRecomanacions vistaConsultarRecomanacions;
     private VistaModificarEnquesta vistaModificarEnquesta;
     private VistaConsultarEnquesta vistaConsultarEnquesta;
     private VistaCrearEnquesta vistaCrearEnquesta;
@@ -107,6 +106,14 @@ public class CtrlPresentacio {
             vistaEnquestador = new VistaEnquestador(this, idUsuari, nomUsuari, rol);
             vistaEnquestador.setVisible(true);
         }
+        else if(rol.equals("ADMIN")) {
+            vistaAdmin = new VistaAdmin(this, idUsuari, nomUsuari, rol);
+            vistaAdmin.setVisible(true);
+        }
+        else if(rol.equals("MODERADOR")) {
+            vistaModerador = new VistaModerador(this, idUsuari, nomUsuari, rol);
+            vistaModerador.setVisible(true);
+        }
         else {
             vistaEnquestat = new VistaEnquestat(this, idUsuari, nomUsuari, rol);
             vistaEnquestat.setVisible(true);
@@ -122,13 +129,6 @@ public class CtrlPresentacio {
         vistaConsultarPerfil.setVisible(true);
     }
 
-    /**
-     * Obre la finestra per consultar recomanacions d'enquestes.
-     */
-    public void mostrarConsultarRecomanacions() {
-        vistaConsultarRecomanacions = new VistaConsultarRecomanacions(this);
-        vistaConsultarRecomanacions.setVisible(true);
-    }
 
     /**
      * Obre la finestra per modificar una enquesta existent.
