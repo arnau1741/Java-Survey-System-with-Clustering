@@ -6,6 +6,11 @@ public class JsonUtil {
 
     // --- Serialització ---
 
+    /**
+     * Converteix un objecte Java (String, Number, Boolean, List, Map) a una cadena JSON.
+     * @param o
+     * @return cadena JSON
+     */
     public static String toJson(Object o) {
         if (o == null)
             return "null";
@@ -46,6 +51,11 @@ public class JsonUtil {
         throw new RuntimeException("Unsupported type: " + o.getClass());
     }
 
+    /**
+     * Escapa els caràcters especials en una cadena per a JSON.
+     * @param s
+     * @return cadena escapada
+     */
     private static String escape(String s) {
         return s.replace("\\", "\\\\")
                 .replace("\"", "\\\"")
@@ -62,12 +72,21 @@ public class JsonUtil {
     private static int pos;
     private static String json;
 
+    /**
+     * Converteix una cadena JSON a un objecte Java (String, Number, Boolean, List, Map).
+     * @param jsonString
+     * @return objecte Java
+     */
     public static Object parse(String jsonString) {
         json = jsonString.trim();
         pos = 0;
         return parseValue();
     }
 
+    /**
+     * Analitza un valor JSON (objecte, array, cadena, número, boolean, null).
+     * @return objecte Java
+     */
     private static Object parseValue() {
         skipWhitespace();
         if (pos >= json.length())
@@ -98,6 +117,10 @@ public class JsonUtil {
         throw new RuntimeException("Unexpected char at " + pos + ": " + c);
     }
 
+    /**
+     * Analitza un objecte JSON i el converteix a un Map.
+     * @return Map amb les claus i valors de l'objecte JSON
+     */
     private static Map<String, Object> parseObject() {
         Map<String, Object> map = new HashMap<>();
         pos++; // skip '{'
@@ -128,6 +151,10 @@ public class JsonUtil {
         return map;
     }
 
+    /**
+     * Analitza un array JSON i el converteix a una llista.
+     * @return Llista amb els valors de l'array JSON
+     */
     private static List<Object> parseArray() {
         List<Object> list = new ArrayList<>();
         pos++; // skip '['
@@ -152,6 +179,10 @@ public class JsonUtil {
         return list;
     }
 
+    /**
+     * Analitza una cadena JSON i la converteix a una cadena Java.
+     * @return cadena Java
+     */
     private static String parseString() {
         StringBuilder sb = new StringBuilder();
         pos++; // skip opening "
@@ -197,6 +228,10 @@ public class JsonUtil {
         throw new RuntimeException("Unterminated string");
     }
 
+    /**
+     * Analitza un número JSON i el converteix a un Number Java.
+     * @return Number Java
+     */
     private static Number parseNumber() {
         int start = pos;
         while (pos < json.length()
@@ -210,12 +245,19 @@ public class JsonUtil {
         return Integer.parseInt(numStr);
     }
 
+    /**
+     * Salta els caràcters d'espai en blanc.
+     */
     private static void skipWhitespace() {
         while (pos < json.length() && Character.isWhitespace(json.charAt(pos))) {
             pos++;
         }
     }
 
+    /**
+     * Retorna el caràcter actual sense avançar la posició.
+     * @return caràcter actual
+     */
     private static char peek() {
         if (pos < json.length())
             return json.charAt(pos);

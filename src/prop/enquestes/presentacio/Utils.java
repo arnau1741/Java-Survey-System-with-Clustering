@@ -522,7 +522,7 @@ public class Utils {
             /// //idUsuari cambiar
             int idUsuari = 1;
 
-            Map<Integer, Integer> result = ctrl.clustering(idUsuari, idEnquesta, k, maxIter);
+            Map<Integer, Integer> result = ctrl.clustering(idUsuari, idEnquesta, k, maxIter, null);
             for (int clusterId = 0; clusterId < k; clusterId++) {
                 io.writeln("Cluster " + clusterId + ":");
                 boolean first = true;

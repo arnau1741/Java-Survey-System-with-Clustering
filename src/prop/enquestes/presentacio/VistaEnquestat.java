@@ -4,6 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Vista principal per als usuaris amb rol d'Enquestat.
+ * <p>
+ * Aquesta classe representa el menú principal per a un usuari estàndard (enquestat).
+ * Proporciona accés a les funcionalitats permeses per a aquest rol, com respondre enquestes,
+ * crear-ne de noves (si el sistema ho permet), consultar el perfil i gestionar les seves dades.
+ * </p>
+ */
 public class VistaEnquestat extends JFrame {
     private CtrlPresentacio ctrl;
     private int idUsuari;
@@ -21,6 +29,15 @@ public class VistaEnquestat extends JFrame {
     private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
     private JButton sortirButton = new JButton("Sortir");
 
+    /**
+     * Constructor de la vista d'Enquestat.
+     * Inicialitza la finestra, guarda la informació de la sessió i configura els components gràfics.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari Identificador de l'usuari actual.
+     * @param nomUsuari Nom de l'usuari.
+     * @param nomRol Rol de l'usuari ("ENQUESTAT").
+     */
     public VistaEnquestat (CtrlPresentacio ctrl, int idUsuari, String nomUsuari, String nomRol) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -31,6 +48,11 @@ public class VistaEnquestat extends JFrame {
         setupListeners();     // Configura els listeners dels botons
     }
 
+    /**
+     * Inicialitza i distribueix els components visuals de la interfície.
+     * Crea un menú vertical amb botons per a cada funcionalitat disponible
+     * i un botó de sortida a la part inferior.
+     */
     private void initComponents() {
         setTitle("Menu Usuari - " + nomRol);
         setSize(400, 400);
@@ -67,10 +89,19 @@ public class VistaEnquestat extends JFrame {
 
     }
 
+    /**
+     * Modifica la visibilitat de la finestra principal.
+     *
+     * @param b True per mostrar la finestra, False per amagar-la.
+     */
     public void hacerVisible(boolean b) {
         setVisible(b);
     }
 
+    /**
+     * Configura els escoltadors (listeners) per als botons del menú.
+     * Assigna a cada botó la funció corresponent del controlador de presentació.
+     */
     private void setupListeners() {
         consultarPerfilButton.addActionListener(e -> {
             ctrl.mostrarConsultarPerfil();

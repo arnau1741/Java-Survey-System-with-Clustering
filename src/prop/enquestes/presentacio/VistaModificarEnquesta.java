@@ -11,6 +11,18 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Diàleg per a la gestió i modificació d'enquestes.
+ * <p>
+ * Aquesta vista ofereix funcionalitats per a:
+ * <ul>
+ * <li>Consultar informació detallada d'una enquesta existent.</li>
+ * <li>Modificar preguntes específiques d'una enquesta.</li>
+ * <li>Eliminar completament una enquesta.</li>
+ * <li>Eliminar respostes d'un usuari concret en una enquesta.</li>
+ * </ul>
+ * </p>
+ */
 public class VistaModificarEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
     private int idUsuariActual;
@@ -19,23 +31,30 @@ public class VistaModificarEnquesta extends JDialog {
     private JButton buttonOK = new JButton("OK");
     private JButton buttonCancel = new JButton("Cancelar");
 
-    private JPanel contentPane;
-    private JComboBox<String> comboEnquestes;
-    private JTextArea areaInfo;
-    private JButton buttonMostrarInfo;
-    private JLabel labelIdActual;
+    private JPanel contentPane = new JPanel();
+    private JComboBox<String> comboEnquestes = new JComboBox<>();
+    private JTextArea areaInfo = new JTextArea();
+    private JButton buttonMostrarInfo = new JButton("Mostrar Info");
+    private JLabel labelIdActual = new JLabel("Id:");
 
-    private JTextField campIndexPregunta;
-    private JComboBox<String> comboTipusPregunta;
-    private JTextArea campTextPregunta;
-    private JTextField campNumOpcions;
-    private JTextArea campOpcionsPregunta;
-    private JButton buttonModificarPregunta;
+    private JTextField campIndexPregunta = new JTextField();
+    private JComboBox<String> comboTipusPregunta = new JComboBox<>();
+    private JTextArea campTextPregunta = new JTextArea();
+    private JTextField campNumOpcions = new JTextField();
+    private JTextArea campOpcionsPregunta = new JTextArea();
+    private JButton buttonModificarPregunta = new JButton("Modificar");
 
-    private JButton buttonEliminarEnquesta;
-    private JTextField campIdEnquestat;
-    private JButton buttonEliminarResposta;
+    private JButton buttonEliminarEnquesta = new JButton("Eliminar");
+    private JTextField campIdEnquestat = new JTextField();
+    private JButton buttonEliminarResposta = new JButton("Eliminar");
 
+    /**
+     * Constructor de la vista de modificació d'enquestes.
+     * Inicialitza els components, carrega la llista d'enquestes i configura els controladors.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuariActual Identificador de l'usuari que realitza la gestió.
+     */
     public VistaModificarEnquesta(CtrlPresentacio ctrl, int idUsuariActual) {
         super((Frame) null, "Gestió d'Enquestes", true);
         this.ctrl = ctrl;
@@ -65,6 +84,10 @@ public class VistaModificarEnquesta extends JDialog {
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    /**
+     * Inicialitza i organitza tots els components gràfics de la finestra.
+     * Divideix la interfície en seccions clares: Selecció, Modificació, Eliminació d'enquesta i Eliminació de respostes.
+     */
     private void inicializarComponentes() {
         contentPane = new JPanel(new BorderLayout(5, 5));
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -218,6 +241,11 @@ public class VistaModificarEnquesta extends JDialog {
         contentPane.add(scrollPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Configura els listeners per als diferents elements interactius.
+     * Gestiona la selecció d'enquestes, els canvis en el tipus de pregunta (activant/desactivant camps)
+     * i les accions dels botons de modificar i eliminar.
+     */
     private void configurarListeners() {
         buttonMostrarInfo.addActionListener(e -> mostrarInfoEnquesta());
 
@@ -260,6 +288,9 @@ public class VistaModificarEnquesta extends JDialog {
         buttonEliminarResposta.addActionListener(e -> eliminarResposta());
     }
 
+    /**
+     * Carrega la llista d'enquestes al ComboBox.
+     */
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
@@ -284,6 +315,9 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Mostra la informació detallada de l'enquesta seleccionada.
+     */
     private void mostrarInfoEnquesta() {
         if (idEnquestaActual == -1) {
             areaInfo.setText("");
@@ -308,6 +342,9 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Extreu l'ID de l'enquesta del text seleccionat al ComboBox.
+     */
     private int extraerIdEnquesta(String texto) {
         try {
             // Formato esperado: "ID: X - ..."
@@ -325,6 +362,10 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Realitza la modificació d'una pregunta específica.
+     * Recull les dades del formulari, valida la informació i crida al controlador per aplicar els canvis.
+     */
     private void modificarPregunta() {
         if (idEnquestaActual == -1) {
             JOptionPane.showMessageDialog(this,
@@ -433,6 +474,10 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Elimina l'enquesta seleccionada permanentment.
+     * Demana confirmació a l'usuari abans de procedir.
+     */
     private void eliminarEnquesta() {
         if (idEnquestaActual == -1) {
             JOptionPane.showMessageDialog(this,
@@ -480,6 +525,10 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Elimina totes les respostes d'un usuari específic a l'enquesta actual.
+     * Demana confirmació abans d'executar l'acció.
+     */
     private void eliminarResposta() {
         if (idEnquestaActual == -1) {
             JOptionPane.showMessageDialog(this,

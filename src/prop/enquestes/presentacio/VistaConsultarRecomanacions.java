@@ -4,6 +4,13 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
+/**
+ * Diàleg per visualitzar diferents tipus de recomanacions i estadístiques del sistema.
+ * <p>
+ * Aquesta vista ofereix un menú lateral amb opcions (Enquesta, Resposta, Clustering, Consultes)
+ * que actualitzen dinàmicament un panell de text central amb la informació sol·licitada.
+ * </p>
+ */
 public class VistaConsultarRecomanacions extends JDialog {
     private CtrlPresentacio ctrl;
     private JPanel contentPane = new JPanel();
@@ -13,8 +20,15 @@ public class VistaConsultarRecomanacions extends JDialog {
     private JButton consultes = new JButton("Consultes");
     private JTextArea info = new JTextArea();
 
-    private JButton buttonCancel;
+    private JButton buttonCancel = new JButton("Tancar");
 
+    /**
+     * Constructor de la vista de recomanacions.
+     * Configura la interfície gràfica, defineix el layout (disseny) i assigna la lògica
+     * als botons per mostrar informació textual al panell central.
+     *
+     * @param ctrl Referència al controlador de presentació per gestionar la navegació.
+     */
     public VistaConsultarRecomanacions(CtrlPresentacio ctrl) {
         super((Frame) null, "Consultar Recomanacions", true);
         this.ctrl = ctrl;
@@ -101,6 +115,9 @@ public class VistaConsultarRecomanacions extends JDialog {
     }
 
 
+    /**
+     * Tanca la finestra de diàleg i allibera els recursos associats.
+     */
     private void onCancel() {
         // add your code here if necessary
         dispose();

@@ -4,6 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Vista principal per als usuaris amb rol d'Enquestador.
+ * <p>
+ * Aquesta classe representa el menú principal per a un enquestador.
+ * Proporciona accés a funcionalitats com consultar el perfil, gestionar respostes
+ * (exportar/importar/consultar) i veure recomanacions.
+ * </p>
+ */
 public class VistaEnquestador extends JFrame {
 
     private CtrlPresentacio ctrl;
@@ -20,6 +28,15 @@ public class VistaEnquestador extends JFrame {
     private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
     private JButton sortirButton = new JButton("Sortir");
 
+    /**
+     * Constructor de la vista d'Enquestador.
+     * Inicialitza la finestra amb les dades de l'usuari i configura els components.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari Identificador de l'enquestador.
+     * @param nomUsuari Nom de l'usuari.
+     * @param nomRol Rol de l'usuari ("ENQUESTADOR").
+     */
     public VistaEnquestador(CtrlPresentacio ctrl, int idUsuari, String nomUsuari, String nomRol) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -31,6 +48,10 @@ public class VistaEnquestador extends JFrame {
 
     }
 
+    /**
+     * Inicialitza i distribueix els components gràfics de la interfície.
+     * Crea un menú de botons vertical per a les diferents funcionalitats disponibles.
+     */
     private void initComponents() {
         setTitle("Menu Usuari - " + nomRol);
         setSize(400, 400);
@@ -66,10 +87,19 @@ public class VistaEnquestador extends JFrame {
 
     }
 
+    /**
+     * Canvia la visibilitat de la finestra.
+     *
+     * @param b True per mostrar la finestra, False per amagar-la.
+     */
     public void hacerVisible(boolean b) {
         setVisible(b);
     }
 
+    /**
+     * Assigna els escoltadors (listeners) als botons del menú.
+     * Defineix quina acció del controlador s'executa en prémer cada botó.
+     */
     private void setupListeners() {
         consultarPerfilButton.addActionListener(e -> {
             ctrl.mostrarConsultarPerfil();

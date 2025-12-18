@@ -9,6 +9,14 @@ import prop.enquestes.excepcions.FileNotFound;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
 import prop.enquestes.excepcions.UsuariNoValid;
 
+/**
+ * Diàleg per a la importació d'enquestes des de fitxers externs.
+ * <p>
+ * Aquesta vista permet a l'usuari seleccionar un fitxer local mitjançant un explorador de fitxers.
+ * El sistema llegeix el fitxer i intenta crear una nova enquesta associada a l'usuari actual,
+ * validant el format de les dades.
+ * </p>
+ */
 public class VistaImportarEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
     private int idUsuari;
@@ -21,6 +29,13 @@ public class VistaImportarEnquesta extends JDialog {
     private JButton buttonOK = new JButton("Importar");
     private JButton buttonCancel = new JButton("Cancel·lar");
 
+    /**
+     * Constructor de la vista d'importació.
+     * Inicialitza la finestra modal i configura els components gràfics.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari Identificador de l'usuari que realitza la importació.
+     */
     public VistaImportarEnquesta(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -35,6 +50,10 @@ public class VistaImportarEnquesta extends JDialog {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Inicialitza i distribueix els components visuals.
+     * Col·loca el camp de text i el botó de selecció al centre, i els botons d'acció a sota.
+     */
     private void initLayout() {
         contentPane.setLayout(new BorderLayout(10, 10));
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -54,6 +73,10 @@ public class VistaImportarEnquesta extends JDialog {
         fieldPath.setPreferredSize(new Dimension(250, 28));
     }
 
+    /**
+     * Configura els escoltadors (listeners) per als botons.
+     * Assigna la lògica de selecció de fitxer, confirmació d'importació i cancel·lació.
+     */
     private void initActions() {
         btnSeleccionar.addActionListener(e -> seleccionarFitxer());
         buttonOK.addActionListener(e -> onImportar());
@@ -71,6 +94,11 @@ public class VistaImportarEnquesta extends JDialog {
         });
     }
 
+    /**
+     * Obre un explorador de fitxers (JFileChooser) perquè l'usuari seleccioni l'arxiu a importar.
+     * Processa la ruta seleccionada per obtenir el nom del fitxer (sovint necessari sense extensió
+     * segons la lògica del controlador) i l'actualitza al camp de text.
+     */
     private void seleccionarFitxer() {
         JFileChooser fc = new JFileChooser(BASE_DIR);
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -101,6 +129,11 @@ public class VistaImportarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Executa la importació de l'enquesta utilitzant el nom del fitxer seleccionat.
+     * Crida al controlador i gestiona les possibles excepcions (fitxer no trobat, format invàlid,
+     * o usuari no vàlid), mostrant missatges d'error o d'èxit segons correspongui.
+     */
     private void onImportar() {
         String relativePath = fieldPath.getText().trim();
 

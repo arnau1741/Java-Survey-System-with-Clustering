@@ -6,6 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Diàleg per al registre de nous usuaris al sistema.
+ * <p>
+ * Aquesta vista presenta un formulari perquè l'usuari introdueixi les seves dades
+ * (nom, contrasenya, email) i seleccioni el rol desitjat (Enquestat, Enquestador o Admin).
+ * </p>
+ */
 public class VistaCrearUsuari extends JDialog {
     private JPanel contentPane = new JPanel();
     private CtrlPresentacio ctrl;
@@ -16,13 +23,19 @@ public class VistaCrearUsuari extends JDialog {
 
     private JComboBox<String> comboRol = new JComboBox<>(new String[] {
             "ENQUESTAT",
-            "ENQUESTADOR",
-            "ADMIN"
+            "ENQUESTADOR"
     });
 
-    private JButton buttonOK;
-    private JButton buttonCancel;
+    private JButton buttonOK = new JButton("OK");
+    private JButton buttonCancel = new JButton("Cancelar");
 
+    /**
+     * Constructor de la vista de creació d'usuari.
+     * Inicialitza els camps del formulari, configura la disposició (Layout)
+     * i assigna els escoltadors d'esdeveniments als botons.
+     *
+     * @param c Referència al controlador de presentació.
+     */
     public VistaCrearUsuari(CtrlPresentacio c) {
         super((Frame) null, "Crear Usuari", true);
         ctrl = c;
@@ -89,6 +102,12 @@ public class VistaCrearUsuari extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    /**
+     * Gestiona l'acció de confirmar el registre.
+     * Recull les dades introduïdes, intenta crear l'usuari a través del controlador
+     * i, si té èxit, redirigeix a la pantalla principal comuna.
+     * En cas d'error (usuari no vàlid), mostra un missatge d'alerta.
+     */
     private void onOK() {
         String nom = campNom.getText();
         String cont = campcont.getText();
@@ -105,13 +124,19 @@ public class VistaCrearUsuari extends JDialog {
 
     }
 
+    /**
+     * Gestiona l'acció de cancel·lar el registre.
+     * Torna a la pantalla inicial de l'aplicació i tanca el diàleg actual.
+     */
     private void onCancel() {
         ctrl.inicializarPresentacio();
         dispose();
     }
 
+    /**
+     * Tanca la finestra de diàleg i allibera els recursos gràfics.
+     */
     public void tancar() {
         dispose();
     }
 }
-

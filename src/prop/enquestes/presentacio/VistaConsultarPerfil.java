@@ -5,6 +5,14 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Diàleg per a la consulta de perfils d'usuari.
+ * <p>
+ * Aquesta vista permet seleccionar un usuari del sistema mitjançant un desplegable
+ * i visualitzar les seves dades detallades. A més, genera dinàmicament un avatar
+ * gràfic basat en la inicial del nom de l'usuari seleccionat.
+ * </p>
+ */
 public class VistaConsultarPerfil extends JDialog {
     private CtrlPresentacio ctrl;
     private JPanel contentPane = new JPanel();
@@ -14,6 +22,13 @@ public class VistaConsultarPerfil extends JDialog {
     private JButton buttonCancel = new JButton("Cancel·lar");
     private JLabel labelImagen = new JLabel();
 
+    /**
+     * Constructor de la vista de consulta de perfil.
+     * Configura la disposició dels elements (Layout), carrega la llista d'usuaris
+     * i assigna els escoltadors (listeners) als botons.
+     *
+     * @param ctrl Referència al controlador de presentació per obtenir les dades.
+     */
     public VistaConsultarPerfil(CtrlPresentacio ctrl) {
         super((Frame) null, "Consultar Perfil", true);
         this.ctrl = ctrl;
@@ -115,7 +130,9 @@ public class VistaConsultarPerfil extends JDialog {
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    // CARREGAR USUARIS
+    /**
+     * Obté la llista de noms d'usuari del controlador i omple el ComboBox.
+     */
     private void carregarUsuaris() {
         comboUsuaris.removeAllItems();
         comboUsuaris.addItem("-- Selecciona un usuari --");
@@ -126,7 +143,11 @@ public class VistaConsultarPerfil extends JDialog {
         }
     }
 
-    // CONSULTAR PERFIL
+    /**
+     * Acció executada en prémer el botó "Consultar".
+     * Valida la selecció, obté les dades del perfil del controlador,
+     * les mostra a l'àrea de text i actualitza l'avatar.
+     */
     private void onOK() {
         String txt = (String) comboUsuaris.getSelectedItem();
         if (txt == null || txt.equals("-- Selecciona un usuari --")) {
@@ -147,11 +168,19 @@ public class VistaConsultarPerfil extends JDialog {
         actualizarAvatar(txt);
     }
 
+    /**
+     * Tanca el diàleg.
+     */
     private void onCancel() {
         dispose();
     }
 
-    // Métodos para la imagen
+    /**
+     * Genera un avatar gràfic circular amb la inicial de l'usuari.
+     * Utilitza la classe Graphics2D per dibuixar un cercle blau amb text blanc al centre.
+     *
+     * @param inicial Lletra inicial a mostrar dins de l'avatar.
+     */
     private void crearAvatar(String inicial) {
         int size = 100;
         java.awt.image.BufferedImage img = new java.awt.image.BufferedImage(
@@ -180,6 +209,11 @@ public class VistaConsultarPerfil extends JDialog {
         labelImagen.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
+    /**
+     * Extreu la inicial del nom d'usuari i crida a la funció de creació d'avatar.
+     *
+     * @param nombreUsuario Nom complet de l'usuari seleccionat.
+     */
     private void actualizarAvatar(String nombreUsuario) {
         // Obtener primera letra del nombre
         String inicial = nombreUsuario.substring(0, 1).toUpperCase();

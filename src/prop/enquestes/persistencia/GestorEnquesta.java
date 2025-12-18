@@ -9,11 +9,18 @@ public class GestorEnquesta {
     private GestorPregunta gestorPregunta;
     private GestorRespostes gestorRespostes;
 
+    /**
+     * Constructor de la classe GestorEnquesta de la capa de persistencia.
+     */
     public GestorEnquesta() {
         this.gestorPregunta = new GestorPregunta();
         this.gestorRespostes = new GestorRespostes();
     }
 
+    /**
+     * Guarda les enquestes al sistema de fitxers en format JSON.
+     * @param enquestes
+     */
     public void guardarEnquestes(Map<Integer, Enquesta> enquestes) {
         File dir = new File(DIRECTORY);
         if (!dir.exists())
@@ -39,6 +46,10 @@ public class GestorEnquesta {
         }
     }
 
+    /**
+     * Carrega les enquestes des del sistema de fitxers en format JSON.
+     * @return Map<Integer, Enquesta>
+     */
     public Map<Integer, Enquesta> carregarEnquestes() {
         Map<Integer, Enquesta> enquestes = new HashMap<>();
         File dir = new File(DIRECTORY);
@@ -96,6 +107,12 @@ public class GestorEnquesta {
         return enquestes;
     }
 
+    /**
+     * Crea una resposta a partir del tipus i el valor.
+     * @param tipus
+     * @param val
+     * @return Resposta
+     */
     private Resposta crearResposta(int tipus, Object val) {
         if (val == null)
             return null;
@@ -141,6 +158,11 @@ public class GestorEnquesta {
         return null;
     }
 
+    /**
+     * Escriu el contingut en un fitxer.
+     * @param path
+     * @param content
+     */
     private void writeFile(String path, String content) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             bw.write(content);
@@ -149,6 +171,11 @@ public class GestorEnquesta {
         }
     }
 
+    /**
+     * Llegeix el contingut d'un fitxer.
+     * @param file
+     * @return String
+     */
     private String readFile(File file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             StringBuilder sb = new StringBuilder();

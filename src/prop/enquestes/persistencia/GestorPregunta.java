@@ -8,6 +8,12 @@ import java.util.*;
 public class GestorPregunta {
     private static final String DIRECTORY = "datos/pregunta/";
 
+    /**
+     * Guarda la pregunta p de l'enquesta idEnquesta amb index indexPregunta.
+     * @param idEnquesta
+     * @param indexPregunta
+     * @param p
+     */
     public void guardarPregunta(int idEnquesta, int indexPregunta, Pregunta p) {
         File dir = new File(DIRECTORY);
         if (!dir.exists())
@@ -25,6 +31,12 @@ public class GestorPregunta {
         writeFile(DIRECTORY + "enquesta_" + idEnquesta + "_pregunta_" + indexPregunta + ".json", json);
     }
 
+    /**
+     * Carrega la pregunta de l'enquesta idEnquesta amb index indexPregunta.
+     * @param idEnquesta
+     * @param indexPregunta
+     * @return Pregunta carregada o null si no existeix.
+     */
     public Pregunta carregarPregunta(int idEnquesta, int indexPregunta) {
         File f = new File(DIRECTORY + "enquesta_" + idEnquesta + "_pregunta_" + indexPregunta + ".json");
         if (!f.exists())
@@ -48,6 +60,11 @@ public class GestorPregunta {
         return new Pregunta(text, tipus, opcions);
     }
 
+    /**
+     * Escriu el contingut a un fitxer.
+     * @param path
+     * @param content
+     */
     private void writeFile(String path, String content) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             bw.write(content);
@@ -56,6 +73,11 @@ public class GestorPregunta {
         }
     }
 
+    /**
+     * Llegeix el contingut d'un fitxer.
+     * @param file
+     * @return Contingut del fitxer o null en cas d'error.
+     */
     private String readFile(File file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             StringBuilder sb = new StringBuilder();

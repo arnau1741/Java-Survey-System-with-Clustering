@@ -7,15 +7,28 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
+/**
+ * Diàleg per consultar la informació detallada de les enquestes del sistema.
+ * <p>
+ * Aquesta vista permet a l'usuari seleccionar una enquesta d'una llista desplegable
+ * i visualitzar-ne tot el contingut (preguntes, opcions, etc.) en una àrea de text.
+ * </p>
+ */
 public class VistaConsultarEnquesta extends JDialog {
 
     private CtrlPresentacio ctrlPresentacio;
-    private JPanel contentPane;
-    private JTextArea resultat;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JComboBox<String> comboEnquestes;
+    private JPanel contentPane = new JPanel();
+    private JTextArea resultat =  new JTextArea();
+    private JButton buttonOK =  new JButton("OK");
+    private JButton buttonCancel =  new JButton("Cancel");
+    private JComboBox<String> comboEnquestes =  new JComboBox<>();
 
+    /**
+     * Constructor del diàleg de consulta d'enquestes.
+     * Configura la interfície, carrega les dades inicials i assigna els controladors d'esdeveniments.
+     *
+     * @param ctrlPresentacio Referència al controlador de presentació per obtenir les dades.
+     */
     public VistaConsultarEnquesta(CtrlPresentacio ctrlPresentacio) {
         super((Frame) null, "Consultar Enquesta", true);
         this.ctrlPresentacio = ctrlPresentacio;
@@ -28,9 +41,12 @@ public class VistaConsultarEnquesta extends JDialog {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Inicialitza i distribueix els components gràfics del diàleg.
+     * Crea el panell de selecció superior, l'àrea de text central i els botons inferiors.
+     */
     private void inicialitzarComponents() {
-
-        contentPane = new JPanel(new BorderLayout(10, 10));
+        contentPane.setLayout(new BorderLayout(10,10));
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // ========== SELECCIÓ ENQUESTA (TOP) ==========
@@ -67,6 +83,11 @@ public class VistaConsultarEnquesta extends JDialog {
         setContentPane(contentPane);
     }
 
+    /**
+     * Carrega la llista d'enquestes disponibles al desplegable (ComboBox).
+     * Obté la informació del controlador i filtra només la línia identificativa.
+     * Mostra un missatge d'error si no es poden carregar les dades.
+     */
     private void carregarEnquestes() {
 
         comboEnquestes.removeAllItems();
@@ -93,6 +114,10 @@ public class VistaConsultarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Configura els listeners (escoltadors) per gestionar les interaccions de l'usuari.
+     * Defineix el comportament dels botons, la selecció del desplegable i la tecla ESC.
+     */
     private void configurarListeners() {
 
         // Botó consultar
@@ -128,6 +153,13 @@ public class VistaConsultarEnquesta extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    /**
+     * Realitza la consulta de l'enquesta seleccionada i mostra el resultat.
+     * Obté l'ID de l'enquesta seleccionada, demana els detalls al controlador
+     * i els mostra a l'àrea de text.
+     *
+     * @throws EnquestaNoExisteixException Si l'enquesta sol·licitada no existeix.
+     */
     private void consultar() throws EnquestaNoExisteixException {
 
         String sel = (String) comboEnquestes.getSelectedItem();
@@ -150,6 +182,14 @@ public class VistaConsultarEnquesta extends JDialog {
         resultat.setText(sb.toString());
     }
 
+    /**
+     * Extreu l'ID numèric de l'enquesta a partir de la cadena de text mostrada al desplegable.
+     * S'espera un format tipus "ID: X - Titol...".
+     *
+     * @param texto Cadena de text seleccionada al ComboBox.
+     * @return L'ID de l'enquesta com a enter.
+     * @throws RuntimeException Si el format del text no permet extreure l'ID.
+     */
     private int extraerIdEnquesta(String texto) {
         try {
             // Formato esperado: "ID: X - ..."

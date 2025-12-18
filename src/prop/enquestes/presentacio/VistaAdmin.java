@@ -3,6 +3,14 @@ package prop.enquestes.presentacio;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Vista principal per a l'usuari amb rol d'Administrador.
+ * <p>
+ * Aquesta classe representa el menú principal que veu un administrador en iniciar sessió.
+ * Proporciona accés a totes les funcionalitats del sistema: gestió d'enquestes (crear, importar, exportar),
+ * gestió d'usuaris (vetar/desvetar) i funcionalitats comunes (respondre, consultar perfil).
+ * </p>
+ */
 public class VistaAdmin extends JFrame {
     private CtrlPresentacio ctrl;
     private int idUsuari;
@@ -20,9 +28,18 @@ public class VistaAdmin extends JFrame {
     private JButton enquestesAdministradesButton = new JButton("Enquestes Administrades");
     private JButton consultarRecomanacionsButton = new JButton("Consultar Recomanacions");
     /// Faltaria decidir aquesta vista
-    private JButton vetarDesvetarButton = new JButton("Vetar / Desvetar");
+
     private JButton sortirButton = new JButton("Sortir");
 
+    /**
+     * Constructor de la vista d'administrador.
+     * Inicialitza la finestra, guarda les dades de la sessió i configura els components gràfics.
+     *
+     * @param ctrl Referència al controlador de presentació per comunicar-se amb la lògica.
+     * @param idUsuari Identificador únic de l'administrador actual.
+     * @param nomUsuari Nom de l'administrador.
+     * @param nomRol Rol de l'usuari (en aquest cas, "ADMIN").
+     */
     public VistaAdmin(CtrlPresentacio ctrl, int idUsuari, String nomUsuari, String nomRol) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -33,6 +50,10 @@ public class VistaAdmin extends JFrame {
         setupListeners();     // Configura els listeners dels botons
     }
 
+    /**
+     * Inicialitza i configura els components visuals de la interfície.
+     * Defineix el títol, la mida, la disposició dels botons (layout) i afegeix els panells al frame.
+     */
     private void initComponents() {
         setTitle("Menu ADMIN");
         setSize(400, 400);
@@ -53,7 +74,7 @@ public class VistaAdmin extends JFrame {
         panelBotones.add(enquestesRealitzadesButton);
         panelBotones.add(enquestesAdministradesButton);
         panelBotones.add(consultarRecomanacionsButton);
-        panelBotones.add(vetarDesvetarButton);
+
 
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -75,6 +96,10 @@ public class VistaAdmin extends JFrame {
 
     }
 
+    /**
+     * Configura els listeners (escoltadors) per als botons.
+     * Assigna a cada botó la funció corresponent del controlador de presentació.
+     */
     private void setupListeners() {
         crearEnquestaButton.addActionListener(e -> {
             ctrl.mostrarCrearEnquesta(idUsuari);
@@ -104,9 +129,6 @@ public class VistaAdmin extends JFrame {
         });
         consultarRecomanacionsButton.addActionListener(e -> {
             ctrl.mostrarConsultarRecomanacions();
-        });
-        vetarDesvetarButton.addActionListener(e -> {
-            ctrl.mostrarVetarDesvetar(idUsuari);
         });
 
     }

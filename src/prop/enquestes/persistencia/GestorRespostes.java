@@ -7,6 +7,14 @@ import java.util.*;
 public class GestorRespostes {
     private static final String DIRECTORY = "datos/respostes/";
 
+    /**
+     * Guarda les respostes d'una pregunta d'una enquesta en un fitxer JSON.
+     * @param idEnquesta
+     * @param indexPregunta
+     * @param respostes
+     * @param tipusPregunta
+     * @param opcions
+     */
     public void guardarRespostes(int idEnquesta, int indexPregunta, Map<Integer, Resposta> respostes, int tipusPregunta,
             List<String> opcions) {
         File dir = new File(DIRECTORY);
@@ -40,6 +48,12 @@ public class GestorRespostes {
         writeFile(DIRECTORY + "enquesta_" + idEnquesta + "_pregunta_" + indexPregunta + "_respostes.json", json);
     }
 
+    /**
+     * Carrega les respostes d'una pregunta d'una enquesta des d'un fitxer JSON.
+     * @param idEnquesta
+     * @param indexPregunta
+     * @return Map amb les respostes en format raw (Object)
+     */
     public Map<Integer, Object> carregarRespostesRaw(int idEnquesta, int indexPregunta) {
         Map<Integer, Object> result = new HashMap<>();
         File f = new File(DIRECTORY + "enquesta_" + idEnquesta + "_pregunta_" + indexPregunta + "_respostes.json");
@@ -65,6 +79,11 @@ public class GestorRespostes {
         return result;
     }
 
+    /**
+     * Escriu el contingut en un fitxer.
+     * @param path
+     * @param content
+     */
     private void writeFile(String path, String content) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             bw.write(content);
@@ -73,6 +92,11 @@ public class GestorRespostes {
         }
     }
 
+    /**
+     * Llegeix el contingut d'un fitxer.
+     * @param file
+     * @return contingut del fitxer com a String
+     */
     private String readFile(File file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             StringBuilder sb = new StringBuilder();

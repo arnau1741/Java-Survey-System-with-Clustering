@@ -12,6 +12,14 @@ import prop.enquestes.excepcions.FileNotFound;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
 import prop.enquestes.excepcions.UsuariNoValid;
 
+/**
+ * Diàleg per a la importació de respostes a una enquesta des d'un fitxer extern.
+ * <p>
+ * Aquesta vista permet a l'usuari (generalment un Administrador o Moderador) seleccionar
+ * una enquesta existent i carregar un fitxer de text que contingui respostes per a ser
+ * processades i emmagatzemades pel sistema.
+ * </p>
+ */
 public class VistaImportarRespostes extends JDialog {
     private CtrlPresentacio ctrl;
     private int idUsuari;
@@ -26,6 +34,14 @@ public class VistaImportarRespostes extends JDialog {
     private JButton buttonCancel = new JButton("Cancel·lar");
     private JComboBox<String> comboEnquestes = new JComboBox<>();
 
+    /**
+     * Constructor de la vista d'importació de respostes.
+     * Inicialitza la finestra, configura la interfície i carrega la llista d'enquestes
+     * disponibles segons el rol de l'usuari.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari Identificador de l'usuari que realitza la importació.
+     */
     public VistaImportarRespostes(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -41,6 +57,10 @@ public class VistaImportarRespostes extends JDialog {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Inicialitza i distribueix els components visuals de la finestra.
+     * Organitza els panells per a la selecció d'enquesta, selecció de fitxer i botons d'acció.
+     */
     private void initLayout() {
         contentPane.setLayout(new BorderLayout(10, 10));
         contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -70,6 +90,11 @@ public class VistaImportarRespostes extends JDialog {
         fieldPath.setPreferredSize(new Dimension(250, 28));
     }
 
+    /**
+     * Configura els escoltadors (listeners) per als components interactius.
+     * Defineix el comportament dels botons de selecció de fitxer, importació i cancel·lació,
+     * així com del desplegable d'enquestes per actualitzar l'ID seleccionat.
+     */
     private void initActions() {
         btnSeleccionar.addActionListener(e -> seleccionarFitxer());
         buttonOK.addActionListener(e -> onImportar());
@@ -96,6 +121,11 @@ public class VistaImportarRespostes extends JDialog {
         });
     }
 
+    /**
+     * Obre un explorador de fitxers per permetre a l'usuari seleccionar l'arxiu de respostes.
+     * Processa la ruta seleccionada per adaptar-la al format esperat pel sistema
+     * (nom de fitxer net o ruta relativa).
+     */
     private void seleccionarFitxer() {
         JFileChooser fc = new JFileChooser(BASE_DIR);
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -124,6 +154,11 @@ public class VistaImportarRespostes extends JDialog {
         }
     }
 
+    /**
+     * Carrega les enquestes disponibles al desplegable segons el rol de l'usuari.
+     * Si l'usuari és ADMIN, mostra només les enquestes que administra.
+     * Si és MODERADOR, mostra totes les enquestes del sistema.
+     */
     private void carregarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
@@ -159,6 +194,11 @@ public class VistaImportarRespostes extends JDialog {
         }
     }
 
+    /**
+     * Executa el procés d'importació de les respostes.
+     * Valida que s'hagi seleccionat una enquesta i un fitxer, i crida al controlador per processar la importació.
+     * Gestiona i mostra els errors possibles (fitxer no trobat, format incorrecte, errors d'usuari, etc.).
+     */
     private void onImportar() {
         if (idEnquestaActual == -1) {
             JOptionPane.showMessageDialog(this,
@@ -211,6 +251,13 @@ public class VistaImportarRespostes extends JDialog {
         }
     }
 
+    /**
+     * Extreu l'ID numèric de l'enquesta a partir de la cadena de text seleccionada al desplegable.
+     * S'espera el format "ID: X - Títol".
+     *
+     * @param texto Cadena de text del ComboBox.
+     * @return L'ID de l'enquesta, o -1 si no es pot extreure.
+     */
     private int extraerIdEnquesta(String texto) {
         // "ID: X - Títol"
         try {

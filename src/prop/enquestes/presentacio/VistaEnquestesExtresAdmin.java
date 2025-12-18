@@ -3,6 +3,15 @@ package prop.enquestes.presentacio;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Vista de gestió avançada d'enquestes per a l'administrador.
+ * <p>
+ * Aquesta finestra actua com un submenú dinàmic. Depenent del context indicat
+ * (si es consulten enquestes "Realitzades" o "Administrades"), la vista renderitza
+ * un conjunt diferent de botons i funcionalitats, com ara modificar, donar poders,
+ * exportar o importar respostes.
+ * </p>
+ */
 public class VistaEnquestesExtresAdmin extends JFrame {
 
     private CtrlPresentacio ctrl;
@@ -18,6 +27,15 @@ public class VistaEnquestesExtresAdmin extends JFrame {
     private JButton donarPodersButton = new JButton("Donar poders");
     private JButton consultarRecomanacionsButton = new JButton("Consultar Recomanacions");
     private JButton sortirButton = new JButton("Sortir");
+
+    /**
+     * Constructor de la vista d'enquestes extres.
+     * Configura la finestra segons el tipus d'operativa seleccionada al menú principal.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param nomEnquesta Cadena de text que determina el mode de visualització (ex: "Realitzada").
+     * @param idUsuari Identificador de l'administrador actual.
+     */
     public VistaEnquestesExtresAdmin(CtrlPresentacio ctrl,  String nomEnquesta, int idUsuari) {
         this.ctrl = ctrl;
         this.nomEnquesta = nomEnquesta;
@@ -26,6 +44,16 @@ public class VistaEnquestesExtresAdmin extends JFrame {
         setupListeners();     // Configura els listeners dels botons
     }
 
+    /**
+     * Inicialitza i configura els components visuals.
+     * <p>
+     * Aquest mètode conté lògica condicional:
+     * <ul>
+     * <li>Si {@code nomEnquesta} és "Realitzada": Mostra opcions d'exportació i consulta bàsica.</li>
+     * <li>En cas contrari (Administrada): Afegeix opcions de gestió avançada com importar, modificar i donar poders.</li>
+     * </ul>
+     * </p>
+     */
     public void initComponents() {
         setTitle("Menu enquesta" + nomEnquesta);
         setSize(400, 400);
@@ -72,6 +100,10 @@ public class VistaEnquestesExtresAdmin extends JFrame {
 
     }
 
+    /**
+     * Assigna els escoltadors (listeners) als botons disponibles.
+     * Vincula cada botó amb la funció corresponent del controlador de presentació.
+     */
     public void setupListeners() {
         modificarEnquestaButton.addActionListener(e -> {
             ctrl.mostrarVistaModificarEnquesta(idUsuari);

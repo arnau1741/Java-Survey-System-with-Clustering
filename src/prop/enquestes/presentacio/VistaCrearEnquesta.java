@@ -8,6 +8,15 @@ import java.util.List;
 import prop.enquestes.excepcions.InvalidFormatEnquesta;
 import prop.enquestes.excepcions.UsuariNoValid;
 
+/**
+ * Diàleg per a la creació de noves enquestes.
+ * <p>
+ * Aquesta vista permet a l'usuari (normalment amb rol Enquestador o Administrador)
+ * definir el títol, la descripció i les preguntes d'una nova enquesta.
+ * Admet diferents tipus de preguntes (Lliure, Múltiple, Numèrica, Ordenada, Única)
+ * i gestiona la introducció de les seves opcions corresponents.
+ * </p>
+ */
 public class VistaCrearEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
     private int idCreador;
@@ -28,6 +37,13 @@ public class VistaCrearEnquesta extends JDialog {
     private JButton buttonOK = new JButton("OK");
     private JButton buttonCancel = new JButton("Cancelar");
 
+    /**
+     * Constructor de la vista de creació d'enquestes.
+     * Inicialitza la finestra, configura el layout i assigna els escoltadors d'esdeveniments.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari Identificador de l'usuari que crea l'enquesta.
+     */
     public VistaCrearEnquesta(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;
         this.idCreador = idUsuari;
@@ -62,6 +78,11 @@ public class VistaCrearEnquesta extends JDialog {
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    /**
+     * Configura la distribució dels components gràfics (Layout).
+     * Organitza els camps de text per al títol i descripció a la part superior,
+     * la llista de preguntes al centre i els botons d'acció a la part inferior.
+     */
     private void initLayout() {
         contentPane.setLayout(new BorderLayout(8, 8));
 
@@ -96,6 +117,12 @@ public class VistaCrearEnquesta extends JDialog {
         llistaPreguntes.setVisibleRowCount(8);
     }
 
+    /**
+     * Converteix el nom del tipus de pregunta en el seu codi enter corresponent.
+     *
+     * @param tipus Nom del tipus de pregunta (ex: "Numèrica", "Única").
+     * @return Enter que representa el tipus (0=Numèrica, 1=Única, 2=Múltiple, 3=Ordenada, 4=Lliure) o -1 si no és vàlid.
+     */
     private int tipusPreguntaAInt(String tipus) {
         switch (tipus) {
             case "Numèrica": return 0;
@@ -107,6 +134,10 @@ public class VistaCrearEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Defineix la lògica dels botons "Afegir Pregunta" i "Eliminar Pregunta".
+     * Gestiona els diàlegs d'entrada de dades per a cada tipus de pregunta i les seves opcions.
+     */
     private void initActions() {
         afegirPreguntaButton.addActionListener(e -> {
             String[] tipusValids = {"Lliure", "Múltiple", "Numèrica", "Ordenada", "Única"};
@@ -188,6 +219,11 @@ public class VistaCrearEnquesta extends JDialog {
         });
     }
 
+    /**
+     * Valida les dades introduïdes i envia la sol·licitud de creació d'enquesta al controlador.
+     *
+     * @throws InvalidFormatEnquesta Si el format de les preguntes no és correcte.
+     */
     private void onOK() throws InvalidFormatEnquesta {
         String titol = titolEnq.getText().trim();
         if (titol.isEmpty()) {
@@ -219,12 +255,20 @@ public class VistaCrearEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Cancel·la l'operació, tanca la finestra i torna a la presentació inicial.
+     */
     private void onCancel() {
         ctrl.inicializarPresentacio();
         dispose();
     }
 
-    /** Construeix el format textual que espera CtrlDominiMantEnquesta */
+    /**
+     * Construeix la llista plana d'Strings que defineix l'estructura de les preguntes.
+     * Aquest format és l'esperat pel controlador de domini per crear l'enquesta.
+     *
+     * @return Llista d'Strings amb el format [tipus, text, (numOpcions, opcio1...)?] per a cada pregunta.
+     */
     public List<String> getPreguntes() {
         List<String> out = new ArrayList<>();
 
