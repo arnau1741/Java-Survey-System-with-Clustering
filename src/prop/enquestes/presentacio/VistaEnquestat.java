@@ -26,7 +26,6 @@ public class VistaEnquestat extends JFrame {
     private JButton exportarRespostesButton = new JButton("Exportar Respostes");
     private JButton exportarEnquestatButton = new JButton("Exportar Enquesta");
     private JButton consultarRespostesButton = new JButton("Consultar Respostes");
-    private JButton consultarRecomanacionsButton =  new JButton("Consultar Recomanacions");
     private JButton sortirButton = new JButton("Sortir");
 
     /**
@@ -70,7 +69,6 @@ public class VistaEnquestat extends JFrame {
         buttonPanel.add(exportarRespostesButton);
         buttonPanel.add(exportarEnquestatButton);
         buttonPanel.add(consultarRespostesButton);
-        buttonPanel.add(consultarRecomanacionsButton);
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSortir.add(sortirButton);
@@ -105,9 +103,6 @@ public class VistaEnquestat extends JFrame {
     private void setupListeners() {
         consultarPerfilButton.addActionListener(e -> {
             ctrl.mostrarConsultarPerfil();
-        });
-        consultarRecomanacionsButton.addActionListener(e -> {
-            ctrl.mostrarConsultarRecomanacions();
         });
         crearEnquestaButton.addActionListener(e -> {
             ctrl.mostrarCrearEnquesta(idUsuari);

@@ -29,7 +29,6 @@ public class CtrlPresentacio {
     private VistaModerador vistaModerador;
 
     private VistaConsultarPerfil vistaConsultarPerfil;
-    private VistaConsultarRecomanacions vistaConsultarRecomanacions;
     private VistaModificarEnquesta vistaModificarEnquesta;
     private VistaConsultarEnquesta vistaConsultarEnquesta;
     private VistaCrearEnquesta vistaCrearEnquesta;
@@ -122,13 +121,6 @@ public class CtrlPresentacio {
         vistaConsultarPerfil.setVisible(true);
     }
 
-    /**
-     * Obre la finestra per consultar recomanacions d'enquestes.
-     */
-    public void mostrarConsultarRecomanacions() {
-        vistaConsultarRecomanacions = new VistaConsultarRecomanacions(this);
-        vistaConsultarRecomanacions.setVisible(true);
-    }
 
     /**
      * Obre la finestra per modificar una enquesta existent.
