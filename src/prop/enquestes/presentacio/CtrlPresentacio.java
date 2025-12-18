@@ -106,6 +106,14 @@ public class CtrlPresentacio {
             vistaEnquestador = new VistaEnquestador(this, idUsuari, nomUsuari, rol);
             vistaEnquestador.setVisible(true);
         }
+        else if(rol.equals("ADMIN")) {
+            vistaAdmin = new VistaAdmin(this, idUsuari, nomUsuari, rol);
+            vistaAdmin.setVisible(true);
+        }
+        else if(rol.equals("MODERADOR")) {
+            vistaModerador = new VistaModerador(this, idUsuari, nomUsuari, rol);
+            vistaModerador.setVisible(true);
+        }
         else {
             vistaEnquestat = new VistaEnquestat(this, idUsuari, nomUsuari, rol);
             vistaEnquestat.setVisible(true);

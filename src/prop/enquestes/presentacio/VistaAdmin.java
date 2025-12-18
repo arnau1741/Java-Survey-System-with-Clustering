@@ -55,7 +55,7 @@ public class VistaAdmin extends JFrame {
      */
     private void initComponents() {
         setTitle("Menu ADMIN");
-        setSize(400, 400);
+        setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -72,7 +72,6 @@ public class VistaAdmin extends JFrame {
         panelBotones.add(consultarUsuariButton);
         panelBotones.add(enquestesRealitzadesButton);
         panelBotones.add(enquestesAdministradesButton);
-
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSortir.add(sortirButton);
