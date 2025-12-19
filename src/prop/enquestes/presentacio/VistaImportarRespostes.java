@@ -248,6 +248,11 @@ public class VistaImportarRespostes extends JDialog {
                     "Error de l'usuari:\n" + e.getMessage(),
                     "Format invàlid",
                     JOptionPane.ERROR_MESSAGE);
+        } catch(NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error format de les respostes incorrecta:\n",
+                    "Format invàlid",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
