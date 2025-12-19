@@ -102,6 +102,7 @@ public class CtrlPresentacio {
         ///Des d'aqui obtenim el rol i mostrem qualsevol de les vistes decidides
         String nomUsuari = obtenirNomUsuari(idUsuari);
         String rol = obtenirRol(idUsuari);
+
         if(rol.equals("ENQUESTADOR")) {
             vistaEnquestador = new VistaEnquestador(this, idUsuari, nomUsuari, rol);
             vistaEnquestador.setVisible(true);
