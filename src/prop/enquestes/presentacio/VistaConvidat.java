@@ -61,10 +61,6 @@ public class VistaConvidat extends JFrame {
         add(contentPanel);
         setContentPane(contentPanel);
 
-        buttonSortir.addActionListener(e -> {
-            dispose();
-        });
-
     }
 
     /**
@@ -74,6 +70,10 @@ public class VistaConvidat extends JFrame {
     private void setupListeners() {
         buttonRespondreEnquesta.addActionListener(e -> {
             ctrl.mostrarRespondreEnquesta(idUsuari);
+        });
+        buttonSortir.addActionListener(e -> {
+            dispose();
+            ctrl.inicializarPresentacio();
         });
     }
 }

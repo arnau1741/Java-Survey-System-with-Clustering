@@ -79,10 +79,6 @@ public class VistaEnquestador extends JFrame {
 
         add(contentPanel);
 
-        sortirButton.addActionListener(e -> {
-            dispose();
-        });
-
     }
 
     /**
@@ -117,6 +113,10 @@ public class VistaEnquestador extends JFrame {
 
         consultarRespostesButton.addActionListener(e -> {
             ctrl.mostrarConsultarRespostes(idUsuari);
+        });
+        sortirButton.addActionListener(e -> {
+            dispose();
+            ctrl.inicializarPresentacio();
         });
 
     }

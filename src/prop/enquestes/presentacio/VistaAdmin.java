@@ -86,10 +86,6 @@ public class VistaAdmin extends JFrame {
 
         setContentPane(contentPanel);
 
-        sortirButton.addActionListener(e -> {
-            dispose();
-        });
-
     }
 
     /**
@@ -122,6 +118,10 @@ public class VistaAdmin extends JFrame {
         enquestesAdministradesButton.addActionListener(e -> {
             String nomEnquesta = "Administrada";
             ctrl.mostrarEnquestesExtra(nomEnquesta, idUsuari);
+        });
+        sortirButton.addActionListener(e -> {
+            dispose();
+            ctrl.inicializarPresentacio();
         });
 
     }

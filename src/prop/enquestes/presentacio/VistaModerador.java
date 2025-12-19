@@ -88,9 +88,7 @@ public class VistaModerador extends JFrame {
 
         add(contentPanel);
 
-        sortirButton.addActionListener(e -> {
-            dispose();
-        });
+
 
     }
 
@@ -147,6 +145,10 @@ public class VistaModerador extends JFrame {
 
         donarPodersButton.addActionListener(e -> {
             ctrl.mostrarDonarPoders(idUsuari);
+        });
+        sortirButton.addActionListener(e -> {
+            dispose();
+            ctrl.inicializarPresentacio();
         });
 
     }
