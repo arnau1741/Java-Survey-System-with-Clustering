@@ -297,7 +297,7 @@ public class CtrlDominiMantEnquesta {
      */
     public Enquesta getUltimaEnquestaCreada() {
         if(!enquestes.isEmpty()) {
-            return enquestes.get(ultimIdEnquesta);
+            return enquestes.get(ultimIdEnquesta-1);
         }
         return null;
     }
