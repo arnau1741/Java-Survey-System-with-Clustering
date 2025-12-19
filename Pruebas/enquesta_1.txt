@@ -1,0 +1,18 @@
+==== Informacio enquesta ====
+ID: 1
+Titol: enquesta de cafe
+Descripcio: cafee
+Creador ID: 0
+Numero de preguntes: 2
+
+==== Preguntes i respostes ====
+Pregunta: 1: pregunta lliure
+No hi ha respostes.
+
+Pregunta: 2: multiple
+Opcions:
+  * Opció 1: op1
+  * Opció 2: op2
+  * Opció 3: op3
+No hi ha respostes.
+

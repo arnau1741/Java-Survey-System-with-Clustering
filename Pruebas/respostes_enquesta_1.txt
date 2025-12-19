@@ -1,0 +1,13 @@
+=== RESPOSTES DE L'ENQUESTA 1 ===
+Títol: enquesta de cafe
+
+Pregunta 1: pregunta lliure
+   (No hi ha respostes)
+
+Pregunta 2: multiple
+Opcions:
+ * op1
+ * op2
+ * op3
+   (No hi ha respostes)
+
