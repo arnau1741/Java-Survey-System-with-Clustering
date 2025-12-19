@@ -22,7 +22,11 @@ public class AdminState extends UsuariState {
      */
     public AdminState(Map<Integer, Enquesta> realitzadesHeretades) {
         this.enquestesAdministrades = new HashMap<>();
-        this.enquestesRealitzades = (realitzadesHeretades != null) ? realitzadesHeretades : new HashMap<>();
+        if(realitzadesHeretades != null) {
+            this.enquestesRealitzades = realitzadesHeretades;
+        } else {
+            this.enquestesRealitzades = new HashMap<>();
+        }
     }
 
     /**

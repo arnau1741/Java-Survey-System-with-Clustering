@@ -219,6 +219,7 @@ public class CtrlDomini {
         if(u.esEnquestat()){
             u.cambiarARolAdmin();
         }
+        System.out.println(enq.getTitol());
         u.demanarAfegirEnquestaAdministrada(enq);
     }
 
