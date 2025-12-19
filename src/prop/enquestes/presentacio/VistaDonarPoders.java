@@ -151,7 +151,7 @@ public class VistaDonarPoders extends JDialog {
         try {
             // Nota: Encara que el bloc if/else fa la mateixa crida, es manté per claredat
             // o per si en el futur es diferencien les crides al controlador.
-            if (rol.equals("Enquestador")) {
+            if (rol.equals("ENQUESTADOR")) {
                 ctrl.donarPoders(idExecutor, idEnquesta, nomTarget, rol);
             } else {
                 ctrl.donarPoders(idExecutor, idEnquesta, nomTarget, rol);
