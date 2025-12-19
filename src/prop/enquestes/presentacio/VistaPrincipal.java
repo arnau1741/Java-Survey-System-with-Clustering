@@ -70,7 +70,7 @@ public class VistaPrincipal {
         });
 
         btnSortir.addActionListener(e -> {
-            System.exit(0);
+            iCtrlPresentacio.actualizaDades();
         });
 
     }

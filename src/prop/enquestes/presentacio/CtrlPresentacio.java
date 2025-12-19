@@ -721,4 +721,9 @@ public class CtrlPresentacio {
     public String obtenirRolUsuari(int idUsuari) {
         return ctrlDomini.getCtrlDominiMantUsuari().getRolUsuari(idUsuari);
     }
+
+    public void actualizaDades() {
+        ctrlDomini.guardarDades();
+        System.exit(0);
+    }
 }
