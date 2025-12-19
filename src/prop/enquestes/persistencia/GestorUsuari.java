@@ -31,6 +31,9 @@ public class GestorUsuari {
                 roleType = "ADMIN";
             else if (u.esEnquestador())
                 roleType = "ENQUESTADOR";
+            else if(u.esModerador()){
+                roleType = "MODERADOR";
+            }
             map.put("rol", roleType);
 
             String json = JsonUtil.toJson(map);
