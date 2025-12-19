@@ -75,6 +75,9 @@ public class GestorUsuari {
                 case "ENQUESTADOR":
                     rolState = new EnquestadorState();
                     break;
+                case "MODERADOR":
+                    rolState = new ModeradorState();
+                    break;
                 default:
                     rolState = new EnquestatState();
             }
