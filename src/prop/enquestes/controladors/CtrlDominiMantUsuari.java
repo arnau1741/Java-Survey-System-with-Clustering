@@ -30,7 +30,7 @@ public class CtrlDominiMantUsuari {
         for (Integer id : usuaris.keySet()){
             nomUsuariToID.put(usuaris.get(id).getUsuari(), id);
         }
-        ultimID = usuaris.size() - 1;
+        ultimID = usuaris.size();
     }
 
     /**
