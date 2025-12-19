@@ -231,6 +231,7 @@ public class CtrlDomini {
      */
     /////////////////////// Cas d'us - Exportar enquesta //////////////////
     protected List<String> exportarEnquestaPrivate(Integer idEnquesta) throws EnquestaNoExisteixException {
+        if(idEnquesta == -1) throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
             throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
@@ -415,6 +416,7 @@ public class CtrlDomini {
      * @throws EnquestaNoExisteixException
      */
     public List<String> exportarRespostesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
+        if(idEnquesta == -1) throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
         if (enq == null) {
             throw new EnquestaNoExisteixException("L'enquesta amb id " + idEnquesta + " no existeix.");
