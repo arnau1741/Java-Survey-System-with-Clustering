@@ -10,5 +10,6 @@ public interface ClusteringStrategy {
      * @return Un Map on la clau és l'ID de l'Usuari i el valor és l'ID del Clúster assignat.
      * @throws KmeansExcepcio Si hi ha algun error en l'execució matemàtica.
      */
+	AbstractMap.SimpleEntry<>(mapa, valor);
     AbstractMap.SimpleEntry<Map<Integer, Integer>, double> executar(Enquesta data) throws KmeansExcepcio;
 }

@@ -388,7 +388,6 @@ public class VistaRespondreEnquesta extends JDialog {
             areaPreguntas.setText("Has completat l’enquesta!");
             respuesta.setEnabled(false);
             buttonAfegirResposta.setVisible(false);
-			comboEnquestes.setEnabled(false);
             buttonFinalitzar.setVisible(true);
         }
     }

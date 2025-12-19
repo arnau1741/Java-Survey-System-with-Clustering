@@ -44,7 +44,7 @@ public class KMedoidsStrategy implements ClusteringStrategy {
      * @throws KmeansExcepcio Si hi ha algun error en l'execució matemàtica.
      */
     @Override
-    public AbstractMap.SimpleEntry<Map<Integer, Integer>, Double>(Enquesta data) throws KmeansExcepcio {
+    public Map<Integer, Integer> executar(Enquesta data) throws KmeansExcepcio {
         KMedoids algorisme;
         if (usarSeed) {
             algorisme = new KMedoids(k, maxIterations, seed);
@@ -66,8 +66,6 @@ public class KMedoidsStrategy implements ClusteringStrategy {
                 int idUsuari = (int) idArray[i];
                 resultat.put(idUsuari, labels[i]);
         }
-
-		double coefSilhouete = algorisme.getCoeficientSilhouete();
-   		return new AbstractMap.SimpleEntry<>(resultat, coefSilhouete);
+        return resultat;
     }
 }
