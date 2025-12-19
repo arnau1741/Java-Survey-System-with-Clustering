@@ -246,7 +246,6 @@ public class CtrlDominiMantEnquesta {
      * @throws InvalidFormatEnquesta si el format de la nova pregunta es invàlid
      * @throws IndexOutOfBoundsException si l'índex de la pregunta està fora de rang
      */
-    //deberiamos hacer mas versiones en un futuro.
     public int modificarPreguntaEnquesta(int idEnquesta, int idxPregunta, List<String> novaPregunta) throws EnquestaNoExisteixException,InvalidFormatEnquesta {
         //borrar todas las respuestas
         Enquesta enq = getEnquesta(idEnquesta);
