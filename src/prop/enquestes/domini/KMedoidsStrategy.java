@@ -3,6 +3,8 @@ package prop.enquestes.domini;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import prop.enquestes.excepcions.KmeansExcepcio;
 
 public class KMedoidsStrategy implements ClusteringStrategy {
@@ -44,7 +46,7 @@ public class KMedoidsStrategy implements ClusteringStrategy {
      * @throws KmeansExcepcio Si hi ha algun error en l'execució matemàtica.
      */
     @Override
-    public AbstractMap.SimpleEntry<Map<Integer, Integer>, Double>(Enquesta data) throws KmeansExcepcio {
+    public AbstractMap.SimpleEntry<Map<Integer, Integer>, Double> executar (Enquesta data) throws KmeansExcepcio {
         KMedoids algorisme;
         if (usarSeed) {
             algorisme = new KMedoids(k, maxIterations, seed);

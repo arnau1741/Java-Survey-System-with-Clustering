@@ -3,6 +3,8 @@ package prop.enquestes.domini;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import prop.enquestes.excepcions.KmeansExcepcio;
 
 public class KMeansStrategy implements ClusteringStrategy {

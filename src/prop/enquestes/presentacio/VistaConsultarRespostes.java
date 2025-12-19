@@ -214,10 +214,20 @@ public class VistaConsultarRespostes extends JDialog {
         String tipus = (String) comboKmeans.getSelectedItem();
 
         try {
-			double 
-            Map<Integer, Integer> result = ctrl.aplicarClustering(idUsuari, idEnq, k, iter, tipus, coefSilhuete);
+            var resultats = ctrl.aplicarClustering(idUsuari, idEnq, k, iter, tipus);
+			Map<Integer, Integer> result = resultats.getKey();
+			double coefSilhouete = resultats.getValue();
 
             StringBuilder sb = new StringBuilder();
+
+            sb.append("Resultat clustering (clúster id = {id usuaris}):\n\n");
+            sb.append("Algorisme: ").append(tipus).append("\n\n");
+
+            for (var entry : result.entrySet()) {
+                sb.append("Usuari ").append(entry.getKey())
+                        .append(" → Grup ").append(entry.getValue()).append("\n");
+            }
+
             sb.append("Resultat clustering (usuari -> clúster):\n\n");
             sb.append("Algorisme: ").append(tipus).append("\n\n");
             for (var entry : result.entrySet()) {
