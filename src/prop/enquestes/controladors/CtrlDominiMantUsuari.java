@@ -7,7 +7,7 @@ import prop.enquestes.domini.*;
 public class CtrlDominiMantUsuari {
     private Map<Integer, Usuari> usuaris;
     private Map<String, Integer> nomUsuariToID;
-    private Integer ultimID=0;
+    private Integer ultimID;
 
     private Set<String> emailsVetats;
 
@@ -29,8 +29,8 @@ public class CtrlDominiMantUsuari {
         this.usuaris = usuaris;
         for (Integer id : usuaris.keySet()){
             nomUsuariToID.put(usuaris.get(id).getUsuari(), id);
-
         }
+        ultimID = usuaris.size() - 1;
     }
 
     /**
@@ -197,5 +197,4 @@ public class CtrlDominiMantUsuari {
         ultimID++;
         return tmp;
     }
-
 }
