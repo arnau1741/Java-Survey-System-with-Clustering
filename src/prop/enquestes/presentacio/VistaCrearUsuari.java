@@ -120,6 +120,8 @@ public class VistaCrearUsuari extends JDialog {
             dispose();
         } catch (UsuariNoValid e) {
             JOptionPane.showMessageDialog(this, "Error d'usuari: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Error de parametres: " + e.getMessage());
         }
 
     }
