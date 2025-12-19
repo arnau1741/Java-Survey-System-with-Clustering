@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class CtrlDominiMantEnquesta {
     private Map<Integer, Enquesta> enquestes;
-    private Integer ultimIdEnquesta = 0;
+    private Integer ultimIdEnquesta;
 
     /**
      * Constructor de la classe CtrlDominiMantEnquesta
@@ -297,7 +297,7 @@ public class CtrlDominiMantEnquesta {
      */
     public Enquesta getUltimaEnquestaCreada() {
         if(!enquestes.isEmpty()) {
-            return enquestes.get(ultimIdEnquesta - 1);
+            return enquestes.get(ultimIdEnquesta);
         }
         return null;
     }
