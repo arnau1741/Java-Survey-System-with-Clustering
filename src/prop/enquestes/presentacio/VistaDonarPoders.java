@@ -97,9 +97,16 @@ public class VistaDonarPoders extends JDialog {
         idsEnquestes = new ArrayList<>();
         comboEnquestes.addItem("-- Selecciona --");
         idsEnquestes.add(-1);
+        String rol = ctrl.obtenirRolUsuari(idExecutor);
 
         try {
-            List<String> enquestasInfo = ctrl.obtenirEnquestesAdministrades(idExecutor);
+            List<String> enquestasInfo = null;
+            if(rol.equals("MODERADOR")) {
+                enquestasInfo = ctrl.obtenirLlistaEnquestes();
+            }
+            else {
+                enquestasInfo = ctrl.obtenirEnquestesAdministrades(idExecutor);
+            }
             for (String info : enquestasInfo) {
                 // Buscamos la línea exacta que empieza por "ID:"
                 String[] lineas = info.split("\n");
