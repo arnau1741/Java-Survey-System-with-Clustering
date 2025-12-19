@@ -7,6 +7,7 @@ import prop.enquestes.excepcions.UsuariNoValid;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -218,22 +219,35 @@ public class VistaConsultarRespostes extends JDialog {
 			Map<Integer, Integer> result = resultats.getKey();
 			double coefSilhouete = resultats.getValue();
 
-            StringBuilder sb = new StringBuilder();
+			Map<Integer, List<Integer>> clusters = new TreeMap<>();
 
-            sb.append("Resultat clustering (clúster id = {id usuaris}):\n\n");
-            sb.append("Algorisme: ").append(tipus).append("\n\n");
+			for (var entry : result.entrySet()) {
+				int usuari = entry.getKey();
+				int cluster = entry.getValue();
 
-            for (var entry : result.entrySet()) {
-                sb.append("Usuari ").append(entry.getKey())
-                        .append(" → Grup ").append(entry.getValue()).append("\n");
-            }
+				clusters.computeIfAbsent(cluster, kx -> new ArrayList<>()).add(usuari);
+			}
 
-            sb.append("Resultat clustering (usuari -> clúster):\n\n");
-            sb.append("Algorisme: ").append(tipus).append("\n\n");
-            for (var entry : result.entrySet()) {
-                sb.append("Usuari ").append(entry.getKey())
-                        .append(" → Grup ").append(entry.getValue()).append("\n");
-            }
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Resultat clustering (clúster id = {id usuaris}):\n\n");
+			sb.append("Algorisme: ").append(tipus).append("\n\n");
+			sb.append("Coeficient Silhouette: ").append(coefSilhouete).append("\n");
+
+			for (var clusterEntry : clusters.entrySet()) {
+
+				sb.append("Cluster ").append(clusterEntry.getKey()).append(" = { ");
+
+				List<Integer> usuaris = clusterEntry.getValue();
+
+				for (int i = 0; i < usuaris.size(); ++i) {
+					sb.append(usuaris.get(i));
+					if (i < usuaris.size() - 1) sb.append(", ");
+				}
+
+				sb.append(" }\n");
+			}
 
             areaClustering.setText(sb.toString());
 
