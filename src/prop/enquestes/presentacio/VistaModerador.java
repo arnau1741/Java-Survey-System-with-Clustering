@@ -108,6 +108,7 @@ public class VistaModerador extends JFrame {
      */
     private void setupListeners() {
         crearEnquestaButton.addActionListener(e -> {
+            dispose();
             ctrl.mostrarCrearEnquesta(idUsuari);
         });
 
@@ -140,6 +141,7 @@ public class VistaModerador extends JFrame {
         });
 
         vetarDesvetarButton.addActionListener(e -> {
+            dispose();
             ctrl.mostrarVetarDesvetar(idUsuari);
         });
 

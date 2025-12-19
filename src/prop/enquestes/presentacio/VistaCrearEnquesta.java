@@ -243,6 +243,7 @@ public class VistaCrearEnquesta extends JDialog {
             ctrl.crearEnquesta(titol, descripcio, idCreador, preguntesTxt);
             JOptionPane.showMessageDialog(this, "Enquesta creada correctament!");
             dispose();
+            ctrl.mostrarVistaPrincipalComuna(idCreador);
         } catch (UsuariNoValid e) {
             JOptionPane.showMessageDialog(this,
                     "Error de l'usuari: " + e.getMessage(),
@@ -259,8 +260,8 @@ public class VistaCrearEnquesta extends JDialog {
      * Cancel·la l'operació, tanca la finestra i torna a la presentació inicial.
      */
     private void onCancel() {
-        ctrl.inicializarPresentacio();
         dispose();
+        ctrl.mostrarVistaPrincipalComuna(idCreador);
     }
 
     /**

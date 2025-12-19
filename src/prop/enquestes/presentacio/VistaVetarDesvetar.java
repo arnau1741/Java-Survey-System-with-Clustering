@@ -120,6 +120,9 @@ public class VistaVetarDesvetar extends JDialog {
             }
         });
 
-        btnSortir.addActionListener(e -> dispose());
+        btnSortir.addActionListener(e -> {
+            dispose();
+            ctrl.mostrarVistaPrincipalComuna(idExecutor);
+        });
     }
 }

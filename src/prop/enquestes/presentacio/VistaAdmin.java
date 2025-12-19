@@ -94,6 +94,7 @@ public class VistaAdmin extends JFrame {
      */
     private void setupListeners() {
         crearEnquestaButton.addActionListener(e -> {
+            dispose();
             ctrl.mostrarCrearEnquesta(idUsuari);
         });
         consultarEnquestaButton.addActionListener(e -> {

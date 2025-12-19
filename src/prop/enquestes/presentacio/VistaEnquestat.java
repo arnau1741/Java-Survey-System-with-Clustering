@@ -103,6 +103,7 @@ public class VistaEnquestat extends JFrame {
             ctrl.mostrarConsultarPerfil();
         });
         crearEnquestaButton.addActionListener(e -> {
+            dispose();
             ctrl.mostrarCrearEnquesta(idUsuari);
         });
 
