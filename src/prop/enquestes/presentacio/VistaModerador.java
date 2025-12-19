@@ -19,10 +19,16 @@ public class VistaModerador extends JFrame {
     private String nomRol;
 
     private JPanel contentPanel = new JPanel();
+    private JButton crearEnquestaButton = new JButton("Crear Enquesta");
+    private JButton importarEnquestaButton = new JButton("Importar Enquesta");
+    private JButton importarRespostesButton = new JButton("Importar Respostes");
+    private JButton exportarEnquestaButton = new JButton("Exportar Enquesta");
+    private JButton exportarRespostesButton = new JButton("Exportar Respostes");
     private JButton consultarPerfilButton = new JButton("Consultar Perfil");
     private JButton modificarEnquestaButton = new JButton("Modificar Enquesta");
     private JButton consultarRespostesButton = new JButton("Consultar Respostes");
     private JButton vetarDesvetarButton = new JButton("Vetar / Desvetar");
+    private JButton donarPodersButton = new JButton("Donar poders");
     private JButton sortirButton = new JButton("Sortir");
 
     /**
@@ -60,10 +66,16 @@ public class VistaModerador extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0,1,5,5));
 
+        buttonPanel.add(crearEnquestaButton);
+        buttonPanel.add(importarEnquestaButton);
+        buttonPanel.add(importarRespostesButton);
+        buttonPanel.add(exportarEnquestaButton);
+        buttonPanel.add(exportarRespostesButton);
         buttonPanel.add(consultarPerfilButton);
         buttonPanel.add(modificarEnquestaButton);
         buttonPanel.add(consultarRespostesButton);
         buttonPanel.add(vetarDesvetarButton);
+        buttonPanel.add(donarPodersButton);
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSortir.add(sortirButton);
@@ -97,6 +109,22 @@ public class VistaModerador extends JFrame {
      * permetent la navegació cap a les vistes de modificació, consulta, etc.
      */
     private void setupListeners() {
+        crearEnquestaButton.addActionListener(e -> {
+            ctrl.mostrarCrearEnquesta(idUsuari);
+        });
+
+        importarEnquestaButton.addActionListener(e -> {
+            ctrl.mostrarImportarEnquesta(idUsuari);
+        });
+
+        importarRespostesButton.addActionListener(e -> {
+            ctrl.mostrarImportarRespostes(idUsuari);
+        });
+
+        exportarEnquestaButton.addActionListener(e -> {
+            ctrl.mostrarExportarEnquesta(idUsuari);
+        });
+
         consultarPerfilButton.addActionListener(e -> {
             ctrl.mostrarConsultarPerfil();
         });
