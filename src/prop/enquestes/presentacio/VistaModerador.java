@@ -125,6 +125,10 @@ public class VistaModerador extends JFrame {
             ctrl.mostrarExportarEnquesta(idUsuari);
         });
 
+        exportarRespostesButton.addActionListener(e -> {
+            ctrl.mostrarExportarRespostes(idUsuari);
+        });
+
         consultarPerfilButton.addActionListener(e -> {
             ctrl.mostrarConsultarPerfil();
         });
@@ -136,8 +140,13 @@ public class VistaModerador extends JFrame {
         consultarRespostesButton.addActionListener(e -> {
             ctrl.mostrarConsultarRespostes(idUsuari);
         });
+
         vetarDesvetarButton.addActionListener(e -> {
             ctrl.mostrarVetarDesvetar(idUsuari);
+        });
+
+        donarPodersButton.addActionListener(e -> {
+            ctrl.mostrarDonarPoders(idUsuari);
         });
 
     }
