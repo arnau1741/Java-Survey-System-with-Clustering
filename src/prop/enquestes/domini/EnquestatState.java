@@ -27,7 +27,7 @@ public class EnquestatState extends UsuariState {
      * @return nom del rol
      */
     @Override
-    public String nombreRol() { return "Enquestat"; }
+    public String nombreRol() { return "ENQUESTAT"; }
 
     /**
      * Canvia el rol de l'usuari a Enquestador

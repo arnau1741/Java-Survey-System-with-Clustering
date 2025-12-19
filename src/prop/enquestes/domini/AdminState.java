@@ -30,7 +30,7 @@ public class AdminState extends UsuariState {
      * @return nom del rol
      */
     @Override
-    public String nombreRol() { return "Admin"; }
+    public String nombreRol() { return "ADMIN"; }
 
     /**
      * Canvia el rol de l'usuari a Enquestador

@@ -9,7 +9,7 @@ public class ModeradorState extends UsuariState {
      * Nom del rol
      * @return String amb el nom del rol
      */
-    @Override public String nombreRol() { return "Moderador"; }
+    @Override public String nombreRol() { return "MODERADOR"; }
 
     /**
      * Canvia el rol de l'usuari a Enquestador
