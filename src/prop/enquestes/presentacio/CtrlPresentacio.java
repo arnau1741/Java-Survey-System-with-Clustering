@@ -346,6 +346,17 @@ public class CtrlPresentacio {
     }
 
     /**
+     * Obté totes les enquestes no respostes per l'usuari amb les seves preguntes i respostes.
+     *
+     * @return Llista d'Strings representant totes les enquestes no respostes.
+     * @throws EnquestaNoExisteixException Si no hi ha enquestes disponibles.
+     */
+    public List<String> obtenirLlistaEnquestesNoRespostes(int idUsuari) throws EnquestaNoExisteixException {
+        return ctrlDomini.consultarEnquestesNoRespostes(idUsuari);
+    }
+
+
+    /**
      * Obté la llista d'enquestes que administra un usuari específic.
      *
      * @param idUsuari ID de l'administrador o propietari.

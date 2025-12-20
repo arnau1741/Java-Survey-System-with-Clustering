@@ -210,7 +210,7 @@ public class VistaRespondreEnquesta extends JDialog {
         comboEnquestes.addItem("-- Selecciona --");
 
         try {
-            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
+            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestesNoRespostes(idUsuari);
             for (String info : enquestasInfo) {
                 // Buscamos la línea exacta que empieza por "ID:"
                 String[] lineas = info.split("\n");

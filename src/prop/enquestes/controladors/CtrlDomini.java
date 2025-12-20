@@ -854,6 +854,16 @@ public class CtrlDomini {
         return result;
     }
 
+    public List<String> consultarEnquestesNoRespostes(int idUsuari) {
+        List<String> result = new ArrayList<>();
+        // falta acabar d'implementar aixo
+        List<Enquesta> enquestesNoRespostes = ctrlDominiMantEnquesta.getEnquestesNoRespostesPerUsuari(idUsuari);
+        for (Enquesta enq : enquestesNoRespostes) {
+            result.add("ID:" + enq.getId());
+        }
+        return result;
+    }
+
     /*
      public List<String> obtenirInfoEnquesta(int idEnquesta) {
      Enquesta e = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
