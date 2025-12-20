@@ -16,6 +16,11 @@ public class AdminState extends UsuariState {
         this.enquestesRealitzades = new HashMap<>();
     }
 
+    public AdminState(Map<Integer, Enquesta> enquestesAdministrades, Map<Integer, Enquesta> enquestesRealitzades) {
+        this.enquestesAdministrades = enquestesAdministrades != null ? enquestesAdministrades : new HashMap<>();
+        this.enquestesRealitzades = enquestesRealitzades != null ? enquestesRealitzades : new HashMap<>();
+    }
+
     /**
      * Constructor per mantenir dades al fer downgrade d'Admin
      * @param realitzadesHeretades Enquestes realitzades a heretar

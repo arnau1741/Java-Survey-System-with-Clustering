@@ -14,6 +14,9 @@ public class EnquestadorState extends UsuariState {
         this.enquestesAssignades = new HashMap<>();
     }
 
+    public EnquestadorState(Map<Integer, Enquesta> enquestesAssignades) {
+        this.enquestesAssignades = enquestesAssignades != null ? enquestesAssignades : new HashMap<>();
+    }
     /**
      * Getter del nom del rol
      * @return nom del rol

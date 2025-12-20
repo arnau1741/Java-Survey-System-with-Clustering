@@ -27,13 +27,29 @@ public class GestorUsuari {
             map.put("password", u.getContrasenya());
             map.put("email", u.getEmail());
             String roleType = "ENQUESTAT";
-            if (u.esAdmin())
+            if (u.esAdmin()){
                 roleType = "ADMIN";
-            else if (u.esEnquestador())
-                roleType = "ENQUESTADOR";
-            else if(u.esModerador()){
-                roleType = "MODERADOR";
+
+                AdminState admin = (AdminState) u.getRol();
+                Map<Integer, Enquesta> enquestesAdministrades = admin.getEnquestesAdministrades();
+                List<Integer> ids = new ArrayList<>(enquestesAdministrades.keySet());
+                map.put("enquestesAdministrades", ids);
+
+                Map<Integer, Enquesta> enquestesRealitzades = admin.getEnquestesRealitzades();
+                List<Integer> idsRealitzades = new ArrayList<>(enquestesRealitzades.keySet());
+                map.put("enquestesRealitzades", idsRealitzades);
             }
+            else if (u.esEnquestador()){
+                roleType = "ENQUESTADOR";
+
+                EnquestadorState enquestador = (EnquestadorState) u.getRol();
+                Map<Integer, Enquesta> enquestesAssignades = enquestador.getEnquestesAssignades();
+                List<Integer> ids = new ArrayList<>(enquestesAssignades.keySet());
+                map.put("enquestesAssignades", ids);
+            }
+            else if(u.esModerador())
+                roleType = "MODERADOR";
+
             map.put("rol", roleType);
 
             String json = JsonUtil.toJson(map);
@@ -45,7 +61,7 @@ public class GestorUsuari {
      * Carrega els usuaris des de fitxers JSON.
      * @return Map d'usuaris carregats.
      */
-    public Map<Integer, Usuari> carregarUsuaris() {
+    public Map<Integer, Usuari> carregarUsuaris(Map<Integer, Enquesta> totesEnquestes) {
         Map<Integer, Usuari> usuaris = new HashMap<>();
         File dir = new File(DIRECTORY);
         if (!dir.exists())
@@ -73,16 +89,53 @@ public class GestorUsuari {
             UsuariState rolState;
             switch (rolStr) {
                 case "ADMIN":
-                    rolState = new AdminState();
+                    List<Integer> idsAdministrades = new ArrayList<>();
+                    idsAdministrades = (List<Integer>) map.get("enquestesAdministrades");
+                    List<Integer> idsRealitzades = new ArrayList<>();
+                    idsRealitzades = (List<Integer>) map.get("enquestesRealitzades");
+                    Map<Integer, Enquesta> enquestesAdministrades = new HashMap<>();
+                    for (Integer idEnquesta : idsAdministrades) {
+                        Enquesta e = totesEnquestes.get(idEnquesta);
+                        if (e != null) {
+                            enquestesAdministrades.put(idEnquesta, e);
+                        }
+                    }
+                    Map<Integer, Enquesta> enquestesRealitzades = new HashMap<>();
+                    for (Integer idEnquesta : idsRealitzades) {
+                        Enquesta e = totesEnquestes.get(idEnquesta);
+                        if (e != null) {
+                            enquestesRealitzades.put(idEnquesta, e);
+                        }
+                    }
+                    rolState = new AdminState(enquestesAdministrades, enquestesRealitzades);
                     break;
                 case "ENQUESTADOR":
-                    rolState = new EnquestadorState();
+                    List<Integer> idsAssignades = new ArrayList<>();
+                    idsAssignades = (List<Integer>) map.get("enquestesAssignades");
+                    Map<Integer, Enquesta> enquestesAssignades = new HashMap<>();
+                    for (Integer idEnquesta : idsAssignades) {
+                        Enquesta e = totesEnquestes.get(idEnquesta);
+                        if (e != null) {
+                            enquestesAssignades.put(idEnquesta, e);
+                        }
+                    }
+                    rolState = new EnquestadorState(enquestesAssignades);
                     break;
                 case "MODERADOR":
                     rolState = new ModeradorState();
                     break;
                 default:
-                    rolState = new EnquestatState();
+                    List<Integer> idsRealitzadesEnquestat = new ArrayList<>();
+                    idsRealitzades = (List<Integer>) map.get("enquestesRealitzades");
+                    Map<Integer, Enquesta> enquestesRealitzadesEnquestat = new HashMap<>();
+                    for (Integer idEnquesta : idsRealitzades) {
+                        Enquesta e = totesEnquestes.get(idEnquesta);
+                        if (e != null) {
+                            enquestesRealitzadesEnquestat.put(idEnquesta, e);
+                        }
+                    }
+                    rolState = new EnquestatState(enquestesRealitzadesEnquestat);
+                    break;
             }
 
             Usuari u = new Usuari(id, nom, pass, email, rolState);

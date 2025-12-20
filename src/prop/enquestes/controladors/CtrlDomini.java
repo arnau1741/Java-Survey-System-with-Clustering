@@ -29,8 +29,9 @@ public class CtrlDomini {
         gestorPersistencia = new GestorPersistencia();
 
         // Load data on startup
-        ctrlDominiMantUsuari.setUsuaris(gestorPersistencia.carregarUsuaris());
         ctrlDominiMantEnquesta.setEnquestes(gestorPersistencia.carregarEnquestes());
+        Map<Integer, Enquesta> totesEnquestes = ctrlDominiMantEnquesta.getEnquestesObj();
+        ctrlDominiMantUsuari.setUsuaris(gestorPersistencia.carregarUsuaris(totesEnquestes));
     }
 
     /**
@@ -53,8 +54,8 @@ public class CtrlDomini {
      * Funcio per a guardar les dades
      */
     public void guardarDades() {
-        gestorPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
         gestorPersistencia.guardarEnquestes(ctrlDominiMantEnquesta.getEnquestesObj());
+        gestorPersistencia.guardarUsuaris(ctrlDominiMantUsuari.getUsuaris());
     }
 
     /**
