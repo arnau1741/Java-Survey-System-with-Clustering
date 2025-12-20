@@ -151,7 +151,7 @@ public class CtrlDomini {
      */
     public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari)
             throws InvalidFormatResposta, InvalidFormatEnquesta, EnquestaNoExisteixException, UsuariNoValid {
-        if (respostesUsuari == null) throw new InvalidFormatResposta("Les respostes de l'usuari són nul·les");
+        if (respostesUsuari == null || respostesUsuari.isEmpty()) throw new InvalidFormatResposta("Les respostes de l'usuari són nul·les");
         if (idUsuari == -1) {
                 respondreEnquestaPrivate(idEnquesta, -1, respostesUsuari);
                 return; // Èxit
@@ -201,7 +201,7 @@ public class CtrlDomini {
      */
     public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes)
             throws InvalidFormatEnquesta, UsuariNoValid {
-        if (titol == null || titol.isEmpty() || descripcio == null || preguntes == null){
+        if (titol == null || titol.isEmpty() || descripcio == null || descripcio.isEmpty() || preguntes.isEmpty() || preguntes == null){
             throw new IllegalArgumentException("Paràmetres invàlids per crear enquesta");
         }
 
@@ -950,7 +950,7 @@ public class CtrlDomini {
      */
     public int crearUsuariEnquestador(String nomUsuari, String password, String email)
             throws UsuariNoValid, IllegalArgumentException {
-        if (nomUsuari == null || nomUsuari.isEmpty() || password == null || email == null) {
+        if (nomUsuari == null || nomUsuari.isEmpty() || password == null || password.isEmpty() || email.isEmpty() ||  email == null) {
             throw new IllegalArgumentException("Dades invàlides");
         }
 
@@ -1172,7 +1172,7 @@ public class CtrlDomini {
      */
     public int modificarRespostaEnquesta(int idExecutor, Integer idEnquesta, int idUsuari, int idxPregunta, String novaResposta)
             throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatResposta, InvalidFormatEnquesta, UsuariNoValid, IllegalArgumentException {
-        if (novaResposta == null) return -11;
+        if (novaResposta == null || novaResposta.isEmpty()) return -11;
 
         Usuari u = ctrlDominiMantUsuari.getUsuari(idExecutor);
         if(u == null){
