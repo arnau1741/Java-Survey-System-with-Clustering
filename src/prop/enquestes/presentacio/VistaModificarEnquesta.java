@@ -34,7 +34,6 @@ public class VistaModificarEnquesta extends JDialog {
     private JPanel contentPane = new JPanel();
     private JComboBox<String> comboEnquestes = new JComboBox<>();
     private JTextArea areaInfo = new JTextArea();
-    private JButton buttonMostrarInfo = new JButton("Mostrar Info");
     private JLabel labelIdActual = new JLabel("Id:");
 
     private JTextField campIndexPregunta = new JTextField();
@@ -68,8 +67,6 @@ public class VistaModificarEnquesta extends JDialog {
 
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonMostrarInfo);
-
         configurarListeners();
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -116,10 +113,6 @@ public class VistaModificarEnquesta extends JDialog {
         panelSuperior.add(labelIdActual);
 
         panelSuperior.add(Box.createHorizontalStrut(10));
-
-        buttonMostrarInfo = new JButton("Mostrar");
-        buttonMostrarInfo.setPreferredSize(new Dimension(100, 25));
-        panelSuperior.add(buttonMostrarInfo);
 
         panelSeleccion.add(panelSuperior, BorderLayout.NORTH);
 
@@ -247,8 +240,6 @@ public class VistaModificarEnquesta extends JDialog {
      * i les accions dels botons de modificar i eliminar.
      */
     private void configurarListeners() {
-        buttonMostrarInfo.addActionListener(e -> mostrarInfoEnquesta());
-
         comboEnquestes.addActionListener(e -> {
             String seleccionado = (String) comboEnquestes.getSelectedItem();
             if (seleccionado != null && !seleccionado.equals("-- Selecciona --")) {
