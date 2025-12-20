@@ -7,8 +7,10 @@ import java.awt.*;
  * Vista de gestió avançada d'enquestes per a l'administrador.
  * <p>
  * Aquesta finestra actua com un submenú dinàmic. Depenent del context indicat
- * (si es consulten enquestes "Realitzades" o "Administrades"), la vista renderitza
- * un conjunt diferent de botons i funcionalitats, com ara modificar, donar poders,
+ * (si es consulten enquestes "Realitzades" o "Administrades"), la vista
+ * renderitza
+ * un conjunt diferent de botons i funcionalitats, com ara modificar, donar
+ * poders,
  * exportar o importar respostes.
  * </p>
  */
@@ -18,29 +20,31 @@ public class VistaEnquestesExtresAdmin extends JFrame {
     private int idUsuari;
     private String nomEnquesta;
     private JPanel contentPanel = new JPanel();
-    private JButton exportarEnquestaButton = new  JButton("Exportar enquesta");
-    private JButton exportarRespostesButton = new  JButton("Exportar resposta");
-    private JButton respondreEnquestaButton = new  JButton("Respondre enquesta");
-    private JButton consultarRespostesButton = new  JButton("Consultar resposta");
-    private JButton importarRespostesButton = new  JButton("Importar resposta");
+    private JButton exportarEnquestaButton = new JButton("Exportar enquesta");
+    private JButton exportarRespostesButton = new JButton("Exportar respostes");
+    private JButton respondreEnquestaButton = new JButton("Respondre enquesta");
+    private JButton consultarRespostesButton = new JButton("Consultar resposta");
+    private JButton importarRespostesButton = new JButton("Importar resposta");
     private JButton modificarEnquestaButton = new JButton("Modificar enquesta");
     private JButton donarPodersButton = new JButton("Donar poders");
     private JButton sortirButton = new JButton("Sortir");
 
     /**
      * Constructor de la vista d'enquestes extres.
-     * Configura la finestra segons el tipus d'operativa seleccionada al menú principal.
+     * Configura la finestra segons el tipus d'operativa seleccionada al menú
+     * principal.
      *
-     * @param ctrl Referència al controlador de presentació.
-     * @param nomEnquesta Cadena de text que determina el mode de visualització (ex: "Realitzada").
-     * @param idUsuari Identificador de l'administrador actual.
+     * @param ctrl        Referència al controlador de presentació.
+     * @param nomEnquesta Cadena de text que determina el mode de visualització (ex:
+     *                    "Realitzada").
+     * @param idUsuari    Identificador de l'administrador actual.
      */
-    public VistaEnquestesExtresAdmin(CtrlPresentacio ctrl,  String nomEnquesta, int idUsuari) {
+    public VistaEnquestesExtresAdmin(CtrlPresentacio ctrl, String nomEnquesta, int idUsuari) {
         this.ctrl = ctrl;
         this.nomEnquesta = nomEnquesta;
         this.idUsuari = idUsuari;
         initComponents();
-        setupListeners();     // Configura els listeners dels botons
+        setupListeners(); // Configura els listeners dels botons
     }
 
     /**
@@ -48,8 +52,10 @@ public class VistaEnquestesExtresAdmin extends JFrame {
      * <p>
      * Aquest mètode conté lògica condicional:
      * <ul>
-     * <li>Si {@code nomEnquesta} és "Realitzada": Mostra opcions d'exportació i consulta bàsica.</li>
-     * <li>En cas contrari (Administrada): Afegeix opcions de gestió avançada com importar, modificar i donar poders.</li>
+     * <li>Si {@code nomEnquesta} és "Realitzada": Mostra opcions d'exportació i
+     * consulta bàsica.</li>
+     * <li>En cas contrari (Administrada): Afegeix opcions de gestió avançada com
+     * importar, modificar i donar poders.</li>
      * </ul>
      * </p>
      */
@@ -64,12 +70,11 @@ public class VistaEnquestesExtresAdmin extends JFrame {
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayout(0, 1, 10, 10));
 
-        if(nomEnquesta.equals("Realitzada")) {
+        if (nomEnquesta.equals("Realitzada")) {
             panelBotones.add(exportarEnquestaButton);
             panelBotones.add(exportarRespostesButton);
             panelBotones.add(consultarRespostesButton);
-        }
-        else {
+        } else {
             panelBotones.add(exportarEnquestaButton);
             panelBotones.add(exportarRespostesButton);
             panelBotones.add(importarRespostesButton);
@@ -77,7 +82,6 @@ public class VistaEnquestesExtresAdmin extends JFrame {
             panelBotones.add(consultarRespostesButton);
             panelBotones.add(donarPodersButton);
         }
-
 
         JPanel panelSortir = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSortir.add(sortirButton);
@@ -110,16 +114,28 @@ public class VistaEnquestesExtresAdmin extends JFrame {
             ctrl.mostrarImportarRespostes(idUsuari);
         });
         exportarRespostesButton.addActionListener(e -> {
-            ctrl.mostrarExportarRespostes(idUsuari);
+            if ("Realitzada".equals(nomEnquesta)) {
+                ctrl.mostrarExportarRespostes(idUsuari, false);
+            } else {
+                ctrl.mostrarExportarRespostes(idUsuari, true);
+            }
         });
         exportarEnquestaButton.addActionListener(e -> {
-            ctrl.mostrarExportarEnquesta(idUsuari);
+            if ("Realitzada".equals(nomEnquesta)) {
+                ctrl.mostrarExportarEnquesta(idUsuari, false);
+            } else {
+                ctrl.mostrarExportarEnquesta(idUsuari, true);
+            }
         });
         donarPodersButton.addActionListener(e -> {
             ctrl.mostrarDonarPoders(idUsuari);
         });
         consultarRespostesButton.addActionListener(e -> {
-            ctrl.mostrarConsultarRespostes(idUsuari);
+            if ("Realitzada".equals(nomEnquesta)) {
+                ctrl.mostrarConsultarRespostesPropies(idUsuari);
+            } else {
+                ctrl.mostrarConsultarRespostes(idUsuari);
+            }
         });
 
     }

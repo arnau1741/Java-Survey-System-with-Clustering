@@ -1,4 +1,5 @@
 package prop.enquestes.presentacio;
+
 import prop.enquestes.controladors.CtrlDomini;
 import prop.enquestes.controladors.CtrlDominiMantUsuari;
 import java.util.AbstractMap.SimpleEntry;
@@ -14,8 +15,10 @@ import java.util.Map;
 /**
  * Controlador principal de la capa de Presentació.
  * <p>
- * Aquesta classe actua com a punt d'entrada per a la interfície gràfica i gestiona la navegació entre
- * les diferents vistes de l'aplicació. També fa d'intermediari entre les vistes i el Controlador de Domini.
+ * Aquesta classe actua com a punt d'entrada per a la interfície gràfica i
+ * gestiona la navegació entre
+ * les diferents vistes de l'aplicació. També fa d'intermediari entre les vistes
+ * i el Controlador de Domini.
  * </p>
  */
 public class CtrlPresentacio {
@@ -48,8 +51,10 @@ public class CtrlPresentacio {
      * Constructor del Controlador de Presentació.
      * Inicialitza el controlador de domini i la vista principal de l'aplicació.
      *
-     * @throws InvalidFormatEnquesta Si hi ha un error de format intern en inicialitzar dades.
-     * @throws EnquestaNoExisteixException Si s'intenten carregar enquestes que no existeixen inicialment.
+     * @throws InvalidFormatEnquesta       Si hi ha un error de format intern en
+     *                                     inicialitzar dades.
+     * @throws EnquestaNoExisteixException Si s'intenten carregar enquestes que no
+     *                                     existeixen inicialment.
      */
     public CtrlPresentacio() throws InvalidFormatEnquesta, EnquestaNoExisteixException {
         ctrlDomini = new CtrlDomini();
@@ -61,7 +66,7 @@ public class CtrlPresentacio {
      * Fa visible la finestra principal.
      */
     public void inicializarPresentacio() {
-        //ctrlDomini.inicializarCtrlDomini();
+        // ctrlDomini.inicializarCtrlDomini();
         vistaPrincipal.hacerVisible(true);
     }
 
@@ -101,23 +106,20 @@ public class CtrlPresentacio {
      * @param idUsuari Identificador únic de l'usuari que ha iniciat sessió.
      */
     public void mostrarVistaPrincipalComuna(int idUsuari) {
-        ///Des d'aqui obtenim el rol i mostrem qualsevol de les vistes decidides
+        /// Des d'aqui obtenim el rol i mostrem qualsevol de les vistes decidides
         String nomUsuari = obtenirNomUsuari(idUsuari);
         String rol = obtenirRol(idUsuari);
 
-        if(rol.equals("ENQUESTADOR")) {
+        if (rol.equals("ENQUESTADOR")) {
             vistaEnquestador = new VistaEnquestador(this, idUsuari, nomUsuari, rol);
             vistaEnquestador.setVisible(true);
-        }
-        else if(rol.equals("ADMIN")) {
+        } else if (rol.equals("ADMIN")) {
             vistaAdmin = new VistaAdmin(this, idUsuari, nomUsuari, rol);
             vistaAdmin.setVisible(true);
-        }
-        else if(rol.equals("MODERADOR")) {
+        } else if (rol.equals("MODERADOR")) {
             vistaModerador = new VistaModerador(this, idUsuari, nomUsuari, rol);
             vistaModerador.setVisible(true);
-        }
-        else {
+        } else {
             vistaEnquestat = new VistaEnquestat(this, idUsuari, nomUsuari, rol);
             vistaEnquestat.setVisible(true);
         }
@@ -131,7 +133,6 @@ public class CtrlPresentacio {
         vistaConsultarPerfil = new VistaConsultarPerfil(this);
         vistaConsultarPerfil.setVisible(true);
     }
-
 
     /**
      * Obre la finestra per modificar una enquesta existent.
@@ -178,7 +179,11 @@ public class CtrlPresentacio {
      * @param idUsuari ID de l'usuari que vol exportar.
      */
     public void mostrarExportarEnquesta(int idUsuari) {
-        vistaExportarEnquesta = new VistaExportarEnquesta(this, idUsuari);
+        mostrarExportarEnquesta(idUsuari, false);
+    }
+
+    public void mostrarExportarEnquesta(int idUsuari, boolean isAdministeredMode) {
+        vistaExportarEnquesta = new VistaExportarEnquesta(this, idUsuari, isAdministeredMode);
         vistaExportarEnquesta.setVisible(true);
     }
 
@@ -186,7 +191,7 @@ public class CtrlPresentacio {
      * Obre la vista de gestió extra d'enquestes per a administradors.
      *
      * @param nomEnquesta Títol de l'enquesta a gestionar.
-     * @param idUsuari ID de l'administrador.
+     * @param idUsuari    ID de l'administrador.
      */
     public void mostrarEnquestesExtra(String nomEnquesta, int idUsuari) {
         vistaEnquestesExtresAdmin = new VistaEnquestesExtresAdmin(this, nomEnquesta, idUsuari);
@@ -199,7 +204,11 @@ public class CtrlPresentacio {
      * @param idUsuari ID de l'usuari que respondrà.
      */
     public void mostrarRespondreEnquesta(int idUsuari) {
-        vistaRespondreEnquesta = new VistaRespondreEnquesta(this, idUsuari);
+        mostrarRespondreEnquesta(idUsuari, -1);
+    }
+
+    public void mostrarRespondreEnquesta(int idUsuari, int idEnquesta) {
+        vistaRespondreEnquesta = new VistaRespondreEnquesta(this, idUsuari, idEnquesta);
         vistaRespondreEnquesta.setVisible(true);
     }
 
@@ -209,7 +218,11 @@ public class CtrlPresentacio {
      * @param idUsuari ID de l'usuari que exporta.
      */
     public void mostrarExportarRespostes(int idUsuari) {
-        vistaExportarRespostes = new VistaExportarRespostes(this, idUsuari);
+        mostrarExportarRespostes(idUsuari, false);
+    }
+
+    public void mostrarExportarRespostes(int idUsuari, boolean isAdministeredMode) {
+        vistaExportarRespostes = new VistaExportarRespostes(this, idUsuari, isAdministeredMode);
         vistaExportarRespostes.setVisible(true);
     }
 
@@ -261,9 +274,10 @@ public class CtrlPresentacio {
      * Gestiona l'inici de sessió d'un usuari.
      *
      * @param nomUsuari Nom d'usuari.
-     * @param password Contrasenya.
+     * @param password  Contrasenya.
      * @return L'identificador (ID) de l'usuari si l'autenticació és correcta.
-     * @throws IllegalArgumentException Si la contrasenya o l'usuari són incorrectes.
+     * @throws IllegalArgumentException Si la contrasenya o l'usuari són
+     *                                  incorrectes.
      */
     public int iniciarSessio(String nomUsuari, String password) throws IllegalArgumentException {
         int id = ctrlDomini.iniciarSessio(nomUsuari, password);
@@ -273,18 +287,18 @@ public class CtrlPresentacio {
     /**
      * Crea un nou usuari al sistema.
      *
-     * @param nom Nom de l'usuari.
-     * @param cont Contrasenya.
+     * @param nom   Nom de l'usuari.
+     * @param cont  Contrasenya.
      * @param email Correu electrònic.
-     * @param rol Rol de l'usuari (ENQUESTADOR o ENQUESTAT).
+     * @param rol   Rol de l'usuari (ENQUESTADOR o ENQUESTAT).
      * @return L'ID del nou usuari creat.
      * @throws UsuariNoValid Si l'usuari ja existeix o les dades no són vàlides.
      */
     public int crearUsuari(String nom, String cont, String email, String rol) throws UsuariNoValid {
-        if(rol.equals("ENQUESTADOR")){
-            return ctrlDomini.crearUsuariEnquestador(nom,cont,email);
-        }
-        else return ctrlDomini.crearUsuariEnquestat(nom,cont,email);
+        if (rol.equals("ENQUESTADOR")) {
+            return ctrlDomini.crearUsuariEnquestador(nom, cont, email);
+        } else
+            return ctrlDomini.crearUsuariEnquestat(nom, cont, email);
     }
 
     /**
@@ -336,7 +350,8 @@ public class CtrlPresentacio {
     }
 
     /**
-     * Obté totes les enquestes disponibles al sistema amb les seves preguntes i respostes.
+     * Obté totes les enquestes disponibles al sistema amb les seves preguntes i
+     * respostes.
      *
      * @return Llista d'Strings representant totes les enquestes.
      * @throws EnquestaNoExisteixException Si no hi ha enquestes disponibles.
@@ -350,7 +365,8 @@ public class CtrlPresentacio {
      *
      * @param idUsuari ID de l'administrador o propietari.
      * @return Llista d'Strings amb les enquestes administrades.
-     * @throws EnquestaNoExisteixException Si l'usuari no administra cap enquesta o aquestes no existeixen.
+     * @throws EnquestaNoExisteixException Si l'usuari no administra cap enquesta o
+     *                                     aquestes no existeixen.
      */
     public List<String> obtenirEnquestesAdministrades(int idUsuari) throws EnquestaNoExisteixException {
         return ctrlDomini.obtenirEnquestesAdministrades(idUsuari);
@@ -381,70 +397,79 @@ public class CtrlPresentacio {
     /**
      * Elimina una enquesta del sistema.
      *
-     * @param idUsuari ID de l'usuari que vol eliminar l'enquesta (ha de tenir permisos).
+     * @param idUsuari   ID de l'usuari que vol eliminar l'enquesta (ha de tenir
+     *                   permisos).
      * @param idEnquesta ID de l'enquesta a eliminar.
      * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
-     * @throws InvalidFormatEnquesta Si hi ha un error de format.
-     * @throws UsuariNoValid Si l'usuari no té permisos.
+     * @throws InvalidFormatEnquesta       Si hi ha un error de format.
+     * @throws UsuariNoValid               Si l'usuari no té permisos.
      */
-    public void eliminarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException, InvalidFormatEnquesta, UsuariNoValid {
+    public void eliminarEnquesta(int idUsuari, int idEnquesta)
+            throws EnquestaNoExisteixException, InvalidFormatEnquesta, UsuariNoValid {
         ctrlDomini.eliminarEnquesta(idUsuari, idEnquesta);
     }
 
     /**
      * Esborra una resposta concreta d'un usuari a una enquesta.
      *
-     * @param idUsuari ID de l'usuari administrador/executor.
-     * @param idEnquesta ID de l'enquesta.
+     * @param idUsuari    ID de l'usuari administrador/executor.
+     * @param idEnquesta  ID de l'enquesta.
      * @param idEnquestat ID de l'usuari que va respondre l'enquesta.
-     * @throws UsuariNoHaResposEnquesta Si l'enquestat no havia respost l'enquesta.
+     * @throws UsuariNoHaResposEnquesta    Si l'enquestat no havia respost
+     *                                     l'enquesta.
      * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
-     * @throws InvalidFormatEnquesta Si hi ha un error intern de format.
-     * @throws UsuariNoValid Si l'usuari executor no té permisos.
+     * @throws InvalidFormatEnquesta       Si hi ha un error intern de format.
+     * @throws UsuariNoValid               Si l'usuari executor no té permisos.
      */
-    public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat) throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatEnquesta, UsuariNoValid {
+    public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat)
+            throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatEnquesta, UsuariNoValid {
         ctrlDomini.esborrarRespostaEnquesta(idUsuari, idEnquesta, idEnquestat);
     }
 
     /**
      * Modifica el text d'una pregunta dins d'una enquesta.
      *
-     * @param idUsuari ID de l'usuari que modifica.
-     * @param idEnquesta ID de l'enquesta.
-     * @param indexPregunta Índex de la pregunta dins l'enquesta.
+     * @param idUsuari         ID de l'usuari que modifica.
+     * @param idEnquesta       ID de l'enquesta.
+     * @param indexPregunta    Índex de la pregunta dins l'enquesta.
      * @param novaPreguntaText Llista amb el nou text i opcions de la pregunta.
      * @return Codi d'operació o resultat.
-     * @throws InvalidFormatEnquesta Si el format de la nova pregunta no és vàlid.
+     * @throws InvalidFormatEnquesta       Si el format de la nova pregunta no és
+     *                                     vàlid.
      * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
-     * @throws UsuariNoValid Si l'usuari no té permisos.
+     * @throws UsuariNoValid               Si l'usuari no té permisos.
      */
-    public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int indexPregunta, List<String> novaPreguntaText) throws InvalidFormatEnquesta, EnquestaNoExisteixException, UsuariNoValid {
+    public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int indexPregunta, List<String> novaPreguntaText)
+            throws InvalidFormatEnquesta, EnquestaNoExisteixException, UsuariNoValid {
         return ctrlDomini.modificarPreguntaEnquesta(idUsuari, idEnquesta, indexPregunta, novaPreguntaText);
     }
 
     /**
      * Crea una nova enquesta al sistema.
      *
-     * @param titol Títol de l'enquesta.
+     * @param titol      Títol de l'enquesta.
      * @param descripcio Descripció de l'enquesta.
-     * @param idCreador ID de l'usuari creador.
-     * @param preguntes Llista d'Strings definint les preguntes.
-     * @throws InvalidFormatEnquesta Si el format de les preguntes o dades és incorrecte.
-     * @throws UsuariNoValid Si l'usuari creador no és vàlid.
+     * @param idCreador  ID de l'usuari creador.
+     * @param preguntes  Llista d'Strings definint les preguntes.
+     * @throws InvalidFormatEnquesta Si el format de les preguntes o dades és
+     *                               incorrecte.
+     * @throws UsuariNoValid         Si l'usuari creador no és vàlid.
      */
-    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes) throws InvalidFormatEnquesta, UsuariNoValid {
+    public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes)
+            throws InvalidFormatEnquesta, UsuariNoValid {
         ctrlDomini.crearEnquesta(titol, descripcio, idCreador, preguntes);
     }
 
     /**
-     * Importa una enquesta des d'un fitxer de text localitzat a la carpeta "Pruebas".
+     * Importa una enquesta des d'un fitxer de text localitzat a la carpeta
+     * "Pruebas".
      *
      * @param nombreArchivo Nom del fitxer sense extensió.
-     * @param idCreador ID de l'usuari que importa l'enquesta.
+     * @param idCreador     ID de l'usuari que importa l'enquesta.
      * @return El nombre de preguntes importades.
-     * @throws FileNotFound Si el fitxer no es troba.
+     * @throws FileNotFound          Si el fitxer no es troba.
      * @throws InvalidFormatEnquesta Si el fitxer no segueix el format esperat.
-     * @throws UsuariNoValid Si l'usuari no és vàlid.
+     * @throws UsuariNoValid         Si l'usuari no és vàlid.
      */
     public int importarEnquesta(String nombreArchivo, int idCreador)
             throws FileNotFound, InvalidFormatEnquesta, UsuariNoValid {
@@ -539,13 +564,13 @@ public class CtrlPresentacio {
      * Importa respostes a una enquesta des d'un fitxer extern.
      *
      * @param nombreArchivo Nom del fitxer.
-     * @param idUsuari ID de l'usuari que realitza la importació.
-     * @param idEnquesta ID de l'enquesta on s'associen les respostes.
+     * @param idUsuari      ID de l'usuari que realitza la importació.
+     * @param idEnquesta    ID de l'enquesta on s'associen les respostes.
      * @return Nombre de respostes importades.
-     * @throws FileNotFound Si no es troba el fitxer.
-     * @throws InvalidFormatEnquesta Si el format no és correcte.
+     * @throws FileNotFound                Si no es troba el fitxer.
+     * @throws InvalidFormatEnquesta       Si el format no és correcte.
      * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
-     * @throws UsuariNoValid Si l'usuari no és vàlid.
+     * @throws UsuariNoValid               Si l'usuari no és vàlid.
      */
     public int importarRespostes(String nombreArchivo, int idUsuari, int idEnquesta)
             throws FileNotFound, InvalidFormatEnquesta, EnquestaNoExisteixException, UsuariNoValid {
@@ -565,13 +590,14 @@ public class CtrlPresentacio {
     /**
      * Obté les dades d'una enquesta per a ser exportada.
      *
-     * @param idUsuari ID de l'usuari sol·licitant.
+     * @param idUsuari   ID de l'usuari sol·licitant.
      * @param idEnquesta ID de l'enquesta.
      * @return Llista d'Strings amb el format d'exportació de l'enquesta.
      * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
-     * @throws UsuariNoValid Si l'usuari no té permisos.
+     * @throws UsuariNoValid               Si l'usuari no té permisos.
      */
-    public List<String> exportarEnquesta(int idUsuari, int idEnquesta) throws EnquestaNoExisteixException, UsuariNoValid {
+    public List<String> exportarEnquesta(int idUsuari, int idEnquesta)
+            throws EnquestaNoExisteixException, UsuariNoValid {
         return ctrlDomini.exportarEnquesta(idEnquesta, idUsuari);
     }
 
@@ -590,25 +616,27 @@ public class CtrlPresentacio {
      * Envia les respostes d'un usuari a una enquesta per ser emmagatzemades.
      *
      * @param idEnquestat ID de l'usuari que respon.
-     * @param idEnquesta ID de l'enquesta.
-     * @param respostes Llista de respostes en format text.
+     * @param idEnquesta  ID de l'enquesta.
+     * @param respostes   Llista de respostes en format text.
      * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
-     * @throws InvalidFormatEnquesta Si l'enquesta té un format incorrecte.
-     * @throws InvalidFormatResposta Si les respostes no compleixen el format esperat.
-     * @throws UsuariNoValid Si l'usuari no és vàlid.
+     * @throws InvalidFormatEnquesta       Si l'enquesta té un format incorrecte.
+     * @throws InvalidFormatResposta       Si les respostes no compleixen el format
+     *                                     esperat.
+     * @throws UsuariNoValid               Si l'usuari no és vàlid.
      */
-    public void respondreEnquesta(int idEnquestat, int idEnquesta, List<String> respostes) throws EnquestaNoExisteixException, InvalidFormatEnquesta, InvalidFormatResposta, UsuariNoValid {
+    public void respondreEnquesta(int idEnquestat, int idEnquesta, List<String> respostes)
+            throws EnquestaNoExisteixException, InvalidFormatEnquesta, InvalidFormatResposta, UsuariNoValid {
         ctrlDomini.respondreEnquesta(idEnquesta, idEnquestat, respostes);
     }
 
-    ///////Persistencia
+    /////// Persistencia
 
     /**
      * Guarda les respostes d'una enquesta directament a un fitxer.
      *
-     * @param idUsuari ID de l'usuari que sol·licita l'exportació.
+     * @param idUsuari   ID de l'usuari que sol·licita l'exportació.
      * @param idEnquesta ID de l'enquesta.
-     * @param path Ruta on guardar el fitxer.
+     * @param path       Ruta on guardar el fitxer.
      * @throws Exception Si hi ha errors d'escriptura o lògica.
      */
     public void exportarRespostesAFitxer(int idUsuari, int idEnquesta, String path) throws Exception {
@@ -641,17 +669,19 @@ public class CtrlPresentacio {
      *
      * @param idExecutor ID de l'usuari que atorga els poders.
      * @param idEnquesta ID de l'enquesta.
-     * @param nomTarget Nom de l'usuari que rebrà els poders.
-     * @param rol Rol que se li assignarà (o rol de l'executor per verificació).
+     * @param nomTarget  Nom de l'usuari que rebrà els poders.
+     * @param rol        Rol que se li assignarà (o rol de l'executor per
+     *                   verificació).
      * @throws InvalidFormatEnquesta Si hi ha errors en l'estructura de dades.
-     * @throws UsuariNoValid Si els usuaris no són vàlids o no tenen permisos.
+     * @throws UsuariNoValid         Si els usuaris no són vàlids o no tenen
+     *                               permisos.
      */
-    public void donarPoders(int idExecutor, int idEnquesta, String nomTarget, String rol) throws InvalidFormatEnquesta, UsuariNoValid {
-        if(rol.equals("Enquestador")) {
-            ctrlDomini.donarPodersEnquestador(idExecutor,idEnquesta, nomTarget);
-        }
-        else {
-            ctrlDomini.donarPodersAdmin(idExecutor,idEnquesta, nomTarget);
+    public void donarPoders(int idExecutor, int idEnquesta, String nomTarget, String rol)
+            throws InvalidFormatEnquesta, UsuariNoValid {
+        if (rol.equals("Enquestador")) {
+            ctrlDomini.donarPodersEnquestador(idExecutor, idEnquesta, nomTarget);
+        } else {
+            ctrlDomini.donarPodersAdmin(idExecutor, idEnquesta, nomTarget);
         }
 
     }
@@ -659,24 +689,25 @@ public class CtrlPresentacio {
     /**
      * Executa l'algorisme de clustering K-Means sobre les respostes d'una enquesta.
      *
-     * @param idUsuari ID de l'usuari que demana l'operació.
+     * @param idUsuari   ID de l'usuari que demana l'operació.
      * @param idEnquesta ID de l'enquesta objectiu.
-     * @param k Nombre de clústers.
-     * @param iter Nombre màxim d'iteracions.
+     * @param k          Nombre de clústers.
+     * @param iter       Nombre màxim d'iteracions.
      * @return Un mapa relacionant clústers amb usuaris/respostes.
      * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
-     * @throws KmeansExcepcio Si falla l'algorisme K-means.
-     * @throws InvalidFormatEnquesta Si el format de dades és incorrecte.
-     * @throws UsuariNoValid Si l'usuari no és vàlid.
+     * @throws KmeansExcepcio              Si falla l'algorisme K-means.
+     * @throws InvalidFormatEnquesta       Si el format de dades és incorrecte.
+     * @throws UsuariNoValid               Si l'usuari no és vàlid.
      */
-    public SimpleEntry<Map<Integer, Integer>,Double> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter, String tipus) throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
+    public SimpleEntry<Map<Integer, Integer>, Double> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter,
+                                                                        String tipus) throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
         return ctrlDomini.clustering(idUsuari, idEnquesta, k, iter, tipus);
     }
 
     /**
      * Veta (bloqueja) un usuari al sistema.
      *
-     * @param idUsuari ID del moderador.
+     * @param idUsuari    ID del moderador.
      * @param nomObjectiu Nom de l'usuari a vetar.
      * @throws UsuariNoValid Si l'usuari no existeix o el moderador no té permisos.
      */
@@ -687,7 +718,7 @@ public class CtrlPresentacio {
     /**
      * Retira el vet (desbloqueja) a un usuari del sistema.
      *
-     * @param idUsuari ID del moderador.
+     * @param idUsuari    ID del moderador.
      * @param nomObjectiu Nom de l'usuari a desvetar.
      * @throws UsuariNoValid Si l'usuari no existeix o el moderador no té permisos.
      */
@@ -728,4 +759,44 @@ public class CtrlPresentacio {
         ctrlDomini.guardarDades();
         System.exit(0);
     }
+
+    // ==========================================
+    // NOVES FUNCIONALITATS (USER REQ)
+    // ==========================================
+
+    public List<String> exportarEnquestaSenseRespostes(int idUsuari, int idEnquesta)
+            throws EnquestaNoExisteixException, UsuariNoValid {
+        // Validación básica
+        return ctrlDomini.exportarEnquestaSenseRespostes(idEnquesta);
+    }
+
+    public List<String> exportarRespostesUsuari(int idEnquesta, int idUsuari)
+            throws EnquestaNoExisteixException, UsuariNoValid {
+        return ctrlDomini.exportarRespostesUsuari(idEnquesta, idUsuari);
+    }
+
+    public List<String> getRespostesUsuariList(int idEnquesta, int idUsuari) throws EnquestaNoExisteixException {
+        return ctrlDomini.getRespostesUsuariList(idEnquesta, idUsuari);
+    }
+
+    public List<String> obtenirEnquestesRespostesPerUsuari(int idUsuari) throws UsuariNoValid {
+        return ctrlDomini.obtenirEnquestesRespostesPerUsuari(idUsuari);
+    }
+
+    public void modificarRespostaEnquesta(int idUsuari, int idEnquesta, List<String> respostes)
+            throws EnquestaNoExisteixException, UsuariNoValid, InvalidFormatEnquesta, InvalidFormatResposta,
+            UsuariNoHaResposEnquesta {
+        ctrlDomini.modificarRespostaEnquesta(idUsuari, idEnquesta, respostes);
+    }
+
+    // Mètodes per a les noves vistes o modificades
+
+    /**
+     * Obre la nova vista per consultar i modificar les respostes de l'usuari.
+     */
+    public void mostrarConsultarRespostesPropies(int idUsuari) {
+        VistaConsultarRespostesUsuari v = new VistaConsultarRespostesUsuari(this, idUsuari);
+        v.setVisible(true);
+    }
+
 }

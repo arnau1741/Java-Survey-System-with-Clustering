@@ -14,8 +14,10 @@ import java.util.List;
 /**
  * Diàleg per a l'exportació de les respostes d'una enquesta.
  * <p>
- * Aquesta vista permet a l'usuari seleccionar una enquesta existent, visualitzar
- * una previsualització de les respostes rebudes i exportar-les a un fitxer de text
+ * Aquesta vista permet a l'usuari seleccionar una enquesta existent,
+ * visualitzar
+ * una previsualització de les respostes rebudes i exportar-les a un fitxer de
+ * text
  * localitzat a la carpeta "Pruebas".
  * </p>
  */
@@ -23,6 +25,7 @@ public class VistaExportarRespostes extends JDialog {
 
     private final CtrlPresentacio ctrl;
     private int idUsuari;
+    private boolean isAdministeredMode = false;
     private int idEnquestaActual = -1;
 
     private JPanel contentPane = new JPanel();
@@ -33,20 +36,25 @@ public class VistaExportarRespostes extends JDialog {
     private JButton btnExportar = new JButton("Exportar");
     private JButton btnSortir = new JButton("Tancar");
 
-
-    private JButton buttonOK = new  JButton("OK");
-    private JButton buttonCancel = new  JButton("Cancel");
+    private JButton buttonOK = new JButton("OK");
+    private JButton buttonCancel = new JButton("Cancel");
 
     /**
      * Constructor de la vista d'exportació de respostes.
-     * Inicialitza la finestra modal, carrega les enquestes disponibles i configura els components.
+     * Inicialitza la finestra modal, carrega les enquestes disponibles i configura
+     * els components.
      *
-     * @param ctrl Referència al controlador de presentació.
+     * @param ctrl     Referència al controlador de presentació.
      * @param idUsuari Identificador de l'usuari que realitza l'acció.
      */
     public VistaExportarRespostes(CtrlPresentacio ctrl, int idUsuari) {
+        this(ctrl, idUsuari, false);
+    }
+
+    public VistaExportarRespostes(CtrlPresentacio ctrl, int idUsuari, boolean isAdministeredMode) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
+        this.isAdministeredMode = isAdministeredMode;
 
         setTitle("Exportar Respostes");
         setModal(true);
@@ -62,11 +70,12 @@ public class VistaExportarRespostes extends JDialog {
 
     /**
      * Inicialitza i organitza els components gràfics (Layout).
-     * Crea el panell de selecció superior, l'àrea de previsualització central i els botons inferiors.
+     * Crea el panell de selecció superior, l'àrea de previsualització central i els
+     * botons inferiors.
      */
     private void initLayout() {
-        contentPane.setLayout(new BorderLayout(10,10));
-        contentPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        contentPane.setLayout(new BorderLayout(10, 10));
+        contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // PANEL SUPERIOR
         JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
@@ -105,26 +114,45 @@ public class VistaExportarRespostes extends JDialog {
 
     /**
      * Carrega la llista d'enquestes disponibles al desplegable (ComboBox).
-     * Filtra la informació rebuda del controlador per mostrar la línia identificativa.
+     * Filtra la informació rebuda del controlador per mostrar la línia
+     * identificativa.
      */
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
         try {
-            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
+            List<String> enquestasInfo;
+            String rol = ctrl.obtenirRol(idUsuari);
+
+            // Logic: Enquestat OR Admin in Respondent Mode -> Own Answers list
+            // Admin in Administered Mode -> Administered list
+            if ("ENQUESTAT".equals(rol) || !isAdministeredMode) {
+                enquestasInfo = ctrl.obtenirEnquestesRespostesPerUsuari(idUsuari);
+            } else {
+                enquestasInfo = ctrl.obtenirEnquestesAdministrades(idUsuari);
+            }
+
             for (String info : enquestasInfo) {
-                // Buscamos la línea exacta que empieza por "ID:"
-                String[] lineas = info.split("\n");
-                for (String linea : lineas) {
-                    if (linea.trim().startsWith("ID:")) {
-                        comboEnquestes.addItem(linea); // SOLO esta línea
-                        break; // Muy importante
+                if ("ENQUESTAT".equals(rol) || !isAdministeredMode) {
+                    comboEnquestes.addItem(info);
+                } else {
+                    // Administered/List format usually needs ID extraction if formatted weirdly
+                    // My implemented obtenirEnquestesAdministrades returns "ID: X - Title"
+                    // VistaEnquestesExtresAdmin handling suggests checking line start.
+                    // But here we can simpler if consistency exists.
+                    // Let's assume consistent "ID:" start logic just in case.
+                    String[] lineas = info.split("\n");
+                    for (String linea : lineas) {
+                        if (linea.trim().startsWith("ID:")) {
+                            comboEnquestes.addItem(linea);
+                            break;
+                        }
                     }
                 }
             }
-        } catch (EnquestaNoExisteixException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Error exportant: " + e.getMessage(),
+                    "Error carregar llista: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -143,7 +171,8 @@ public class VistaExportarRespostes extends JDialog {
 
     /**
      * Actualitza l'àrea de previsualització quan es selecciona una enquesta.
-     * Extreu l'ID de l'enquesta seleccionada i crida al mètode de visualització de dades.
+     * Extreu l'ID de l'enquesta seleccionada i crida al mètode de visualització de
+     * dades.
      */
     private void mostrarPreview() {
         String seleccionado = (String) comboEnquestes.getSelectedItem();
@@ -166,14 +195,26 @@ public class VistaExportarRespostes extends JDialog {
     }
 
     /**
-     * Obté les respostes de l'enquesta actual des del controlador i les mostra a l'àrea de text.
+     * Obté les respostes de l'enquesta actual des del controlador i les mostra a
+     * l'àrea de text.
      */
     private void mostrarInfoRespostes() {
-        List<String> res = ctrl.obtenirRespostesEnquesta(idEnquestaActual);
-        StringBuilder sb = new StringBuilder();
+        try {
+            List<String> res;
+            // Preview logic same as Export logic
+            if ("ENQUESTAT".equals(ctrl.obtenirRol(idUsuari)) || !isAdministeredMode) {
+                res = ctrl.exportarRespostesUsuari(idEnquestaActual, idUsuari);
+            } else {
+                res = ctrl.obtenirRespostesEnquesta(idEnquestaActual);
+            }
 
-        for (String s : res) sb.append(s).append("\n");
-        areaPreview.setText(sb.toString());
+            StringBuilder sb = new StringBuilder();
+            for (String s : res)
+                sb.append(s).append("\n");
+            areaPreview.setText(sb.toString());
+        } catch (Exception e) {
+            areaPreview.setText("Error: " + e.getMessage());
+        }
     }
 
     /**
@@ -187,7 +228,8 @@ public class VistaExportarRespostes extends JDialog {
         try {
             // Formato esperado: "ID: X - ..."
             int idxID = texto.indexOf("ID:");
-            if (idxID == -1) throw new RuntimeException("Format invalid");
+            if (idxID == -1)
+                throw new RuntimeException("Format invalid");
 
             int idxDosPunts = texto.indexOf(':', idxID);
             int idxGuio = texto.indexOf('-', idxDosPunts);
@@ -202,30 +244,51 @@ public class VistaExportarRespostes extends JDialog {
 
     /**
      * Executa l'exportació de les respostes a un fitxer de text.
-     * El fitxer es guarda a la carpeta "Pruebas" amb el nom "respostes_enquesta_ID.txt".
+     * El fitxer es guarda a la carpeta "Pruebas" amb el nom
+     * "respostes_enquesta_ID.txt".
      */
     private void onExportar() {
-        String outputPath = "Pruebas" + File.separator + "respostes_enquesta_" + idEnquestaActual + ".txt";
+        if (idEnquestaActual == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona una enquesta primer.", "Atenció",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        try {
-            List<String> contingut = ctrl.exportarRespostesEnquesta(idEnquestaActual);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Respostes");
+        fileChooser.setSelectedFile(new File("respostes_enquesta_" + idEnquestaActual + ".txt"));
 
-            try (FileWriter fw = new FileWriter(outputPath)) {
-                for (String s : contingut)
-                    fw.write(s + "\n");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+
+            try {
+                List<String> contingut;
+                // Determine which export method to use based on Role/Mode
+                if ("ENQUESTAT".equals(ctrl.obtenirRol(idUsuari)) || !isAdministeredMode) {
+                    contingut = ctrl.exportarRespostesUsuari(idEnquestaActual, idUsuari);
+                } else {
+                    contingut = ctrl.exportarRespostesEnquesta(idEnquestaActual);
+                }
+
+                try (FileWriter fw = new FileWriter(fileToSave)) {
+                    for (String s : contingut)
+                        fw.write(s + "\n");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                JOptionPane.showMessageDialog(this,
+                        "Respostes exportades correctament a:\n" + fileToSave.getAbsolutePath(),
+                        "Èxit",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Error exportant: " + ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
-
-            JOptionPane.showMessageDialog(this,
-                    "Respostes exportades a:\n" + outputPath,
-                    "Èxit",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-        } catch (EnquestaNoExisteixException ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Error exportant: " + ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

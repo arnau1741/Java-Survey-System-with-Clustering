@@ -62,8 +62,13 @@ public class VistaRespondreEnquesta extends JDialog {
     }
 
     public VistaRespondreEnquesta(CtrlPresentacio ctrl, int idUsuari) {
+        this(ctrl, idUsuari, -1);
+    }
+
+    public VistaRespondreEnquesta(CtrlPresentacio ctrl, int idUsuari, int idEnquestaPre) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
+        this.idEnquestaActual = idEnquestaPre;
 
         UIHelper.configureDialog(this, "Respondre Enquesta");
 
@@ -81,6 +86,25 @@ public class VistaRespondreEnquesta extends JDialog {
 
         // Initial State
         cargarEnquestes();
+
+        if (idEnquestaActual != -1) {
+            // Auto-select if exists in combo (optional but good for consistency)
+            // But main goal is to START.
+            // actionComencar uses idEnquestaActual.
+            // We just need to check if valid.
+            // Let's hide selection panel and go straight to question?
+            // Or just simulate button click.
+            try {
+                // Verify it exists in our loaded list or directly load it
+                // Since cargarEnquestes relies on string parsing, we might not pass the right
+                // string to combo.
+                // But actionComencar relies on idEnquestaActual.
+                // So we can just call actionComencar!
+                actionComencar();
+            } catch (Exception e) {
+                // Fallback
+            }
+        }
         pack();
         setSize(800, 600); // Reasonable default size
         setLocationRelativeTo(null);
@@ -215,8 +239,25 @@ public class VistaRespondreEnquesta extends JDialog {
                 return;
             }
 
-            // Init answers list with nulls/empty strings
-            respostes = new ArrayList<>(Collections.nCopies(preguntes.size(), ""));
+            // Check if user has answered before
+            List<String> prevAnswers = ctrl.getRespostesUsuariList(idEnquestaActual, idUsuari);
+
+            boolean hasData = false;
+            if (prevAnswers != null && prevAnswers.size() == preguntes.size()) {
+                for (String s : prevAnswers) {
+                    if (s != null && !s.isEmpty()) {
+                        hasData = true;
+                        break;
+                    }
+                }
+            }
+
+            if (hasData) {
+                respostes = prevAnswers;
+                UIHelper.showInfo(this, "S'han recuperat les teves respostes anteriors.");
+            } else {
+                respostes = new ArrayList<>(Collections.nCopies(preguntes.size(), ""));
+            }
 
             preguntaActual = 0;
             mostrarPregunta();
@@ -267,6 +308,19 @@ public class VistaRespondreEnquesta extends JDialog {
             ctrl.respondreEnquesta(idUsuari, idEnquestaActual, respostes);
             UIHelper.showInfo(this, "Respostes enviades correctament!");
             dispose();
+
+        } catch (InvalidFormatEnquesta ex) {
+            if (ex.getMessage() != null && ex.getMessage().contains("ja ha estat realitzada")) {
+                try {
+                    ctrl.modificarRespostaEnquesta(idUsuari, idEnquestaActual, respostes);
+                    UIHelper.showInfo(this, "Respostes modificades correctament!");
+                    dispose();
+                } catch (Exception e2) {
+                    UIHelper.showError(this, "Error modificant respostes: " + e2.getMessage());
+                }
+            } else {
+                UIHelper.showError(this, "Error enviant respostes: " + ex.getMessage());
+            }
         } catch (Exception ex) {
             UIHelper.showError(this, "Error enviant respostes: " + ex.getMessage());
         }
