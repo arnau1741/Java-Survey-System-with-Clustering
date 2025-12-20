@@ -99,7 +99,6 @@ public class VistaImportarRespostes extends JDialog {
         btnSeleccionar.addActionListener(e -> seleccionarFitxer());
         buttonOK.addActionListener(e -> onImportar());
         buttonCancel.addActionListener(e -> {
-            ctrl.inicializarPresentacio();
             dispose();
         });
 
@@ -115,7 +114,6 @@ public class VistaImportarRespostes extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                ctrl.inicializarPresentacio();
                 dispose();
             }
         });
@@ -223,7 +221,6 @@ public class VistaImportarRespostes extends JDialog {
                     "Èxit",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            ctrl.inicializarPresentacio();
             dispose();
 
         } catch (FileNotFound e) {
