@@ -1,11 +1,9 @@
 package prop.enquestes.presentacio;
 
-import prop.enquestes.excepcions.EnquestaNoExisteixException;
-import prop.enquestes.excepcions.InvalidFormatEnquesta;
-import prop.enquestes.excepcions.UsuariNoHaResposEnquesta;
-import prop.enquestes.excepcions.UsuariNoValid;
+import prop.enquestes.excepcions.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -26,26 +24,30 @@ import java.util.List;
 public class VistaModificarEnquesta extends JDialog {
     private CtrlPresentacio ctrl;
     private int idUsuariActual;
+
     private int idEnquestaActual = -1;
 
-    private JButton buttonOK = new JButton("OK");
-    private JButton buttonCancel = new JButton("Cancelar");
+    // Components
+    private JComboBox<String> comboEnquestes;
+    private JTextArea areaInfo; // Para mostrar descripción general
 
-    private JPanel contentPane = new JPanel();
-    private JComboBox<String> comboEnquestes = new JComboBox<>();
-    private JTextArea areaInfo = new JTextArea();
-    private JLabel labelIdActual = new JLabel("Id:");
+    // Master-Detail
+    private DefaultListModel<String> listModelPreguntes;
+    private JList<String> listPreguntes;
 
-    private JTextField campIndexPregunta = new JTextField();
-    private JComboBox<String> comboTipusPregunta = new JComboBox<>();
-    private JTextArea campTextPregunta = new JTextArea();
-    private JTextField campNumOpcions = new JTextField();
-    private JTextArea campOpcionsPregunta = new JTextArea();
-    private JButton buttonModificarPregunta = new JButton("Modificar");
+    // Editor
+    private JTextField txtIndex; // Readonly or hidden
+    private JComboBox<String> comboTipus;
+    private JTextArea txtPregunta;
+    private DefaultListModel<String> listModelOpcions;
+    private JList<String> listOpcions;
+    private JTextField txtNewOpcio;
+    private JButton btnAddOpt, btnDelOpt;
+    private JButton btnGuardarCanvis;
 
-    private JButton buttonEliminarEnquesta = new JButton("Eliminar");
-    private JTextField campIdEnquestat = new JTextField();
-    private JButton buttonEliminarResposta = new JButton("Eliminar");
+    // Actions
+    private JButton btnEliminarEnquesta;
+    private JButton btnEliminarRespostes;
 
     /**
      * Constructor de la vista de modificació d'enquestes.
@@ -59,517 +61,506 @@ public class VistaModificarEnquesta extends JDialog {
         this.ctrl = ctrl;
         this.idUsuariActual = idUsuariActual;
 
-        setSize(700, 650); // Más compacto
+        UIHelper.configureDialog(this, "Gestió d'Enquestes");
+        setSize(900, 600);
         setLocationRelativeTo(null);
 
-        inicializarComponentes();
+        initUI();
         cargarEnquestes();
-
-        setContentPane(contentPane);
-        setModal(true);
-        configurarListeners();
-
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                dispose();
-            }
-        });
-
-        contentPane.registerKeyboardAction(e -> dispose(),
-                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
     /**
      * Inicialitza i organitza tots els components gràfics de la finestra.
      * Divideix la interfície en seccions clares: Selecció, Modificació, Eliminació d'enquesta i Eliminació de respostes.
      */
-    private void inicializarComponentes() {
-        contentPane = new JPanel(new BorderLayout(5, 5));
-        contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    private void initUI() {
+        JPanel content = new JPanel(new BorderLayout(10, 10));
+        content.setBackground(UIHelper.COLOR_BACKGROUND);
+        content.setBorder(UIHelper.PADDING_MAIN);
+        setContentPane(content);
 
-        // Panel principal con scroll
-        JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
-        JScrollPane scrollPane = new JScrollPane(panelPrincipal);
-        scrollPane.setBorder(null);
+        // --- TOP: Selector ---
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topPanel.setBackground(UIHelper.COLOR_BACKGROUND);
 
-        // ========== SECCIÓN 1: Selección de Enquesta ==========
-        JPanel panelSeleccion = new JPanel(new BorderLayout(5, 5));
-        panelSeleccion.setBorder(BorderFactory.createTitledBorder("Selecció d'Enquesta"));
-
-        // Panel superior
-        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        panelSuperior.add(new JLabel("Enquesta:"));
-
+        topPanel.add(new JLabel("Enquesta:"));
         comboEnquestes = new JComboBox<>();
-        comboEnquestes.setPreferredSize(new Dimension(250, 25));
-        panelSuperior.add(comboEnquestes);
+        comboEnquestes.setPreferredSize(new Dimension(300, 25));
+        comboEnquestes.addActionListener(e -> onSelectEnquesta());
+        topPanel.add(comboEnquestes);
 
-        labelIdActual = new JLabel("ID: --");
-        labelIdActual.setFont(labelIdActual.getFont().deriveFont(Font.BOLD));
-        labelIdActual.setForeground(Color.BLUE);
-        panelSuperior.add(labelIdActual);
+        content.add(topPanel, BorderLayout.NORTH);
 
-        panelSuperior.add(Box.createHorizontalStrut(10));
+        // --- CENTER: Split Pane (Questions List | Editor) ---
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setDividerLocation(300);
+        splitPane.setResizeWeight(0.3);
 
-        panelSeleccion.add(panelSuperior, BorderLayout.NORTH);
+        // LEFT: List
+        JPanel leftPanel = new JPanel(new BorderLayout());
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Preguntes"));
+        listModelPreguntes = new DefaultListModel<>();
+        listPreguntes = new JList<>(listModelPreguntes);
+        listPreguntes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listPreguntes.addListSelectionListener(e -> onSelectPregunta());
+        leftPanel.add(new JScrollPane(listPreguntes), BorderLayout.CENTER);
 
-        // Área de información
-        areaInfo = new JTextArea(6, 50);
-        areaInfo.setEditable(false);
-        areaInfo.setFont(new Font("Monospaced", Font.PLAIN, 11));
-        JScrollPane scrollInfo = new JScrollPane(areaInfo);
-        scrollInfo.setPreferredSize(new Dimension(650, 120));
-        panelSeleccion.add(scrollInfo, BorderLayout.CENTER);
+        splitPane.setLeftComponent(leftPanel);
 
-        panelPrincipal.add(panelSeleccion);
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
+        // RIGHT: Editor
+        JPanel rightPanel = new JPanel(new BorderLayout());
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Editor de Pregunta"));
 
-        // ========== SECCIÓN 2: Modificar Pregunta ==========
-        JPanel panelModificar = new JPanel();
-        panelModificar.setLayout(new BoxLayout(panelModificar, BoxLayout.Y_AXIS));
-        panelModificar.setBorder(BorderFactory.createTitledBorder("Modificar Pregunta"));
+        // Editor Form
+        JPanel form = new JPanel(new GridBagLayout());
+        // ... (Layout code for form) ...
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Inputs básicos en grid 2x2
-        JPanel panelInputs = new JPanel(new GridLayout(2, 2, 5, 5));
-        panelInputs.add(new JLabel("Índex pregunta (0-X):"));
-        campIndexPregunta = new JTextField();
-        panelInputs.add(campIndexPregunta);
+        // Tipus
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0;
+        form.add(new JLabel("Tipus:"), gbc);
 
-        panelInputs.add(new JLabel("Nou tipus:"));
-        comboTipusPregunta = new JComboBox<>(new String[]{
-                "0: NUMÈRICA", "1: ÚNICA", "2: ORDENADA", "3: MÚLTIPLE", "4: LLIURE"
-        });
-        panelInputs.add(comboTipusPregunta);
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+        comboTipus = new JComboBox<>(new String[] { "Numèrica", "Única", "Ordenada", "Múltiple", "Lliure" });
+        comboTipus.addActionListener(e -> updateEditorState());
+        form.add(comboTipus, gbc);
 
-        panelModificar.add(panelInputs);
-        panelModificar.add(Box.createRigidArea(new Dimension(0, 5)));
+        // Text
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0;
+        form.add(new JLabel("Text:"), gbc);
 
-        // Texto pregunta
-        JPanel panelTexto = new JPanel(new BorderLayout(2, 2));
-        panelTexto.add(new JLabel("Text:"), BorderLayout.NORTH);
-        campTextPregunta = new JTextArea(2, 40);
-        campTextPregunta.setLineWrap(true);
-        campTextPregunta.setWrapStyleWord(true);
-        JScrollPane scrollTexto = new JScrollPane(campTextPregunta);
-        scrollTexto.setPreferredSize(new Dimension(600, 60));
-        panelTexto.add(scrollTexto, BorderLayout.CENTER);
-        panelModificar.add(panelTexto);
-        panelModificar.add(Box.createRigidArea(new Dimension(0, 5)));
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+        txtPregunta = new JTextArea(3, 20);
+        txtPregunta.setLineWrap(true);
+        form.add(new JScrollPane(txtPregunta), gbc);
 
-        // Opciones
-        JPanel panelOpciones = new JPanel(new BorderLayout(2, 2));
-        panelOpciones.add(new JLabel("Opcions (una per línea):"), BorderLayout.NORTH);
-        campOpcionsPregunta = new JTextArea(2, 40);
-        campOpcionsPregunta.setEnabled(false);
-        campOpcionsPregunta.setLineWrap(true);
-        JScrollPane scrollOpciones = new JScrollPane(campOpcionsPregunta);
-        scrollOpciones.setPreferredSize(new Dimension(600, 60));
-        panelOpciones.add(scrollOpciones, BorderLayout.CENTER);
-        panelModificar.add(panelOpciones);
-        panelModificar.add(Box.createRigidArea(new Dimension(0, 5)));
+        // Opcions
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 0;
+        gbc.anchor = GridBagConstraints.NORTH;
+        form.add(new JLabel("Opcions:"), gbc);
 
-        // Número de opciones
-        JPanel panelNumOpciones = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panelNumOpciones.add(new JLabel("Nº opcions:"));
-        campNumOpcions = new JTextField(5);
-        campNumOpcions.setEnabled(false);
-        panelNumOpciones.add(campNumOpcions);
-        panelModificar.add(panelNumOpciones);
-        panelModificar.add(Box.createRigidArea(new Dimension(0, 10)));
+        gbc.gridx = 1;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 1.0;
 
-        // Botón
-        buttonModificarPregunta = new JButton("Modificar Pregunta");
-        buttonModificarPregunta.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelModificar.add(buttonModificarPregunta);
+        JPanel pOpt = new JPanel(new BorderLayout());
+        listModelOpcions = new DefaultListModel<>();
+        listOpcions = new JList<>(listModelOpcions);
+        pOpt.add(new JScrollPane(listOpcions), BorderLayout.CENTER);
 
-        panelPrincipal.add(panelModificar);
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
+        JPanel pOptInput = new JPanel(new BorderLayout());
+        txtNewOpcio = new JTextField();
+        JPanel pOptBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        btnAddOpt = new JButton("+");
+        btnDelOpt = new JButton("-");
+        pOptBtns.add(btnAddOpt);
+        pOptBtns.add(btnDelOpt);
+        pOptInput.add(txtNewOpcio, BorderLayout.CENTER);
+        pOptInput.add(pOptBtns, BorderLayout.EAST);
 
-        // ========== SECCIÓN 3: Eliminar Enquesta ==========
-        JPanel panelEliminar = new JPanel(new BorderLayout(5, 5));
-        panelEliminar.setBorder(BorderFactory.createTitledBorder("Eliminar Enquesta"));
+        pOpt.add(pOptInput, BorderLayout.SOUTH);
 
-        JLabel labelWarning = new JLabel("<html><font color='red'><b>ATENCIÓ:</b> Acció irreversible</font></html>");
-        panelEliminar.add(labelWarning, BorderLayout.NORTH);
+        form.add(pOpt, gbc);
 
-        buttonEliminarEnquesta = new JButton("ELIMINAR ENQUESTA");
-        buttonEliminarEnquesta.setBackground(new Color(220, 50, 50));
-        buttonEliminarEnquesta.setForeground(Color.WHITE);
-        buttonEliminarEnquesta.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelEliminar.add(buttonEliminarEnquesta, BorderLayout.CENTER);
+        // Save Button
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.EAST;
+        btnGuardarCanvis = UIHelper.createButton("Guardar Canvis a la Pregunta", e -> guardarPregunta());
+        form.add(btnGuardarCanvis, gbc);
 
-        panelPrincipal.add(panelEliminar);
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
+        rightPanel.add(form, BorderLayout.CENTER);
+        splitPane.setRightComponent(rightPanel);
 
-        // ========== SECCIÓN 4: Eliminar Resposta ==========
-        JPanel panelEliminarResposta = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        panelEliminarResposta.setBorder(BorderFactory.createTitledBorder("Eliminar Resposta"));
+        content.add(splitPane, BorderLayout.CENTER);
 
-        panelEliminarResposta.add(new JLabel("ID Enquestat:"));
-        campIdEnquestat = new JTextField(8);
-        panelEliminarResposta.add(campIdEnquestat);
+        // --- BOTTOM: Global Actions ---
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        bottomPanel.setBorder(BorderFactory.createTitledBorder("Accions Globals"));
 
-        buttonEliminarResposta = new JButton("Eliminar");
-        buttonEliminarResposta.setBackground(new Color(255, 150, 150));
-        panelEliminarResposta.add(buttonEliminarResposta);
+        btnEliminarEnquesta = UIHelper.createButton("Eliminar Enquesta", e -> eliminarEnquesta());
+        btnEliminarEnquesta.setForeground(Color.RED);
 
-        JLabel labelInfo = new JLabel("<html><i>Elimina totes les respostes d'aquest enquestat</i></html>");
-        labelInfo.setFont(labelInfo.getFont().deriveFont(Font.ITALIC, 11f));
-        panelEliminarResposta.add(labelInfo);
+        btnEliminarRespostes = UIHelper.createButton("Eliminar Respostes d'Usuari...", e -> eliminarRespostes());
 
-        panelPrincipal.add(panelEliminarResposta);
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
+        JButton btnClose = UIHelper.createButton("Tancar", e -> dispose());
 
-        // ========== BOTÓN CERRAR ==========
-        JPanel panelCerrar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton buttonCerrar = new JButton("Tancar");
-        buttonCerrar.addActionListener(e -> dispose());
-        panelCerrar.add(buttonCerrar);
+        bottomPanel.add(btnEliminarEnquesta);
+        bottomPanel.add(btnEliminarRespostes);
+        bottomPanel.add(Box.createHorizontalStrut(50));
+        bottomPanel.add(btnClose);
 
-        panelPrincipal.add(panelCerrar);
+        content.add(bottomPanel, BorderLayout.SOUTH);
 
-        contentPane.add(scrollPane, BorderLayout.CENTER);
-    }
-
-    /**
-     * Configura els listeners per als diferents elements interactius.
-     * Gestiona la selecció d'enquestes, els canvis en el tipus de pregunta (activant/desactivant camps)
-     * i les accions dels botons de modificar i eliminar.
-     */
-    private void configurarListeners() {
-        comboEnquestes.addActionListener(e -> {
-            String seleccionado = (String) comboEnquestes.getSelectedItem();
-            if (seleccionado != null && !seleccionado.equals("-- Selecciona --")) {
-                try {
-                    idEnquestaActual = extraerIdEnquesta(seleccionado);
-                    labelIdActual.setText("ID: " + idEnquestaActual);
-                    mostrarInfoEnquesta();
-                } catch (Exception ex) {
-                    idEnquestaActual = -1;
-                    labelIdActual.setText("ID: --");
-                    areaInfo.setText("");
-                }
-            } else {
-                idEnquestaActual = -1;
-                labelIdActual.setText("ID: --");
-                areaInfo.setText("");
+        // Listener logic
+        btnAddOpt.addActionListener(e -> {
+            String t = txtNewOpcio.getText().trim();
+            if (!t.isEmpty()) {
+                listModelOpcions.addElement(t);
+                txtNewOpcio.setText("");
             }
         });
-
-        comboTipusPregunta.addActionListener(e -> {
-            String seleccionado = (String) comboTipusPregunta.getSelectedItem();
-            if (seleccionado != null) {
-                String tipoNumero = seleccionado.substring(0, 1);
-                int tipus = Integer.parseInt(tipoNumero);
-                boolean requiereOpciones = (tipus == 1 || tipus == 2 || tipus == 3);
-                campNumOpcions.setEnabled(requiereOpciones);
-                campOpcionsPregunta.setEnabled(requiereOpciones);
-                if (!requiereOpciones) {
-                    campNumOpcions.setText("");
-                    campOpcionsPregunta.setText("");
-                }
-            }
+        btnDelOpt.addActionListener(e -> {
+            int idx = listOpcions.getSelectedIndex();
+            if (idx != -1)
+                listModelOpcions.remove(idx);
         });
 
-        buttonModificarPregunta.addActionListener(e -> modificarPregunta());
-        buttonEliminarEnquesta.addActionListener(e -> eliminarEnquesta());
-        buttonEliminarResposta.addActionListener(e -> eliminarResposta());
+        // Initial state
+        setEditorEnabled(false);
     }
 
-    /**
-     * Carrega la llista d'enquestes al ComboBox.
-     */
+    private void setEditorEnabled(boolean b) {
+        comboTipus.setEnabled(b);
+        txtPregunta.setEnabled(b);
+        listOpcions.setEnabled(b);
+        txtNewOpcio.setEnabled(b);
+        btnAddOpt.setEnabled(b);
+        btnDelOpt.setEnabled(b);
+        btnGuardarCanvis.setEnabled(b);
+    }
+
+    private void updateEditorState() {
+        if (!comboTipus.isEnabled())
+            return;
+        String t = (String) comboTipus.getSelectedItem();
+        boolean hasOpts = t.equals("Única") || t.equals("Ordenada") || t.equals("Múltiple");
+        listOpcions.setEnabled(hasOpts);
+        txtNewOpcio.setEnabled(hasOpts);
+        btnAddOpt.setEnabled(hasOpts);
+        btnDelOpt.setEnabled(hasOpts);
+        if (!hasOpts) {
+            listModelOpcions.clear();
+            txtNewOpcio.setText("");
+        }
+    }
+
+    // --- Loading Logic ---
+
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
-
         try {
             List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
             for (String info : enquestasInfo) {
-                // Buscamos la línea exacta que empieza por "ID:"
                 String[] lineas = info.split("\n");
                 for (String linea : lineas) {
                     if (linea.trim().startsWith("ID:")) {
-                        comboEnquestes.addItem(linea); // SOLO esta línea
-                        break; // Muy importante
+                        comboEnquestes.addItem(linea);
+                        break;
                     }
                 }
             }
-        } catch (EnquestaNoExisteixException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            UIHelper.showError(this, "Error carregant enquestes: " + e.getMessage());
         }
     }
 
-    /**
-     * Mostra la informació detallada de l'enquesta seleccionada.
-     */
-    private void mostrarInfoEnquesta() {
-        if (idEnquestaActual == -1) {
-            areaInfo.setText("");
-            JOptionPane.showMessageDialog(this,
-                    "Selecciona una enquesta",
-                    "Error", JOptionPane.WARNING_MESSAGE);
+    private void onSelectEnquesta() {
+        String sel = (String) comboEnquestes.getSelectedItem();
+        listModelPreguntes.clear();
+        setEditorEnabled(false);
+
+        if (sel == null || sel.equals("-- Selecciona --")) {
+            idEnquestaActual = -1;
             return;
         }
 
         try {
-            List<String> infoCompleta = ctrl.obtenirPreguntesEnquesta(idEnquestaActual);
-
-            StringBuilder sb = new StringBuilder();
-            for (String linea : infoCompleta) {
-                sb.append(linea).append("\n");
-            }
-
-            areaInfo.setText(sb.toString());
-
-        } catch (EnquestaNoExisteixException e) {
-            areaInfo.setText("Error: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Extreu l'ID de l'enquesta del text seleccionat al ComboBox.
-     */
-    private int extraerIdEnquesta(String texto) {
-        try {
-            // Formato esperado: "ID: X - ..."
-            int idxID = texto.indexOf("ID:");
-            if (idxID == -1) throw new RuntimeException("Format invalid");
-
-            int idxDosPunts = texto.indexOf(':', idxID);
-            int idxGuio = texto.indexOf('-', idxDosPunts);
-
-            String idStr = texto.substring(idxDosPunts + 1, idxGuio).trim();
-            return Integer.parseInt(idStr);
+            idEnquestaActual = extraerIdEnquesta(sel);
+            List<String> raw = ctrl.obtenirPreguntesEnquesta(idEnquestaActual);
+            // Parse to fill list
+            // We need a custom parser that keeps the structure to populate the list
+            // "1. Text de la pregunta [TIPUS]"
+            List<String> texts = parseQuestionTitles(raw);
+            for (String t : texts)
+                listModelPreguntes.addElement(t);
 
         } catch (Exception e) {
-            throw new RuntimeException("No s'ha pogut extreure l'ID de: " + texto);
+            UIHelper.showError(this, "Error carregant preguntes: " + e.getMessage());
         }
     }
 
-    /**
-     * Realitza la modificació d'una pregunta específica.
-     * Recull les dades del formulari, valida la informació i crida al controlador per aplicar els canvis.
-     */
-    private void modificarPregunta() {
-        if (idEnquestaActual == -1) {
-            JOptionPane.showMessageDialog(this,
-                    "Selecciona una enquesta",
-                    "Error", JOptionPane.WARNING_MESSAGE);
+    // Helper to get titles for the list
+    private List<String> parseQuestionTitles(List<String> rawLines) {
+        List<String> titles = new ArrayList<>();
+        // Simple state machine again...
+        // Format of rawLines is from Enquesta.getPreguntes() which returns [Type, Text,
+        // (NumOpts, Opts...)?]
+        // Actually Enquesta.getPreguntes() returns a flattened list.
+        // I need to parse it robustly.
+
+        List<String> clean = new ArrayList<>();
+        boolean start = false;
+        for (String s : rawLines) {
+            if (s.trim().equals("Preguntes:")) {
+                start = true;
+                continue;
+            }
+            if (!start)
+                continue;
+            if (s.startsWith("- "))
+                clean.add(s.substring(2));
+            else
+                clean.add(s);
+        }
+
+        int i = 0;
+        while (i < clean.size()) {
+            String type = clean.get(i++);
+            if (type == null || type.trim().equals("- - -") || type.trim().isEmpty())
+                continue;
+            // Validate type
+            if (!type.equals("NUMERICA") && !type.equals("UNICA") && !type.equals("ORDENADA") &&
+                    !type.equals("MULTIPLE") && !type.equals("LLIURE"))
+                continue;
+
+            if (i >= clean.size())
+                break;
+            String text = clean.get(i++);
+            titles.add(text + " [" + type + "]");
+
+            // Consume options
+            if (type.equals("UNICA") || type.equals("ORDENADA") || type.equals("MULTIPLE")) {
+                if (i < clean.size()) {
+                    try {
+                        int n = Integer.parseInt(clean.get(i++));
+                        for (int k = 0; k < n; k++)
+                            i++;
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+            if (i < clean.size() && clean.get(i).equals("- - -"))
+                i++;
+        }
+        return titles;
+    }
+
+    private int extraerIdEnquesta(String texto) {
+        int idxID = texto.indexOf("ID:");
+        if (idxID == -1)
+            throw new RuntimeException("Format invalid");
+        int idxDosPunts = texto.indexOf(':', idxID);
+        int idxGuio = texto.indexOf('-', idxDosPunts);
+        String idStr = texto.substring(idxDosPunts + 1, idxGuio).trim();
+        return Integer.parseInt(idStr);
+    }
+
+    // --- Editor Logic ---
+
+    private void onSelectPregunta() {
+        int idx = listPreguntes.getSelectedIndex();
+        if (idx == -1) {
+            setEditorEnabled(false);
             return;
         }
+        setEditorEnabled(true);
+        loadPreguntaToEditor(idx);
+    }
+
+    private void loadPreguntaToEditor(int idx) {
+        // Need to parse again to get full data... this is inefficient (O(N^2) if done
+        // poorly),
+        // but N is small.
+        // Better: caching parsed questions. But for "cleaning views", I will re-parse.
+        try {
+            List<String> raw = ctrl.obtenirPreguntesEnquesta(idEnquestaActual);
+            // Re-use logic to find specific question
+            // I will copy-paste parser logic but return the object for index `idx`
+            // Ideally I should have had a `Ctrl.getPregunta(idEnquesta, idx)` but I have
+            // `modificarPregunta`...
+            // I have to interpret "obtenirPreguntesEnquesta" output.
+
+            // ... (Parser logic similar to VistaRespondreEnquesta) ...
+            List<PreguntaInfo> allParams = parsearPreguntesFull(raw);
+            if (idx < allParams.size()) {
+                PreguntaInfo p = allParams.get(idx);
+                // Map TIPUS string to Combo
+                // NUMERICA -> Numèrica
+                // UNICA -> Única
+                // ORDENADA -> Ordenada
+                // MULTIPLE -> Múltiple
+                // LLIURE -> Lliure
+                String comboVal = "Numèrica";
+                if (p.tipus.equals("UNICA"))
+                    comboVal = "Única";
+                else if (p.tipus.equals("ORDENADA"))
+                    comboVal = "Ordenada";
+                else if (p.tipus.equals("MULTIPLE"))
+                    comboVal = "Múltiple";
+                else if (p.tipus.equals("LLIURE"))
+                    comboVal = "Lliure";
+
+                comboTipus.setSelectedItem(comboVal);
+                txtPregunta.setText(p.text);
+
+                listModelOpcions.clear();
+                if (p.opcions != null) {
+                    for (String op : p.opcions)
+                        listModelOpcions.addElement(op);
+                }
+                updateEditorState();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Helper class
+    private static class PreguntaInfo {
+        String tipus;
+        String text;
+        List<String> opcions;
+
+        PreguntaInfo(String t, String x, List<String> o) {
+            tipus = t;
+            text = x;
+            opcions = o;
+        }
+    }
+
+    private List<PreguntaInfo> parsearPreguntesFull(List<String> rawLines) {
+        // ... (Same parser as VistaRespondreEnquesta) ...
+        // I should have put this in a helper class or Ctrl, but I can't touch Ctrl
+        // easily.
+        // Copying here is "minimal changes" to architecture vs "clean code"...
+
+        // Copied logic:
+        List<PreguntaInfo> llista = new ArrayList<>();
+        List<String> clean = new ArrayList<>();
+        boolean start = false;
+        for (String s : rawLines) {
+            if (s.trim().equals("Preguntes:")) {
+                start = true;
+                continue;
+            }
+            if (!start)
+                continue;
+            if (s.startsWith("- "))
+                clean.add(s.substring(2));
+            else
+                clean.add(s);
+        }
+        int i = 0;
+        while (i < clean.size()) {
+            String type = clean.get(i++);
+            if (type == null || type.trim().equals("- - -") || type.trim().isEmpty())
+                continue;
+            if (!type.equals("NUMERICA") && !type.equals("UNICA") && !type.equals("ORDENADA") &&
+                    !type.equals("MULTIPLE") && !type.equals("LLIURE"))
+                continue;
+            if (i >= clean.size())
+                break;
+            String text = clean.get(i++);
+            List<String> opcions = new ArrayList<>();
+            if (type.equals("UNICA") || type.equals("ORDENADA") || type.equals("MULTIPLE")) {
+                if (i < clean.size()) {
+                    try {
+                        int n = Integer.parseInt(clean.get(i++));
+                        for (int k = 0; k < n; k++)
+                            opcions.add(clean.get(i++));
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+            llista.add(new PreguntaInfo(type, text, opcions));
+            if (i < clean.size() && clean.get(i).equals("- - -"))
+                i++;
+        }
+        return llista;
+    }
+
+    private void guardarPregunta() {
+        int idx = listPreguntes.getSelectedIndex();
+        if (idx == -1)
+            return;
 
         try {
-            String indexText = campIndexPregunta.getText().trim();
-            if (indexText.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "Introdueix l'índex de la pregunta",
-                        "Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            int idxPregunta = Integer.parseInt(indexText);
-
             List<String> novaPregunta = new ArrayList<>();
+            // Map Combo back to UPPERCASE ID
+            String comboVal = (String) comboTipus.getSelectedItem();
+            int tipoInt = 0; // NUMERICA
+            if (comboVal.equals("Única"))
+                tipoInt = 1;
+            else if (comboVal.equals("Ordenada"))
+                tipoInt = 2;
+            else if (comboVal.equals("Múltiple"))
+                tipoInt = 3;
+            else if (comboVal.equals("Lliure"))
+                tipoInt = 4;
 
-            // Tipo
-            String tipoSeleccionado = (String) comboTipusPregunta.getSelectedItem();
-            String tipus = tipoSeleccionado.substring(0, 1);
-            novaPregunta.add(tipus);
+            novaPregunta.add(String.valueOf(tipoInt));
 
-            // Texto
-            String textPregunta = campTextPregunta.getText().trim();
-            if (textPregunta.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "Introdueix el text de la pregunta",
-                        "Error", JOptionPane.WARNING_MESSAGE);
+            String text = txtPregunta.getText().trim();
+            if (text.isEmpty()) {
+                UIHelper.showWarning(this, "El text és obligatori.");
                 return;
             }
-            novaPregunta.add(textPregunta);
+            novaPregunta.add(text);
 
-            // Opciones si aplica
-            int tipusNum = Integer.parseInt(tipus);
-            if (tipusNum == 1 || tipusNum == 2 || tipusNum == 3) {
-                String numOpcionsText = campNumOpcions.getText().trim();
-                if (numOpcionsText.isEmpty()) {
-                    JOptionPane.showMessageDialog(this,
-                            "Introdueix el nombre d'opcions",
-                            "Error", JOptionPane.WARNING_MESSAGE);
+            if (tipoInt == 1 || tipoInt == 2 || tipoInt == 3) {
+                if (listModelOpcions.isEmpty()) {
+                    UIHelper.showWarning(this, "Afegeix opcions.");
                     return;
                 }
-
-                int numOpcions = Integer.parseInt(numOpcionsText);
-                if (numOpcions <= 0) {
-                    JOptionPane.showMessageDialog(this,
-                            "El nombre d'opcions ha de ser positiu",
-                            "Error", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-
-                novaPregunta.add(String.valueOf(numOpcions));
-
-                String opcionsText = campOpcionsPregunta.getText().trim();
-                if (opcionsText.isEmpty()) {
-                    JOptionPane.showMessageDialog(this,
-                            "Introdueix les opcions",
-                            "Error", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-
-                String[] opcions = opcionsText.split("\n");
-                if (opcions.length < numOpcions) {
-                    JOptionPane.showMessageDialog(this,
-                            String.format("Falten opcions. Has introduït %d de %d",
-                                    opcions.length, numOpcions),
-                            "Error", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-
-                for (int i = 0; i < numOpcions; i++) {
-                    novaPregunta.add(opcions[i].trim());
-                }
+                novaPregunta.add(String.valueOf(listModelOpcions.size()));
+                for (int i = 0; i < listModelOpcions.size(); i++)
+                    novaPregunta.add(listModelOpcions.get(i));
             }
 
-            // Llamar al controlador
-            int result = ctrl.modificarPreguntaEnquesta(idUsuariActual, idEnquestaActual, idxPregunta, novaPregunta);
-            if (result == 1) {
-                JOptionPane.showMessageDialog(this,
-                        "Pregunta modificada correctament",
-                        "Èxit", JOptionPane.INFORMATION_MESSAGE);
+            ctrl.modificarPreguntaEnquesta(idUsuariActual, idEnquestaActual, idx, novaPregunta);
+            UIHelper.showInfo(this, "Pregunta modificada!");
+            onSelectEnquesta(); // Refresh
 
-                // Refrescar
-                mostrarInfoEnquesta();
-                campIndexPregunta.setText("");
-                campTextPregunta.setText("");
-                campNumOpcions.setText("");
-                campOpcionsPregunta.setText("");
-            }
-
-        } catch (InvalidFormatEnquesta e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error del format: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (EnquestaNoExisteixException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error de l'enquesta: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (UsuariNoValid e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error de l'usuari: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            UIHelper.showError(this, "Error modificant: " + e.getMessage());
         }
     }
 
-    /**
-     * Elimina l'enquesta seleccionada permanentment.
-     * Demana confirmació a l'usuari abans de procedir.
-     */
     private void eliminarEnquesta() {
-        if (idEnquestaActual == -1) {
-            JOptionPane.showMessageDialog(this,
-                    "Selecciona una enquesta",
-                    "Error", JOptionPane.WARNING_MESSAGE);
+        if (idEnquestaActual == -1)
             return;
-        }
-
-        int confirmacion = JOptionPane.showConfirmDialog(this,
-                "<html>Eliminar enquesta <b>" + idEnquestaActual + "</b>?<br>" +
-                        "<font color='red'>Acció irreversible</font></html>",
-                "Confirmar eliminació",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
-
-        if (confirmacion == JOptionPane.YES_OPTION) {
+        if (UIHelper.showConfirm(this, "Segur que vols eliminar aquesta enquesta? Acció irreversible.")) {
             try {
                 ctrl.eliminarEnquesta(idUsuariActual, idEnquestaActual);
-
-                JOptionPane.showMessageDialog(this,
-                        "Enquesta " + idEnquestaActual + " eliminada",
-                        "Èxit", JOptionPane.INFORMATION_MESSAGE);
-
-                // Recargar
+                UIHelper.showInfo(this, "Enquesta eliminada.");
                 cargarEnquestes();
-                idEnquestaActual = -1;
-                labelIdActual.setText("ID: --");
-                areaInfo.setText("");
-
-            } catch (EnquestaNoExisteixException e) {
-                JOptionPane.showMessageDialog(this,
-                        "Error: " + e.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (InvalidFormatEnquesta e) {
-                JOptionPane.showMessageDialog(this,
-                        "Error de format: " + e.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
-
-            } catch (UsuariNoValid e) {
-                JOptionPane.showMessageDialog(this,
-                        "Error d'usuari: " + e.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
-
+                onSelectEnquesta();
+            } catch (Exception e) {
+                UIHelper.showError(this, "Error: " + e.getMessage());
             }
         }
     }
 
-    /**
-     * Elimina totes les respostes d'un usuari específic a l'enquesta actual.
-     * Demana confirmació abans d'executar l'acció.
-     */
-    private void eliminarResposta() {
-        if (idEnquestaActual == -1) {
-            JOptionPane.showMessageDialog(this,
-                    "Selecciona una enquesta",
-                    "Error", JOptionPane.WARNING_MESSAGE);
+    private void eliminarRespostes() {
+        if (idEnquestaActual == -1)
             return;
-        }
-
-        String idEnquestatText = campIdEnquestat.getText().trim();
-        if (idEnquestatText.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Introdueix l'ID de l'enquestat",
-                    "Error", JOptionPane.WARNING_MESSAGE);
+        String idUserStr = JOptionPane.showInputDialog(this,
+                "Introdueix l'ID de l'usuari del qual vols esborrar les respostes:");
+        if (idUserStr == null || idUserStr.trim().isEmpty())
             return;
-        }
 
         try {
-            int idEnquestat = Integer.parseInt(idEnquestatText);
-
-            int confirmacion = JOptionPane.showConfirmDialog(this,
-                    "Eliminar respostes de l'enquestat " + idEnquestat +
-                            " a l'enquesta " + idEnquestaActual + "?",
-                    "Confirmar",
-                    JOptionPane.YES_NO_OPTION);
-
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                ctrl.esborrarRespostaEnquesta(idUsuariActual, idEnquestaActual, idEnquestat);
-
-                JOptionPane.showMessageDialog(this,
-                        "Respostes eliminades",
-                        "Èxit", JOptionPane.INFORMATION_MESSAGE);
-
-                campIdEnquestat.setText("");
+            int idUserTarget = Integer.parseInt(idUserStr);
+            if (UIHelper.showConfirm(this, "Eliminar respostes de l'usuari " + idUserTarget + "?")) {
+                ctrl.esborrarRespostaEnquesta(idUsuariActual, idEnquestaActual, idUserTarget);
+                UIHelper.showInfo(this, "Respostes eliminades.");
             }
-        } catch (UsuariNoHaResposEnquesta e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error en l'usuari: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (EnquestaNoExisteixException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error en l'enquesta: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (InvalidFormatEnquesta e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error en el format: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (UsuariNoValid e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error en l'usuari: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            UIHelper.showError(this, "Error: " + e.getMessage());
         }
     }
 }

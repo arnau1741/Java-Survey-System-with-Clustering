@@ -1,453 +1,505 @@
 package prop.enquestes.presentacio;
 
-import prop.enquestes.excepcions.EnquestaNoExisteixException;
-import prop.enquestes.excepcions.InvalidFormatEnquesta;
-import prop.enquestes.excepcions.InvalidFormatResposta;
-import prop.enquestes.excepcions.UsuariNoValid;
+import prop.enquestes.excepcions.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 
-/**
- * Diàleg que permet a un usuari respondre una enquesta.
- * <p>
- * Aquesta vista gestiona tot el flux de resposta: des de la selecció de l'enquesta,
- * la visualització de la informació prèvia, la presentació seqüencial de les preguntes
- * i l'enviament final de les respostes al controlador.
- * </p>
- */
 public class VistaRespondreEnquesta extends JDialog {
+
     private CtrlPresentacio ctrl;
     private int idUsuari;
+
+    // State
     private int idEnquestaActual = -1;
-    private List<String> preguntes;
-    private List<String> respostes;
+    private List<PreguntaInfo> preguntes;
+    private List<String> respostes; // Stores answers as strings
     private int preguntaActual = 0;
 
-    private JPanel contentPane = new JPanel();
-    private JComboBox<String> comboEnquestes = new JComboBox<>();
-    private JLabel labelIdActual = new JLabel();
-    //private JButton buttonMostrarInfo = new JButton("Mostrar info");
-    private JTextArea areaInfo = new JTextArea();
-    private JButton buttonOK = new JButton("OK");
-    private JButton buttonFinalitzar = new JButton("Finalitzar");
+    // UI Components
+    private JPanel mainPanel;
+    private CardLayout cardLayout;
 
-    private JTextArea areaPreguntas = new JTextArea();
-    private JTextField respuesta = new JTextField();
-    private JButton buttonAfegirResposta = new JButton("Afegir Resposta");
-    private JButton buttonCerrar = new JButton("Cerrar");
+    // -- Selection Panel --
+    private JPanel panelSeleccio;
+    private JComboBox<String> comboEnquestes;
+    private JTextArea areaInfoEnquesta;
+    private JButton btnComencar;
 
-    /**
-     * Constructor de la vista per respondre enquestes.
-     * Inicialitza la finestra, carrega les enquestes disponibles i configura la lògica de navegació.
-     *
-     * @param ctrl Referència al controlador de presentació.
-     * @param idUsuari Identificador de l'usuari que respondrà l'enquesta.
-     */
+    // -- Question Panel --
+    private JPanel panelPregunta;
+    private JProgressBar progressBar;
+    private JLabel labelIndexPregunta;
+    private JTextArea labelTextPregunta; // JTextArea for wrapping
+    private JPanel panelInputsContainer;
+    private JButton btnAnterior;
+    private JButton btnSeguent;
+    private JButton btnFinalitzar;
+
+    // Dynamic Inputs
+    private ButtonGroup buttonGroupActual;
+    private List<JCheckBox> checkBoxesActuals;
+    private JTextField textFieldActual;
+    private JTextArea textAreaActual;
+
+    // Helper Class for Question Data
+    private static class PreguntaInfo {
+        String tipus; // "NUMERICA", "UNICA", "ORDENADA", "MULTIPLE", "LLIURE"
+        String text;
+        List<String> opcions;
+
+        PreguntaInfo(String tipus, String text, List<String> opcions) {
+            this.tipus = tipus;
+            this.text = text;
+            this.opcions = opcions;
+        }
+    }
+
     public VistaRespondreEnquesta(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
 
-        inicializarComponentes();
+        UIHelper.configureDialog(this, "Respondre Enquesta");
+
+        // Setup Main Layout
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+        setContentPane(mainPanel);
+
+        // Build Panels
+        createPanelSeleccio();
+        createPanelPregunta();
+
+        mainPanel.add(panelSeleccio, "SELECCIO");
+        mainPanel.add(panelPregunta, "PREGUNTA");
+
+        // Initial State
         cargarEnquestes();
-        setTitle("Respondre Enquesta");
-        setModal(true);
-        setContentPane(contentPane);
-        getRootPane().setDefaultButton(buttonOK);
-
-        configurarListeners();
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (buttonAfegirResposta.isVisible()) {
-                    buttonAfegirResposta.doClick();
-                } else if (buttonFinalitzar.isVisible()) {
-                    buttonFinalitzar.doClick();
-                }
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
         pack();
+        setSize(800, 600); // Reasonable default size
         setLocationRelativeTo(null);
     }
 
+    private void createPanelSeleccio() {
+        panelSeleccio = new JPanel(new BorderLayout());
+        panelSeleccio.setBorder(UIHelper.PADDING_MAIN);
+        panelSeleccio.setBackground(UIHelper.COLOR_BACKGROUND);
 
-    private void debug(){
-        System.out.println("Debugging VistaRespondreEnquesta...");
-        System.out.println("ID Usuari: " + idUsuari);
-        System.out.println("ID Enquesta Actual: " + idEnquestaActual);
-        System.out.println("Pregunta Actual: " + preguntaActual);
-        System.out.println("Preguntes: " + preguntes);
-        System.out.println("Respostes: " + respostes);
-    }
+        JLabel lblTitle = UIHelper.createTitleLabel("Selecciona una Enquesta");
+        lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        panelSeleccio.add(lblTitle, BorderLayout.NORTH);
 
-    /**
-     * Inicialitza i distribueix els components gràfics (Layout).
-     * Crea dues seccions principals: una per seleccionar l'enquesta i veure'n la informació,
-     * i una altra per respondre les preguntes una per una.
-     */
-    private void inicializarComponentes() {
-        contentPane = new JPanel(new BorderLayout(5, 5));
-        contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // Panel principal con scroll
-        JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
-        JScrollPane scrollPane = new JScrollPane(panelPrincipal);
-        scrollPane.setBorder(null);
-
-        // ========== SECCIÓN 1: Selección de Enquesta ==========
-        JPanel panelSeleccion = new JPanel(new BorderLayout(5, 5));
-        panelSeleccion.setBorder(BorderFactory.createTitledBorder("Selecció d'Enquesta"));
-
-        // Panel superior
-        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        panelSuperior.add(new JLabel("Enquesta:"));
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBackground(UIHelper.COLOR_BACKGROUND);
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
         comboEnquestes = new JComboBox<>();
-        comboEnquestes.setPreferredSize(new Dimension(250, 25));
-        panelSuperior.add(comboEnquestes);
+        comboEnquestes.setFont(UIHelper.FONT_NORMAL);
 
-        labelIdActual = new JLabel("ID: --");
-        labelIdActual.setFont(labelIdActual.getFont().deriveFont(Font.BOLD));
-        labelIdActual.setForeground(Color.BLUE);
-        panelSuperior.add(labelIdActual);
+        areaInfoEnquesta = new JTextArea(10, 40);
+        areaInfoEnquesta.setEditable(false);
+        areaInfoEnquesta.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        areaInfoEnquesta.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
-        panelSuperior.add(Box.createHorizontalStrut(10));
+        centerPanel.add(comboEnquestes);
+        centerPanel.add(Box.createVerticalStrut(20));
+        centerPanel.add(new JScrollPane(areaInfoEnquesta));
 
-        //buttonMostrarInfo = new JButton("Mostrar");
-        //buttonMostrarInfo.setPreferredSize(new Dimension(100, 25));
-        //panelSuperior.add(buttonMostrarInfo);
+        panelSeleccio.add(centerPanel, BorderLayout.CENTER);
 
-        panelSeleccion.add(panelSuperior, BorderLayout.NORTH);
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        bottomPanel.setBackground(UIHelper.COLOR_BACKGROUND);
 
-        // Área de información
-        areaInfo = new JTextArea(6, 50);
-        areaInfo.setEditable(false);
-        areaInfo.setFont(new Font("Monospaced", Font.PLAIN, 11));
-        JScrollPane scrollInfo = new JScrollPane(areaInfo);
-        scrollInfo.setPreferredSize(new Dimension(650, 120));
-        panelSeleccion.add(scrollInfo, BorderLayout.CENTER);
+        btnComencar = UIHelper.createButton("Començar Enquesta", e -> actionComencar());
+        btnComencar.setEnabled(false);
+        JButton btnCancel = UIHelper.createButton("Cancel·lar", e -> dispose());
 
-        panelPrincipal.add(panelSeleccion);
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
+        bottomPanel.add(btnComencar);
+        bottomPanel.add(btnCancel);
+        panelSeleccio.add(bottomPanel, BorderLayout.SOUTH);
 
-
-        // ========== SECCIÓN 2: Responder Encuesta ==========
-        JPanel panelPreguntas = new JPanel();
-        panelPreguntas.setLayout(new BoxLayout(panelPreguntas, BoxLayout.Y_AXIS));
-        panelPreguntas.setBorder(BorderFactory.createTitledBorder("Respon la pregunta"));
-
-        // Texto pregunta
-        JPanel panelTexto = new JPanel(new BorderLayout(2, 2));
-        panelTexto.add(new JLabel("Pregunta de l'enquesta:"), BorderLayout.NORTH);
-        areaPreguntas = new JTextArea(2, 40);
-        areaPreguntas.setEditable(false);
-        JScrollPane scrollTexto = new JScrollPane(areaPreguntas);
-        scrollTexto.setPreferredSize(new Dimension(600, 60));
-        panelTexto.add(scrollTexto, BorderLayout.CENTER);
-        panelPreguntas.add(panelTexto);
-        panelPreguntas.add(Box.createRigidArea(new Dimension(0, 5)));
-
-        // Respuesta
-        JPanel panelResposta = new JPanel(new BorderLayout(2, 2));
-        panelResposta.add(new JLabel("Respon:"), BorderLayout.NORTH);
-        respuesta = new JTextField();
-        JScrollPane scrollOpciones = new JScrollPane(respuesta);
-        scrollOpciones.setPreferredSize(new Dimension(600, 60));
-        panelResposta.add(scrollOpciones, BorderLayout.CENTER);
-        panelPreguntas.add(panelResposta);
-        panelPreguntas.add(Box.createRigidArea(new Dimension(0, 5)));
-
-        // Botón
-        buttonAfegirResposta = new JButton("Afegir Resposta");
-        buttonAfegirResposta.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelPreguntas.add(buttonAfegirResposta);
-
-        panelPrincipal.add(panelPreguntas);
-        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10)));
-
-        buttonFinalitzar = new JButton("Enviar Respostes");
-        buttonFinalitzar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        buttonFinalitzar.setVisible(false); // Amagat inicialment
-        panelPreguntas.add(buttonFinalitzar);
-
-        // ========== BOTÓN CERRAR ==========
-        JPanel panelCerrar = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonCerrar = new JButton("Tancar");
-        buttonCerrar.addActionListener(e -> dispose());
-        panelCerrar.add(buttonCerrar);
-
-        panelPrincipal.add(panelCerrar);
-
-        contentPane.add(scrollPane, BorderLayout.CENTER);
-		
-
+        // Listener for Combo
+        comboEnquestes.addActionListener(e -> {
+            String selected = (String) comboEnquestes.getSelectedItem();
+            if (selected != null && !selected.equals("-- Selecciona --")) {
+                try {
+                    idEnquestaActual = extraerIdEnquesta(selected);
+                    mostrarInfoEnquesta();
+                    btnComencar.setEnabled(true);
+                } catch (Exception ex) {
+                    areaInfoEnquesta.setText("");
+                    btnComencar.setEnabled(false);
+                }
+            } else {
+                areaInfoEnquesta.setText("");
+                btnComencar.setEnabled(false);
+            }
+        });
     }
 
-    /**
-     * Carrega la llista d'enquestes disponibles al ComboBox.
-     */
+    private void createPanelPregunta() {
+        panelPregunta = new JPanel(new BorderLayout());
+        panelPregunta.setBackground(UIHelper.COLOR_BACKGROUND);
+        panelPregunta.setBorder(UIHelper.PADDING_MAIN);
+
+        // Top: Progress
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(UIHelper.COLOR_BACKGROUND);
+        progressBar = new JProgressBar();
+        progressBar.setStringPainted(true);
+        labelIndexPregunta = UIHelper.createSubtitleLabel("Pregunta 1 de ?");
+
+        topPanel.add(labelIndexPregunta, BorderLayout.NORTH);
+        topPanel.add(progressBar, BorderLayout.SOUTH);
+        panelPregunta.add(topPanel, BorderLayout.NORTH);
+
+        // Center: Question + Inputs
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBackground(UIHelper.COLOR_BACKGROUND);
+        centerPanel.setBorder(new EmptyBorder(20, 0, 20, 0));
+
+        labelTextPregunta = new JTextArea("Text de la pregunta...");
+        labelTextPregunta.setWrapStyleWord(true);
+        labelTextPregunta.setLineWrap(true);
+        labelTextPregunta.setEditable(false);
+        labelTextPregunta.setOpaque(false);
+        labelTextPregunta.setFont(UIHelper.FONT_TITLE);
+        labelTextPregunta.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        panelInputsContainer = new JPanel();
+        panelInputsContainer.setLayout(new BoxLayout(panelInputsContainer, BoxLayout.Y_AXIS));
+        panelInputsContainer.setBackground(UIHelper.COLOR_BACKGROUND);
+        panelInputsContainer.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        centerPanel.add(labelTextPregunta);
+        centerPanel.add(Box.createVerticalStrut(20));
+        centerPanel.add(panelInputsContainer); // Scrollable if needed?
+        // Add scroll just in case
+        JScrollPane scrollCenter = new JScrollPane(centerPanel);
+        scrollCenter.setBorder(null);
+        panelPregunta.add(scrollCenter, BorderLayout.CENTER);
+
+        // Bottom: Navigation
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottomPanel.setBackground(UIHelper.COLOR_BACKGROUND);
+
+        btnAnterior = UIHelper.createButton("Anterior", e -> actionAnterior());
+        btnSeguent = UIHelper.createButton("Següent", e -> actionSeguent());
+        btnFinalitzar = UIHelper.createButton("Finalitzar", e -> actionFinalitzar());
+
+        bottomPanel.add(btnAnterior);
+        bottomPanel.add(btnSeguent);
+        bottomPanel.add(btnFinalitzar);
+
+        panelPregunta.add(bottomPanel, BorderLayout.SOUTH);
+    }
+
+    // --- Actions ---
+
+    private void actionComencar() {
+        try {
+            // Load questions
+            List<String> rawInfo = ctrl.obtenirPreguntesEnquesta(idEnquestaActual);
+            preguntes = parsearPreguntes(rawInfo);
+
+            if (preguntes.isEmpty()) {
+                UIHelper.showError(this, "Aquesta enquesta no té preguntes.");
+                return;
+            }
+
+            // Init answers list with nulls/empty strings
+            respostes = new ArrayList<>(Collections.nCopies(preguntes.size(), ""));
+
+            preguntaActual = 0;
+            mostrarPregunta();
+            cardLayout.show(mainPanel, "PREGUNTA");
+
+        } catch (Exception e) {
+            UIHelper.showError(this, "Error carregant l'enquesta: " + e.getMessage());
+        }
+    }
+
+    private void actionSeguent() {
+        String resp = extraerRespostaUI();
+        if (resp == null || resp.trim().isEmpty()) {
+            UIHelper.showWarning(this, "Siusplau, respon la pregunta per continuar.");
+            return;
+        }
+        respostes.set(preguntaActual, resp);
+
+        preguntaActual++;
+        mostrarPregunta();
+    }
+
+    private void actionAnterior() {
+        if (preguntaActual > 0) {
+            // Save current (optional?) No, if they go back they might want to discard?
+            // Better to save just in case
+            String resp = extraerRespostaUI();
+            if (resp != null && !resp.trim().isEmpty()) {
+                respostes.set(preguntaActual, resp);
+            }
+
+            preguntaActual--;
+            mostrarPregunta();
+        }
+    }
+
+    private void actionFinalitzar() {
+        // Save last answer
+        String resp = extraerRespostaUI();
+        if (resp == null || resp.trim().isEmpty()) {
+            UIHelper.showWarning(this, "Siusplau, respon la pregunta per finalitzar.");
+            return;
+        }
+        respostes.set(preguntaActual, resp);
+
+        // Submit
+        try {
+            ctrl.respondreEnquesta(idUsuari, idEnquestaActual, respostes);
+            UIHelper.showInfo(this, "Respostes enviades correctament!");
+            dispose();
+        } catch (Exception ex) {
+            UIHelper.showError(this, "Error enviant respostes: " + ex.getMessage());
+        }
+    }
+
+    // --- Helpers ---
+
+    private void mostrarPregunta() {
+        PreguntaInfo p = preguntes.get(preguntaActual);
+
+        // Update Header
+        labelIndexPregunta.setText("Pregunta " + (preguntaActual + 1) + " de " + preguntes.size());
+        progressBar.setMaximum(preguntes.size());
+        progressBar.setValue(preguntaActual + 1);
+
+        // Update Text
+        labelTextPregunta.setText(p.text);
+
+        // Build Inputs
+        panelInputsContainer.removeAll();
+        buttonGroupActual = null;
+        checkBoxesActuals = null;
+        textFieldActual = null;
+        textAreaActual = null;
+
+        String savedAnswer = respostes.get(preguntaActual); // Get saved answer if any
+
+        if (p.tipus.equals("NUMERICA")) {
+            textFieldActual = new JTextField(20);
+            textFieldActual.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+            if (!savedAnswer.isEmpty())
+                textFieldActual.setText(savedAnswer);
+            panelInputsContainer.add(textFieldActual);
+        } else if (p.tipus.equals("LLIURE")) {
+            textAreaActual = new JTextArea(6, 40);
+            textAreaActual.setLineWrap(true);
+            textAreaActual.setWrapStyleWord(true);
+            if (!savedAnswer.isEmpty())
+                textAreaActual.setText(savedAnswer);
+            JScrollPane scroll = new JScrollPane(textAreaActual);
+            scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
+            panelInputsContainer.add(scroll);
+        } else if (p.tipus.equals("UNICA") || p.tipus.equals("ORDENADA")) {
+            buttonGroupActual = new ButtonGroup();
+            int index = 0;
+            // savedAnswer stores the index "0", "1", etc.
+            int savedIdx = -1;
+            try {
+                if (!savedAnswer.isEmpty())
+                    savedIdx = Integer.parseInt(savedAnswer);
+            } catch (NumberFormatException ignored) {
+            }
+
+            for (String op : p.opcions) {
+                JRadioButton rb = new JRadioButton(op);
+                rb.setBackground(UIHelper.COLOR_BACKGROUND);
+                buttonGroupActual.add(rb);
+                panelInputsContainer.add(rb);
+                if (index == savedIdx)
+                    rb.setSelected(true);
+                index++;
+            }
+        } else if (p.tipus.equals("MULTIPLE")) {
+            checkBoxesActuals = new ArrayList<>();
+            // savedAnswer stores "0,2,3"
+            List<String> selectedIndices = new ArrayList<>();
+            if (!savedAnswer.isEmpty()) {
+                Collections.addAll(selectedIndices, savedAnswer.split(","));
+            }
+
+            int index = 0;
+            for (String op : p.opcions) {
+                JCheckBox cb = new JCheckBox(op);
+                cb.setBackground(UIHelper.COLOR_BACKGROUND);
+                checkBoxesActuals.add(cb);
+                panelInputsContainer.add(cb);
+                if (selectedIndices.contains(String.valueOf(index)))
+                    cb.setSelected(true);
+                index++;
+            }
+        }
+
+        // Navigation State
+        btnAnterior.setEnabled(preguntaActual > 0);
+
+        if (preguntaActual == preguntes.size() - 1) {
+            btnSeguent.setVisible(false);
+            btnFinalitzar.setVisible(true);
+        } else {
+            btnSeguent.setVisible(true);
+            btnFinalitzar.setVisible(false);
+        }
+
+        panelInputsContainer.revalidate();
+        panelInputsContainer.repaint();
+    }
+
+    // --- Parsing / Extraction (Same logic, cleaner) ---
+
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
-
         try {
             List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
             for (String info : enquestasInfo) {
-                // Buscamos la línea exacta que empieza por "ID:"
                 String[] lineas = info.split("\n");
                 for (String linea : lineas) {
                     if (linea.trim().startsWith("ID:")) {
-                        comboEnquestes.addItem(linea); // SOLO esta línea
-                        break; // Muy importante
+                        comboEnquestes.addItem(linea);
+                        break;
                     }
                 }
             }
+            if (comboEnquestes.getItemCount() <= 1) {
+                areaInfoEnquesta.setText("No hi ha enquestes disponibles.");
+            }
         } catch (EnquestaNoExisteixException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error: " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            areaInfoEnquesta.setText("Error: " + e.getMessage());
         }
     }
 
-    /**
-     * Assigna els escoltadors (listeners) als components.
-     * Defineix la lògica per iniciar l'enquesta, avançar entre preguntes i finalitzar.
-     */
-    private void configurarListeners() {
-        System.out.println("Configurant listeners...");
-        /*
-        buttonMostrarInfo.addActionListener(e -> {
-            System.out.println("dentro de configurar listeners - buttonMostrarInfo");
-            if (idEnquestaActual == -1) {
-                JOptionPane.showMessageDialog(this,
-                        "Selecciona una enquesta",
-                        "Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            mostrarInfoEnquesta();
-
-            try {
-                preguntes = ctrl.obtenirPreguntes(idEnquestaActual);
-                respostes = new java.util.ArrayList<>();
-                preguntaActual = 0;
-
-                mostrarPregunta();
-                debug();
-
-            } catch (EnquestaNoExisteixException ex) {
-                JOptionPane.showMessageDialog(this,
-                        "No s'han pogut carregar les preguntes:\n" + ex.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        });*/
-
-        comboEnquestes.addActionListener(e -> {
-			System.out.println("comboEnquestes ACTION-LISTENER");
-            String seleccionado = (String) comboEnquestes.getSelectedItem();
-            if (seleccionado != null && !seleccionado.equals("-- Selecciona --")) {
-                try {
-                    idEnquestaActual = extraerIdEnquesta(seleccionado);
-                    labelIdActual.setText("ID: " + idEnquestaActual);
-                    mostrarInfoEnquesta();
-                	preguntes = ctrl.obtenirPreguntes(idEnquestaActual);
-                	respostes = new java.util.ArrayList<>();
-                	preguntaActual = 0;
-                	mostrarPregunta();
-                    debug();
-					// ========== FOCUS ==========
-					SwingUtilities.invokeLater(() -> respuesta.requestFocusInWindow());
-                } catch (Exception ex) {
-                    idEnquestaActual = -1;
-                    labelIdActual.setText("ID: --");
-                    areaInfo.setText("");
-                }
-            } else {
-                idEnquestaActual = -1;
-                labelIdActual.setText("ID: --");
-                areaInfo.setText("");
-            }
-        });
-
-        buttonAfegirResposta.addActionListener(e -> {
-            String resp = respuesta.getText().trim();
-            if (resp.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "Escriu una resposta",
-                        "Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            // Guardar resposta
-            respostes.add(resp);
-            // Passar a la següent
-            preguntaActual++;
-            // Mostrar-la
-            mostrarPregunta();
-            debug();
-        });
-
-        buttonFinalitzar.addActionListener(e -> {
-            enviarRespostes();
-        });
-
-    }
-
-    /**
-     * Mostra la informació general de l'enquesta seleccionada.
-     */
     private void mostrarInfoEnquesta() {
-        System.out.println("Mostrant info de l'enquesta ID: " + idEnquestaActual);
         if (idEnquestaActual == -1) {
-            areaInfo.setText("");
-            JOptionPane.showMessageDialog(this,
-                    "Selecciona una enquesta",
-                    "Error", JOptionPane.WARNING_MESSAGE);
+            areaInfoEnquesta.setText("");
             return;
         }
-
         try {
-            List<String> infoCompleta = ctrl.obtenirPreguntesEnquesta(idEnquestaActual);
-            System.out.println("Info completa obtinguda:");
-
+            List<String> info = ctrl.obtenirPreguntesEnquesta(idEnquestaActual);
             StringBuilder sb = new StringBuilder();
-            int contador = 0;
-            for (String linea : infoCompleta) {
-                sb.append(linea).append("\n");
-                System.out.println("Info: " + linea);
-                contador++;
-                if (contador >= 3) break;
+            int lines = 0;
+            for (String s : info) {
+                if (lines++ > 5)
+                    break;
+                sb.append(s).append("\n");
             }
-
-            areaInfo.setText(sb.toString());
-
-        } catch (EnquestaNoExisteixException e) {
-            areaInfo.setText("Error: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Extreu l'ID numèric de l'enquesta del text del ComboBox.
-     */
-    private int extraerIdEnquesta(String texto) {
-        System.out.println("Extraient ID de l'enquesta de: " + texto);
-        try {
-            // Formato esperado: "ID: X - ..."
-            int idxID = texto.indexOf("ID:");
-            if (idxID == -1) throw new RuntimeException("Format invalid");
-
-            int idxDosPunts = texto.indexOf(':', idxID);
-            int idxGuio = texto.indexOf('-', idxDosPunts);
-
-            String idStr = texto.substring(idxDosPunts + 1, idxGuio).trim();
-            return Integer.parseInt(idStr);
-
+            areaInfoEnquesta.setText(sb.toString());
         } catch (Exception e) {
-            throw new RuntimeException("No s'ha pogut extreure l'ID de: " + texto);
+            areaInfoEnquesta.setText("Error: " + e.getMessage());
         }
     }
 
-    /**
-     * Controla el flux de preguntes.
-     * Si queden preguntes, mostra la següent i neteja el camp de resposta.
-     * Si s'han acabat, mostra un missatge de finalització i habilita el botó per enviar les dades.
-     */
-    private void mostrarPregunta() {
-        System.out.println("Mostrant pregunta número: " + (preguntaActual + 1));
-        if (preguntes == null || preguntes.isEmpty()) {
-            areaPreguntas.setText("No hi ha preguntes en aquesta enquesta.");
-            return;
-        }
-
-        if (preguntaActual < preguntes.size()) {
-            areaPreguntas.setText(preguntes.get(preguntaActual));
-            respuesta.setText("");
-        }
-        else {
-            // Hem acabat totes les preguntes
-            areaPreguntas.setText("Has completat l’enquesta!");
-            respuesta.setEnabled(false);
-            buttonAfegirResposta.setVisible(false);
-			comboEnquestes.setEnabled(false);
-            buttonFinalitzar.setVisible(true);
-        }
+    private int extraerIdEnquesta(String texto) {
+        int idxID = texto.indexOf("ID:");
+        if (idxID == -1)
+            throw new RuntimeException("Format invalid");
+        int idxDosPunts = texto.indexOf(':', idxID);
+        int idxGuio = texto.indexOf('-', idxDosPunts);
+        String idStr = texto.substring(idxDosPunts + 1, idxGuio).trim();
+        return Integer.parseInt(idStr);
     }
 
-    /**
-     * Envia la llista de respostes acumulades al controlador per ser persistides.
-     * Gestiona les possibles excepcions de format o validació.
-     */
-    private void enviarRespostes() {
-        System.out.println("Enviant respostes per a l'enquesta ID: " + idEnquestaActual);
-        try {
-            ctrl.respondreEnquesta(idUsuari, idEnquestaActual, respostes);
+    private List<PreguntaInfo> parsearPreguntes(List<String> rawLines) {
+        List<PreguntaInfo> llista = new ArrayList<>();
+        List<String> cleanLines = new ArrayList<>();
+        boolean startFound = false;
 
-            JOptionPane.showMessageDialog(this,
-                    "Respostes enviades correctament!",
-                    "Èxit",
-                    JOptionPane.INFORMATION_MESSAGE);
+        for (String line : rawLines) {
+            if (line != null && line.trim().equals("Preguntes:")) {
+                startFound = true;
+                continue;
+            }
+            if (!startFound)
+                continue;
+            if (line != null && line.startsWith("- "))
+                cleanLines.add(line.substring(2));
+            else if (line != null)
+                cleanLines.add(line);
+        }
 
-            dispose();
-        } catch (InvalidFormatEnquesta ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Error enviant respostes: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            dispose();
-        } catch (EnquestaNoExisteixException ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Error de l'enquesta: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            dispose();
-        } catch (InvalidFormatResposta ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Error del format de la resposta: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            dispose();
-        } catch (UsuariNoValid ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Error de l'usuari: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            dispose();
+        int i = 0;
+        while (i < cleanLines.size()) {
+            String tipus = cleanLines.get(i++);
+            if (tipus == null || tipus.trim().equals("- - -") || tipus.trim().isEmpty())
+                continue;
+
+            // Basic validation
+            if (!tipus.equals("NUMERICA") && !tipus.equals("UNICA") && !tipus.equals("ORDENADA") &&
+                    !tipus.equals("MULTIPLE") && !tipus.equals("LLIURE"))
+                continue;
+
+            if (i >= cleanLines.size())
+                break;
+            String text = cleanLines.get(i++);
+            List<String> opcions = new ArrayList<>();
+
+            if (tipus.equals("UNICA") || tipus.equals("ORDENADA") || tipus.equals("MULTIPLE")) {
+                if (i < cleanLines.size()) {
+                    try {
+                        int numOpcions = Integer.parseInt(cleanLines.get(i++));
+                        for (int k = 0; k < numOpcions && i < cleanLines.size(); k++) {
+                            opcions.add(cleanLines.get(i++));
+                        }
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
+            }
+            llista.add(new PreguntaInfo(tipus, text, opcions));
+            if (i < cleanLines.size() && cleanLines.get(i).equals("- - -"))
+                i++;
         }
-        catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,
-                    ex.getClass().getSimpleName() + ": " + ex.getMessage(),
-                    "Error inesperat",
-                    JOptionPane.ERROR_MESSAGE);
-            dispose();
-        }
+        return llista;
     }
 
-    /**
-     * Tanca el diàleg.
-     */
-    private void onCancel() {
-        System.out.println("Tancant el diàleg...");
-        // add your code here if necessary
-        dispose();
+    private String extraerRespostaUI() {
+        if (preguntes == null || preguntaActual >= preguntes.size())
+            return "";
+        PreguntaInfo p = preguntes.get(preguntaActual);
+
+        if (p.tipus.equals("NUMERICA")) {
+            return textFieldActual != null ? textFieldActual.getText().trim() : "";
+        } else if (p.tipus.equals("LLIURE")) {
+            return textAreaActual != null ? textAreaActual.getText().trim() : "";
+        } else if (p.tipus.equals("UNICA") || p.tipus.equals("ORDENADA")) {
+            if (buttonGroupActual == null)
+                return "";
+            int index = 0;
+            for (Enumeration<AbstractButton> buttons = buttonGroupActual.getElements(); buttons.hasMoreElements();) {
+                AbstractButton button = buttons.nextElement();
+                if (button.isSelected())
+                    return String.valueOf(index);
+                index++;
+            }
+            return "";
+        } else if (p.tipus.equals("MULTIPLE")) {
+            if (checkBoxesActuals == null)
+                return "";
+            List<String> indices = new ArrayList<>();
+            for (int i = 0; i < checkBoxesActuals.size(); i++) {
+                if (checkBoxesActuals.get(i).isSelected())
+                    indices.add(String.valueOf(i));
+            }
+            return String.join(",", indices);
+        }
+        return "";
     }
 }

@@ -18,10 +18,10 @@ public class VistaConsultarEnquesta extends JDialog {
 
     private CtrlPresentacio ctrlPresentacio;
     private JPanel contentPane = new JPanel();
-    private JTextArea resultat =  new JTextArea();
+    private JEditorPane resultat;
     private JButton buttonOK =  new JButton("OK");
     private JButton buttonCancel =  new JButton("Cancel");
-    private JComboBox<String> comboEnquestes =  new JComboBox<>();
+    private JComboBox<String> comboEnquestes;
 
     /**
      * Constructor del diàleg de consulta d'enquestes.
@@ -33,12 +33,13 @@ public class VistaConsultarEnquesta extends JDialog {
         super((Frame) null, "Consultar Enquesta", true);
         this.ctrlPresentacio = ctrlPresentacio;
 
+        UIHelper.configureDialog(this, "Consultar Enquesta");
+        setSize(700, 600);
+        setLocationRelativeTo(null);
         inicialitzarComponents();
         carregarEnquestes();
         configurarListeners();
 
-        pack();
-        setLocationRelativeTo(null);
     }
 
     /**
@@ -46,27 +47,30 @@ public class VistaConsultarEnquesta extends JDialog {
      * Crea el panell de selecció superior, l'àrea de text central i els botons inferiors.
      */
     private void inicialitzarComponents() {
-        contentPane.setLayout(new BorderLayout(10,10));
-        contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        contentPane = new JPanel(new BorderLayout(10, 10));
+        contentPane.setBackground(UIHelper.COLOR_BACKGROUND);
+        contentPane.setBorder(UIHelper.PADDING_MAIN);
+        setContentPane(contentPane);
 
-        // ========== SELECCIÓ ENQUESTA (TOP) ==========
+        // TOP: Selector
         JPanel panelSeleccion = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        panelSeleccion.setBorder(BorderFactory.createTitledBorder("Selecció d'Enquesta"));
-
+        panelSeleccion.setBackground(UIHelper.COLOR_BACKGROUND);
         panelSeleccion.add(new JLabel("Enquesta:"));
 
         comboEnquestes = new JComboBox<>();
-        comboEnquestes.setPreferredSize(new Dimension(250, 25));
+        comboEnquestes.setPreferredSize(new Dimension(300, 25));
         panelSeleccion.add(comboEnquestes);
 
         contentPane.add(panelSeleccion, BorderLayout.NORTH);
 
         // ========== RESULTAT (CENTER) ==========
-        resultat = new JTextArea(15, 40);
+        resultat = new JEditorPane();
+        resultat.setContentType("text/html");
         resultat.setEditable(false);
-        resultat.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        resultat.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+        resultat.setFont(UIHelper.FONT_NORMAL);
         JScrollPane scroll = new JScrollPane(resultat);
-
+        scroll.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         contentPane.add(scroll, BorderLayout.CENTER);
 
         // ========== BOTONS (BOTTOM) ==========
@@ -161,25 +165,53 @@ public class VistaConsultarEnquesta extends JDialog {
      * @throws EnquestaNoExisteixException Si l'enquesta sol·licitada no existeix.
      */
     private void consultar() throws EnquestaNoExisteixException {
-
         String sel = (String) comboEnquestes.getSelectedItem();
-
         if (sel == null || sel.equals("-- Selecciona --")) {
-            JOptionPane.showMessageDialog(this,
-                    "Has de seleccionar una enquesta.",
-                    "Advertència",
-                    JOptionPane.WARNING_MESSAGE);
+            resultat.setText("");
             return;
         }
 
-        int id = extraerIdEnquesta(sel);
+        try {
+            int id = extraerIdEnquesta(sel);
+            List<String> info = ctrlPresentacio.consultarEnquesta(id);
 
-        List<String> info = ctrlPresentacio.consultarEnquesta(id);
+            // Convert plain text list to HTML
+            StringBuilder html = new StringBuilder();
+            html.append("<html><body style='font-family:sans-serif; padding:10px;'>");
+            html.append("<h2>Detalls de l'Enquesta ").append(id).append("</h2>");
 
-        StringBuilder sb = new StringBuilder();
-        for (String s : info) sb.append(s).append("\n");
+            boolean inQuestions = false;
+            for (String s : info) {
+                if (s.trim().equals("Preguntes:")) {
+                    html.append("<h3>Preguntes:</h3><ul>");
+                    inQuestions = true;
+                    continue;
+                }
 
-        resultat.setText(sb.toString());
+                if (inQuestions) {
+                    if (s.startsWith("- ")) {
+                        html.append("</ul><div style='background-color:#EFEFEF; padding:5px; margin-bottom:5px;'><b>")
+                                .append(s.substring(2)).append("</b>"); // Type
+                    } else if (s.equals("- - -")) {
+                        html.append("</div>");
+                    } else {
+                        // Text or Options
+                        // Simple heuristic: if follows Type, it's Text.
+                        html.append("<br>").append(s);
+                    }
+                } else {
+                    html.append("<p>").append(s).append("</p>");
+                }
+            }
+            if (inQuestions)
+                html.append("</div>"); // Close last div if needed
+
+            html.append("</body></html>");
+            resultat.setText(html.toString());
+
+        } catch (Exception ex) {
+            UIHelper.showError(this, "Error consultant: " + ex.getMessage());
+        }
     }
 
     /**
