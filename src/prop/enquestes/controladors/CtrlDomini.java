@@ -913,7 +913,7 @@ public class CtrlDomini {
     ////////////////////// Cas d'us - Crear usuari ////////////////////
     public int crearUsuariEnquestat(String nomUsuari, String password, String email)
             throws UsuariNoValid, IllegalArgumentException {
-        if (nomUsuari == null || nomUsuari.isEmpty() || password == null || email == null){
+        if (nomUsuari == null || nomUsuari.isEmpty() || password == null || password.isEmpty() || email.isEmpty() || email == null){
             throw new IllegalArgumentException("Dades invàlides");
         }
 
