@@ -433,6 +433,13 @@ public class VistaRespondreEnquesta extends JDialog {
                     JOptionPane.ERROR_MESSAGE);
             dispose();
         }
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getClass().getSimpleName() + ": " + ex.getMessage(),
+                    "Error inesperat",
+                    JOptionPane.ERROR_MESSAGE);
+            dispose();
+        }
     }
 
     /**
