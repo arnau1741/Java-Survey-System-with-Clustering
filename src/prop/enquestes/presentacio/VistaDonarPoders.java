@@ -184,6 +184,11 @@ public class VistaDonarPoders extends JDialog {
                     "Error de l'usuari: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'enquesta: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
