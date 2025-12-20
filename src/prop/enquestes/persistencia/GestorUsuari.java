@@ -26,7 +26,7 @@ public class GestorUsuari {
             map.put("nomUsuari", u.getUsuari());
             map.put("password", u.getContrasenya());
             map.put("email", u.getEmail());
-            String roleType = "ENQUESTAT";
+            String roleType = "";
             if (u.esAdmin()){
                 roleType = "ADMIN";
 
@@ -49,6 +49,14 @@ public class GestorUsuari {
             }
             else if(u.esModerador())
                 roleType = "MODERADOR";
+            else if(u.esEnquestat()){
+                roleType = "ENQUESTAT";
+
+                EnquestatState enquestat = (EnquestatState) u.getRol();
+                Map<Integer, Enquesta> enquestesRealitzades = enquestat.getEnquestesRealitzades();
+                List<Integer> idsRealitzades = new ArrayList<>(enquestesRealitzades.keySet());
+                map.put("enquestesRealitzades", idsRealitzades);
+            }
 
             map.put("rol", roleType);
 
