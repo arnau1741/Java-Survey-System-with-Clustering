@@ -16,7 +16,7 @@ public class VistaPrincipal {
     private JFrame ventana = new JFrame("Sistema d'Enquestes");
     private JPanel panel = new JPanel();
 
-    private JButton btnIniciarSessio = new JButton("Iniciar Sessio");
+    private JButton btnIniciarSessio = new JButton("Iniciar Sessió");
     private JButton btnCrearUsuari = new JButton("Crear Usuari");
     private JButton btnConvidat = new JButton("Convidat");
     private JButton btnSortir = new JButton("Sortir");
@@ -57,7 +57,6 @@ public class VistaPrincipal {
         // === LISTENERS ===
 
         btnIniciarSessio.addActionListener(e -> {
-            System.out.println("Iniciant sessio...");
             iCtrlPresentacio.mostrarVistaIniciarSessio();
         });
 
