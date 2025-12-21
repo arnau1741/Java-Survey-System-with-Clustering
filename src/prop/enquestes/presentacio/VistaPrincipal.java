@@ -40,7 +40,7 @@ public class VistaPrincipal {
      * Login, Registre o Convidat segons l'acció de l'usuari.
      */
     private void inicializarComponentes() {
-        ventana.setSize(400, 300);
+        ventana.setSize(900, 700);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setLocationRelativeTo(null);
 
@@ -52,7 +52,10 @@ public class VistaPrincipal {
         panel.add(btnConvidat);
         panel.add(btnSortir);
 
-        ventana.add(panel);
+        JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        wrapper.add(panel);
+
+        ventana.add(wrapper);
 
         // === LISTENERS ===
 

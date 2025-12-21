@@ -54,8 +54,8 @@ public class VistaEnquestat extends JFrame {
      * i un botó de sortida a la part inferior.
      */
     private void initComponents() {
-        setTitle("Menu Usuari - " + nomRol);
-        setSize(400, 400);
+        setTitle("Menú Usuari - " + nomRol);
+        setSize(900, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

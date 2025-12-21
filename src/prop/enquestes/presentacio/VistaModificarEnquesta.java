@@ -62,7 +62,7 @@ public class VistaModificarEnquesta extends JDialog {
         this.idUsuariActual = idUsuariActual;
 
         UIHelper.configureDialog(this, "Gestió d'Enquestes");
-        setSize(900, 600);
+        setSize(900, 700);
         setLocationRelativeTo(null);
 
         initUI();

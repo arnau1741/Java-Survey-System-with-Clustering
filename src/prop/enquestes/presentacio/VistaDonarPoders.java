@@ -47,7 +47,7 @@ public class VistaDonarPoders extends JDialog {
 
         setTitle("Assignar Poders");
         setModal(true);
-        setSize(400, 250);
+        setSize(900, 700);
         setLocationRelativeTo(null);
 
         initComponents();

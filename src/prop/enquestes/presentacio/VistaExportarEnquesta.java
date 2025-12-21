@@ -66,7 +66,7 @@ public class VistaExportarEnquesta extends JDialog {
         }
         initActions();
 
-        setSize(600, 500);
+        setSize(900, 700);
         setLocationRelativeTo(null);
     }
 

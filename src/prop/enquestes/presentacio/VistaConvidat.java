@@ -39,8 +39,8 @@ public class VistaConvidat extends JFrame {
      * Defineix el títol, la mida i la distribució dels botons al panell.
      */
     private void initComponents() {
-        setTitle("Menu convidat");
-        setSize(400, 400);
+        setTitle("Menú convidat");
+        setSize(900, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

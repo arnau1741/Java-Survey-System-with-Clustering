@@ -25,7 +25,7 @@ public class VistaConsultarRespostesUsuari extends JDialog {
         this.idUsuari = idUsuari;
 
         UIHelper.configureDialog(this, "Les Meves Respostes");
-        setSize(600, 500);
+        setSize(900, 700);
         setLocationRelativeTo(null);
 
         initUI();
