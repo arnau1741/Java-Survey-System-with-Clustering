@@ -27,7 +27,7 @@ public class VistaCrearUsuari extends JDialog {
     });
 
     private JButton buttonOK = new JButton("OK");
-    private JButton buttonCancel = new JButton("Cancelar");
+    private JButton buttonCancel = new JButton("Cancel·lar");
 
     /**
      * Constructor de la vista de creació d'usuari.
