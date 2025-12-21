@@ -98,7 +98,7 @@ public class VistaEnquestador extends JFrame {
      */
     private void setupListeners() {
         consultarPerfilButton.addActionListener(e -> {
-            ctrl.mostrarConsultarPerfil();
+            ctrl.mostrarConsultarPerfil(idUsuari);
         });
 
         consultarEnquestaButton.addActionListener(e -> {

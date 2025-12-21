@@ -102,7 +102,7 @@ public class VistaEnquestat extends JFrame {
      */
     private void setupListeners() {
         consultarPerfilButton.addActionListener(e -> {
-            ctrl.mostrarConsultarPerfil();
+            ctrl.mostrarConsultarPerfil(idUsuari);
         });
         crearEnquestaButton.addActionListener(e -> {
             dispose();
