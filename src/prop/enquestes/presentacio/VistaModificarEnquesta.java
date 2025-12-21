@@ -548,8 +548,27 @@ public class VistaModificarEnquesta extends JDialog {
     private void eliminarRespostes() {
         if (idEnquestaActual == -1)
             return;
-        String idUserStr = JOptionPane.showInputDialog(this,
-                "Introdueix l'ID de l'usuari del qual vols esborrar les respostes:");
+
+        List<String> respostesInfo = ctrl.obtenirRespostesEnquesta(idEnquestaActual);
+        StringBuilder mensaje = new StringBuilder();
+        mensaje.append("Introdueix l'ID de l'usuari del qual vols esborrar les respostes:\n\n");
+
+        // Mostrar al menos la información cruda para referencia
+        if (!respostesInfo.isEmpty()) {
+            mensaje.append("Informació de respostes disponible:\n");
+            for (int i = 0; i < Math.min(respostesInfo.size(), 10); i++) {
+                mensaje.append(respostesInfo.get(i)).append("\n");
+            }
+            if (respostesInfo.size() > 10) {
+                mensaje.append("... i ").append(respostesInfo.size() - 10).append(" més\n");
+                mensaje.append("Mes informacio aneu a Consultar Respostes\n");
+            }
+            mensaje.append("\n");
+        }
+
+        String idUserStr = JOptionPane.showInputDialog(this, mensaje.toString());
+
+        //String idUserStr = JOptionPane.showInputDialog(this,"Introdueix l'ID de l'usuari del qual vols esborrar les respostes:");
         if (idUserStr == null || idUserStr.trim().isEmpty())
             return;
 
