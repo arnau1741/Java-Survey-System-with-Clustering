@@ -1,135 +1,129 @@
 package prop.enquestes.presentacio;
 
-import prop.enquestes.excepcions.EnquestaNoExisteixException;
-import prop.enquestes.excepcions.InvalidFormatEnquesta;
-import prop.enquestes.excepcions.KmeansExcepcio;
-import prop.enquestes.excepcions.UsuariNoValid;
+import prop.enquestes.excepcions.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Diàleg per a la consulta de respostes i l'anàlisi de dades mitjançant Clustering.
- * <p>
- * Aquesta vista permet seleccionar una enquesta per visualitzar totes les respostes rebudes.
- * A més, ofereix la funcionalitat d'executar l'algorisme K-Means (Clustering) sobre aquestes
- * respostes, permetent a l'usuari configurar els paràmetres 'k' (nombre de clústers) i
- * 'maxIter' (iteracions màximes).
- * </p>
+ * Diàleg per a la consulta de respostes i l'anàlisi de dades mitjançant
+ * Clustering.
  */
 public class VistaConsultarRespostes extends JDialog {
 
     private CtrlPresentacio ctrl;
     private int idUsuari;
 
-    private JPanel contentPane = new JPanel();
-
-    private JComboBox<String> comboEnquestes = new JComboBox<>();
-    private JTextArea areaRespostes = new  JTextArea();
-    private JTextArea areaClustering = new  JTextArea();
-
-    private JTextField fieldK = new  JTextField();
-    private JTextField fieldIter = new  JTextField();
-    private JComboBox<String> comboKmeans = new JComboBox<>();
-
-    private JButton btnAplicarCluster = new JButton("Aplicar Clustering");
-    private JButton btnTancar = new JButton("Tancar");
-
-    /** Llista auxiliar per mapejar l'índex del ComboBox amb l'ID real de l'enquesta. */
+    private JComboBox<String> comboEnquestes;
     private List<Integer> idsEnquestes;
 
-    /**
-     * Constructor de la vista de consulta de respostes.
-     * Inicialitza la finestra, carrega les enquestes disponibles i configura els escoltadors.
-     *
-     * @param ctrl Referència al controlador de presentació.
-     * @param idUsuari Identificador de l'usuari actual (necessari per a permisos d'execució).
-     */
+    // Respostes
+    private DefaultListModel<String> respostesModel;
+    private JList<String> listRespostes;
+
+    // Clustering
+    private JTextField fieldK;
+    private JTextField fieldIter;
+    private JComboBox<String> comboAlgorisme;
+    private JLabel lblSilhouette;
+    private JTable tableClusters;
+    private DefaultTableModel modelClusters;
+
     public VistaConsultarRespostes(CtrlPresentacio ctrl, int idUsuari) {
+        super((Frame) null, "Consultes i Clustering", true);
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
 
-        setTitle("Consultes i Clustering");
-        setSize(700, 550);
-        setModal(true);
+        UIHelper.configureDialog(this, "Consultes i Clustering");
+        setSize(900, 700);
         setLocationRelativeTo(null);
 
-        initComponents();
+        initUI();
         carregarEnquestes();
-        initActions();
     }
 
-    /**
-     * Inicialitza els components gràfics de la interfície.
-     * Divideix la pantalla en dues àrees (respostes i clustering) mitjançant un JSplitPane
-     * i afegeix els controls de paràmetres a la part inferior.
-     */
-    private void initComponents() {
-        contentPane.setLayout(new BorderLayout(10, 10));
-        JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+    private void initUI() {
+        JPanel content = new JPanel(new BorderLayout(10, 10));
+        content.setBackground(UIHelper.COLOR_BACKGROUND);
+        content.setBorder(UIHelper.PADDING_MAIN);
+        setContentPane(content);
 
-        north.add(new JLabel("Enquesta: "));
+        // TOP: Selector
+        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        top.setBackground(UIHelper.COLOR_BACKGROUND);
+        top.add(new JLabel("Enquesta:"));
         comboEnquestes = new JComboBox<>();
         comboEnquestes.setPreferredSize(new Dimension(300, 25));
-        north.add(comboEnquestes);
+        comboEnquestes.addActionListener(e -> mostrarRespostes());
+        top.add(comboEnquestes);
+        content.add(top, BorderLayout.NORTH);
 
-        contentPane.add(north, BorderLayout.NORTH);
+        // CENTER: Split (Respostes | Clustering)
+        JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        split.setResizeWeight(0.4);
 
-        areaRespostes = new JTextArea();
-        areaRespostes.setEditable(false);
-        areaRespostes.setFont(new Font("Monospaced", Font.PLAIN, 11));
+        // -- Upper: Respostes --
+        JPanel pResp = new JPanel(new BorderLayout());
+        pResp.setBorder(BorderFactory.createTitledBorder("Respostes Rebudes"));
+        respostesModel = new DefaultListModel<>();
+        listRespostes = new JList<>(respostesModel);
+        listRespostes.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        pResp.add(new JScrollPane(listRespostes), BorderLayout.CENTER);
 
-        JScrollPane scrollResp = new JScrollPane(areaRespostes);
-        scrollResp.setBorder(BorderFactory.createTitledBorder("Respostes"));
+        split.setTopComponent(pResp);
 
-        areaClustering = new JTextArea();
-        areaClustering.setEditable(false);
-        areaClustering.setFont(new Font("Monospaced", Font.PLAIN, 11));
+        // -- Lower: Clustering --
+        JPanel pCluster = new JPanel(new BorderLayout(10, 10));
+        pCluster.setBorder(BorderFactory.createTitledBorder("Anàlisi de Dades (Clustering)"));
 
-        JScrollPane scrollCluster = new JScrollPane(areaClustering);
-        scrollCluster.setBorder(BorderFactory.createTitledBorder("Resultat Clustering"));
+        // Params
+        JPanel pParams = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        pParams.add(new JLabel("Clusters (k):"));
+        fieldK = new JTextField("2", 3);
+        pParams.add(fieldK);
 
-        JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollResp, scrollCluster);
-        split.setResizeWeight(0.6);
-        contentPane.add(split, BorderLayout.CENTER);
+        pParams.add(new JLabel("Max Iter:"));
+        fieldIter = new JTextField("50", 4);
+        pParams.add(fieldIter);
 
-        JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pParams.add(new JLabel("Algorisme:"));
+        comboAlgorisme = new JComboBox<>(new String[] { "KMeans", "kmeans++", "KMedoids" });
+        pParams.add(comboAlgorisme);
 
-        south.add(new JLabel("k:"));
-        fieldK = new JTextField("2", 5);
-        south.add(fieldK);
+        JButton btnRun = UIHelper.createButton("Executar Clustering", e -> aplicarClustering());
+        pParams.add(btnRun);
 
-        south.add(new JLabel("maxIter:"));
-        fieldIter = new JTextField("50", 5);
-        south.add(fieldIter);
+        pCluster.add(pParams, BorderLayout.NORTH);
 
-        south.add(new JLabel("Algorime a usar:"));
-        comboKmeans = new JComboBox<>(new String[] {
-                "KMeans",
-                "kmeans++",
-                "KMedoids"
-        });
+        // Results
+        JPanel pResCluster = new JPanel(new BorderLayout());
+        lblSilhouette = new JLabel("Silhouette Coefficient: -");
+        lblSilhouette.setFont(UIHelper.FONT_SUBTITLE);
+        lblSilhouette.setBorder(new EmptyBorder(0, 5, 5, 5));
+        pResCluster.add(lblSilhouette, BorderLayout.NORTH);
 
-        south.add(comboKmeans);
-        south.add(btnAplicarCluster);
-        south.add(btnTancar);
+        modelClusters = new DefaultTableModel(new String[] { "ID Usuari", "Cluster Assignat" }, 0);
+        tableClusters = new JTable(modelClusters);
+        pResCluster.add(new JScrollPane(tableClusters), BorderLayout.CENTER);
 
-        contentPane.add(south, BorderLayout.SOUTH);
+        pCluster.add(pResCluster, BorderLayout.CENTER);
 
-        add(contentPane);
+        split.setBottomComponent(pCluster);
+        content.add(split, BorderLayout.CENTER);
 
-        setContentPane(contentPane);
+        // BOTTOM: Close
+        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottom.setBackground(UIHelper.COLOR_BACKGROUND);
+        bottom.add(UIHelper.createButton("Tancar", e -> dispose()));
+        content.add(bottom, BorderLayout.SOUTH);
     }
 
-    /**
-     * Carrega les enquestes disponibles al desplegable.
-     * Analitza les cadenes de text rebudes del controlador per extreure l'ID numèric
-     * i l'emmagatzema a la llista auxiliar {@code idsEnquestes} per a la seva posterior referència.
-     */
     private void carregarEnquestes() {
         comboEnquestes.removeAllItems();
         idsEnquestes = new ArrayList<>();
@@ -137,128 +131,84 @@ public class VistaConsultarRespostes extends JDialog {
         idsEnquestes.add(-1);
 
         try {
-            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
+            List<String> enquestasInfo = ctrl.obtenirEnquestesAdministrades(idUsuari);
             for (String info : enquestasInfo) {
-                // Buscamos la línea exacta que empieza por "ID:"
                 String[] lineas = info.split("\n");
                 for (String linea : lineas) {
-                    linea = linea.trim();
-                    if (linea.startsWith("ID:")) {
+                    if (linea.trim().startsWith("ID:")) {
+                        // Parse ID
                         String part = linea.substring(3).trim();
+                        // Usually format is "ID: 1 - Title"
                         String idStr = part.split("-")[0].trim();
-                        int id = Integer.parseInt(idStr);
-                        comboEnquestes.addItem(linea); // SOLO esta línea
-                        idsEnquestes.add(id);
-                        break; // Muy importante
+                        try {
+                            int id = Integer.parseInt(idStr);
+                            comboEnquestes.addItem(linea);
+                            idsEnquestes.add(id);
+                        } catch (NumberFormatException ignored) {
+                        }
+                        break;
                     }
                 }
             }
-        } catch (EnquestaNoExisteixException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            UIHelper.showError(this, "Error carregant enquestes: " + e.getMessage());
         }
     }
 
-    /**
-     * Assigna les accions als components (botons i desplegable).
-     */
-    private void initActions() {
-        comboEnquestes.addActionListener(e -> mostrarRespostes());
-
-        btnAplicarCluster.addActionListener(e -> aplicarClustering());
-
-        btnTancar.addActionListener(e -> dispose());
-    }
-
-    /**
-     * Mostra les respostes de l'enquesta seleccionada.
-     * S'executa automàticament en canviar la selecció del ComboBox.
-     * Recupera l'ID de la llista auxiliar i demana les dades al controlador.
-     */
     private void mostrarRespostes() {
         int idx = comboEnquestes.getSelectedIndex();
-        if (idx < 0) return;
+        respostesModel.clear();
+        if (idx <= 0)
+            return;
 
         int idEnq = idsEnquestes.get(idx);
-
         try {
             List<String> llista = ctrl.obtenirRespostesEnquesta(idEnq);
-            StringBuilder sb = new StringBuilder();
-            for (String s : llista) sb.append(s).append("\n");
-
-            areaRespostes.setText(sb.toString());
-
+            if (llista.isEmpty()) {
+                respostesModel.addElement("No hi ha respostes.");
+            } else {
+                for (String s : llista)
+                    respostesModel.addElement(s);
+            }
         } catch (Exception ex) {
-            areaRespostes.setText("Error carregant respostes.");
+            UIHelper.showError(this, "Error obtenint respostes: " + ex.getMessage());
         }
     }
 
-    /**
-     * Executa l'algorisme de Clustering amb els paràmetres introduïts per l'usuari.
-     * Llegeix els valors dels camps de text (K i iteracions), crida al controlador
-     * i mostra el resultat (associació Usuari -> Grup) a l'àrea inferior.
-     * Gestiona possibles errors de format o lògica de negoci.
-     */
     private void aplicarClustering() {
         int idx = comboEnquestes.getSelectedIndex();
-        if (idx < 0) {
-            JOptionPane.showMessageDialog(this, "Selecciona una enquesta.");
+        if (idx <= 0) {
+            UIHelper.showWarning(this, "Selecciona una enquesta primer.");
             return;
         }
-
         int idEnq = idsEnquestes.get(idx);
 
-        int k = Integer.parseInt(fieldK.getText().trim());
-        int iter = Integer.parseInt(fieldIter.getText().trim());
-        String tipus = (String) comboKmeans.getSelectedItem();
-
         try {
+            int k = Integer.parseInt(fieldK.getText().trim());
+            int iter = Integer.parseInt(fieldIter.getText().trim());
+            if (k < 1 || iter < 1)
+                throw new NumberFormatException();
+
+            String tipus = (String) comboAlgorisme.getSelectedItem();
+
             var resultats = ctrl.aplicarClustering(idUsuari, idEnq, k, iter, tipus);
-			Map<Integer, Integer> result = resultats.getKey();
-			double coefSilhouete = resultats.getValue();
+            Map<Integer, Integer> result = resultats.getKey();
+            double coef = resultats.getValue();
 
-			Map<Integer, List<Integer>> clusters = new TreeMap<>();
+            // Update UI
+            lblSilhouette.setText(String.format("Silhouette Coefficient: %.4f", coef));
 
-			for (var entry : result.entrySet()) {
-				int usuari = entry.getKey();
-				int cluster = entry.getValue();
+            modelClusters.setRowCount(0);
+            for (Map.Entry<Integer, Integer> entry : result.entrySet()) {
+                modelClusters.addRow(new Object[] { entry.getKey(), "Cluster " + entry.getValue() });
+            }
 
-				clusters.computeIfAbsent(cluster, kx -> new ArrayList<>()).add(usuari);
-			}
+            UIHelper.showInfo(this, "Clustering finalitzat correctament.");
 
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Resultat clustering (clúster id = {id usuaris}):\n\n");
-			sb.append("Algorisme: ").append(tipus).append("\n\n");
-			sb.append("Coeficient Silhouette: ").append(coefSilhouete).append("\n");
-
-			for (var clusterEntry : clusters.entrySet()) {
-
-				sb.append("Cluster ").append(clusterEntry.getKey()).append(" = { ");
-
-				List<Integer> usuaris = clusterEntry.getValue();
-
-				for (int i = 0; i < usuaris.size(); ++i) {
-					sb.append(usuaris.get(i));
-					if (i < usuaris.size() - 1) sb.append(", ");
-				}
-
-				sb.append(" }\n");
-			}
-
-            areaClustering.setText(sb.toString());
-
-        } catch (KmeansExcepcio ex) {
-            JOptionPane.showMessageDialog(this, "Error en clustering: " + ex.getMessage());
-        } catch (EnquestaNoExisteixException ex) {
-            JOptionPane.showMessageDialog(this, "Error de l'enquesta: " + ex.getMessage());
-        } catch (InvalidFormatEnquesta ex) {
-            JOptionPane.showMessageDialog(this, "Error del format: " + ex.getMessage());
-        } catch (UsuariNoValid ex) {
-            JOptionPane.showMessageDialog(this, "Error de l'usuari: " + ex.getMessage());
+        } catch (NumberFormatException e) {
+            UIHelper.showWarning(this, "Paràmetres invàlids (han de ser enters positius).");
+        } catch (Exception e) {
+            UIHelper.showError(this, "Error en clustering: " + e.getMessage());
         }
     }
 }

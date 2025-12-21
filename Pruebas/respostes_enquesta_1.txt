@@ -2,12 +2,38 @@
 Títol: enquesta de cafe
 
 Pregunta 1: pregunta lliure
-   (No hi ha respostes)
+ - Usuari -1: 3
+ - Usuari 1: a
+ - Usuari -2: 5
+ - Usuari -3: 0
+ - Usuari -4: 2
+ - Usuari -5: 4
+ - Usuari -6: 3
+ - Usuari -7: 0
+ - Usuari -8: 2
+ - Usuari -9: 1
+ - Usuari -10: 5
+ - Usuari -11: 4
+ - Usuari -12: 1
+ - Usuari -13: 1
 
 Pregunta 2: multiple
 Opcions:
  * op1
  * op2
  * op3
-   (No hi ha respostes)
+ - Usuari -1: op2
+ - Usuari 1: op2
+ - Usuari -2: op3
+ - Usuari -3: op1
+ - Usuari -4: op2
+ - Usuari -5: op1
+ - Usuari -6: op2
+ - Usuari -7: op3
+ - Usuari -8: op1
+ - Usuari -9: op2
+ - Usuari -10: op1
+ - Usuari -11: op3
+ - Usuari -12: op3
+ - Usuari -13: op3
 

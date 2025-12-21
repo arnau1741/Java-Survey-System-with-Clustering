@@ -24,6 +24,7 @@ public class VistaImportarRespostes extends JDialog {
     private CtrlPresentacio ctrl;
     private int idUsuari;
     private int idEnquestaActual = -1;
+    private boolean isAdministeredMode;
 
     private static final String BASE_DIR = ".";
 
@@ -42,9 +43,10 @@ public class VistaImportarRespostes extends JDialog {
      * @param ctrl Referència al controlador de presentació.
      * @param idUsuari Identificador de l'usuari que realitza la importació.
      */
-    public VistaImportarRespostes(CtrlPresentacio ctrl, int idUsuari) {
+    public VistaImportarRespostes(CtrlPresentacio ctrl, int idUsuari, boolean isAdministeredMode) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
+        this.isAdministeredMode = isAdministeredMode;
 
         setTitle("Importar Respostes");
         setModal(true);
@@ -99,7 +101,6 @@ public class VistaImportarRespostes extends JDialog {
         btnSeleccionar.addActionListener(e -> seleccionarFitxer());
         buttonOK.addActionListener(e -> onImportar());
         buttonCancel.addActionListener(e -> {
-            ctrl.inicializarPresentacio();
             dispose();
         });
 
@@ -115,7 +116,6 @@ public class VistaImportarRespostes extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                ctrl.inicializarPresentacio();
                 dispose();
             }
         });
@@ -171,11 +171,11 @@ public class VistaImportarRespostes extends JDialog {
             }
             else if (rol.equals("MODERADOR")) {
                 // si l'usuari es moderador, mostra totes les enquestes
-                enquestes = ctrl.obtenirLlistaEnquestes();
+                enquestes = ctrl.obtenirEnquestesAdministrades(idUsuari);
             }
             else {
                 // per l'enquestador
-                enquestes = ctrl.obtenirLlistaEnquestes();
+                enquestes = ctrl.obtenirEnquestesAdministrades(idUsuari);
             }
 
             for (String info : enquestes) {
@@ -223,7 +223,6 @@ public class VistaImportarRespostes extends JDialog {
                     "Èxit",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            ctrl.inicializarPresentacio();
             dispose();
 
         } catch (FileNotFound e) {

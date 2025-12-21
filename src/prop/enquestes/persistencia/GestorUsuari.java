@@ -132,11 +132,11 @@ public class GestorUsuari {
                 case "MODERADOR":
                     rolState = new ModeradorState();
                     break;
-                default:
+                case "ENQUESTAT":
                     List<Integer> idsRealitzadesEnquestat = new ArrayList<>();
-                    idsRealitzades = (List<Integer>) map.get("enquestesRealitzades");
+                    idsRealitzadesEnquestat = (List<Integer>) map.get("enquestesRealitzades");
                     Map<Integer, Enquesta> enquestesRealitzadesEnquestat = new HashMap<>();
-                    for (Integer idEnquesta : idsRealitzades) {
+                    for (Integer idEnquesta : idsRealitzadesEnquestat) {
                         Enquesta e = totesEnquestes.get(idEnquesta);
                         if (e != null) {
                             enquestesRealitzadesEnquestat.put(idEnquesta, e);
@@ -144,6 +144,8 @@ public class GestorUsuari {
                     }
                     rolState = new EnquestatState(enquestesRealitzadesEnquestat);
                     break;
+                default:
+                    throw new IllegalArgumentException("Rol desconegut: " + rolStr);
             }
 
             Usuari u = new Usuari(id, nom, pass, email, rolState);

@@ -1,8 +1,6 @@
 package prop.enquestes.domini;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AdminState extends UsuariState {
     private Map<Integer, Enquesta> enquestesAdministrades;
@@ -169,4 +167,14 @@ public class AdminState extends UsuariState {
      * @return true si és admin, false en cas contrari
      */
     @Override public boolean esAdmin() { return true; }
+
+    @Override
+    public List<String> obtenirEnquestesPerRol() {
+        List<String> resultat = new ArrayList<>();
+
+        for (Enquesta e : enquestesAdministrades.values()) {
+            resultat.add("ID: " + e.getId() + " - " + e.getTitol());
+        }
+        return resultat;
+    }
 }

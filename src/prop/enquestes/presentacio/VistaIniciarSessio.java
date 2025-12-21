@@ -113,8 +113,8 @@ public class VistaIniciarSessio extends JDialog {
      * Tanca el diàleg i retorna el control a la pantalla inicial de l'aplicació.
      */
     private void onCancel() {
-        ctrl.inicializarPresentacio();
         dispose();
+        ctrl.inicializarPresentacio();
     }
 
     /**

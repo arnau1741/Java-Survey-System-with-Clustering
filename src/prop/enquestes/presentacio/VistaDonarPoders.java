@@ -102,7 +102,7 @@ public class VistaDonarPoders extends JDialog {
         try {
             List<String> enquestasInfo = null;
             if(rol.equals("MODERADOR")) {
-                enquestasInfo = ctrl.obtenirLlistaEnquestes();
+                enquestasInfo = ctrl.obtenirLlistaEnquestes(-1);
             }
             else {
                 enquestasInfo = ctrl.obtenirEnquestesAdministrades(idExecutor);
@@ -182,6 +182,11 @@ public class VistaDonarPoders extends JDialog {
         } catch (UsuariNoValid ex) {
             JOptionPane.showMessageDialog(this,
                     "Error de l'usuari: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error de l'enquesta: " + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }

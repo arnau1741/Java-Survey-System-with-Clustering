@@ -3,6 +3,7 @@ import java.io.StringReader;
 import java.util.*;
 
 import prop.enquestes.domini.*;
+import prop.enquestes.excepcions.UsuariNoValid;
 
 public class CtrlDominiMantUsuari {
     private Map<Integer, Usuari> usuaris;
@@ -175,17 +176,17 @@ public class CtrlDominiMantUsuari {
      */
     public int iniciarSessio(String nomUsuari, String password){
         //comprovem si existeix un usuari amb nomUsuari
-        if (!nomUsuariToID.containsKey(nomUsuari)) return -1;
+        if (!nomUsuariToID.containsKey(nomUsuari)) throw new IllegalArgumentException("L'usuari no existeix.");
         Integer id = nomUsuariToID.get(nomUsuari);
         String correctPassword = usuaris.get(id).getContrasenya();
         Usuari us = usuaris.get(id);
-        if(us.isBlocked()) return -3;
+        if(us.isBlocked()) throw new IllegalArgumentException("L'usuari està vetat.");
 
         //comprovem password
         if(correctPassword.equals(password)) {
             return us.getId();
         }
-        else return -2;
+        else throw new IllegalArgumentException("Contrasenya incorrecta.");
     }
 
     /**

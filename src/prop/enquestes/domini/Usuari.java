@@ -1,5 +1,6 @@
 package prop.enquestes.domini;
 
+import java.util.List;
 import java.util.Map;
 
 public class Usuari {
@@ -230,4 +231,8 @@ public class Usuari {
      * @return true si es enquestat, false en cas contrari
      */
     public boolean esEnquestat()   { return rol.esEnquestat(); }
+
+    public List<String> obtenirEnquestesPerRol() {
+        return rol.obtenirEnquestesPerRol();
+    }
 }

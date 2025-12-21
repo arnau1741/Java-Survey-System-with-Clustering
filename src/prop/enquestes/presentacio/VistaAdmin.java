@@ -6,9 +6,12 @@ import java.awt.*;
 /**
  * Vista principal per a l'usuari amb rol d'Administrador.
  * <p>
- * Aquesta classe representa el menú principal que veu un administrador en iniciar sessió.
- * Proporciona accés a totes les funcionalitats del sistema: gestió d'enquestes (crear, importar, exportar),
- * gestió d'usuaris (vetar/desvetar) i funcionalitats comunes (respondre, consultar perfil).
+ * Aquesta classe representa el menú principal que veu un administrador en
+ * iniciar sessió.
+ * Proporciona accés a totes les funcionalitats del sistema: gestió d'enquestes
+ * (crear, importar, exportar),
+ * gestió d'usuaris (vetar/desvetar) i funcionalitats comunes (respondre,
+ * consultar perfil).
  * </p>
  */
 public class VistaAdmin extends JFrame {
@@ -21,9 +24,8 @@ public class VistaAdmin extends JFrame {
     private JButton crearEnquestaButton = new JButton("Crear Enquesta");
     private JButton consultarEnquestaButton = new JButton("Consultar Enquesta");
     private JButton importarEnquestaButton = new JButton("Importar Enquesta");
-    private JButton exportarEnquestaButton = new JButton("Exportar Enquesta");
     private JButton respondreEnquestaButton = new JButton("Respondre Enquesta");
-    private JButton consultarUsuariButton  = new JButton("Consultar Usuari");
+    private JButton consultarUsuariButton = new JButton("Consultar Usuari");
     private JButton enquestesRealitzadesButton = new JButton("Enquestes Realitzades");
     private JButton enquestesAdministradesButton = new JButton("Enquestes Administrades");
     /// Faltaria decidir aquesta vista
@@ -32,12 +34,14 @@ public class VistaAdmin extends JFrame {
 
     /**
      * Constructor de la vista d'administrador.
-     * Inicialitza la finestra, guarda les dades de la sessió i configura els components gràfics.
+     * Inicialitza la finestra, guarda les dades de la sessió i configura els
+     * components gràfics.
      *
-     * @param ctrl Referència al controlador de presentació per comunicar-se amb la lògica.
-     * @param idUsuari Identificador únic de l'administrador actual.
+     * @param ctrl      Referència al controlador de presentació per comunicar-se
+     *                  amb la lògica.
+     * @param idUsuari  Identificador únic de l'administrador actual.
      * @param nomUsuari Nom de l'administrador.
-     * @param nomRol Rol de l'usuari (en aquest cas, "ADMIN").
+     * @param nomRol    Rol de l'usuari (en aquest cas, "ADMIN").
      */
     public VistaAdmin(CtrlPresentacio ctrl, int idUsuari, String nomUsuari, String nomRol) {
         this.ctrl = ctrl;
@@ -46,12 +50,13 @@ public class VistaAdmin extends JFrame {
         this.nomRol = nomRol;
 
         initComponents();
-        setupListeners();     // Configura els listeners dels botons
+        setupListeners(); // Configura els listeners dels botons
     }
 
     /**
      * Inicialitza i configura els components visuals de la interfície.
-     * Defineix el títol, la mida, la disposició dels botons (layout) i afegeix els panells al frame.
+     * Defineix el títol, la mida, la disposició dels botons (layout) i afegeix els
+     * panells al frame.
      */
     private void initComponents() {
         setTitle("Menu ADMIN");
@@ -67,7 +72,6 @@ public class VistaAdmin extends JFrame {
         panelBotones.add(crearEnquestaButton);
         panelBotones.add(consultarEnquestaButton);
         panelBotones.add(importarEnquestaButton);
-        panelBotones.add(exportarEnquestaButton);
         panelBotones.add(respondreEnquestaButton);
         panelBotones.add(consultarUsuariButton);
         panelBotones.add(enquestesRealitzadesButton);
@@ -102,9 +106,6 @@ public class VistaAdmin extends JFrame {
         });
         importarEnquestaButton.addActionListener(e -> {
             ctrl.mostrarImportarEnquesta(idUsuari);
-        });
-        exportarEnquestaButton.addActionListener(e -> {
-            ctrl.mostrarExportarEnquesta(idUsuari);
         });
         respondreEnquestaButton.addActionListener(e -> {
             ctrl.mostrarRespondreEnquesta(idUsuari);
