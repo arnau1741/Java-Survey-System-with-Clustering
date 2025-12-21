@@ -1,9 +1,13 @@
 package prop.enquestes.domini;
 
+import prop.enquestes.controladors.CtrlDominiMantEnquesta;
+
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class ModeradorState extends UsuariState {
+    //puntero a todas las encuestas del sistema
 
     /**
      * Nom del rol
@@ -132,4 +136,9 @@ public class ModeradorState extends UsuariState {
      */
     @Override
     public boolean esModerador() { return true; }
+
+    @Override
+    public List<String> obtenirEnquestesPerRol() {
+        return null;
+    }
 }

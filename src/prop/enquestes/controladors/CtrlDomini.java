@@ -1658,4 +1658,21 @@ public class CtrlDomini {
         esborrarRespostaEnquestaPrivate(idEnquesta, idUsuari);
         respondreEnquestaPrivate(idEnquesta, idUsuari, respostes);
     }
+
+    public List<String> obtenirEnquestesPerRol(int idUsuari){
+        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
+        if(u.esModerador()){
+            Map<Integer, Enquesta> totes = ctrlDominiMantEnquesta.getEnquestesObj();
+
+            List<String> resultat = new ArrayList<>();
+
+            for (Enquesta e : totes.values()) {
+                resultat.add("ID: " + e.getId() + " - " + e.getTitol());
+            }
+            return resultat;
+        }
+        return u.obtenirEnquestesPerRol();
+    }
 }
+
+

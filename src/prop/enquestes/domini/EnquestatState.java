@@ -1,8 +1,6 @@
 package prop.enquestes.domini;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class EnquestatState extends UsuariState {
     private Map<Integer, Enquesta> enquestesRealitzades;
@@ -156,4 +154,14 @@ public class EnquestatState extends UsuariState {
      */
     @Override
     public boolean esEnquestat() { return true; }
+
+    @Override
+    public List<String> obtenirEnquestesPerRol() {
+        List<String> resultat = new ArrayList<>();
+
+        for (Enquesta e : enquestesRealitzades.values()) {
+            resultat.add("ID: " + e.getId() + " - " + e.getTitol());
+        }
+        return resultat;
+    }
 }

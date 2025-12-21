@@ -2,6 +2,7 @@ package prop.enquestes.domini;
 
 import prop.enquestes.domini.Usuari;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public abstract class UsuariState {
@@ -133,4 +134,6 @@ public abstract class UsuariState {
      * @return true si es Moderador, false en cas contrari
      */
     public boolean esModerador() { return false; }
+
+    public abstract List<String> obtenirEnquestesPerRol();
 }
