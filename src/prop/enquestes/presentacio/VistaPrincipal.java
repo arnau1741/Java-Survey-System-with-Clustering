@@ -52,10 +52,7 @@ public class VistaPrincipal {
         panel.add(btnConvidat);
         panel.add(btnSortir);
 
-        JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        wrapper.add(panel);
-
-        ventana.add(wrapper);
+        ventana.add(panel);
 
         // === LISTENERS ===
 
