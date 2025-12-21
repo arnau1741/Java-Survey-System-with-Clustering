@@ -25,7 +25,7 @@ public class VistaAdmin extends JFrame {
     private JButton consultarEnquestaButton = new JButton("Consultar Enquesta");
     private JButton importarEnquestaButton = new JButton("Importar Enquesta");
     private JButton respondreEnquestaButton = new JButton("Respondre Enquesta");
-    private JButton consultarUsuariButton = new JButton("Consultar Usuari");
+    private JButton consultarUsuariButton = new JButton("Consultar Perfil");
     private JButton enquestesRealitzadesButton = new JButton("Enquestes Realitzades");
     private JButton enquestesAdministradesButton = new JButton("Enquestes Administrades");
     /// Faltaria decidir aquesta vista
@@ -111,7 +111,7 @@ public class VistaAdmin extends JFrame {
             ctrl.mostrarRespondreEnquesta(idUsuari);
         });
         consultarUsuariButton.addActionListener(e -> {
-            ctrl.mostrarConsultarPerfil();
+            ctrl.mostrarConsultarPerfil(idUsuari);
         });
         enquestesRealitzadesButton.addActionListener(e -> {
             String nomEnquesta = "Realitzada";
@@ -126,5 +126,9 @@ public class VistaAdmin extends JFrame {
             ctrl.inicializarPresentacio();
         });
 
+    }
+
+    public void hacerVisible(boolean b) {
+        setVisible(b);
     }
 }

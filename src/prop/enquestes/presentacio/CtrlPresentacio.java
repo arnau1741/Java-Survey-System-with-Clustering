@@ -77,6 +77,7 @@ public class CtrlPresentacio {
      * Mostra la vista per iniciar sessió i amaga la vista principal.
      */
     public void mostrarVistaIniciarSessio() {
+        vistaPrincipal.hacerVisible(false);
         vistaIniciarSessio = new VistaIniciarSessio(this);
         vistaIniciarSessio.setVisible(true);
     }
@@ -85,9 +86,9 @@ public class CtrlPresentacio {
      * Mostra la vista per registrar un nou usuari.
      */
     public void mostrarVistaCrearUsuari() {
+        vistaPrincipal.hacerVisible(false);
         vistaCrearUsuari = new VistaCrearUsuari(this);
         vistaCrearUsuari.setVisible(true);
-        vistaPrincipal.hacerVisible(false);
     }
 
     /**
@@ -95,9 +96,9 @@ public class CtrlPresentacio {
      */
     public void mostrarVistaConvidat() {
         int idUsuari = -1;
+        vistaPrincipal.hacerVisible(false);
         vistaConvidat = new VistaConvidat(this, idUsuari);
         vistaConvidat.setVisible(true);
-        vistaPrincipal.hacerVisible(false);
     }
 
     /**
@@ -129,8 +130,17 @@ public class CtrlPresentacio {
     /**
      * Obre la finestra per consultar el perfil d'usuari.
      */
-    public void mostrarConsultarPerfil() {
-        vistaConsultarPerfil = new VistaConsultarPerfil(this);
+    public void mostrarConsultarPerfil(int idUsuari) {
+        String rol = obtenirRol(idUsuari);
+        if (rol.equals("ENQUESTADOR")) {
+            vistaEnquestador.setVisible(false);
+        } else if (rol.equals("ADMIN")) {
+            vistaAdmin.setVisible(false);
+        } else if (rol.equals("MODERADOR")) {
+            vistaModerador.setVisible(false);
+        } else vistaEnquestat.setVisible(false);
+
+        vistaConsultarPerfil = new VistaConsultarPerfil(this, idUsuari);
         vistaConsultarPerfil.setVisible(true);
     }
 
@@ -353,7 +363,7 @@ public class CtrlPresentacio {
     /**
      * Obté la llista d'enquestes disponibles per a un usuari.
      * Si l'usuari està registrat, filtra aquelles que ja ha respost.
-     * 
+     *
      * @param idUsuari ID de l'usuari.
      * @return Llista d'enquestes disponibles.
      * @throws EnquestaNoExisteixException

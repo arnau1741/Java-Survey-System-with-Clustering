@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class VistaConsultarPerfil extends JDialog {
     private CtrlPresentacio ctrl;
+    private int idUsuari;
+
     private JPanel contentPane = new JPanel();
     private JComboBox<String> comboUsuaris = new JComboBox<>();
     private JTextArea perfil = new JTextArea();
@@ -29,9 +31,10 @@ public class VistaConsultarPerfil extends JDialog {
      *
      * @param ctrl Referència al controlador de presentació per obtenir les dades.
      */
-    public VistaConsultarPerfil(CtrlPresentacio ctrl) {
+    public VistaConsultarPerfil(CtrlPresentacio ctrl, int idUsuari) {
         super((Frame) null, "Consultar Perfil", true);
         this.ctrl = ctrl;
+        this.idUsuari = idUsuari;
 
         setSize(550, 350);
         setLocationRelativeTo(null);
@@ -173,6 +176,7 @@ public class VistaConsultarPerfil extends JDialog {
      */
     private void onCancel() {
         dispose();
+        ctrl.mostrarVistaPrincipalComuna(idUsuari);
     }
 
     /**

@@ -135,7 +135,7 @@ public class VistaModerador extends JFrame {
         });
 
         consultarPerfilButton.addActionListener(e -> {
-            ctrl.mostrarConsultarPerfil();
+            ctrl.mostrarConsultarPerfil(idUsuari);
         });
 
         modificarEnquestaButton.addActionListener(e -> {
