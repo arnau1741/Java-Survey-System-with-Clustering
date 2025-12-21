@@ -117,11 +117,9 @@ public class VistaExportarRespostes extends JDialog {
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
-        System.out.println("Enquestador Mode Enquestes: ENQUESTADOR");
         try {
             List<String> enquestasInfo;
             String rol = ctrl.obtenirRol(idUsuari);
-            System.out.println(rol);
 
             if ("ENQUESTAT".equals(rol) || ("ADMINISTRADOR".equals(rol) && !isAdministeredMode)) {
                 enquestasInfo = ctrl.obtenirEnquestesRespostesPerUsuari(idUsuari);
