@@ -66,7 +66,6 @@ public class CtrlPresentacio {
      * Fa visible la finestra principal.
      */
     public void inicializarPresentacio() {
-        // ctrlDomini.inicializarCtrlDomini();
         vistaPrincipal.hacerVisible(true);
     }
 
@@ -78,15 +77,16 @@ public class CtrlPresentacio {
      * Mostra la vista per iniciar sessió i amaga la vista principal.
      */
     public void mostrarVistaIniciarSessio() {
+        vistaPrincipal.hacerVisible(false);
         vistaIniciarSessio = new VistaIniciarSessio(this);
         vistaIniciarSessio.setVisible(true);
-        vistaPrincipal.hacerVisible(false);
     }
 
     /**
      * Mostra la vista per registrar un nou usuari.
      */
     public void mostrarVistaCrearUsuari() {
+        vistaPrincipal.hacerVisible(false);
         vistaCrearUsuari = new VistaCrearUsuari(this);
         vistaCrearUsuari.setVisible(true);
         vistaPrincipal.hacerVisible(false);
@@ -97,6 +97,7 @@ public class CtrlPresentacio {
      */
     public void mostrarVistaConvidat() {
         int idUsuari = -1;
+        vistaPrincipal.hacerVisible(false);
         vistaConvidat = new VistaConvidat(this, idUsuari);
         vistaConvidat.setVisible(true);
         vistaPrincipal.hacerVisible(false);

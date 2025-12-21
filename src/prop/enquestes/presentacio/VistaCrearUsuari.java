@@ -40,7 +40,7 @@ public class VistaCrearUsuari extends JDialog {
         super((Frame) null, "Crear Usuari", true);
         ctrl = c;
 
-        setSize(350, 250);
+        setSize(900, 700);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(3, 2, 10, 10));
 

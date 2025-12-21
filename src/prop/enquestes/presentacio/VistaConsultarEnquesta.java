@@ -34,7 +34,7 @@ public class VistaConsultarEnquesta extends JDialog {
         this.ctrlPresentacio = ctrlPresentacio;
 
         UIHelper.configureDialog(this, "Consultar Enquesta");
-        setSize(700, 600);
+        setSize(900, 700);
         setLocationRelativeTo(null);
         inicialitzarComponents();
         carregarEnquestes();

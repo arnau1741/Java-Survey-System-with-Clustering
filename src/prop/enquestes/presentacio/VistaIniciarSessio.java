@@ -43,7 +43,7 @@ public class VistaIniciarSessio extends JDialog {
         contentPane.add(buttonCancel);
 
 
-        setSize(300, 200);
+        setSize(900, 700);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(2,1,10,10));
         setContentPane(contentPane);
@@ -113,6 +113,7 @@ public class VistaIniciarSessio extends JDialog {
      * Tanca el diàleg i retorna el control a la pantalla inicial de l'aplicació.
      */
     private void onCancel() {
+        //ctrl.inicializarPresentacio();
         dispose();
         ctrl.inicializarPresentacio();
     }

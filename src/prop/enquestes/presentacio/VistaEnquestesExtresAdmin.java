@@ -60,8 +60,8 @@ public class VistaEnquestesExtresAdmin extends JFrame {
      * </p>
      */
     public void initComponents() {
-        setTitle("Menu enquesta" + nomEnquesta);
-        setSize(400, 400);
+        setTitle("Menú enquesta" + nomEnquesta);
+        setSize(900, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

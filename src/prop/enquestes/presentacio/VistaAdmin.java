@@ -59,8 +59,8 @@ public class VistaAdmin extends JFrame {
      * panells al frame.
      */
     private void initComponents() {
-        setTitle("Menu ADMIN");
-        setSize(500, 500);
+        setTitle("Menú Usuari - " + nomRol);
+        setSize(900, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

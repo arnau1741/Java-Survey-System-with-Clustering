@@ -106,7 +106,7 @@ public class VistaRespondreEnquesta extends JDialog {
             }
         }
         pack();
-        setSize(800, 600); // Reasonable default size
+        setSize(900, 700); // Reasonable default size
         setLocationRelativeTo(null);
     }
 
