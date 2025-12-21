@@ -61,7 +61,7 @@ public class VistaExportarRespostes extends JDialog {
         cargarEnquestes();
         initActions();
 
-        setSize(900, 700);
+        setSize(600, 500);
         setLocationRelativeTo(null);
     }
 

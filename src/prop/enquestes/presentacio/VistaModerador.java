@@ -58,7 +58,7 @@ public class VistaModerador extends JFrame {
      */
     private void initComponents() {
         setTitle("Menú Usuari - " + nomRol);
-        setSize(900, 700);
+        setSize(400, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

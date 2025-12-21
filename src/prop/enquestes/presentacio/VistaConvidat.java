@@ -40,7 +40,7 @@ public class VistaConvidat extends JFrame {
      */
     private void initComponents() {
         setTitle("Menú convidat");
-        setSize(900, 700);
+        setSize(400, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

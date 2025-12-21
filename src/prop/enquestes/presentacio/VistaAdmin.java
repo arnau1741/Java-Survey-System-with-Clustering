@@ -60,7 +60,7 @@ public class VistaAdmin extends JFrame {
      */
     private void initComponents() {
         setTitle("Menú Usuari - " + nomRol);
-        setSize(900, 700);
+        setSize(500, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

@@ -70,7 +70,7 @@ public class VistaImportarEnquesta extends JDialog {
         bottom.add(buttonCancel);
         contentPane.add(bottom, BorderLayout.SOUTH);
 
-        fieldPath.setPreferredSize(new Dimension(900, 700));
+        fieldPath.setPreferredSize(new Dimension(250, 28));
     }
 
     /**

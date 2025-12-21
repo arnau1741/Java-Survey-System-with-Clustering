@@ -33,7 +33,7 @@ public class VistaConsultarPerfil extends JDialog {
         super((Frame) null, "Consultar Perfil", true);
         this.ctrl = ctrl;
 
-        setSize(900, 700);
+        setSize(550, 350);
         setLocationRelativeTo(null);
         contentPane.setLayout(new BorderLayout(10, 10));
 

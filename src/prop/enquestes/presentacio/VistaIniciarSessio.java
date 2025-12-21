@@ -43,7 +43,7 @@ public class VistaIniciarSessio extends JDialog {
         contentPane.add(buttonCancel);
 
 
-        setSize(900, 700);
+        setSize(300, 200);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(2,1,10,10));
         setContentPane(contentPane);

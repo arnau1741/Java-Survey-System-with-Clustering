@@ -34,7 +34,7 @@ public class VistaCrearEnquesta extends JDialog {
 
         initUI();
         pack();
-        setSize(900, 700);
+        setSize(600, 500);
         setLocationRelativeTo(null);
     }
 
