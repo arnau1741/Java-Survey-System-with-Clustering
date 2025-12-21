@@ -168,6 +168,10 @@ public class VistaConsultarEnquesta extends JDialog {
         String sel = (String) comboEnquestes.getSelectedItem();
         if (sel == null || sel.equals("-- Selecciona --")) {
             resultat.setText("");
+            JOptionPane.showMessageDialog(this,
+                    "Has de seleccionar una enquesta",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
