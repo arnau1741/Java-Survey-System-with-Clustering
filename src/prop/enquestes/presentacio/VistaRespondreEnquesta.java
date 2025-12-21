@@ -88,18 +88,7 @@ public class VistaRespondreEnquesta extends JDialog {
         cargarEnquestes();
 
         if (idEnquestaActual != -1) {
-            // Auto-select if exists in combo (optional but good for consistency)
-            // But main goal is to START.
-            // actionComencar uses idEnquestaActual.
-            // We just need to check if valid.
-            // Let's hide selection panel and go straight to question?
-            // Or just simulate button click.
             try {
-                // Verify it exists in our loaded list or directly load it
-                // Since cargarEnquestes relies on string parsing, we might not pass the right
-                // string to combo.
-                // But actionComencar relies on idEnquestaActual.
-                // So we can just call actionComencar!
                 actionComencar();
             } catch (Exception e) {
                 // Fallback
