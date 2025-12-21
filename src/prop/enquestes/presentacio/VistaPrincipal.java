@@ -40,7 +40,7 @@ public class VistaPrincipal {
      * Login, Registre o Convidat segons l'acció de l'usuari.
      */
     private void inicializarComponentes() {
-        ventana.setSize(900, 700);
+        ventana.setSize(400, 300);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setLocationRelativeTo(null);
 
