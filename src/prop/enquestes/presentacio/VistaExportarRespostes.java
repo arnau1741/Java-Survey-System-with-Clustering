@@ -25,8 +25,8 @@ public class VistaExportarRespostes extends JDialog {
 
     private final CtrlPresentacio ctrl;
     private int idUsuari;
-    private boolean isAdministeredMode = false;
     private int idEnquestaActual = -1;
+    private boolean isAdministeredMode;
 
     private JPanel contentPane = new JPanel();
     private JComboBox<String> comboEnquestes = new JComboBox<>();
@@ -47,9 +47,6 @@ public class VistaExportarRespostes extends JDialog {
      * @param ctrl     Referència al controlador de presentació.
      * @param idUsuari Identificador de l'usuari que realitza l'acció.
      */
-    public VistaExportarRespostes(CtrlPresentacio ctrl, int idUsuari) {
-        this(ctrl, idUsuari, false);
-    }
 
     public VistaExportarRespostes(CtrlPresentacio ctrl, int idUsuari, boolean isAdministeredMode) {
         this.ctrl = ctrl;
@@ -120,20 +117,23 @@ public class VistaExportarRespostes extends JDialog {
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
+        System.out.println("Enquestador Mode Enquestes: ENQUESTADOR");
         try {
             List<String> enquestasInfo;
             String rol = ctrl.obtenirRol(idUsuari);
+            System.out.println(rol);
 
-            // Logic: Enquestat OR Admin in Respondent Mode -> Own Answers list
-            // Admin in Administered Mode -> Administered list
-            if ("ENQUESTAT".equals(rol) || !isAdministeredMode) {
+            if ("ENQUESTAT".equals(rol) || ("ADMINISTRADOR".equals(rol) && !isAdministeredMode)) {
                 enquestasInfo = ctrl.obtenirEnquestesRespostesPerUsuari(idUsuari);
+            }
+            else if (rol.equals("ENQUESTADOR")) {
+                enquestasInfo = ctrl.obtenirEnquestesAdministrades(idUsuari);
             } else {
                 enquestasInfo = ctrl.obtenirEnquestesAdministrades(idUsuari);
             }
 
             for (String info : enquestasInfo) {
-                if ("ENQUESTAT".equals(rol) || !isAdministeredMode) {
+                if ("ENQUESTAT".equals(rol) || ("ADMINISTRADOR".equals(rol) && !isAdministeredMode)) {
                     comboEnquestes.addItem(info);
                 } else {
                     // Administered/List format usually needs ID extraction if formatted weirdly
@@ -201,8 +201,8 @@ public class VistaExportarRespostes extends JDialog {
     private void mostrarInfoRespostes() {
         try {
             List<String> res;
-            // Preview logic same as Export logic
-            if ("ENQUESTAT".equals(ctrl.obtenirRol(idUsuari)) || !isAdministeredMode) {
+            String rol = ctrl.obtenirRol(idUsuari);
+            if ("ENQUESTAT".equals(rol) || ("ADMINISTRADOR".equals(rol) && !isAdministeredMode)) {
                 res = ctrl.exportarRespostesUsuari(idEnquestaActual, idUsuari);
             } else {
                 res = ctrl.obtenirRespostesEnquesta(idEnquestaActual);
@@ -266,7 +266,8 @@ public class VistaExportarRespostes extends JDialog {
             try {
                 List<String> contingut;
                 // Determine which export method to use based on Role/Mode
-                if ("ENQUESTAT".equals(ctrl.obtenirRol(idUsuari)) || !isAdministeredMode) {
+                String rol = ctrl.obtenirRol(idUsuari);
+                if ("ENQUESTAT".equals(rol) || ("ADMINISTRADOR".equals(rol) && !isAdministeredMode)) {
                     contingut = ctrl.exportarRespostesUsuari(idEnquestaActual, idUsuari);
                 } else {
                     contingut = ctrl.exportarRespostesEnquesta(idEnquestaActual);

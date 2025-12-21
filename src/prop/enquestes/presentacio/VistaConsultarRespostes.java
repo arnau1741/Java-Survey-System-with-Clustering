@@ -131,7 +131,7 @@ public class VistaConsultarRespostes extends JDialog {
         idsEnquestes.add(-1);
 
         try {
-            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
+            List<String> enquestasInfo = ctrl.obtenirEnquestesAdministrades(idUsuari);
             for (String info : enquestasInfo) {
                 String[] lineas = info.split("\n");
                 for (String linea : lineas) {

@@ -98,7 +98,7 @@ public class VistaConsultarEnquesta extends JDialog {
         comboEnquestes.addItem("-- Selecciona --");
 
         try {
-            List<String> enquestesInfo = ctrlPresentacio.obtenirLlistaEnquestes();
+            List<String> enquestesInfo = ctrlPresentacio.obtenirLlistaEnquestes(-1);
 
             for (String info : enquestesInfo) {
                 String[] linies = info.split("\n");

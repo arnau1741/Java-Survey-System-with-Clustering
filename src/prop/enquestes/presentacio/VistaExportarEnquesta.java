@@ -134,14 +134,14 @@ public class VistaExportarEnquesta extends JDialog {
             // Role Admin + !isAdministeredMode -> Own Answers
             String rol = ctrl.obtenirRol(idUsuari);
 
-            if ("ENQUESTAT".equals(rol) || !isAdministeredMode) {
+            if ("ENQUESTAT".equals(rol) || ("ADMINISTRADOR".equals(rol) && !isAdministeredMode)) {
                 enquestasInfo = ctrl.obtenirEnquestesRespostesPerUsuari(idUsuari);
             } else {
                 enquestasInfo = ctrl.obtenirEnquestesAdministrades(idUsuari);
             }
 
             for (String info : enquestasInfo) {
-                if ("ENQUESTAT".equals(rol) || !isAdministeredMode) {
+                if ("ENQUESTAT".equals(rol) || ("ADMINISTRADOR".equals(rol) && !isAdministeredMode)) {
                     comboEnquestes.addItem(info);
                 } else {
                     String[] lineas = info.split("\n");

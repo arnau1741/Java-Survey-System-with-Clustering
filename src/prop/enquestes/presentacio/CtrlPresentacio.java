@@ -232,7 +232,7 @@ public class CtrlPresentacio {
      * @param idUsuari ID de l'usuari que importa.
      */
     public void mostrarImportarRespostes(int idUsuari) {
-        vistaImportarRespostes = new VistaImportarRespostes(this, idUsuari);
+        vistaImportarRespostes = new VistaImportarRespostes(this, idUsuari, false);
         vistaImportarRespostes.setVisible(true);
     }
 
@@ -349,15 +349,17 @@ public class CtrlPresentacio {
         return Perfil;
     }
 
+
     /**
-     * Obté totes les enquestes disponibles al sistema amb les seves preguntes i
-     * respostes.
-     *
-     * @return Llista d'Strings representant totes les enquestes.
-     * @throws EnquestaNoExisteixException Si no hi ha enquestes disponibles.
+     * Obté la llista d'enquestes disponibles per a un usuari.
+     * Si l'usuari està registrat, filtra aquelles que ja ha respost.
+     * 
+     * @param idUsuari ID de l'usuari.
+     * @return Llista d'enquestes disponibles.
+     * @throws EnquestaNoExisteixException
      */
-    public List<String> obtenirLlistaEnquestes() throws EnquestaNoExisteixException {
-        return ctrlDomini.consultarEnquestesAmbPreguntesIRespostes();
+    public List<String> obtenirLlistaEnquestes(int idUsuari) throws EnquestaNoExisteixException {
+        return ctrlDomini.consultarEnquestesAmbPreguntesIRespostes(idUsuari);
     }
 
     /**
@@ -369,7 +371,7 @@ public class CtrlPresentacio {
      *                                     aquestes no existeixen.
      */
     public List<String> obtenirEnquestesAdministrades(int idUsuari) throws EnquestaNoExisteixException {
-        return ctrlDomini.obtenirEnquestesAdministrades(idUsuari);
+        return ctrlDomini.obtenirEnquestesPerRol(idUsuari);
     }
 
     /**

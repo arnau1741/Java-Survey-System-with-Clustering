@@ -424,7 +424,8 @@ public class VistaRespondreEnquesta extends JDialog {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
         try {
-            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
+            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes(idUsuari);
+            System.out.println(enquestasInfo);
             for (String info : enquestasInfo) {
                 String[] lineas = info.split("\n");
                 for (String linea : lineas) {

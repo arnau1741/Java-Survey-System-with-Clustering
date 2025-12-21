@@ -253,7 +253,7 @@ public class VistaModificarEnquesta extends JDialog {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
         try {
-            List<String> enquestasInfo = ctrl.obtenirLlistaEnquestes();
+            List<String> enquestasInfo = ctrl.obtenirEnquestesAdministrades(idUsuariActual);
             for (String info : enquestasInfo) {
                 String[] lineas = info.split("\n");
                 for (String linea : lineas) {

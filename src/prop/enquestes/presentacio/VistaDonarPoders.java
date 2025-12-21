@@ -102,7 +102,7 @@ public class VistaDonarPoders extends JDialog {
         try {
             List<String> enquestasInfo = null;
             if(rol.equals("MODERADOR")) {
-                enquestasInfo = ctrl.obtenirLlistaEnquestes();
+                enquestasInfo = ctrl.obtenirLlistaEnquestes(-1);
             }
             else {
                 enquestasInfo = ctrl.obtenirEnquestesAdministrades(idExecutor);

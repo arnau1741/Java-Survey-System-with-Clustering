@@ -131,7 +131,7 @@ public class VistaModerador extends JFrame {
         });
 
         exportarRespostesButton.addActionListener(e -> {
-            ctrl.mostrarExportarRespostes(idUsuari);
+            ctrl.mostrarExportarRespostes(idUsuari, false);
         });
 
         consultarPerfilButton.addActionListener(e -> {
