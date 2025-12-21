@@ -89,6 +89,7 @@ public class CtrlPresentacio {
     public void mostrarVistaCrearUsuari() {
         vistaCrearUsuari = new VistaCrearUsuari(this);
         vistaCrearUsuari.setVisible(true);
+        vistaPrincipal.hacerVisible(false);
     }
 
     /**
@@ -98,6 +99,7 @@ public class CtrlPresentacio {
         int idUsuari = -1;
         vistaConvidat = new VistaConvidat(this, idUsuari);
         vistaConvidat.setVisible(true);
+        vistaPrincipal.hacerVisible(false);
     }
 
     /**
