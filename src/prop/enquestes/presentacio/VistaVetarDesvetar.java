@@ -39,7 +39,7 @@ public class VistaVetarDesvetar extends JDialog {
 
         setTitle("Gestionar Vetos d'Usuaris");
         setModal(true);
-        setSize(900, 700);
+        setSize(380, 200);
         setLocationRelativeTo(null);
 
         initLayout();
