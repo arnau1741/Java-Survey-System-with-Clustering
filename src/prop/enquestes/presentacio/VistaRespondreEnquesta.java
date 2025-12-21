@@ -260,8 +260,7 @@ public class VistaRespondreEnquesta extends JDialog {
     private void actionSeguent() {
         String resp = extraerRespostaUI();
         if (resp == null || resp.trim().isEmpty()) {
-            UIHelper.showWarning(this, "Siusplau, respon la pregunta per continuar.");
-            return;
+            resp = "";
         }
         respostes.set(preguntaActual, resp);
 
@@ -287,8 +286,7 @@ public class VistaRespondreEnquesta extends JDialog {
         // Save last answer
         String resp = extraerRespostaUI();
         if (resp == null || resp.trim().isEmpty()) {
-            UIHelper.showWarning(this, "Siusplau, respon la pregunta per finalitzar.");
-            return;
+            resp = "";
         }
         respostes.set(preguntaActual, resp);
 
