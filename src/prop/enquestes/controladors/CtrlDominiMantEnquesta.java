@@ -110,19 +110,6 @@ public class CtrlDominiMantEnquesta {
     }
 
     /**
-     * Funcio per mostrar totes les enquestes
-     */
-    public void mostrarEnquestes() {
-        if (enquestes.isEmpty()) {
-            System.out.println("No hay encuestas disponibles.");
-        } else {
-            for (Enquesta e : enquestes.values()) {
-                System.out.println(e);
-            }
-        }
-    }
-
-    /**
      * Obte totes les enquestes existents
      * @return un map d'enquestes amb primer parametre com l'id i el segon com l'enquesta
      */
@@ -150,39 +137,6 @@ public class CtrlDominiMantEnquesta {
         } catch (IllegalArgumentException e) {
             throw new InvalidFormatEnquesta("No s'ha pogut crear l'enquesta: " + e.getMessage());
         }
-    }
-
-    /**
-     *  Funcio que importa una enquesta d'un fitxer txt
-     * @param idUsuari que importa l'enquesta
-     * @param path que conte el fitxer de l'enquesta
-     * @return retorna el numero de preguntes que te la nova enquesta importada
-     * @throws InvalidFormatEnquesta Si el format de l'enquesta és invàlid
-     * @throws FileNotFound Si no es troba el fitxer a la ruta especificada
-     */
-    public int importarEnquesta(int idUsuari, String path) throws InvalidFormatEnquesta, FileNotFound {
-        // llegir fitxer
-        List<String> enquestaTxt = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                enquestaTxt.add(line);
-            }
-        } catch (IOException e) {
-            throw new FileNotFound("No s'ha pogut trobar el fitxer a la ruta especificada: " + path);
-        }
-
-        // extreure titol, descripcio i preguntes
-        String titol = enquestaTxt.get(0);
-        String descripcio = enquestaTxt.get(1);
-        List<String> preguntesTxt = new ArrayList<>();
-        for (int i = 2; i < enquestaTxt.size(); i++) {
-            preguntesTxt.add(enquestaTxt.get(i));
-        }
-
-        // crear enquesta
-        int numPreguntes = novaEnquesta(titol, descripcio, idUsuari, preguntesTxt);
-        return numPreguntes;
     }
 
     /**
@@ -268,14 +222,6 @@ public class CtrlDominiMantEnquesta {
         //setearla como nueva pregunta
 
         return 1; // Èxit
-    }
-
-    /**
-     * Retorna una llista amb tots els ids de les enquestes existents
-     * @return llista d'ids d'enquestes
-     */
-    public List<Integer> getIdsEnquestes() {
-        return new ArrayList<>(enquestes.keySet());
     }
 
     /**

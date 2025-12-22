@@ -1053,30 +1053,6 @@ public class CtrlDomini {
     }
 
     /**
-     * Funcio per a obtenir les enquestes administrades per un usuari
-     * 
-     * @param idUsuari identificador de l'usuari
-     * @return llista de strings amb les enquestes administrades
-     */
-    public List<String> obtenirEnquestesAdministrades(int idUsuari) {
-        Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
-
-        Map<Integer, Enquesta> map = new HashMap<>();
-        if (u.esModerador()) {
-            map = ctrlDominiMantEnquesta.getEnquestesObj();
-        } else {
-            map = u.getRol().getEnquestesAdministrades();
-        }
-
-        List<String> resultat = new ArrayList<>();
-
-        for (Enquesta e : map.values()) {
-            resultat.add("ID: " + e.getId() + " - " + e.getTitol());
-        }
-        return resultat;
-    }
-
-    /**
      * Funcio per a comprovar si una enquesta té resposta d'un usuari
      * 
      * @param enq      Enquesta

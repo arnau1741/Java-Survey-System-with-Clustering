@@ -108,15 +108,6 @@ public class CtrlDominiMantUsuari {
     }
 
     /**
-     * Comprova si existeix un usuari amb l'identificador especificat
-     * @param IdUsuari de l'usuari a cercar
-     * @return true si existeix, false en cas contrari
-     */
-    public boolean existeixUsuariId(int IdUsuari){
-        return usuaris.containsKey(IdUsuari);
-    }
-
-    /**
      * Comprova si un email ja està en ús per algun usuari
      * @param email
      * @return true si l'email ja està en ús, false en cas contrari

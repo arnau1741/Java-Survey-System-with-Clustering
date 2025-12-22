@@ -15,14 +15,6 @@ public abstract class Resposta {
     }
 
     /**
-     * Mètode per saber si la resposta està contestada
-     * @return true si està contestada, false en cas contrari
-     */
-    public boolean EsContestat() {
-        return contestat;
-    }
-
-    /**
      * Mètode per establir si la resposta està contestada
      * @param contestat true si està contestada, false en cas contrari
      */

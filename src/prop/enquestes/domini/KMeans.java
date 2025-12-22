@@ -112,28 +112,6 @@ public class KMeans {
     }
 
     /**
-     * Obté els centroides després de l'ajust
-     * 
-     * @return llista de centroides
-     * @throws IllegalStateException si fit() no s'ha cridat encara
-     */
-    public List<List<Resposta>> getCentroids() {
-        if (centroids == null) {
-            throw new IllegalStateException("Call fit() first.");
-        }
-        return centroids;
-    }
-    /*
-     * public int predict(List<Resposta> point) {
-     * if (centroids == null) {
-     * throw new IllegalStateException("Primero llama a fit().");
-     * }
-     * 
-     * return closestCentroid(point, centroids);
-     * }
-     */
-
-    /**
      * Inicialitza els centroides seleccionant k punts aleatoris de les dades
      * 
      * @param data les dades d'entrada (Enquesta)

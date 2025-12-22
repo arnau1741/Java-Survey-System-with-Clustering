@@ -88,29 +88,6 @@ public class KMedoids {
     }
 
     /**
-     * Retorna els medoids com a llista de punts (cada punt = List&lt;Resposta&gt; real).
-     * @return Llista de medoids
-     */
-    public List<List<Resposta>> getMedoids(Enquesta data) {
-        if (medoidIdx == null)
-            throw new IllegalStateException("Call fit() first.");
-        List<List<Resposta>> res = new ArrayList<>();
-        for (int idx : medoidIdx)
-            res.add(data.getRespostesUsuariMatriu(idx));
-        return res;
-    }
-
-    /**
-     * Retorna els índexos dels medoids dins l'enquesta.
-     * @return Array d'índexos dels medoids
-     */
-    public int[] getMedoidIndices() {
-        if (medoidIdx == null)
-            throw new IllegalStateException("Call fit() first.");
-        return medoidIdx;
-    }
-
-    /**
      * Retorna el coeficient de Silhouete del clustering realitzat.
      * @return Coeficient de Silhouete
      */

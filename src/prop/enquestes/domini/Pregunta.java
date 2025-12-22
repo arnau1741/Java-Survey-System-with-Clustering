@@ -186,32 +186,6 @@ public class Pregunta {
     }
 
     /**
-     * Calcula la moda de les respostes per a preguntes UNICA, MULTIPLE, ORDENADA
-     * @return la resposta moda
-     * @throws UnsupportedOperationException si la pregunta no és d'aquests tipus
-     * @throws IllegalStateException si no es pot calcular la moda
-     */
-    public Resposta getRespostaModa(){
-        if (tipus == 1 ||tipus == 2 || tipus==3){
-            Map<Resposta, Integer> freqMap = new HashMap<>();
-            for (Resposta r : respostes.values()) {
-                freqMap.put(r, freqMap.getOrDefault(r, 0) + 1);
-            }
-            Resposta moda = null;
-            int maxFreq = 0;
-            for (Map.Entry<Resposta, Integer> entry : freqMap.entrySet()) {
-                if (entry.getValue() > maxFreq) {
-                    maxFreq = entry.getValue();
-                    moda = entry.getKey();
-                }
-            }
-            return moda;
-        } else {
-            throw new UnsupportedOperationException("No es pot calcular la moda per a aquest tipus de pregunta.");
-        }
-    }
-
-    /**
      * Elimina totes les respostes de la pregunta
      */
     public void eliminarTotesRespostes() {
