@@ -19,7 +19,6 @@ public class VistaConsultarEnquesta extends JDialog {
     private CtrlPresentacio ctrlPresentacio;
     private JPanel contentPane = new JPanel();
     private JEditorPane resultat;
-    private JButton buttonOK =  new JButton("OK");
     private JButton buttonCancel =  new JButton("Cancel");
     private JComboBox<String> comboEnquestes;
 
@@ -76,10 +75,8 @@ public class VistaConsultarEnquesta extends JDialog {
         // ========== BOTONS (BOTTOM) ==========
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-        buttonOK = new JButton("Consultar");
         buttonCancel = new JButton("Tancar");
 
-        bottom.add(buttonOK);
         bottom.add(buttonCancel);
 
         contentPane.add(bottom, BorderLayout.SOUTH);
@@ -124,17 +121,6 @@ public class VistaConsultarEnquesta extends JDialog {
      */
     private void configurarListeners() {
 
-        // Botó consultar
-        buttonOK.addActionListener(e -> {
-            try {
-                consultar();
-            } catch (EnquestaNoExisteixException ex) {
-                JOptionPane.showMessageDialog(this,
-                        "Error: " + ex.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        });
 
         // Botó tancar
         buttonCancel.addActionListener(e -> dispose());
