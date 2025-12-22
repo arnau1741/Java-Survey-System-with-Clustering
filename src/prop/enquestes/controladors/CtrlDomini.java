@@ -1065,7 +1065,7 @@ public class CtrlDomini {
         }
 
         if (!checkRequerimentsPassword(password))
-            throw new IllegalArgumentException("Contrasenya no compleix els requisits");
+            throw new IllegalArgumentException("Contrasenya no compleix els requisits. Ha de tenir 6 digits");
 
         if (ctrlDominiMantUsuari.emailUsat(email))
             throw new IllegalArgumentException("Email ja està en ús");
@@ -1101,7 +1101,7 @@ public class CtrlDomini {
         }
 
         if (!checkRequerimentsPassword(password))
-            throw new IllegalArgumentException("Contrasenya no compleix els requisits");
+            throw new IllegalArgumentException("Contrasenya no compleix els requisits. Ha de tenir 6 digits");
 
         if (ctrlDominiMantUsuari.emailUsat(email))
             throw new IllegalArgumentException("Email ja està en ús");
