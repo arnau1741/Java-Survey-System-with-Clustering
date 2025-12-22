@@ -202,9 +202,46 @@ public class VistaExportarEnquesta extends JDialog {
         try {
             List<String> infoEnquesta = ctrl.obtenirInfoEnquesta(idEnquestaActual);
             StringBuilder sb = new StringBuilder();
-            for (String line : infoEnquesta) {
-                sb.append(line).append("\n");
+            boolean enPreguntes = false;
+            int preguntasMostradas = 0;
+            int maxPreguntas = 5;
+            boolean esTipoPregunta = false;
+            int preguntaNumero = 1;
+
+            for (String s : infoEnquesta) {
+                // Primero añadimos toda la información hasta "Preguntes:"
+                if (!enPreguntes) {
+                    sb.append(s).append("\n");
+                    if (s.trim().equals("Preguntes:")) {
+                        enPreguntes = true;
+                    }
+                    continue;
+                }
+                // Ahora estamos en la sección de preguntas
+                if (s.startsWith("- ")) {
+                    String contenido = s.substring(2).trim();
+
+                    // Verificar si es un tipo de pregunta
+                    if (contenido.equals("NUMERICA") || contenido.equals("UNICA") ||
+                            contenido.equals("ORDENADA") || contenido.equals("MULTIPLE") ||
+                            contenido.equals("LLIURE")) {
+                        esTipoPregunta = true;
+                        continue;
+                    }
+
+                    if (esTipoPregunta) {
+                        esTipoPregunta = false;
+                        preguntasMostradas++;
+
+                        if (preguntasMostradas <= maxPreguntas) {
+                            sb.append(preguntaNumero).append(". ").append(contenido).append("\n");
+                            preguntaNumero++;
+                        }
+                        // Si ya mostramos el máximo, no hacemos nada más con esta pregunta
+                    }
+                }
             }
+            if(preguntasMostradas != 0 && preguntasMostradas > maxPreguntas) sb.append("...\n");
             areaPreview.setText(sb.toString());
         } catch (EnquestaNoExisteixException ex) {
             areaPreview.setText("Error al carregar la informació de l'enquesta. Info: " + ex.getMessage());
