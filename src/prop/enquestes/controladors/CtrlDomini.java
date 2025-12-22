@@ -116,16 +116,17 @@ public class CtrlDomini {
         if (u.isBlocked())
             throw new UsuariNoValid("L'usuari està vetat"); // Usuari vetat
 
-        if (!u.esAdmin() && !u.esEnquestat()) {
+        if (!u.esAdmin() && !u.esEnquestat() && !u.esEnquestador()) {
             throw new UsuariNoValid("Credencials insuficients"); // Credencials insuficients
         }
 
         Enquesta enq;
         enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
-        //if (u.teEnquestaRealitzada(idEnquesta))
-        //   throw new UsuariNoValid("L'enquesta ja ha estat realitzada per l'usuari"); // Enquesta ja realitzada
-
+        if (u.esEnquestador()){
+            respondreEnquestaPrivate(idEnquesta, -1, respostesUsuari);
+            return;
+        }
         respondreEnquestaPrivate(idEnquesta, idUsuari, respostesUsuari);
 
         u.demanarAfegirEnquestaRealitzada(enq);
