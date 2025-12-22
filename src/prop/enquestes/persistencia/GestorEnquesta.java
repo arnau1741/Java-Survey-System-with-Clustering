@@ -114,14 +114,14 @@ public class GestorEnquesta {
      * @return Resposta
      */
     private Resposta crearResposta(int tipus, Object val) {
-        if (val == null)
-            return null;
+        //if (val == null)
+        //    return null;
 
         // 0: NUMERICA, 1: UNICA, 2: ORDENADA, 3: MULTIPLE, 4: LLIURE
         try {
             if (tipus == 0) { // NUMERICA
-                if (val instanceof Number) {
-                    return new RespostaNumerica(((Number) val).doubleValue());
+                if (val instanceof Number || val == null) {
+                    return new RespostaNumerica(val == null ? null : ((Number) val).doubleValue());
                 }
             } else if (tipus == 1) { // UNICA
                 if (val instanceof Number) {
