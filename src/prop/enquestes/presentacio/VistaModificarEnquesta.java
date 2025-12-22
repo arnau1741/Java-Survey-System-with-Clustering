@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * Diàleg per a la gestió i modificació d'enquestes.
- * <p>
  * Aquesta vista ofereix funcionalitats per a:
  * <ul>
  * <li>Consultar informació detallada d'una enquesta existent.</li>
@@ -19,7 +18,6 @@ import java.util.List;
  * <li>Eliminar completament una enquesta.</li>
  * <li>Eliminar respostes d'un usuari concret en una enquesta.</li>
  * </ul>
- * </p>
  */
 public class VistaModificarEnquesta extends JDialog {
     private CtrlPresentacio ctrl;

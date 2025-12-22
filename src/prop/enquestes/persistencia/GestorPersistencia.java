@@ -28,7 +28,7 @@ public class GestorPersistencia {
 
     /**
      * Carrega i retorna els usuaris utilitzant el gestor d'usuaris.
-     * @return Map<Integer, Usuari>
+     * @return Map&lt;Integer, Usuari&gt;
      */
     public Map<Integer, Usuari> carregarUsuaris( Map<Integer, Enquesta> totesEnquestes) {
         return gestorUsuari.carregarUsuaris(totesEnquestes);
@@ -44,7 +44,7 @@ public class GestorPersistencia {
 
     /**
      * Carrega i retorna les enquestes utilitzant el gestor d'enquestes.
-     * @return Map<Integer, Enquesta>
+     * @return Map&lt;Integer, Enquesta&gt;
      */
     public Map<Integer, Enquesta> carregarEnquestes() {
         return gestorEnquesta.carregarEnquestes();

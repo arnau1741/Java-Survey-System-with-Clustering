@@ -48,7 +48,7 @@ public class GestorEnquesta {
 
     /**
      * Carrega les enquestes des del sistema de fitxers en format JSON.
-     * @return Map<Integer, Enquesta>
+     * @return Map&lt;Integer, Enquesta&gt;
      */
     public Map<Integer, Enquesta> carregarEnquestes() {
         Map<Integer, Enquesta> enquestes = new HashMap<>();

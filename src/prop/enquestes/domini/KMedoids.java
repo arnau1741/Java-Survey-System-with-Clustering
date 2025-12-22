@@ -88,7 +88,7 @@ public class KMedoids {
     }
 
     /**
-     * Retorna els medoids com a llista de punts (cada punt = List<Resposta> real).
+     * Retorna els medoids com a llista de punts (cada punt = List&lt;Resposta&gt; real).
      * @return Llista de medoids
      */
     public List<List<Resposta>> getMedoids(Enquesta data) {

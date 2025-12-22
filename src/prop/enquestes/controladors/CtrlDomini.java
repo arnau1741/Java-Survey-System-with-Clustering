@@ -97,7 +97,6 @@ public class CtrlDomini {
      * @param idUsuari
      * @param respostesUsuari
      * @throws InvalidFormatResposta
-     * @throws InvalidFormatEnquesta
      * @throws EnquestaNoExisteixException
      * @throws UsuariNoValid
      */
@@ -1320,7 +1319,7 @@ public class CtrlDomini {
      * @param idUsuari   identificador de l'usuari
      * @return respostesStr, llista de strings amb les preguntes i respostes de
      *         l'usuari
-     * @throws EnquestaNoExisteixException si l'enquesta no existeix
+     * @throws NoSuchElementException si l'enquesta no coincideix de parametre
      * @throws UsuariNoHaResposEnquesta    si l'usuari no ha respost l'enquesta amb
      *                                     id donat
      */

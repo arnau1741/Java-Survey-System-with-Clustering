@@ -49,15 +49,14 @@ public class VistaEnquestesExtresAdmin extends JFrame {
 
     /**
      * Inicialitza i configura els components visuals.
-     * <p>
      * Aquest mètode conté lògica condicional:
+     *
      * <ul>
      * <li>Si {@code nomEnquesta} és "Realitzada": Mostra opcions d'exportació i
      * consulta bàsica.</li>
      * <li>En cas contrari (Administrada): Afegeix opcions de gestió avançada com
      * importar, modificar i donar poders.</li>
      * </ul>
-     * </p>
      */
     public void initComponents() {
         setTitle("Menú enquesta" + nomEnquesta);
