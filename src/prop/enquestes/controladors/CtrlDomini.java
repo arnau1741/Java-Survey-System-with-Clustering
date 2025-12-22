@@ -93,12 +93,12 @@ public class CtrlDomini {
     /**
      * Funcio per a respondre una enquesta
      * 
-     * @param idEnquesta
-     * @param idUsuari
-     * @param respostesUsuari
-     * @throws InvalidFormatResposta
-     * @throws EnquestaNoExisteixException
-     * @throws UsuariNoValid
+     * @param idEnquesta      Identificador de l'enquesta a respondre
+     * @param idUsuari        Identificador de l'usuari que respon l'enquesta
+     * @param respostesUsuari Llista de respostes
+     * @throws InvalidFormatResposta Si el format de respostes es incorrecte
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
+     * @throws UsuariNoValid Si l'usuari no es valid
      */
     public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari)
             throws InvalidFormatResposta, EnquestaNoExisteixException, UsuariNoValid {
@@ -146,12 +146,12 @@ public class CtrlDomini {
     /**
      * Funcio per a crear una enquesta
      * 
-     * @param titol
-     * @param descripcio
-     * @param idCreador
-     * @param preguntes
-     * @throws InvalidFormatEnquesta
-     * @throws UsuariNoValid
+     * @param titol      Titol de l'enquesta
+     * @param descripcio Descripcio de l'enquesta
+     * @param idCreador  Identificador de l'usuari creador de l'enquesta
+     * @param preguntes  Llista de preguntes
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es valida
+     * @throws UsuariNoValid Si l'usuari no es valid
      */
     public void crearEnquesta(String titol, String descripcio, int idCreador, List<String> preguntes)
             throws InvalidFormatEnquesta, UsuariNoValid {
@@ -237,8 +237,8 @@ public class CtrlDomini {
     /**
      * Funcio per a exportar una enquesta
      * 
-     * @param idEnquesta
-     * @param idUsuari
+     * @param idEnquesta de l'enquesta a exportar
+     * @param idUsuari de l'usuari per confirmar si esta vetat
      * @return Llista de strings amb la informacio de l'enquesta, null si hi ha un
      *         error
      */
@@ -261,6 +261,8 @@ public class CtrlDomini {
      * @param idEnquesta identificador de l'enquesta
      * @return nombre de respostes importades, -1 si hi ha un error llegint el
      *         fitxer, -2 si l'enquesta no existeix
+     * @throws EnquestaNoExisteixException Si l'enquesta no exiteix
+     * @throws InvalidFormatEnquesta Si l'enquesta te un format incorrecte
      */
     protected int importarRespostesPrivate(String path, Integer idEnquesta)
             throws EnquestaNoExisteixException, InvalidFormatEnquesta {
@@ -301,14 +303,14 @@ public class CtrlDomini {
     /**
      * Funcio per a importar respostes d'un fitxer
      * 
-     * @param idUsuari
-     * @param path
-     * @param idEnquesta
+     * @param idUsuari  de l'usuari que vol exportar
+     * @param path origen del fitxer
+     * @param idEnquesta identificador de l'enquesta
      * @return nombre de respostes importades
-     * @throws InvalidFormatEnquesta
-     * @throws EnquestaNoExisteixException
-     * @throws UsuariNoValid
-     * @throws IllegalArgumentException
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es correcta
+     * @throws EnquestaNoExisteixException Si l'enquesta no exiteix
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws IllegalArgumentException Si hi ha un argument invalid
      */
     public int importarRespostes(int idUsuari, String path, Integer idEnquesta)
             throws InvalidFormatEnquesta, EnquestaNoExisteixException, UsuariNoValid, IllegalArgumentException {
@@ -348,9 +350,9 @@ public class CtrlDomini {
      *
      * @param idEnquesta identificador de l'enquesta
      * @param path       desti del fitxer
-     * @throws EnquestaNoExisteixException
-     * @throws UsuariNoValid
-     * @throws IllegalArgumentException
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws IllegalArgumentException Si hi ha un argument no valid
      */
     public void exportarRespostesAFitxer(int idUsuari, int idEnquesta, String path)
             throws UsuariNoValid, EnquestaNoExisteixException, IllegalArgumentException {
@@ -375,9 +377,9 @@ public class CtrlDomini {
     /**
      * Funcio per a exportar les respostes d'una enquesta
      * 
-     * @param idEnquesta
+     * @param idEnquesta de l'enquesta a exportar
      * @return Llista de strings amb la informacio de les respostes de l'enquesta
-     * @throws EnquestaNoExisteixException
+     * @throws EnquestaNoExisteixException Si l'enquesta no exiteix
      */
     public List<String> exportarRespostesEnquesta(int idEnquesta) throws EnquestaNoExisteixException {
         if (idEnquesta == -1)
@@ -426,6 +428,7 @@ public class CtrlDomini {
      * Funcio per a eliminar una enquesta
      * 
      * @param idEnquesta identificador de l'enquesta a eliminar
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
      */
     protected void eliminarEnquestaPrivate(Integer idEnquesta) throws EnquestaNoExisteixException {
         ctrlDominiMantEnquesta.eliminarEnquesta(idEnquesta);
@@ -435,11 +438,11 @@ public class CtrlDomini {
     /**
      * Funcio per a eliminar una enquesta
      * 
-     * @param idUsuari
-     * @param idEnquesta
-     * @throws EnquestaNoExisteixException
-     * @throws UsuariNoValid
-     * @throws InvalidFormatEnquesta
+     * @param idUsuari de l'usuari que vol eliminar l'enquesta
+     * @param idEnquesta de l'enquesta que es vol eliminar
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es valid
      */
     public void eliminarEnquesta(int idUsuari, Integer idEnquesta)
             throws EnquestaNoExisteixException, UsuariNoValid, InvalidFormatEnquesta {
@@ -484,6 +487,8 @@ public class CtrlDomini {
      * @param idxPregunta  index de la pregunta a modificar
      * @param novaPregunta llista de strings amb la nova pregunta
      * @return 1 si s'ha modificat correctament
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es correcta
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
      */
     protected int modificarPreguntaEnquestaPrivate(int idEnquesta, int idxPregunta, List<String> novaPregunta)
             throws InvalidFormatEnquesta, EnquestaNoExisteixException {
@@ -495,15 +500,15 @@ public class CtrlDomini {
     /**
      * Funcio per a modificar una pregunta d'una enquesta
      * 
-     * @param idUsuari
-     * @param idEnquesta
-     * @param idxPregunta
-     * @param novaPregunta
+     * @param idUsuari de l'usuari que vol modificar la pregunta
+     * @param idEnquesta de l'enquesta modificat
+     * @param idxPregunta de la pregunta modificat d'una enquesta
+     * @param novaPregunta de la pregunta nova a la enquesta
      * @return 1 si s'ha modificat correctament
-     * @throws InvalidFormatEnquesta
-     * @throws EnquestaNoExisteixException
-     * @throws UsuariNoValid
-     * @throws IllegalArgumentException
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es valid
+     * @throws EnquestaNoExisteixException Si l'enquesta no exiteix
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws IllegalArgumentException Si l'argument no es valid
      */
     public int modificarPreguntaEnquesta(int idUsuari, int idEnquesta, int idxPregunta, List<String> novaPregunta)
             throws InvalidFormatEnquesta, EnquestaNoExisteixException, UsuariNoValid, IllegalArgumentException {
@@ -569,13 +574,13 @@ public class CtrlDomini {
     /**
      * Funcio per a esborrar les respostes d'una enquesta d'un enquestat
      * 
-     * @param idUsuari
-     * @param idEnquesta
-     * @param idEnquestat
-     * @throws UsuariNoValid
-     * @throws InvalidFormatEnquesta
-     * @throws UsuariNoHaResposEnquesta
-     * @throws EnquestaNoExisteixException
+     * @param idUsuari       identificador de l'usuari que vol borrar una resposta
+     * @param idEnquesta     identificador de l'enquesta on es troba la resposta
+     * @param idEnquestat    identificador de l'usuari que s'elimina la seva resposta
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es valid
+     * @throws UsuariNoHaResposEnquesta Si l'usuari no ha respos a l'enquesta
+     * @throws EnquestaNoExisteixException Si l'enquesta no exiteix
      */
     public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat)
             throws UsuariNoValid, InvalidFormatEnquesta, UsuariNoHaResposEnquesta, EnquestaNoExisteixException {
@@ -700,18 +705,18 @@ public class CtrlDomini {
     /**
      * Funcio per a modificar la resposta d'una pregunta d'una enquesta
      * 
-     * @param idExecutor
-     * @param idEnquesta
-     * @param idUsuari
-     * @param idxPregunta
-     * @param novaResposta
+     * @param idExecutor    identificador de l'usuari que executa
+     * @param idEnquesta    identificador de l'enquesta es modificat
+     * @param idUsuari      identificador de l'usuari que es modificat
+     * @param idxPregunta   index de la pregunta modificada
+     * @param novaResposta  la nova resposta modificat
      * @return codi d'error
-     * @throws UsuariNoHaResposEnquesta
-     * @throws EnquestaNoExisteixException
-     * @throws InvalidFormatResposta
-     * @throws InvalidFormatEnquesta
-     * @throws UsuariNoValid
-     * @throws IllegalArgumentException
+     * @throws UsuariNoHaResposEnquesta Si l'usuari no ha respos a l'enquesta
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
+     * @throws InvalidFormatResposta Si el format de la resposta no es valida
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es valid
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws IllegalArgumentException Si l'argument no es valid
      */
     public int modificarRespostaEnquesta(int idExecutor, Integer idEnquesta, int idUsuari, int idxPregunta,
             String novaResposta)
@@ -758,16 +763,16 @@ public class CtrlDomini {
     /**
      * Funcio per a realitzar clustering K-means sobre les respostes d'una enquesta
      * 
-     * @param idUsuari
-     * @param idEnquesta
-     * @param k
-     * @param maxIterations
-     * @param algorisme
+     * @param idUsuari      identificador de l'usuari
+     * @param idEnquesta    identificador de l'enquesta
+     * @param k             parametre k per el cluster
+     * @param maxIterations iteracions maximes per el cluster
+     * @param algorisme     tipus d'algorisme que s'implementa
      * @return map amb l'identificador de la resposta i el clúster assignat
-     * @throws EnquestaNoExisteixException
-     * @throws KmeansExcepcio
-     * @throws InvalidFormatEnquesta
-     * @throws UsuariNoValid
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
+     * @throws KmeansExcepcio Si el Kmeans te un error
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es correcte
+     * @throws UsuariNoValid Si l'usuari no es valid
      */
     public AbstractMap.SimpleEntry<Map<Integer, Integer>, Double> clustering(int idUsuari, Integer idEnquesta, int k,
             int maxIterations, String algorisme)
@@ -870,9 +875,9 @@ public class CtrlDomini {
     /**
      * Funcio per a consultar les preguntes d'una enquesta
      * 
-     * @param idEnquesta
+     * @param idEnquesta    identificador de l'enquesta
      * @return llista de strings amb les preguntes de l'enquesta
-     * @throws EnquestaNoExisteixException
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
      */
     public List<String> consultarPreguntes(Integer idEnquesta) throws EnquestaNoExisteixException {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
@@ -921,7 +926,8 @@ public class CtrlDomini {
    /**
      * Funcio que consulta i retorna una llista d'una esquesta idEnquesta amb les
      * seves preguntes i respostes
-     * 
+     *
+     * @param idUsuari  identificador de l'usuari
      * @return una llista d'una esquesta idEnquesta amb les seves preguntes i
      *         respostes
      * @throws EnquestaNoExisteixException si l'enquesta no existeix
@@ -967,7 +973,7 @@ public class CtrlDomini {
     /**
      * Funcio per a obtenir les respostes d'una enquesta
      * 
-     * @param idEnquesta
+     * @param idEnquesta    identificador de l'enquesta
      * @return llista de strings amb les respostes de l'enquesta
      */
     public List<String> obtenirRespostesEnquesta(int idEnquesta) {
@@ -997,7 +1003,7 @@ public class CtrlDomini {
     /**
      * Funcio per a obtenir les enquestes administrades per un usuari
      * 
-     * @param idUsuari
+     * @param idUsuari identificador de l'usuari
      * @return llista de strings amb les enquestes administrades
      */
     public List<String> obtenirEnquestesAdministrades(int idUsuari) {
@@ -1041,8 +1047,8 @@ public class CtrlDomini {
      * @param password  Contrasenya de l'usuari
      * @param email     Email de l'usuari
      * @return id de l'usuari creat
-     * @throws UsuariNoValid
-     * @throws IllegalArgumentException
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws IllegalArgumentException Si l'argument no es valid
      */
     public int crearUsuariEnquestat(String nomUsuari, String password, String email)
             throws UsuariNoValid, IllegalArgumentException {
@@ -1073,12 +1079,12 @@ public class CtrlDomini {
     /**
      * Funcio per a crear un usuari enquestador
      * 
-     * @param nomUsuari
-     * @param password
-     * @param email
+     * @param nomUsuari Nom de l'usuari
+     * @param password  Contrasenya de l'usuari
+     * @param email     Email de l'usuari
      * @return id de l'usuari creat
-     * @throws UsuariNoValid
-     * @throws IllegalArgumentException
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws IllegalArgumentException Si l'argument no es valid
      */
     public int crearUsuariEnquestador(String nomUsuari, String password, String email)
             throws UsuariNoValid, IllegalArgumentException {
@@ -1110,12 +1116,12 @@ public class CtrlDomini {
     /**
      * Funcio per a donar poders d'enquestador a un usuari
      * 
-     * @param idExecutor
-     * @param idEnquesta
-     * @param nomTarget
-     * @throws UsuariNoValid
-     * @throws InvalidFormatEnquesta
-     * @throws IllegalArgumentException
+     * @param idExecutor    identificador de l'usuari executor
+     * @param idEnquesta    identificador de l'enquesta
+     * @param nomTarget     nom de l'usuari otorgat
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es valid
+     * @throws IllegalArgumentException Si l'argument no es valid
      */
     public void donarPodersEnquestador(int idExecutor, Integer idEnquesta, String nomTarget)
             throws UsuariNoValid, InvalidFormatEnquesta, IllegalArgumentException {
@@ -1169,12 +1175,12 @@ public class CtrlDomini {
     /**
      * Funcio per a donar poders d'administrador a un usuari
      * 
-     * @param idExecutor
-     * @param idEnquesta
-     * @param nomTarget
-     * @throws UsuariNoValid
-     * @throws InvalidFormatEnquesta
-     * @throws IllegalArgumentException
+     * @param idExecutor    identificador de l'usuari executor
+     * @param idEnquesta    identificador de l'enquesta
+     * @param nomTarget     nom de l'usuari otorgat
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es valid
+     * @throws IllegalArgumentException Si l'argument no es valid
      */
     public void donarPodersAdmin(int idExecutor, Integer idEnquesta, String nomTarget)
             throws UsuariNoValid, InvalidFormatEnquesta, IllegalArgumentException {
@@ -1232,9 +1238,9 @@ public class CtrlDomini {
     /**
      * Funcio per a vetar un usuari
      * 
-     * @param idExecutor
-     * @param nomObjectiu
-     * @throws UsuariNoValid
+     * @param idExecutor    identificador de l'usuari executor
+     * @param nomObjectiu   nom de l'usuari objectiu
+     * @throws UsuariNoValid Si l'usuari no es valid
      */
     public void vetarUsuari(int idExecutor, String nomObjectiu)
             throws UsuariNoValid {
@@ -1263,9 +1269,9 @@ public class CtrlDomini {
     /**
      * Funcio per a desvetar un usuari
      * 
-     * @param idExecutor
-     * @param nomObjectiu
-     * @throws UsuariNoValid
+     * @param idExecutor    identificador de l'usuari executor
+     * @param nomObjectiu   nom de l'usuari objectiu
+     * @throws UsuariNoValid Si l'usuari no es valid
      */
     public void desvetarUsuari(int idExecutor, String nomObjectiu) throws UsuariNoValid {
         if (nomObjectiu == null || nomObjectiu.isEmpty())
@@ -1302,7 +1308,7 @@ public class CtrlDomini {
     /**
      * Funcio per a obtenir l'id d'un usuari a partir del seu nom
      * 
-     * @param nomUsuari
+     * @param nomUsuari nom de l'usuari
      * @return id de l'usuari, o -1 si no existeix
      */
     public int getIdUsuariPerNom(String nomUsuari) {
@@ -1352,7 +1358,7 @@ public class CtrlDomini {
     /**
      * Funcio per a consultar el perfil d'un usuari
      * 
-     * @param id
+     * @param id    identificador de l'usuari
      * @return llista de strings amb la informacio del perfil de l'usuari
      */
     public List<String> consultarPerfil(int id) {
@@ -1425,7 +1431,7 @@ public class CtrlDomini {
     /**
      * Funcio per a comprovar els requeriments d'una contrasenya
      * 
-     * @param password
+     * @param password  password d'un usuari
      * @return true si compleix els requeriments, false en cas contrari
      */
     private boolean checkRequerimentsPassword(String password) {
@@ -1435,9 +1441,10 @@ public class CtrlDomini {
     /**
      * Funcio per a iniciar sessio
      * 
-     * @param nomUsuari
-     * @param password
+     * @param nomUsuari nom de l'usuari
+     * @param password  password de l'usuari
      * @return codi d'error
+     * @throws IllegalArgumentException Si l'argument no es valid
      */
     public int iniciarSessio(String nomUsuari, String password) throws IllegalArgumentException {
         if (nomUsuari == null || nomUsuari.isEmpty())
@@ -1459,7 +1466,7 @@ public class CtrlDomini {
      * 
      * @param idEnquesta identificador de l'enquesta
      * @return llista de strings amb la informació de l'enquesta i les preguntes
-     * @throws EnquestaNoExisteixException
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
      */
     public List<String> exportarEnquestaSenseRespostes(Integer idEnquesta) throws EnquestaNoExisteixException {
         if (idEnquesta == -1)
@@ -1501,8 +1508,8 @@ public class CtrlDomini {
      * @param idEnquesta identificador de l'enquesta
      * @param idUsuari   identificador de l'usuari
      * @return llista de strings amb les preguntes i les respostes de l'usuari
-     * @throws EnquestaNoExisteixException
-     * @throws UsuariNoValid
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
+     * @throws UsuariNoValid Si l'usuari no es valid
      */
     public List<String> exportarRespostesUsuari(Integer idEnquesta, int idUsuari)
             throws EnquestaNoExisteixException, UsuariNoValid {
@@ -1551,7 +1558,7 @@ public class CtrlDomini {
      * @param idEnquesta identificador de l'enquesta
      * @param idUsuari   identificador de l'usuari
      * @return llista de strings amb els valors de les respostes
-     * @throws EnquestaNoExisteixException
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
      */
     public List<String> getRespostesUsuariList(Integer idEnquesta, int idUsuari) throws EnquestaNoExisteixException {
         Enquesta enq = ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
@@ -1606,7 +1613,7 @@ public class CtrlDomini {
      * 
      * @param idUsuari identificador de l'usuari
      * @return llista de strings amb la informacio de les enquestes
-     * @throws UsuariNoValid
+     * @throws UsuariNoValid Si l'usuari no es valid
      */
     public List<String> obtenirEnquestesRespostesPerUsuari(int idUsuari) throws UsuariNoValid {
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
@@ -1630,11 +1637,11 @@ public class CtrlDomini {
      * @param idUsuari   identificador de l'usuari
      * @param idEnquesta identificador de l'enquesta
      * @param respostes  llista amb les noves respostes
-     * @throws EnquestaNoExisteixException
-     * @throws UsuariNoValid
-     * @throws InvalidFormatEnquesta
-     * @throws InvalidFormatResposta
-     * @throws UsuariNoHaResposEnquesta
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
+     * @throws UsuariNoValid Si l'usuari no es valid
+     * @throws InvalidFormatEnquesta Si el format de l'enquesta no es valid
+     * @throws InvalidFormatResposta Si el format de les respostes no es valida
+     * @throws UsuariNoHaResposEnquesta Si l'usuari no ha respos
      */
     public void modificarRespostaEnquesta(int idUsuari, int idEnquesta, List<String> respostes)
             throws EnquestaNoExisteixException, UsuariNoValid, InvalidFormatEnquesta, InvalidFormatResposta,
@@ -1654,7 +1661,7 @@ public class CtrlDomini {
 
     /**
      * Funcio per a obtenir les enquestes segons el rol de l'usuari
-     * @param idUsuari
+     * @param idUsuari  identificador de l'usuari
      * @return llista de strings amb les enquestes segons el rol de l'usuari
      */
     public List<String> obtenirEnquestesPerRol(int idUsuari){

@@ -366,7 +366,7 @@ public class CtrlPresentacio {
      *
      * @param idUsuari ID de l'usuari.
      * @return Llista d'enquestes disponibles.
-     * @throws EnquestaNoExisteixException
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix
      */
     public List<String> obtenirLlistaEnquestes(int idUsuari) throws EnquestaNoExisteixException {
         return ctrlDomini.consultarEnquestesAmbPreguntesIRespostes(idUsuari);
@@ -855,6 +855,7 @@ public class CtrlPresentacio {
 
     /**
      * Obre la nova vista per consultar i modificar les respostes de l'usuari.
+     * @param idUsuari   ID de l'usuari que vol modificar les respostes.
      */
     public void mostrarConsultarRespostesPropies(int idUsuari) {
         VistaConsultarRespostesUsuari v = new VistaConsultarRespostesUsuari(this, idUsuari);
