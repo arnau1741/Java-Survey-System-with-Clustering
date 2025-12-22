@@ -56,7 +56,6 @@ public class Enquesta {
      * @throws IllegalArgumentException si el tipus de pregunta és desconegut
      */
     public List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
-        System.out.println("Convirtiendo respuestas de String a objetos Resposta...");
         List<Resposta> respostesObj = new ArrayList<>();
         // for (String r : respostesStr) {
         for (int index = 0; index < respostesStr.size(); index++) {
@@ -112,13 +111,11 @@ public class Enquesta {
                     respostesObj.add(respostaMultiple);
                     continue;
                 }
-                System.out.println("entra");
                 int numOpcions = preguntes.get(index).getNumOpcions();
                 RespostaMultiple respostaMultiple = new RespostaMultiple();
                 // Convertir String a
                 List<Integer> seleccionades = new ArrayList<>();
                 String[] parts = r.split(","); // Suponemos que las opciones están separadas por comas
-                System.out.println("entra2");
                 for (String part : parts) {
                     int opcio = Integer.parseInt(part.trim());
                     if (opcio < 0 || opcio >= numOpcions) {
