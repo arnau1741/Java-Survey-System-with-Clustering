@@ -19,7 +19,6 @@ public class VistaModerador extends JFrame {
     private String nomRol;
 
     private JPanel contentPanel = new JPanel();
-    private JButton crearEnquestaButton = new JButton("Crear Enquesta");
     private JButton consultarEnquestaButton = new JButton("Consultar Enquesta");
     private JButton importarEnquestaButton = new JButton("Importar Enquesta");
     private JButton importarRespostesButton = new JButton("Importar Respostes");
@@ -75,7 +74,6 @@ public class VistaModerador extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0,1,5,5));
 
-        buttonPanel.add(crearEnquestaButton);
         buttonPanel.add(consultarEnquestaButton);
         buttonPanel.add(importarEnquestaButton);
         buttonPanel.add(importarRespostesButton);
@@ -117,10 +115,6 @@ public class VistaModerador extends JFrame {
      * permetent la navegació cap a les vistes de modificació, consulta, etc.
      */
     private void setupListeners() {
-        crearEnquestaButton.addActionListener(e -> {
-            dispose();
-            ctrl.mostrarCrearEnquesta(idUsuari);
-        });
 
         consultarEnquestaButton.addActionListener(e -> {
             ctrl.mostrarConsultarEnquesta();
