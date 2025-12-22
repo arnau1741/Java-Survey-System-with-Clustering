@@ -10,15 +10,12 @@ public class CtrlDominiMantUsuari {
     private Map<String, Integer> nomUsuariToID;
     private Integer ultimID;
 
-    private Set<String> emailsVetats;
-
     /**
      * Constructor de la classe CtrlDominiMantUsuari
      */
     public CtrlDominiMantUsuari() {
         usuaris = new HashMap<>();
         nomUsuariToID = new HashMap<>();
-        emailsVetats = new HashSet<>();
     }
 
     //////////////////////////// Persistencia
@@ -51,7 +48,6 @@ public class CtrlDominiMantUsuari {
         Usuari u = usuaris.get(idUsuari);
         if(u != null){
             u.setBlocked(true);
-            emailsVetats.add(u.getEmail());
         }
     }
 
@@ -63,18 +59,9 @@ public class CtrlDominiMantUsuari {
         Usuari u = usuaris.get(idUsuari);
         if(u != null){
             u.setBlocked(false);
-            emailsVetats.remove(u.getEmail());
         }
     }
 
-    /**
-     * Comprova si un email està vetat
-     * @param email a comprovar
-     * @return true si està vetat, false en cas contrari
-     */
-    public boolean esEmailVetat(String email){
-        return emailsVetats.contains(email);
-    }
 
     /**
      * Afegeix un usuari al sistema

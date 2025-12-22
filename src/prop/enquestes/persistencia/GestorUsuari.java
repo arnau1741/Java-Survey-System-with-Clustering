@@ -26,6 +26,7 @@ public class GestorUsuari {
             map.put("nomUsuari", u.getUsuari());
             map.put("password", u.getContrasenya());
             map.put("email", u.getEmail());
+            if (u.isBlocked()) map.put("blocked", true);
             String roleType = "";
             if (u.esAdmin()){
                 roleType = "ADMIN";
@@ -38,6 +39,8 @@ public class GestorUsuari {
                 Map<Integer, Enquesta> enquestesRealitzades = admin.getEnquestesRealitzades();
                 List<Integer> idsRealitzades = new ArrayList<>(enquestesRealitzades.keySet());
                 map.put("enquestesRealitzades", idsRealitzades);
+
+                if (u.isBlocked()) map.put("blocked", true);
             }
             else if (u.esEnquestador()){
                 roleType = "ENQUESTADOR";
@@ -46,6 +49,8 @@ public class GestorUsuari {
                 Map<Integer, Enquesta> enquestesAssignades = enquestador.getEnquestesAssignades();
                 List<Integer> ids = new ArrayList<>(enquestesAssignades.keySet());
                 map.put("enquestesAssignades", ids);
+
+                if (u.isBlocked()) map.put("blocked", true);
             }
             else if(u.esModerador())
                 roleType = "MODERADOR";
@@ -56,6 +61,8 @@ public class GestorUsuari {
                 Map<Integer, Enquesta> enquestesRealitzades = enquestat.getEnquestesRealitzades();
                 List<Integer> idsRealitzades = new ArrayList<>(enquestesRealitzades.keySet());
                 map.put("enquestesRealitzades", idsRealitzades);
+
+                if (u.isBlocked()) map.put("blocked", true);
             }
 
             map.put("rol", roleType);
@@ -93,6 +100,8 @@ public class GestorUsuari {
             String pass = (String) map.get("password");
             String email = (String) map.get("email");
             String rolStr = (String) map.get("rol");
+            boolean blocked = false;
+            if (map.containsKey("blocked")) blocked = (Boolean) map.get("blocked");
 
             UsuariState rolState;
             switch (rolStr) {
@@ -115,6 +124,7 @@ public class GestorUsuari {
                             enquestesRealitzades.put(idEnquesta, e);
                         }
                     }
+
                     rolState = new AdminState(enquestesAdministrades, enquestesRealitzades);
                     break;
                 case "ENQUESTADOR":
@@ -148,7 +158,7 @@ public class GestorUsuari {
                     throw new IllegalArgumentException("Rol desconegut: " + rolStr);
             }
 
-            Usuari u = new Usuari(id, nom, pass, email, rolState);
+            Usuari u = new Usuari(id, nom, pass, email,blocked, rolState);
             usuaris.put(id, u);
         }
         return usuaris;

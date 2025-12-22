@@ -29,6 +29,23 @@ public class Usuari {
     }
 
     /**
+     * Constructora de la classe Usuari
+     * @param idUsuari
+     * @param nomUsuari
+     * @param contrasenya
+     * @param email
+     * @param blocked
+     * @param rol
+     */
+    public Usuari(int idUsuari, String nomUsuari, String contrasenya, String email, boolean blocked, UsuariState rol) {
+        this.idUsuari = idUsuari;
+        this.nomUsuari = nomUsuari;
+        this.contrasenya = contrasenya;
+        this.email = email;
+        this.blocked = blocked;
+        this.rol = rol;
+    }
+    /**
      * Getter de l'id de l'usuari
      * @return idUsuari
      */

@@ -255,7 +255,7 @@ public class VistaRespondreEnquesta extends JDialog {
             List<String> prevAnswers = ctrl.getRespostesUsuariList(idEnquestaActual, idUsuari);
 
             boolean hasData = false;
-            if (prevAnswers != null && prevAnswers.size() == preguntes.size()) {
+            if (idUsuari != -1 && prevAnswers != null && prevAnswers.size() == preguntes.size()) {
                 for (String s : prevAnswers) {
                     if (s != null && !s.isEmpty()) {
                         hasData = true;

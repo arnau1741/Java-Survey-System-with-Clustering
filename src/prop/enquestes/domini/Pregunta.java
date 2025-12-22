@@ -13,7 +13,6 @@ public class Pregunta {
     private double minValue; // Per a preguntes NUMERICA
     private double maxValue; // Per a preguntes NUMERICA
 
-    // Format Pregunta_qualsevol? -- Defineix tipus de resposta
 
     /**
      * Constructor de la classe Pregunta
@@ -36,7 +35,6 @@ public class Pregunta {
         } else {
             throw new IllegalArgumentException("Tipus de pregunta desconegut: " + tipus); 
         }
-
     }
 
     // Getters
@@ -144,7 +142,7 @@ public class Pregunta {
      * @throws IllegalArgumentException si ja existeix una resposta per aquest usuari
      */
     public Integer addResposta(Resposta resposta, int idUsuari) throws IllegalArgumentException {
-        if (idUsuari == -1) { // Usuari no registrat
+        if (idUsuari < 0) { // Usuari no registrat
             respostes.put(minKeyRespostes, resposta);
             minKeyRespostes--;
 

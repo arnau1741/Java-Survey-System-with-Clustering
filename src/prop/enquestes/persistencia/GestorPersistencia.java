@@ -3,7 +3,8 @@ package prop.enquestes.persistencia;
 import prop.enquestes.domini.Enquesta;
 import prop.enquestes.domini.Usuari;
 
-import java.util.Map;
+import java.util.*;
+import java.io.File;
 
 public class GestorPersistencia {
     private GestorUsuari gestorUsuari;
@@ -49,4 +50,26 @@ public class GestorPersistencia {
     public Map<Integer, Enquesta> carregarEnquestes() {
         return gestorEnquesta.carregarEnquestes();
     }
+
+    /**
+     * Elimina el directori "datos" i tot el seu contingut per assegurar una
+     */
+    public void cleanDatos() {
+        System.out.println("Eliminant directori 'datos' i tot el seu contingut...");
+        deleteDir(new File("datos"));
+    }
+
+    /**
+     * Elimina un directori i tot el seu contingut de manera recursiva.
+     */
+    private static void deleteDir(File file) {
+        File[] contents = file.listFiles();
+        if (contents != null) {
+            for (File f : contents) {
+                deleteDir(f);
+            }
+        }
+        file.delete();
+    }
+
 }

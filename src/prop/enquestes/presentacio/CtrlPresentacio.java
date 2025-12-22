@@ -138,7 +138,8 @@ public class CtrlPresentacio {
             vistaAdmin.setVisible(false);
         } else if (rol.equals("MODERADOR")) {
             vistaModerador.setVisible(false);
-        } else vistaEnquestat.setVisible(false);
+        } else
+            vistaEnquestat.setVisible(false);
 
         vistaConsultarPerfil = new VistaConsultarPerfil(this, idUsuari);
         vistaConsultarPerfil.setVisible(true);
@@ -359,7 +360,6 @@ public class CtrlPresentacio {
         return Perfil;
     }
 
-
     /**
      * Obté la llista d'enquestes disponibles per a un usuari.
      * Si l'usuari està registrat, filtra aquelles que ja ha respost.
@@ -424,14 +424,20 @@ public class CtrlPresentacio {
     /*
      * Esborra una resposta concreta d'un usuari a una enquesta.
      *
-     * @param idUsuari    ID de l'usuari administrador/executor.
-     * @param idEnquesta  ID de l'enquesta.
+     * @param idUsuari ID de l'usuari administrador/executor.
+     * 
+     * @param idEnquesta ID de l'enquesta.
+     * 
      * @param idEnquestat ID de l'usuari que va respondre l'enquesta.
-     * @throws UsuariNoHaResposEnquesta    Si l'enquestat no havia respost
-     *                                     l'enquesta.
+     * 
+     * @throws UsuariNoHaResposEnquesta Si l'enquestat no havia respost
+     * l'enquesta.
+     * 
      * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
-     * @throws InvalidFormatEnquesta       Si hi ha un error intern de format.
-     * @throws UsuariNoValid               Si l'usuari executor no té permisos.
+     * 
+     * @throws InvalidFormatEnquesta Si hi ha un error intern de format.
+     * 
+     * @throws UsuariNoValid Si l'usuari executor no té permisos.
      */
     public void esborrarRespostaEnquesta(int idUsuari, Integer idEnquesta, int idEnquestat)
             throws UsuariNoHaResposEnquesta, EnquestaNoExisteixException, InvalidFormatEnquesta, UsuariNoValid {
@@ -666,6 +672,47 @@ public class CtrlPresentacio {
     }
 
     /**
+     * Obté la llista d'IDs dels usuaris que han respost una enquesta.
+     * 
+     * @param idEnquesta ID de l'enquesta.
+     * @return Llista d'IDs d'usuaris.
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
+     */
+    public List<Integer> obtenirUsuarisQueHanRespost(int idEnquesta) throws EnquestaNoExisteixException {
+        return ctrlDomini.obtenirUsuarisQueHanRespost(idEnquesta);
+    }
+
+    /**
+     * Obté les respostes d'un usuari específic a una enquesta.
+     * 
+     * @param idEnquesta ID de l'enquesta.
+     * @param idUsuari   ID de l'usuari.
+     * @return Llista de cadenes amb "Pregunta: Resposta".
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
+     * @throws UsuariNoHaResposEnquesta    Si l'usuari no ha respost.
+     */
+    public List<String> obtenirRespostesUsuari(int idEnquesta, int idUsuari)
+            throws EnquestaNoExisteixException, UsuariNoHaResposEnquesta {
+        return ctrlDomini.obtenirRespostesUsuari(idEnquesta, idUsuari);
+    }
+
+    /**
+     * Modifica la resposta d'un usuari a una pregunta d'una enquesta.
+     * 
+     * @param idExecutor   ID de l'usuari que executa l'acció (admin).
+     * @param idEnquesta   ID de l'enquesta.
+     * @param idUsuari     ID de l'usuari que ha respost.
+     * @param idxPregunta  Índex de la pregunta.
+     * @param novaResposta Nova resposta en text.
+     * @throws Exception Si hi ha errors de validació o permisos.
+     */
+    public void modificarRespostaEnquesta(int idExecutor, int idEnquesta, int idUsuari, int idxPregunta,
+            String novaResposta)
+            throws Exception {
+        ctrlDomini.modificarRespostaEnquesta(idExecutor, idEnquesta, idUsuari, idxPregunta, novaResposta);
+    }
+
+    /**
      * Obté la informació detallada d'una enquesta i les seves preguntes.
      *
      * @param idEnquesta ID de l'enquesta.
@@ -712,7 +759,7 @@ public class CtrlPresentacio {
      * @throws UsuariNoValid               Si l'usuari no és vàlid.
      */
     public SimpleEntry<Map<Integer, Integer>, Double> aplicarClustering(int idUsuari, int idEnquesta, int k, int iter,
-                                                                        String tipus) throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
+            String tipus) throws EnquestaNoExisteixException, KmeansExcepcio, InvalidFormatEnquesta, UsuariNoValid {
         return ctrlDomini.clustering(idUsuari, idEnquesta, k, iter, tipus);
     }
 
@@ -855,7 +902,8 @@ public class CtrlPresentacio {
 
     /**
      * Obre la nova vista per consultar i modificar les respostes de l'usuari.
-     * @param idUsuari   ID de l'usuari que vol modificar les respostes.
+     * 
+     * @param idUsuari ID de l'usuari que vol modificar les respostes.
      */
     public void mostrarConsultarRespostesPropies(int idUsuari) {
         VistaConsultarRespostesUsuari v = new VistaConsultarRespostesUsuari(this, idUsuari);

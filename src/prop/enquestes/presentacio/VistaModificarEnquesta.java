@@ -45,13 +45,13 @@ public class VistaModificarEnquesta extends JDialog {
 
     // Actions
     private JButton btnEliminarEnquesta;
-    private JButton btnEliminarRespostes;
 
     /**
      * Constructor de la vista de modificació d'enquestes.
-     * Inicialitza els components, carrega la llista d'enquestes i configura els controladors.
+     * Inicialitza els components, carrega la llista d'enquestes i configura els
+     * controladors.
      *
-     * @param ctrl Referència al controlador de presentació.
+     * @param ctrl           Referència al controlador de presentació.
      * @param idUsuariActual Identificador de l'usuari que realitza la gestió.
      */
     public VistaModificarEnquesta(CtrlPresentacio ctrl, int idUsuariActual) {
@@ -66,9 +66,11 @@ public class VistaModificarEnquesta extends JDialog {
         initUI();
         cargarEnquestes();
     }
+
     /**
      * Inicialitza i organitza tots els components gràfics de la finestra.
-     * Divideix la interfície en seccions clares: Selecció, Modificació, Eliminació d'enquesta i Eliminació de respostes.
+     * Divideix la interfície en seccions clares: Selecció, Modificació, Eliminació
+     * d'enquesta i Eliminació de respostes.
      */
     private void initUI() {
         JPanel content = new JPanel(new BorderLayout(10, 10));
@@ -191,12 +193,12 @@ public class VistaModificarEnquesta extends JDialog {
         btnEliminarEnquesta = UIHelper.createButton("Eliminar Enquesta", e -> eliminarEnquesta());
         btnEliminarEnquesta.setForeground(Color.RED);
 
-        btnEliminarRespostes = UIHelper.createButton("Eliminar Respostes d'Usuari...", e -> eliminarRespostes());
+        JButton btnGestionarRespostes = UIHelper.createButton("Gestionar Respostes", e -> gestionarRespostes());
 
         JButton btnClose = UIHelper.createButton("Tancar", e -> dispose());
 
         bottomPanel.add(btnEliminarEnquesta);
-        bottomPanel.add(btnEliminarRespostes);
+        bottomPanel.add(btnGestionarRespostes);
         bottomPanel.add(Box.createHorizontalStrut(50));
         bottomPanel.add(btnClose);
 
@@ -280,7 +282,8 @@ public class VistaModificarEnquesta extends JDialog {
 
     /**
      * Gestiona la selecció d'una enquesta al comboBox.
-     * Carrega les preguntes associades a l'enquesta seleccionada i actualitza la llista de preguntes.
+     * Carrega les preguntes associades a l'enquesta seleccionada i actualitza la
+     * llista de preguntes.
      */
     private void onSelectEnquesta() {
         String sel = (String) comboEnquestes.getSelectedItem();
@@ -308,7 +311,8 @@ public class VistaModificarEnquesta extends JDialog {
     }
 
     /**
-     * Analitza les línies brutes de preguntes per extreure els títols i tipus de cada pregunta.
+     * Analitza les línies brutes de preguntes per extreure els títols i tipus de
+     * cada pregunta.
      *
      * @param rawLines Llista de línies brutes obtingudes del controlador.
      * @return Llista de títols de preguntes amb el seu tipus associat.
@@ -370,7 +374,8 @@ public class VistaModificarEnquesta extends JDialog {
     }
 
     /**
-     * Extreu l'ID numèric de l'enquesta a partir de la cadena de text mostrada al desplegable.
+     * Extreu l'ID numèric de l'enquesta a partir de la cadena de text mostrada al
+     * desplegable.
      * S'espera un format tipus "ID: X - Titol...".
      *
      * @param texto Cadena de text seleccionada al ComboBox.
@@ -473,7 +478,8 @@ public class VistaModificarEnquesta extends JDialog {
     }
 
     /**
-     * Analitza les línies brutes de preguntes i retorna una llista d'objectes PreguntaInfo.
+     * Analitza les línies brutes de preguntes i retorna una llista d'objectes
+     * PreguntaInfo.
      *
      * @param rawLines Llista de línies brutes obtingudes del controlador.
      * @return Llista d'objectes PreguntaInfo representant cada pregunta.
@@ -531,7 +537,8 @@ public class VistaModificarEnquesta extends JDialog {
 
     /**
      * Desa els canvis realitzats a la pregunta actual a l'enquesta.
-     * Recull les dades de l'editor i les envia al controlador per actualitzar la pregunta.
+     * Recull les dades de l'editor i les envia al controlador per actualitzar la
+     * pregunta.
      */
     private void guardarPregunta() {
         int idx = listPreguntes.getSelectedIndex();
@@ -626,18 +633,31 @@ public class VistaModificarEnquesta extends JDialog {
 
         String idUserStr = JOptionPane.showInputDialog(this, mensaje.toString());
 
-        //String idUserStr = JOptionPane.showInputDialog(this,"Introdueix l'ID de l'usuari del qual vols esborrar les respostes:");
+        // String idUserStr = JOptionPane.showInputDialog(this,"Introdueix l'ID de
+        // l'usuari del qual vols esborrar les respostes:");
         if (idUserStr == null || idUserStr.trim().isEmpty())
             return;
 
         try {
             int idUserTarget = Integer.parseInt(idUserStr);
             if (UIHelper.showConfirm(this, "Eliminar respostes de l'usuari " + idUserTarget + "?")) {
+                System.out.println(
+                        "Eliminant respostes de l'usuari " + idUserTarget + " per a l'enquesta " + idEnquestaActual);
                 ctrl.esborrarRespostaEnquesta(idUsuariActual, idEnquestaActual, idUserTarget);
                 UIHelper.showInfo(this, "Respostes eliminades.");
             }
         } catch (Exception e) {
             UIHelper.showError(this, "Error: " + e.getMessage());
         }
+    }
+
+    /**
+     * Obre la nova vista per gestionar les respostes de manera visual.
+     */
+    private void gestionarRespostes() {
+        if (idEnquestaActual == -1)
+            return;
+        VistaGestionarRespostes v = new VistaGestionarRespostes(ctrl, idUsuariActual, idEnquestaActual);
+        v.setVisible(true);
     }
 }

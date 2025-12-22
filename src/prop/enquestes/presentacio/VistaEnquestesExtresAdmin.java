@@ -26,7 +26,7 @@ public class VistaEnquestesExtresAdmin extends JFrame {
     private JButton exportarRespostesButton = new JButton("Exportar respostes");
     private JButton respondreEnquestaButton = new JButton("Respondre enquesta");
     private JButton consultarRespostesButton = new JButton("Consultar respostes");
-    private JButton importarRespostesButton = new JButton("Importar resposta");
+    private JButton importarRespostesButton = new JButton("Importar respostes");
     private JButton modificarEnquestaButton = new JButton("Modificar enquesta");
     private JButton donarPodersButton = new JButton("Donar poders");
     private JButton sortirButton = new JButton("Sortir");

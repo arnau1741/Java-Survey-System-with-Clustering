@@ -1,10 +1,10 @@
 package prop.enquestes.domini;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import prop.enquestes.excepcions.*;;
-
 
 /*
  * Classe Enquesta: futures implementacions
@@ -30,14 +30,17 @@ public class Enquesta {
     // Constructora
     /**
      * Funcio constructora de la classe Enquesta
-     * @param id de l'enquesta
-     * @param titol de l'enquesta
+     * 
+     * @param id         de l'enquesta
+     * @param titol      de l'enquesta
      * @param descripcio de l'enquesta
-     * @param idCreador de l'usuari
-     * @param preguntes de l'enquesta
-     * @throws IllegalArgumentException si la llista de preguntes no té almenys una pregunta
+     * @param idCreador  de l'usuari
+     * @param preguntes  de l'enquesta
+     * @throws IllegalArgumentException si la llista de preguntes no té almenys una
+     *                                  pregunta
      */
-    public Enquesta(Integer id, String titol, String descripcio, Integer idCreador, List<Pregunta> preguntes) throws IllegalArgumentException{
+    public Enquesta(Integer id, String titol, String descripcio, Integer idCreador, List<Pregunta> preguntes)
+            throws IllegalArgumentException {
         if (preguntes == null || preguntes.isEmpty()) {
             throw new IllegalArgumentException("L'enquesta ha de tenir almenys una pregunta.");
         }
@@ -49,13 +52,16 @@ public class Enquesta {
     }
 
     /**
-     * Converteix una llista de respostes en format String a una llista d'objectes Resposta
+     * Converteix una llista de respostes en format String a una llista d'objectes
+     * Resposta
+     * 
      * @param respostesStr llista de respostes en format String
      * @return llista d'objectes Resposta
-     * @throws IllegalArgumentException si alguna resposta no és vàlida segons el tipus de pregunta
+     * @throws IllegalArgumentException si alguna resposta no és vàlida segons el
+     *                                  tipus de pregunta
      * @throws IllegalArgumentException si el tipus de pregunta és desconegut
      */
-    public List<Resposta> stringARespostes (List<String> respostesStr) throws IllegalArgumentException {
+    public List<Resposta> stringARespostes(List<String> respostesStr) throws IllegalArgumentException {
         List<Resposta> respostesObj = new ArrayList<>();
         // for (String r : respostesStr) {
         for (int index = 0; index < respostesStr.size(); index++) {
@@ -98,7 +104,7 @@ public class Enquesta {
                     continue;
                 }
                 int numOpcions = preguntes.get(index).getNumOpcions();
-                int resposta = Integer.parseInt(r); 
+                int resposta = Integer.parseInt(r);
                 if (resposta < 0 || resposta >= numOpcions) {
                     throw new IllegalArgumentException("Resposta ordenada invàlida: " + r);
                 }
@@ -142,9 +148,10 @@ public class Enquesta {
 
     /**
      * Retorna una llista de textos de les preguntes de l'enquesta
+     * 
      * @return llista de textos de les preguntes
      */
-    public List<String> getPreguntes(){
+    public List<String> getPreguntes() {
         List<String> tipusToString = new ArrayList<>();
         tipusToString.add("NUMERICA");
         tipusToString.add("UNICA");
@@ -163,15 +170,13 @@ public class Enquesta {
                 int nombreOpcions = opcions.size();
                 textsPreguntes.add(Integer.toString(nombreOpcions));
                 textsPreguntes.addAll(opcions);
-            }
-            else if (tipus == 2) { // ORDENADA
+            } else if (tipus == 2) { // ORDENADA
                 // Afegir les opcions de la pregunta ORDENADA
                 List<String> opcions = p.getOpcions();
                 int nombreOpcions = opcions.size();
                 textsPreguntes.add(Integer.toString(nombreOpcions));
                 textsPreguntes.addAll(opcions);
-            }
-            else if(tipus == 3){ // MULTIPLE
+            } else if (tipus == 3) { // MULTIPLE
                 // Afegir les opcions de la pregunta MULTIPLE
                 List<String> opcions = p.getOpcions();
                 int nombreOpcions = opcions.size();
@@ -185,9 +190,10 @@ public class Enquesta {
 
     /**
      * Retorna una llista amb els textos de les preguntes de l'enquesta
+     * 
      * @return llista de textos de les preguntes
      */
-    public List<String> getTextPreguntes(){
+    public List<String> getTextPreguntes() {
         List<String> textsPreguntes = new ArrayList<>();
 
         for (Pregunta p : preguntes) {
@@ -199,10 +205,11 @@ public class Enquesta {
 
     /**
      * Afegeix les respostes d'un usuari a les preguntes de l'enquesta
-     * @param idUsuari de l'usuari
+     * 
+     * @param idUsuari  de l'usuari
      * @param respostes de l'usuari
      */
-    public void afegeixResposta(Integer idUsuari, List<String> respostes){
+    public void afegeixResposta(Integer idUsuari, List<String> respostes) {
         int size = preguntes.size();
         List<Resposta> respostesUsuari = stringARespostes(respostes);
         for (int i = 0; i < size; i++) {
@@ -215,46 +222,66 @@ public class Enquesta {
     // Getters
     /**
      * Retorna l'id de l'enquesta
+     * 
      * @return id de l'enquesta
      */
-    public Integer getId() { return id;}
+    public Integer getId() {
+        return id;
+    }
 
     /**
      * Retorna el títol de l'enquesta
+     * 
      * @return títol de l'enquesta
      */
-    public String getTitol() { return titol;}
+    public String getTitol() {
+        return titol;
+    }
 
     /**
      * Retorna la descripció de l'enquesta
+     * 
      * @return descripció de l'enquesta
      */
-    public String getDescripcio() { return descripcio;}
+    public String getDescripcio() {
+        return descripcio;
+    }
 
     /**
      * Retorna l'id del creador de l'enquesta
+     * 
      * @return id del creador de l'enquesta
      */
-    public Integer getCreador() { return idCreador;}
+    public Integer getCreador() {
+        return idCreador;
+    }
 
     /**
      * Retorna la llista de preguntes de l'enquesta
+     * 
      * @return llista de preguntes de l'enquesta
      */
-    public List<Pregunta> getPreguntesObj() { return preguntes; }
+    public List<Pregunta> getPreguntesObj() {
+        return preguntes;
+    }
 
     /**
      * Retorna el nombre de preguntes de l'enquesta
+     * 
      * @return nombre de preguntes de l'enquesta
      */
-    public int getNumPreguntes() { return preguntes.size(); }
+    public int getNumPreguntes() {
+        return preguntes.size();
+    }
 
     /**
      * Retorna el nombre de respostes per pregunta de l'enquesta
+     * 
      * @return nombre de respostes per pregunta
      */
     public int getNumRespostes() {
-        if (preguntes.isEmpty()) return 0;
+        if (preguntes.isEmpty())
+            return 0;
         Pregunta primeraPregunta = preguntes.getFirst();
         // S'assumeix que totes les preguntes tenen el mateix nombre de respostes
         return primeraPregunta.getNumRespostes();
@@ -262,6 +289,7 @@ public class Enquesta {
 
     /**
      * Retorna les respostes d'un usuari a l'enquesta
+     * 
      * @param idUsuari de l'usuari
      * @return llista de respostes de l'usuari
      */
@@ -277,6 +305,7 @@ public class Enquesta {
 
     /**
      * Retorna les respostes d'un usuari a l'enquesta segons la fila de la matriu
+     * 
      * @param filaMatriu de la matriu
      * @return llista de respostes de l'usuari
      */
@@ -286,7 +315,8 @@ public class Enquesta {
         for (Pregunta p : preguntes) {
             Map<Integer, Resposta> respostesMap = p.getRespostes();
             if (idUsuari == null) {
-                // Obtenir l'ID de l'usuari corresponent a la fila de la matriu si no ha estat obtingut encara
+                // Obtenir l'ID de l'usuari corresponent a la fila de la matriu si no ha estat
+                // obtingut encara
                 int count = 0;
                 for (Integer key : respostesMap.keySet()) {
                     if (count == filaMatriu) {
@@ -304,7 +334,8 @@ public class Enquesta {
 
     /**
      * Canvia una pregunta de l'enquesta per una nova pregunta
-     * @param idxPregunta índex de la pregunta a canviar
+     * 
+     * @param idxPregunta  índex de la pregunta a canviar
      * @param novaPregunta nova pregunta a afegir
      * @throws IndexOutOfBoundsException si l'índex de la pregunta està fora de rang
      */
@@ -317,6 +348,7 @@ public class Enquesta {
 
     /**
      * Comprova si un usuari ha participat en l'enquesta
+     * 
      * @param id de l'usuari
      * @return true si l'usuari ha participat, false en cas contrari
      */
@@ -343,23 +375,27 @@ public class Enquesta {
     /**
      * Mostra les preguntes de l'enquesta
      */
-    void mostrarEnquesta2(){
+    void mostrarEnquesta2() {
         int numPreguntes = preguntes.size();
         System.out.println("Número de preguntes: " + numPreguntes);
         for (int i = 0; i < numPreguntes; i++) {
             Pregunta p = preguntes.get(i);
-            System.out.println("Pregunta " + (i+1) + ": " + p.getText() + " (Tipus: " + p.getTipus() + ")");
+            System.out.println("Pregunta " + (i + 1) + ": " + p.getText() + " (Tipus: " + p.getTipus() + ")");
         }
     }
 
     /**
-     *  Funcio que modifica la resposta d'un usuari que hagi contenstat a una enquesta
-     * @param idUsuari de l'usuari que modifica
-     * @param idxPregunta de l'enquesta a modificar
+     * Funcio que modifica la resposta d'un usuari que hagi contenstat a una
+     * enquesta
+     * 
+     * @param idUsuari     de l'usuari que modifica
+     * @param idxPregunta  de l'enquesta a modificar
      * @param novaResposta de la pregunta d'una enquesta
-     * @throws UsuariNoHaResposEnquesta si l'usuari no ha respost a la pregunta de l'enquesta
+     * @throws UsuariNoHaResposEnquesta si l'usuari no ha respost a la pregunta de
+     *                                  l'enquesta
      */
-    public void modificarRespostaUsuari(int idUsuari, int idxPregunta, Resposta novaResposta) throws UsuariNoHaResposEnquesta {
+    public void modificarRespostaUsuari(int idUsuari, int idxPregunta, Resposta novaResposta)
+            throws UsuariNoHaResposEnquesta {
         Pregunta p = preguntes.get(idxPregunta);
         Map<Integer, Resposta> respostesMap = p.getRespostes();
         if (!respostesMap.containsKey(idUsuari)) {
@@ -367,5 +403,24 @@ public class Enquesta {
         }
         respostesMap.put(idUsuari, novaResposta);
 
+    }
+
+    /**
+     * Retorna una llista amb els identificadors dels usuaris que han respost
+     * l'enquesta.
+     * 
+     * @return llista d'IDs d'usuaris
+     */
+    public List<Integer> getUsuarisQueHanRespost() {
+        List<Integer> usuaris = new ArrayList<>();
+        if (preguntes.isEmpty())
+            return usuaris;
+
+        // Obtenim els usuaris de la primera pregunta (assumint consistència)
+        Pregunta p = preguntes.get(0);
+        Map<Integer, Resposta> respostesMap = p.getRespostes();
+        usuaris.addAll(respostesMap.keySet());
+
+        return usuaris;
     }
 }
