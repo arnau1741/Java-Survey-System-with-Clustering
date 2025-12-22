@@ -168,9 +168,6 @@ public class Pregunta {
             }
             return 1;
         }
-        if (respostes.containsKey(idUsuari)) {
-            throw new IllegalArgumentException("Ja existeix una resposta per l'usuari amb id " + idUsuari);
-        }
         respostes.put(idUsuari, resposta);
         if (tipus == 0) { // NUMERICA
             Double valor = ((RespostaNumerica) resposta).getValor();

@@ -123,8 +123,8 @@ public class CtrlDomini {
         Enquesta enq;
         enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
-        if (u.teEnquestaRealitzada(idEnquesta))
-            throw new UsuariNoValid("L'enquesta ja ha estat realitzada per l'usuari"); // Enquesta ja realitzada
+        //if (u.teEnquestaRealitzada(idEnquesta))
+        //   throw new UsuariNoValid("L'enquesta ja ha estat realitzada per l'usuari"); // Enquesta ja realitzada
 
         respondreEnquestaPrivate(idEnquesta, idUsuari, respostesUsuari);
 
@@ -1596,8 +1596,8 @@ public class CtrlDomini {
                     result.add(sb.toString());
                 }
             } else if (r instanceof RespostaNumerica) {
-                //Double v = ((RespostaNumerica) r).getValor();
-                //result.add(v == null ? "" : v.toString());
+                Double v = ((RespostaNumerica) r).getValor();
+                result.add(v == null ? "" : v.toString());
             } else if (r instanceof RespostaLliure) {
                 String s = ((RespostaLliure) r).getResposta();
                 result.add(s == null ? "" : s);
