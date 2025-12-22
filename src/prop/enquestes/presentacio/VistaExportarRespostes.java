@@ -265,7 +265,7 @@ public class VistaExportarRespostes extends JDialog {
                 List<String> contingut;
                 // Determine which export method to use based on Role/Mode
                 String rol = ctrl.obtenirRol(idUsuari);
-                if ("ENQUESTAT".equals(rol) || ("ADMINISTRADOR".equals(rol) && !isAdministeredMode)) {
+                if ("ENQUESTAT".equals(rol) || ("ADMIN".equals(rol) && !isAdministeredMode)) {
                     contingut = ctrl.exportarRespostesUsuari(idEnquestaActual, idUsuari);
                 } else {
                     contingut = ctrl.exportarRespostesEnquesta(idEnquestaActual);
