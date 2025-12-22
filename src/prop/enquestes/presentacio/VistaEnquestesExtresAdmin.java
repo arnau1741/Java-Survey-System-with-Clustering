@@ -2,6 +2,8 @@ package prop.enquestes.presentacio;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Vista de gestió avançada d'enquestes per a l'administrador.
@@ -45,6 +47,13 @@ public class VistaEnquestesExtresAdmin extends JFrame {
         this.idUsuari = idUsuari;
         initComponents();
         setupListeners(); // Configura els listeners dels botons
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+            }
+        });
     }
 
     /**

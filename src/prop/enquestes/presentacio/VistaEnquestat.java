@@ -46,6 +46,14 @@ public class VistaEnquestat extends JFrame {
 
         initComponents();
         setupListeners();     // Configura els listeners dels botons
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+                ctrl.inicializarPresentacio();
+            }
+        });
     }
 
     /**

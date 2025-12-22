@@ -131,8 +131,8 @@ public class VistaCrearUsuari extends JDialog {
      * Torna a la pantalla inicial de l'aplicació i tanca el diàleg actual.
      */
     private void onCancel() {
-        ctrl.inicializarPresentacio();
         dispose();
+        ctrl.inicializarPresentacio();
     }
 
     /**
