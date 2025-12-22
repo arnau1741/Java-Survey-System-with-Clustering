@@ -2,6 +2,8 @@ package prop.enquestes.presentacio;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Vista principal de l'aplicació (Punt d'entrada gràfic).
@@ -31,6 +33,13 @@ public class VistaPrincipal {
     public VistaPrincipal(CtrlPresentacio ctrlPre) {
         iCtrlPresentacio = ctrlPre;
         inicializarComponentes();
+        ventana.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        ventana.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                iCtrlPresentacio.actualizaDades();
+            }
+        });
     }
 
     /**

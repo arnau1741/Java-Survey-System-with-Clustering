@@ -134,7 +134,7 @@ public class VistaEnquestat extends JFrame {
         });
 
         consultarRespostesButton.addActionListener(e -> {
-            ctrl.mostrarConsultarRespostes(idUsuari);
+            ctrl.mostrarConsultarRespostesPropies(idUsuari);
         });
         sortirButton.addActionListener(e -> {
             dispose();
