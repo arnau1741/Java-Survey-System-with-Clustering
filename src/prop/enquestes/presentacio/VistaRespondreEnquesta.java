@@ -49,6 +49,9 @@ public class VistaRespondreEnquesta extends JDialog {
     private JTextArea textAreaActual;
 
     // Helper Class for Question Data
+    /**
+     * Classe auxiliar per emmagatzemar la informació d'una pregunta.
+     */
     private static class PreguntaInfo {
         String tipus; // "NUMERICA", "UNICA", "ORDENADA", "MULTIPLE", "LLIURE"
         String text;
@@ -61,10 +64,21 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
+    /** Constructor de la vista per respondre enquestes.
+     *
+     * @param ctrl     Referència al controlador de presentació.
+     * @param idUsuari ID de l'usuari que respon l'enquesta.
+     */
     public VistaRespondreEnquesta(CtrlPresentacio ctrl, int idUsuari) {
         this(ctrl, idUsuari, -1);
     }
 
+    /** Constructor de la vista per respondre enquestes amb enquesta preseleccionada.
+     *
+     * @param ctrl          Referència al controlador de presentació.
+     * @param idUsuari      ID de l'usuari que respon l'enquesta.
+     * @param idEnquestaPre ID de l'enquesta a respondre (preseleccionada).
+     */
     public VistaRespondreEnquesta(CtrlPresentacio ctrl, int idUsuari, int idEnquestaPre) {
         this.ctrl = ctrl;
         this.idUsuari = idUsuari;
@@ -99,6 +113,9 @@ public class VistaRespondreEnquesta extends JDialog {
         setLocationRelativeTo(null);
     }
 
+    /** Crea el panell de selecció d'enquestes.
+     * Inclou un combo per seleccionar l'enquesta i una àrea per mostrar la informació.
+     */
     private void createPanelSeleccio() {
         panelSeleccio = new JPanel(new BorderLayout());
         panelSeleccio.setBorder(UIHelper.PADDING_MAIN);
@@ -157,6 +174,9 @@ public class VistaRespondreEnquesta extends JDialog {
         });
     }
 
+    /** Crea el panell per mostrar i respondre les preguntes de l'enquesta.
+     * Inclou una barra de progrés, el text de la pregunta, els inputs dinàmics i els botons de navegació.
+     */
     private void createPanelPregunta() {
         panelPregunta = new JPanel(new BorderLayout());
         panelPregunta.setBackground(UIHelper.COLOR_BACKGROUND);
@@ -217,6 +237,9 @@ public class VistaRespondreEnquesta extends JDialog {
 
     // --- Actions ---
 
+    /** Inicia l'enquesta seleccionada, carregant les preguntes i respostes prèvies si existeixen.
+     * Mostra la primera pregunta i canvia al panell de preguntes.
+     */
     private void actionComencar() {
         try {
             // Load questions
@@ -257,6 +280,8 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
+    /** Mostra la següent pregunta i desa la resposta actual.
+     */
     private void actionSeguent() {
         String resp = extraerRespostaUI();
         if (resp == null || resp.trim().isEmpty()) {
@@ -268,6 +293,8 @@ public class VistaRespondreEnquesta extends JDialog {
         mostrarPregunta();
     }
 
+    /** Mostra la pregunta anterior i desa la resposta actual.
+     */
     private void actionAnterior() {
         if (preguntaActual > 0) {
             // Save current (optional?) No, if they go back they might want to discard?
@@ -282,6 +309,9 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
+    /** Finalitza l'enquesta, desa l'última resposta i envia totes les respostes al controlador.
+     * Mostra missatges d'èxit o error segons correspongui.
+     */
     private void actionFinalitzar() {
         // Save last answer
         String resp = extraerRespostaUI();
@@ -315,6 +345,9 @@ public class VistaRespondreEnquesta extends JDialog {
 
     // --- Helpers ---
 
+    /** Mostra la pregunta actual amb els inputs corresponents segons el tipus.
+     * Actualitza l'estat dels botons de navegació i la barra de progrés.
+     */
     private void mostrarPregunta() {
         PreguntaInfo p = preguntes.get(preguntaActual);
 
@@ -407,6 +440,9 @@ public class VistaRespondreEnquesta extends JDialog {
 
     // --- Parsing / Extraction (Same logic, cleaner) ---
 
+    /** Carrega al desplegable les enquestes disponibles per a l'usuari actual.
+     * Analitza la informació textual rebuda del controlador per extreure l'ID de l'enquesta.
+     */
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
@@ -484,6 +520,13 @@ public class VistaRespondreEnquesta extends JDialog {
         }
     }
 
+    /** Extreu l'ID numèric de l'enquesta a partir de la cadena de text mostrada al desplegable.
+     * S'espera un format tipus "ID: X - Titol...".
+     *
+     * @param texto Cadena de text seleccionada al ComboBox.
+     * @return L'ID de l'enquesta com a enter.
+     * @throws RuntimeException Si el format del text no permet extreure l'ID.
+     */
     private int extraerIdEnquesta(String texto) {
         int idxID = texto.indexOf("ID:");
         if (idxID == -1)
@@ -546,6 +589,10 @@ public class VistaRespondreEnquesta extends JDialog {
         return llista;
     }
 
+    /** Extreu la resposta actual de la interfície d'usuari segons el tipus de pregunta.
+     *
+     * @return La resposta com a cadena de text.
+     */
     private String extraerRespostaUI() {
         if (preguntes == null || preguntaActual >= preguntes.size())
             return "";

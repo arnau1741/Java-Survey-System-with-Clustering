@@ -35,6 +35,12 @@ public class VistaConsultarRespostes extends JDialog {
     private JTable tableClusters;
     private DefaultTableModel modelClusters;
 
+    /**
+     * Constructor de la vista de consulta de respostes i clustering.
+     *
+     * @param ctrl     Referència al controlador de presentació per obtenir les dades.
+     * @param idUsuari Identificador únic de l'usuari actual.
+     */
     public VistaConsultarRespostes(CtrlPresentacio ctrl, int idUsuari) {
         super((Frame) null, "Consultes i Clustering", true);
         this.ctrl = ctrl;
@@ -48,6 +54,9 @@ public class VistaConsultarRespostes extends JDialog {
         carregarEnquestes();
     }
 
+    /**
+     * Inicialitza i distribueix els components gràfics del diàleg.
+     */
     private void initUI() {
         JPanel content = new JPanel(new BorderLayout(10, 10));
         content.setBackground(UIHelper.COLOR_BACKGROUND);
@@ -124,6 +133,11 @@ public class VistaConsultarRespostes extends JDialog {
         content.add(bottom, BorderLayout.SOUTH);
     }
 
+    /**
+     * Carrega la llista d'enquestes administrades per l'usuari al ComboBox.
+     * Emmagatzema els IDs corresponents per a futures consultes.
+     * Mostra un missatge d'error si no es poden carregar les dades.
+     */
     private void carregarEnquestes() {
         comboEnquestes.removeAllItems();
         idsEnquestes = new ArrayList<>();
@@ -155,6 +169,11 @@ public class VistaConsultarRespostes extends JDialog {
         }
     }
 
+    /**
+     * Mostra les respostes rebudes per l'enquesta seleccionada.
+     * Obté les dades del controlador i les afegeix al model de la llista.
+     * Mostra un missatge d'error si no es poden carregar les dades.
+     */
     private void mostrarRespostes() {
         int idx = comboEnquestes.getSelectedIndex();
         respostesModel.clear();
@@ -175,6 +194,11 @@ public class VistaConsultarRespostes extends JDialog {
         }
     }
 
+    /**
+     * Aplica l'algorisme de clustering amb els paràmetres especificats.
+     * Obté els resultats del controlador i actualitza la interfície.
+     * Mostra missatges d'error si els paràmetres són invàlids o si hi ha errors en l'execució.
+     */
     private void aplicarClustering() {
         int idx = comboEnquestes.getSelectedIndex();
         if (idx <= 0) {

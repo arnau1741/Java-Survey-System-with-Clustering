@@ -222,6 +222,11 @@ public class VistaModificarEnquesta extends JDialog {
         setEditorEnabled(false);
     }
 
+    /**
+     * Habilita o deshabilita els components de l'editor de preguntes.
+     *
+     * @param b true per habilitar, false per deshabilitar.
+     */
     private void setEditorEnabled(boolean b) {
         comboTipus.setEnabled(b);
         txtPregunta.setEnabled(b);
@@ -232,6 +237,10 @@ public class VistaModificarEnquesta extends JDialog {
         btnGuardarCanvis.setEnabled(b);
     }
 
+    /**
+     * Actualitza l'estat de l'editor segons el tipus de pregunta seleccionat.
+     * Habilita o deshabilita els controls d'opcions segons sigui necessari.
+     */
     private void updateEditorState() {
         if (!comboTipus.isEnabled())
             return;
@@ -249,6 +258,9 @@ public class VistaModificarEnquesta extends JDialog {
 
     // --- Loading Logic ---
 
+    /**
+     * Carrega les enquestes administrades per l'usuari actual al comboBox.
+     */
     private void cargarEnquestes() {
         comboEnquestes.removeAllItems();
         comboEnquestes.addItem("-- Selecciona --");
@@ -268,6 +280,10 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Gestiona la selecció d'una enquesta al comboBox.
+     * Carrega les preguntes associades a l'enquesta seleccionada i actualitza la llista de preguntes.
+     */
     private void onSelectEnquesta() {
         String sel = (String) comboEnquestes.getSelectedItem();
         listModelPreguntes.clear();
@@ -293,6 +309,12 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Analitza les línies brutes de preguntes per extreure els títols i tipus de cada pregunta.
+     *
+     * @param rawLines Llista de línies brutes obtingudes del controlador.
+     * @return Llista de títols de preguntes amb el seu tipus associat.
+     */
     // Helper to get titles for the list
     private List<String> parseQuestionTitles(List<String> rawLines) {
         List<String> titles = new ArrayList<>();
@@ -349,6 +371,14 @@ public class VistaModificarEnquesta extends JDialog {
         return titles;
     }
 
+    /**
+     * Extreu l'ID numèric de l'enquesta a partir de la cadena de text mostrada al desplegable.
+     * S'espera un format tipus "ID: X - Titol...".
+     *
+     * @param texto Cadena de text seleccionada al ComboBox.
+     * @return L'ID de l'enquesta com a enter.
+     * @throws RuntimeException Si el format del text no permet extreure l'ID.
+     */
     private int extraerIdEnquesta(String texto) {
         int idxID = texto.indexOf("ID:");
         if (idxID == -1)
@@ -361,6 +391,10 @@ public class VistaModificarEnquesta extends JDialog {
 
     // --- Editor Logic ---
 
+    /**
+     * Gestiona la selecció d'una pregunta a la llista.
+     * Carrega les dades de la pregunta seleccionada a l'editor.
+     */
     private void onSelectPregunta() {
         int idx = listPreguntes.getSelectedIndex();
         if (idx == -1) {
@@ -371,6 +405,11 @@ public class VistaModificarEnquesta extends JDialog {
         loadPreguntaToEditor(idx);
     }
 
+    /**
+     * Carrega les dades d'una pregunta específica a l'editor.
+     *
+     * @param idx Índex de la pregunta a carregar.
+     */
     private void loadPreguntaToEditor(int idx) {
         // Need to parse again to get full data... this is inefficient (O(N^2) if done
         // poorly),
@@ -420,6 +459,9 @@ public class VistaModificarEnquesta extends JDialog {
     }
 
     // Helper class
+    /**
+     * Classe auxiliar per emmagatzemar la informació d'una pregunta.
+     */
     private static class PreguntaInfo {
         String tipus;
         String text;
@@ -432,6 +474,12 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Analitza les línies brutes de preguntes i retorna una llista d'objectes PreguntaInfo.
+     *
+     * @param rawLines Llista de línies brutes obtingudes del controlador.
+     * @return Llista d'objectes PreguntaInfo representant cada pregunta.
+     */
     private List<PreguntaInfo> parsearPreguntesFull(List<String> rawLines) {
         // ... (Same parser as VistaRespondreEnquesta) ...
         // I should have put this in a helper class or Ctrl, but I can't touch Ctrl
@@ -483,6 +531,10 @@ public class VistaModificarEnquesta extends JDialog {
         return llista;
     }
 
+    /**
+     * Desa els canvis realitzats a la pregunta actual a l'enquesta.
+     * Recull les dades de l'editor i les envia al controlador per actualitzar la pregunta.
+     */
     private void guardarPregunta() {
         int idx = listPreguntes.getSelectedIndex();
         if (idx == -1)
@@ -530,6 +582,10 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Elimina l'enquesta actual després de confirmar amb l'usuari.
+     * Actualitza la llista d'enquestes després de l'eliminació.
+     */
     private void eliminarEnquesta() {
         if (idEnquestaActual == -1)
             return;
@@ -545,6 +601,10 @@ public class VistaModificarEnquesta extends JDialog {
         }
     }
 
+    /**
+     * Elimina les respostes d'un usuari específic per a l'enquesta actual.
+     * Demana a l'usuari l'ID de l'usuari i confirma abans d'eliminar les respostes.
+     */
     private void eliminarRespostes() {
         if (idEnquestaActual == -1)
             return;

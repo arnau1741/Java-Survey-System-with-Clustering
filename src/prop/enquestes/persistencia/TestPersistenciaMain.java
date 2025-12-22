@@ -10,10 +10,16 @@ import java.io.File;
 
 public class TestPersistenciaMain {
 
+    /**
+     * Elimina el directori "datos" i tot el seu contingut per assegurar una
+     */
     private static void cleanDatos() {
         deleteDir(new File("datos"));
     }
 
+    /**
+     * Elimina un directori i tot el seu contingut de manera recursiva.
+     */
     private static void deleteDir(File file) {
         File[] contents = file.listFiles();
         if (contents != null) {
@@ -24,6 +30,9 @@ public class TestPersistenciaMain {
         file.delete();
     }
 
+    /**
+     * Programa principal per provar la persistència de dades.
+     */
     public static void main(String[] args) throws UsuariNoValid, InvalidFormatEnquesta {
         System.out.println("== TEST DE PERSISTENCIA ==");
 

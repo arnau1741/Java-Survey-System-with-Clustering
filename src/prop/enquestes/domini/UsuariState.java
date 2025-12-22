@@ -135,5 +135,9 @@ public abstract class UsuariState {
      */
     public boolean esModerador() { return false; }
 
+    /**
+     * Obtenir les enquestes segons el rol de l'usuari
+     * @return Llista de les enquestes segons el rol de l'usuari
+     */
     public abstract List<String> obtenirEnquestesPerRol();
 }

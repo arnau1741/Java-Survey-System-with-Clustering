@@ -1653,6 +1653,11 @@ public class CtrlDomini {
         respondreEnquestaPrivate(idEnquesta, idUsuari, respostes);
     }
 
+    /**
+     * Funcio per a obtenir les enquestes segons el rol de l'usuari
+     * @param idUsuari
+     * @return llista de strings amb les enquestes segons el rol de l'usuari
+     */
     public List<String> obtenirEnquestesPerRol(int idUsuari){
         Usuari u = ctrlDominiMantUsuari.getUsuari(idUsuari);
         if(u.esModerador()){

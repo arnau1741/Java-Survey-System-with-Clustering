@@ -26,6 +26,13 @@ public class VistaCrearEnquesta extends JDialog {
     // Stores questions: [tipusInt, text, List<String> opcions]
     private List<List<Object>> preguntes = new ArrayList<>();
 
+    /**
+     * Constructor de la vista de creació d'enquestes.
+     * Configura la interfície i inicialitza els components.
+     *
+     * @param ctrl Referència al controlador de presentació.
+     * @param idUsuari ID de l'usuari creador de l'enquesta.
+     */
     public VistaCrearEnquesta(CtrlPresentacio ctrl, int idUsuari) {
         this.ctrl = ctrl;
         this.idCreador = idUsuari;
@@ -38,6 +45,10 @@ public class VistaCrearEnquesta extends JDialog {
         setLocationRelativeTo(null);
     }
 
+    /**
+     * Inicialitza i configura els components visuals de la interfície.
+     * Defineix els camps per al títol, descripció, preguntes i botons d'acció.
+     */
     private void initUI() {
         contentPane = new JPanel(new BorderLayout(10, 10));
         contentPane.setBackground(UIHelper.COLOR_BACKGROUND);
@@ -113,6 +124,10 @@ public class VistaCrearEnquesta extends JDialog {
 
     // --- Logic ---
 
+    /**
+     * Mostra el diàleg per afegir una nova pregunta a l'enquesta.
+     * Un cop afegida, actualitza la llista de preguntes.
+     */
     private void showDialogAfegirPregunta() {
         DialogAfegirPregunta dialog = new DialogAfegirPregunta(this);
         dialog.setVisible(true);
@@ -134,6 +149,9 @@ public class VistaCrearEnquesta extends JDialog {
         }
     }
 
+    /** Elimina la pregunta seleccionada de la llista i del model intern.
+     * Mostra una confirmació abans d'eliminar.
+     */
     private void eliminarPregunta() {
         int idx = llistaPreguntes.getSelectedIndex();
         if (idx == -1) {
@@ -146,6 +164,9 @@ public class VistaCrearEnquesta extends JDialog {
         }
     }
 
+    /** Acció executada en prémer el botó "Crear Enquesta".
+     * Valida les dades i crea l'enquesta mitjançant el controlador.
+     */
     private void onOK() {
         String titol = titolEnq.getText().trim();
         String desc = descripcioEnq.getText().trim();
@@ -173,11 +194,19 @@ public class VistaCrearEnquesta extends JDialog {
         }
     }
 
+    /** Acció executada en prémer el botó "Cancel·lar".
+     * Tanca el diàleg i torna a la vista principal.
+     */
     private void onCancel() {
         dispose();
         ctrl.mostrarVistaPrincipalComuna(idCreador);
     }
 
+    /** Construeix la llista de preguntes en el format esperat pel controlador.
+     * Cada pregunta es representa com una sèrie d'strings segons el tipus.
+     *
+     * @return Llista de strings representant les preguntes.
+     */
     private List<String> buildPreguntesStrings() {
         List<String> out = new ArrayList<>();
         for (List<Object> p : preguntes) {
@@ -197,6 +226,10 @@ public class VistaCrearEnquesta extends JDialog {
     }
 
     // --- Inner Dialog Class for proper UX ---
+    /**
+     * Diàleg per afegir una nova pregunta a l'enquesta.
+     * Permet seleccionar el tipus de pregunta, introduir el text i opcions si escau.
+     */
     class DialogAfegirPregunta extends JDialog {
         private boolean confirmed = false;
         private JComboBox<String> comboTipus;
@@ -220,6 +253,10 @@ public class VistaCrearEnquesta extends JDialog {
 
         // So I must stick to this logic!
 
+        /** Constructor del diàleg d'afegir pregunta.
+         *
+         * @param owner Finestra propietària del diàleg.
+         */
         public DialogAfegirPregunta(JDialog owner) {
             super(owner, "Afegir Pregunta", true);
             init();
@@ -227,6 +264,9 @@ public class VistaCrearEnquesta extends JDialog {
             setLocationRelativeTo(owner);
         }
 
+        /** Inicialitza i configura els components visuals del diàleg.
+         * Defineix els camps per al tipus de pregunta, text i opcions.
+         */
         private void init() {
             JPanel p = new JPanel(new BorderLayout(5, 5));
             p.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -297,12 +337,16 @@ public class VistaCrearEnquesta extends JDialog {
             btnCancel.addActionListener(e -> dispose());
         }
 
+        /** Actualitza l'estat del camp d'opcions segons el tipus de pregunta seleccionat.
+         * Habilita o deshabilita el camp d'opcions segons sigui necessari.
+         */
         private void updateOptionsState() {
             String t = (String) comboTipus.getSelectedItem();
             boolean needsOptions = t.equals("Única") || t.equals("Ordenada") || t.equals("Múltiple");
             txtOption.setEnabled(needsOptions);
         }
 
+        /** Afegeix una opció a la llista d'opcions si el camp no està buit. */
         private void addOption() {
             String t = txtOption.getText().trim();
             if (!t.isEmpty()) {
@@ -312,6 +356,10 @@ public class VistaCrearEnquesta extends JDialog {
             }
         }
 
+        /** Valida les dades introduïdes abans de confirmar l'afegit de la pregunta.
+         *
+         * @return true si les dades són vàlides, false en cas contrari.
+         */
         private boolean validateInput() {
             if (txtText.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Text obligatori.");
@@ -326,14 +374,24 @@ public class VistaCrearEnquesta extends JDialog {
             return true;
         }
 
+        /**
+         * Indica si l'usuari ha confirmat l'afegit de la pregunta.
+         * @return true si s'ha confirmat, false en cas contrari.
+         */
         public boolean isConfirmed() {
             return confirmed;
         }
 
+        /** Obté el text de la pregunta introduït per l'usuari.
+         * @return Text de la pregunta.
+         */
         public String getText() {
             return txtText.getText().trim();
         }
 
+        /** Obté la llista d'opcions introduïdes per l'usuari.
+         * @return Llista d'opcions.
+         */
         public List<String> getOptions() {
             List<String> l = new ArrayList<>();
             for (int i = 0; i < optionsModel.size(); i++)
@@ -341,6 +399,9 @@ public class VistaCrearEnquesta extends JDialog {
             return l;
         }
 
+        /** Obté el tipus de pregunta codificat com a enter segons la selecció.
+         * @return Enter representant el tipus de pregunta.
+         */
         public int getEncodedType() {
             String t = (String) comboTipus.getSelectedItem();
             if (t.equals("Numèrica"))
@@ -354,6 +415,9 @@ public class VistaCrearEnquesta extends JDialog {
             return 4; // Lliure
         }
 
+        /** Obté el nom del tipus de pregunta seleccionat.
+         * @return Nom del tipus de pregunta.
+         */
         public String getTypeName() {
             return (String) comboTipus.getSelectedItem();
         }

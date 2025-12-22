@@ -19,6 +19,13 @@ public class VistaConsultarRespostesUsuari extends JDialog {
     // Store IDs corresponding to combo items
     private List<Integer> idsEnquestes;
 
+    /**
+     * Constructor del diàleg de consulta de respostes d'un usuari.
+     * Configura la interfície, carrega les dades inicials i assigna els controladors d'esdeveniments.
+     *
+     * @param ctrl Referència al controlador de presentació per obtenir les dades.
+     * @param idUsuari Identificador de l'usuari cuyas respuestas se van a consultar.
+     */
     public VistaConsultarRespostesUsuari(CtrlPresentacio ctrl, int idUsuari) {
         super((Frame) null, "Les Meves Respostes", true);
         this.ctrl = ctrl;
@@ -32,6 +39,9 @@ public class VistaConsultarRespostesUsuari extends JDialog {
         carregarEnquestes();
     }
 
+    /**
+     * Inicialitza i distribueix els components gràfics del diàleg.
+     */
     private void initUI() {
         content = new JPanel(new BorderLayout(10, 10));
         content.setBackground(UIHelper.COLOR_BACKGROUND);
@@ -73,6 +83,9 @@ public class VistaConsultarRespostesUsuari extends JDialog {
         content.add(bottom, BorderLayout.SOUTH);
     }
 
+    /**
+     * Carrega la llista d'enquestes a les quals l'usuari ha respost i les afegeix al combo.
+     */
     private void carregarEnquestes() {
         comboEnquestes.removeAllItems();
         idsEnquestes = new ArrayList<>();
@@ -102,6 +115,10 @@ public class VistaConsultarRespostesUsuari extends JDialog {
         }
     }
 
+    /**
+     * Mostra la vista prèvia de les respostes de l'usuari per a l'enquesta seleccionada.
+     * Si no hi ha cap enquesta seleccionada, es neteja l'àrea de text.
+     */
     private void mostrarPreview() {
         int idx = comboEnquestes.getSelectedIndex();
         if (idx <= 0) {
@@ -126,6 +143,10 @@ public class VistaConsultarRespostesUsuari extends JDialog {
         }
     }
 
+    /**
+     * Acció per modificar les respostes de l'enquesta seleccionada.
+     * Tanca el diàleg actual i obre la vista per respondre l'enquesta.
+     */
     private void actionModificar() {
         int idx = comboEnquestes.getSelectedIndex();
         if (idx <= 0)

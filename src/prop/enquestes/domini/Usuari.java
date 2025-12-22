@@ -232,6 +232,10 @@ public class Usuari {
      */
     public boolean esEnquestat()   { return rol.esEnquestat(); }
 
+    /**
+     * Obte les enquestes per rol
+     * @return Llista de les enquestes per rol
+     */
     public List<String> obtenirEnquestesPerRol() {
         return rol.obtenirEnquestesPerRol();
     }

@@ -155,6 +155,10 @@ public class EnquestatState extends UsuariState {
     @Override
     public boolean esEnquestat() { return true; }
 
+    /**
+     * Obtenir les enquestes per rol
+     * @return llista d'enquestes en format string
+     */
     @Override
     public List<String> obtenirEnquestesPerRol() {
         List<String> resultat = new ArrayList<>();

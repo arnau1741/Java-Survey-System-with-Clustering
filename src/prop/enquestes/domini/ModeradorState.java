@@ -137,6 +137,10 @@ public class ModeradorState extends UsuariState {
     @Override
     public boolean esModerador() { return true; }
 
+    /**
+     * Getter de les enquestes per rol
+     * @return Llista d'enquestes per rol
+     */
     @Override
     public List<String> obtenirEnquestesPerRol() {
         return null;

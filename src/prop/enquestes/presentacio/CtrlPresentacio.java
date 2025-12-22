@@ -767,6 +767,9 @@ public class CtrlPresentacio {
         return ctrlDomini.getCtrlDominiMantUsuari().getRolUsuari(idUsuari);
     }
 
+    /**
+     * Actualitza i guarda les dades abans de tancar l'aplicació.
+     */
     public void actualizaDades() {
         ctrlDomini.guardarDades();
         System.exit(0);
@@ -776,25 +779,72 @@ public class CtrlPresentacio {
     // NOVES FUNCIONALITATS (USER REQ)
     // ==========================================
 
+    /**
+     * Exporta una enquesta sense incloure les respostes.
+     *
+     * @param idUsuari   ID de l'usuari que sol·licita l'exportació.
+     * @param idEnquesta ID de l'enquesta a exportar.
+     * @return Llista d'Strings amb el format d'exportació de l'enquesta.
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
+     * @throws UsuariNoValid               Si l'usuari no té permisos.
+     */
     public List<String> exportarEnquestaSenseRespostes(int idUsuari, int idEnquesta)
             throws EnquestaNoExisteixException, UsuariNoValid {
         // Validación básica
         return ctrlDomini.exportarEnquestaSenseRespostes(idEnquesta);
     }
 
+    /**
+     * Exporta les respostes d'un usuari a una enquesta específica.
+     *
+     * @param idEnquesta ID de l'enquesta.
+     * @param idUsuari   ID de l'usuari.
+     * @return Llista d'Strings amb les respostes de l'usuari.
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
+     * @throws UsuariNoValid               Si l'usuari no és vàlid.
+     */
     public List<String> exportarRespostesUsuari(int idEnquesta, int idUsuari)
             throws EnquestaNoExisteixException, UsuariNoValid {
         return ctrlDomini.exportarRespostesUsuari(idEnquesta, idUsuari);
     }
 
+    /**
+     * Obté les respostes d'un usuari a una enquesta específica.
+     *
+     * @param idEnquesta ID de l'enquesta.
+     * @param idUsuari   ID de l'usuari.
+     * @return Llista d'Strings amb les respostes de l'usuari.
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
+     */
     public List<String> getRespostesUsuariList(int idEnquesta, int idUsuari) throws EnquestaNoExisteixException {
         return ctrlDomini.getRespostesUsuariList(idEnquesta, idUsuari);
     }
 
+    /**
+     * Obté la llista d'enquestes que un usuari ha respost.
+     *
+     * @param idUsuari ID de l'usuari.
+     * @return Llista d'Strings amb les enquestes respostes.
+     * @throws UsuariNoValid Si l'usuari no és vàlid.
+     */
     public List<String> obtenirEnquestesRespostesPerUsuari(int idUsuari) throws UsuariNoValid {
         return ctrlDomini.obtenirEnquestesRespostesPerUsuari(idUsuari);
     }
 
+    /**
+     * Modifica les respostes d'un usuari a una enquesta específica.
+     *
+     * @param idUsuari   ID de l'usuari que vol modificar les respostes.
+     * @param idEnquesta ID de l'enquesta.
+     * @param respostes  Llista de noves respostes en format text.
+     * @throws EnquestaNoExisteixException Si l'enquesta no existeix.
+     * @throws UsuariNoValid               Si l'usuari no és vàlid.
+     * @throws InvalidFormatEnquesta       Si l'enquesta té un format incorrecte.
+     * @throws InvalidFormatResposta       Si les noves respostes no compleixen
+     *                                     el format esperat.
+     * @throws UsuariNoHaResposEnquesta    Si l'usuari no havia respost
+     *                                     prèviament l'enquesta.
+     */
     public void modificarRespostaEnquesta(int idUsuari, int idEnquesta, List<String> respostes)
             throws EnquestaNoExisteixException, UsuariNoValid, InvalidFormatEnquesta, InvalidFormatResposta,
             UsuariNoHaResposEnquesta {

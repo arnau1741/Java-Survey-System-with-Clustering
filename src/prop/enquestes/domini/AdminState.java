@@ -14,6 +14,11 @@ public class AdminState extends UsuariState {
         this.enquestesRealitzades = new HashMap<>();
     }
 
+    /**
+     * Constructor amb paràmetres d'AdminState
+     * @param enquestesAdministrades
+     * @param enquestesRealitzades
+     */
     public AdminState(Map<Integer, Enquesta> enquestesAdministrades, Map<Integer, Enquesta> enquestesRealitzades) {
         this.enquestesAdministrades = enquestesAdministrades != null ? enquestesAdministrades : new HashMap<>();
         this.enquestesRealitzades = enquestesRealitzades != null ? enquestesRealitzades : new HashMap<>();
@@ -168,6 +173,10 @@ public class AdminState extends UsuariState {
      */
     @Override public boolean esAdmin() { return true; }
 
+    /**
+     * Obté les enquestes administrades en format llista de strings
+     * @return Llista de strings amb les enquestes administrades
+     */
     @Override
     public List<String> obtenirEnquestesPerRol() {
         List<String> resultat = new ArrayList<>();
