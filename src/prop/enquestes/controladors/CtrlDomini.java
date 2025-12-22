@@ -102,7 +102,6 @@ public class CtrlDomini {
      */
     public void respondreEnquesta(Integer idEnquesta, int idUsuari, List<String> respostesUsuari)
             throws InvalidFormatResposta, EnquestaNoExisteixException, UsuariNoValid {
-        System.out.println("Responent enquesta " + idEnquesta + " per l'usuari " + idUsuari);
         if (respostesUsuari == null || respostesUsuari.isEmpty())
             throw new InvalidFormatResposta("Les respostes de l'usuari són nul·les");
         if (idUsuari == -1) {
@@ -124,7 +123,6 @@ public class CtrlDomini {
         enq = this.ctrlDominiMantEnquesta.getEnquesta(idEnquesta);
 
         if (u.esEnquestador()) {
-            System.out.println("Usuari és enquestador");
             respondreEnquestaPrivate(idEnquesta, -1, respostesUsuari);
             return;
         }

@@ -641,8 +641,6 @@ public class VistaModificarEnquesta extends JDialog {
         try {
             int idUserTarget = Integer.parseInt(idUserStr);
             if (UIHelper.showConfirm(this, "Eliminar respostes de l'usuari " + idUserTarget + "?")) {
-                System.out.println(
-                        "Eliminant respostes de l'usuari " + idUserTarget + " per a l'enquesta " + idEnquestaActual);
                 ctrl.esborrarRespostaEnquesta(idUsuariActual, idEnquestaActual, idUserTarget);
                 UIHelper.showInfo(this, "Respostes eliminades.");
             }

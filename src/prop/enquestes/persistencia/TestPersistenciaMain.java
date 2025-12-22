@@ -34,69 +34,48 @@ public class TestPersistenciaMain {
      * Programa principal per provar la persistència de dades.
      */
     public static void main(String[] args) throws UsuariNoValid, InvalidFormatEnquesta {
-        System.out.println("== TEST DE PERSISTENCIA ==");
-
         cleanDatos();
-
-        System.out.println("\n--- EJECUCIÓN 1 ---");
         CtrlDomini ctrl1 = new CtrlDomini();
 
-        System.out.println("Creando usuarios...");
         int idAdmin = ctrl1.iniciarSessio("admin1111", "Pass1234");
         //int idAdmin = ctrl1.crearUsuariAdmin("admin1111", "Pass1234", "admin@test.com");
         int idUser = ctrl1.crearUsuariEnquestat("user1", "Pass1234", "user@test.com");
 
-        System.out.println("Creando encuesta...");
         List<String> preguntesInput = new ArrayList<>();
         preguntesInput.add("4");
         preguntesInput.add("Pregunta de prueba?");
 
         ctrl1.crearEnquesta("Encuesta Test", "Desc Test", idAdmin, preguntesInput);
-        System.out.println("Creación correcta");
 
         int idEnquesta = 0; // asumimos que será 0
 
-        System.out.println("Añadiendo respuesta...");
         List<String> respostes = List.of("Respuesta de prueba");
 
         try {
             ctrl1.respondreEnquesta(idEnquesta, idUser, respostes);
-            System.out.println("Respuesta registrada.");
         } catch (Exception e) {
-            System.out.println("Error al responder: " + e.getMessage());
         }
 
-        System.out.println("Guardando datos...");
         ctrl1.guardarDades();
 
-        System.out.println("Ejecución 1 terminada.\n");
-
-        System.out.println("--- EJECUCIÓN 2 ---");
         CtrlDomini ctrl2 = new CtrlDomini();
 
         boolean userExists = ctrl2.getCtrlDominiMantUsuari().existeixUsuari("user1");
-        System.out.println("Usuario cargado? " + userExists);
 
         boolean surveyExists = false;
         try {
             List<String> info = ctrl2.consultarEnquesta(idEnquesta);
-            System.out.println("Encuesta cargada: " + info);
             surveyExists = true;
         } catch (Exception e) {
-            System.out.println("No se pudo cargar la encuesta.");
         }
 
         if (surveyExists) {
             try {
                 List<String> respostesLoaded = ctrl2.consultarRespostesEnquesta(idEnquesta);
-                System.out.println("Respuestas cargadas:");
                 respostesLoaded.forEach(r -> System.out.println("  - " + r));
 
                 boolean ok = respostesLoaded.stream().anyMatch(s -> s.contains("Respuesta de prueba"));
-                System.out
-                        .println(ok ? "Respuestas persistidas correctamente." : "No se han encontrado las respuestas.");
             } catch (Exception e) {
-                System.out.println("Error al consultar respuestas.");
             }
         }
     }

@@ -55,7 +55,6 @@ public class GestorPersistencia {
      * Elimina el directori "datos" i tot el seu contingut per assegurar una
      */
     public void cleanDatos() {
-        System.out.println("Eliminant directori 'datos' i tot el seu contingut...");
         deleteDir(new File("datos"));
     }
 

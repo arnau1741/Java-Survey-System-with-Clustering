@@ -38,12 +38,9 @@ public class RespostaNumerica extends Resposta {
      */
     @Override
     public String getText(List<String> opcions) {
-        System.out.println("Obtenint text de la resposta numèrica...");
         if (this.valor == null) {
-            System.out.println("Resposta no contestada.");
             return "NO CONTESTAT";
         }
-        System.out.println("Resposta contestada amb valor: " + this.valor);
         return valor.toString();
     }
 }
