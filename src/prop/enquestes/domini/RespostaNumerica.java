@@ -39,7 +39,7 @@ public class RespostaNumerica extends Resposta {
     @Override
     public String getText(List<String> opcions) {
         if (valor == null) {
-            return "No contestat";
+            return "NO CONTESTAT";
         }
         return valor.toString();
     }

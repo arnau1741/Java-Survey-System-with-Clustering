@@ -186,6 +186,7 @@ public class VistaConsultarRespostes extends JDialog {
             if (llista.isEmpty()) {
                 respostesModel.addElement("No hi ha respostes.");
             } else {
+                respostesModel.addElement("Respostes rebudes:");
                 for (String s : llista)
                     respostesModel.addElement(s);
             }

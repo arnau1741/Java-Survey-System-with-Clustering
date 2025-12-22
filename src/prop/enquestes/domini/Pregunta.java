@@ -153,7 +153,7 @@ public class Pregunta {
                 if (((RespostaNumerica) resposta).getValor() == null) {
                     return 1;
                 }
-                double valor = ((RespostaNumerica) resposta).getValor();
+                Double valor = ((RespostaNumerica) resposta).getValor();
                 if (respostes.size() == 1) {
                     minValue = valor;
                     maxValue = valor;
@@ -173,7 +173,8 @@ public class Pregunta {
         }
         respostes.put(idUsuari, resposta);
         if (tipus == 0) { // NUMERICA
-            double valor = ((RespostaNumerica) resposta).getValor();
+            Double valor = ((RespostaNumerica) resposta).getValor();
+            if (valor == null) return 1;
             if (respostes.size() == 1) {
                 minValue = valor;
                 maxValue = valor;

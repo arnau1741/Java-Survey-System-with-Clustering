@@ -10,6 +10,7 @@ public class RespostaMultiple extends Resposta{
      */
     public RespostaMultiple() {
         super();
+        respostes = new ArrayList<>();
     }
 
     /**
@@ -47,6 +48,9 @@ public class RespostaMultiple extends Resposta{
                 sb.append(", ");
             }
             sb.append(opcions.get(opcio));
+        }
+        if(sb.length() == 0) {
+            return "NO CONTESTAT";
         }
         return sb.toString();
     }

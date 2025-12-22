@@ -421,7 +421,7 @@ public class CtrlPresentacio {
         ctrlDomini.eliminarEnquesta(idUsuari, idEnquesta);
     }
 
-    /**
+    /*
      * Esborra una resposta concreta d'un usuari a una enquesta.
      *
      * @param idUsuari    ID de l'usuari administrador/executor.

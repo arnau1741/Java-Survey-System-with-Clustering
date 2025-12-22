@@ -8,6 +8,7 @@ public class RespostaOrdenada extends Resposta {
      */
     public RespostaOrdenada() {
         super();
+        resposta = null;
     }
 
     /**
@@ -45,7 +46,7 @@ public class RespostaOrdenada extends Resposta {
     @Override
     public String getText(List<String> opcions) {
         if (resposta == null) {
-            return "No contestat";
+            return "NO CONTESTAT";
         }
         return opcions.get(resposta);
     } 

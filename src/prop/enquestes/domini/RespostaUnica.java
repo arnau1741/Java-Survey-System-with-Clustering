@@ -39,7 +39,7 @@ public class RespostaUnica extends Resposta {
     @Override
     public String getText(List<String> opcions) {
         if (resposta == null) {
-            return "";
+            return "NO CONTESTAT";
         }
         return opcions.get(resposta);
     }

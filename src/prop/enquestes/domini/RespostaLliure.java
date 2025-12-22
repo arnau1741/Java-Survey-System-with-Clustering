@@ -46,7 +46,7 @@ public class RespostaLliure extends Resposta{
      */
     @Override
     public String getText(List<String> opcions) {
-        if(text == null || text.isBlank()) return "No contestada";
+        if(text == null || text.isBlank()) return "NO CONTESTAT";
         else return text;
     }
 }

@@ -321,6 +321,7 @@ public class VistaRespondreEnquesta extends JDialog {
         respostes.set(preguntaActual, resp);
 
         // Submit
+        System.out.println("Respostes a enviar: " + respostes);
         try {
             ctrl.respondreEnquesta(idUsuari, idEnquestaActual, respostes);
             UIHelper.showInfo(this, "Respostes enviades correctament!");
