@@ -37,6 +37,10 @@ The project follows a strict separation of concerns:
 3.  Ensure the `DATA` folder is in the root directory (contains `respuestasCis.txt`, etc.).
 4.  Run the Main class to start the application.
 
+### Compile and Execution alternative
+1.  Execute "make".
+2.  Execute "make run" and a window will pop up.
+
 ## 📂 Project Structure
 
 ```text
