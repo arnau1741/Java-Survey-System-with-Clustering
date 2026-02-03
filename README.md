@@ -10,7 +10,7 @@ The core strength of the application lies in its ability to process massive real
 
 * **Role-Based Access Control (RBAC):** Hierarchical permission system managing different levels of access for Admins, Moderators, and Surveyors.
 * **Big Data Import:** Optimized parsing logic capable of handling large text datasets (50k+ lines), including robust error handling for corrupt data and formatting inconsistencies.
-* **Algorithmic Analysis:** Custom implementation of the **K-Means Clustering** algorithm to segment respondents into distinct profiles based on their answers.
+* **Algorithmic Analysis:** Custom implementation of the **K-Means, K-Means++, K-Medoids Clustering** algorithms to segment respondents into distinct profiles based on their answers.
 * **Data Persistence:** JSON-based storage system for users and surveys, ensuring data integrity between sessions without requiring an external SQL database.
 * **Interactive GUI:** A complete desktop interface developed with Java Swing/AWT.
 
