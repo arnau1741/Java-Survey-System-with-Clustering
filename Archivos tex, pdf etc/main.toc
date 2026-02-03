@@ -1,8 +1,0 @@
-\contentsline {section}{\numberline {1}Introduction}{2}{}%
-\contentsline {section}{\numberline {2}Descripció general del sistema}{3}{}%
-\contentsline {subsection}{\numberline {2.1}Funcionalitats principals}{3}{}%
-\contentsline {subsection}{\numberline {2.2}Perfils d’usuari}{3}{}%
-\contentsline {section}{\numberline {3}Casos d’ús dels enquestats}{4}{}%
-\contentsline {section}{\numberline {4}Casos d’ús dels administradors d’enquestes}{5}{}%
-\contentsline {section}{\numberline {5}Casos d’ús dels enquestadors}{7}{}%
-\contentsline {section}{\numberline {6}Casos d’ús dels moderadors}{7}{}%
