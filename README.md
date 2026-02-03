@@ -3,8 +3,7 @@
 ## 📖 Overview
 A robust software solution developed using a **Three-Tier Architecture** (Presentation, Domain, Persistence) to ensure modularity and scalability. The system manages the complete lifecycle of sociological surveys: from creation and data collection to statistical analysis.
 
-The core strength of the application lies in its ability to process massive real-world datasets (such as CIS Barometers) and apply **Machine Learning algorithms** to identify patterns in public opinion.
-
+The core strength of the application lies in its ability to process massive real-world datasets (such as CIS Barometers) and identification of patterns in public opinion.
 ## ✨ Key Features
 
 * **Role-Based Access Control (RBAC):** Hierarchical permission system managing different levels of access for Admins, Moderators, and Surveyors.
