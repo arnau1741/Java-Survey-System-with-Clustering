@@ -1,5 +1,7 @@
 # Java Survey System with K-Means Clustering 📊
 
+Developed as part of the Software Engineering course at UPC.
+
 ## 📖 Overview
 A robust software solution developed using a **Three-Tier Architecture** (Presentation, Domain, Persistence) to ensure modularity and scalability. The system manages the complete lifecycle of sociological surveys: from creation and data collection to statistical analysis.
 
